@@ -208,7 +208,7 @@ export function DashShell({ path, children }: { path: string; children: ReactNod
           </li>
           <li className="flex items-center gap-2 py-1.5">
             <span className="text-[12px] font-medium text-[#8B97B8] cursor-not-allowed">Create policy</span>
-            <span className="ml-auto"><MaturityTag m="HERMETIC ONLY" /></span>
+            <span className="ml-auto"><MaturityTag m="PLANNED" /></span>
           </li>
           <li className="flex items-center gap-2 py-1.5">
             <span className="text-[12px] font-medium text-[#8B97B8] cursor-not-allowed" title="Needs IdP (roadmap item 19)">Invite team member</span>

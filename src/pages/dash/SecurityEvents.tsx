@@ -20,7 +20,7 @@ export function DashSecurity() {
             <p className="text-[12.5px] text-[#A9B6D3] mb-3 leading-relaxed">Scopes: system · tenant · workspace · connection · connector · tool. Reason required; the confirmation names the scope and environment.</p>
             <div className="flex flex-col gap-3 items-start">
               <Action label="Kill a scope…" maturity="HERMETIC ONLY" danger title="Reason required; confirmation names scope + environment" />
-              <Action label="Restore" maturity="PLANNED" title="Second identity required — until IdP" />
+              <Action label="Restore" maturity="HERMETIC ONLY" title="Second identity required — until IdP" />
               <Action label="View kill audit" maturity="WIRED" onClick={() => { window.history.pushState({}, '', '/app/audit'); window.dispatchEvent(new PopStateEvent('popstate')) }} />
             </div>
           </Panel>
@@ -71,7 +71,7 @@ export function DashEvents() {
               <span key="t" className="font-mono text-[12px]">{e.event_type}</span>, e.received,
               <Pill key="v" v={e.verification} />, e.algorithm, e.dedupe, e.replay,
               <span key="d" className="text-[12px] text-[#A9B6D3] whitespace-normal min-w-[160px] inline-block">{e.downstream}</span>,
-              <Action key="a" label="Replay" maturity="HERMETIC ONLY" title="Governed replay to downstream" />,
+              <Action key="a" label="Replay" maturity="PLANNED" title="Governed replay to downstream" />,
             ])}
           />
         </Panel>
@@ -99,7 +99,7 @@ export function DashEnvironments() {
         />
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {ENV_ROLLUP.map((e) => (
-            <Panel key={e.env} title={e.env} right={<Action label="Set MODE ceiling" maturity="HERMETIC ONLY" />}>
+            <Panel key={e.env} title={e.env} right={<Action label="Set MODE ceiling" maturity="PLANNED" />}>
               <KV items={[
                 ['Connections', String(e.connections)], ['Policies', String(e.policies)],
                 ['Approvals pending', String(e.approvals_pending)], ['Executions 24 h', String(e.executions_24h)],

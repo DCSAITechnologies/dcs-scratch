@@ -80,7 +80,7 @@ export function DashTeam() {
         <Panel title="Members" className="mb-4">
           <Table head={['Name', 'Email', 'Role', 'Last active', 'Actions']} rows={TEAM.map((m) => [
             m.name, m.email, ROLE_LABELS[m.role], m.last_active,
-            <span key="a" className="flex gap-2"><Action label="Change role" maturity="HERMETIC ONLY" /><Action label="Remove" maturity="HERMETIC ONLY" danger /></span>,
+            <span key="a" className="flex gap-2"><Action label="Change role" maturity="PLANNED" /><Action label="Remove" maturity="PLANNED" danger /></span>,
           ])} />
         </Panel>
         <Panel title="Capability matrix">
@@ -131,7 +131,7 @@ export function DashSettings() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
         <Panel title="Organization" right={<MaturityTag m="HERMETIC ONLY" />}>
           <KV items={[['Name', 'Acme Industries'], ['Tenant id', 'org_acme'], ['Default environment', 'Staging']]} />
-          <div className="mt-4"><Action label="Rename" maturity="HERMETIC ONLY" /></div>
+          <div className="mt-4"><Action label="Rename" maturity="PLANNED" /></div>
         </Panel>
         <Panel title="Receipt-service policy (FD-1)" right={<MaturityTag m="HERMETIC ONLY" />}>
           <p className="text-[12.5px] text-[#A9B6D3] leading-relaxed">When the receipt service is unavailable: <b className="text-white">block</b> the step, or proceed and mark the receipt <Pill v="PENDING" />. This is founder decision FD-1 — parked; the current build shows PENDING on failure. Once ruled, this becomes a per-class setting.</p>

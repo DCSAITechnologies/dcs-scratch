@@ -58,8 +58,8 @@ export function DashRunDetail({ id }: { id: string }) {
       <PageHeader title={r.id} sub={`${r.agent} · MODE ${r.mode} · ${r.environment}`} maturity="HERMETIC ONLY"
         actions={<>
           <Action label="Submit plan for approval" maturity="HERMETIC ONLY" title="MODE 1 → creates an approval request; never executes" />
-          <Action label="Escalate to human" maturity="HERMETIC ONLY" />
-          <Action label="Cancel run" maturity="HERMETIC ONLY" danger />
+          <Action label="Escalate to human" maturity="PLANNED" />
+          <Action label="Cancel run" maturity="PLANNED" danger />
         </>} />
 
       <Panel title="Lifecycle rail" className="mb-4">
@@ -143,7 +143,7 @@ export function DashPolicies() {
     <StateGate empty={<EmptyState text="No policies yet. The org floor is created with your organization." />}>
       <div>
         <PageHeader title="Policies" sub="Declarative rules with versions. Workspace admins edit within the org floor; org admins edit the floor; others read." maturity="HERMETIC ONLY"
-          actions={<Action label="Create policy" maturity="HERMETIC ONLY" title="Policy store is the reference build" />} />
+          actions={<Action label="Create policy" maturity="PLANNED" title="Policy store is the reference build" />} />
         <FilterBar>
           <Filter label="Decision" value={decision} options={['ALLOW', 'APPROVAL_REQUIRED', 'REFUSE']} onChange={setDecision} />
           <Filter label="Status" value={status} options={['active', 'disabled', 'draft']} onChange={setStatus} />
@@ -172,12 +172,12 @@ export function DashPolicyDetail({ id }: { id: string }) {
     <div>
       <PageHeader title={p.name} sub={`${p.scope}-scoped · ${p.environment}`} maturity="HERMETIC ONLY"
         actions={<>
-          <Action label="Clone" maturity="HERMETIC ONLY" />
-          <Action label="Compare versions" maturity="HERMETIC ONLY" title="Diff against previous version" />
+          <Action label="Clone" maturity="PLANNED" />
+          <Action label="Compare versions" maturity="PLANNED" title="Diff against previous version" />
           <Action label="Test against sample plan" maturity="HERMETIC ONLY" title="Uses the evaluator" />
           {p.status === 'active'
-            ? <Action label="Disable" maturity="HERMETIC ONLY" danger title="Versioned; audit + receipt" />
-            : <Action label="Activate" maturity="HERMETIC ONLY" title="Versioned; audit + receipt" />}
+            ? <Action label="Disable" maturity="PLANNED" danger title="Versioned; audit + receipt" />
+            : <Action label="Activate" maturity="PLANNED" title="Versioned; audit + receipt" />}
         </>} />
       <div className="mb-4 text-[11.5px] text-[#A9B6D3]">Editing is desktop-only; this route is read-only on mobile.</div>
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">

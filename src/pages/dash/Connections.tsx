@@ -61,7 +61,7 @@ export function DashConnectionDetail({ id }: { id: string }) {
             <Action label={c.state === 'SUSPENDED' ? 'Resume' : 'Suspend'} maturity="HERMETIC ONLY" title="Kill semantics; audit + receipt PENDING" />
             <Action label="Revoke" maturity="HERMETIC ONLY" danger title="Irreversible; confirmation names the environment" />
             <Action label="Rotate credential" maturity="PLANNED" title="Needs vault (roadmap item 20)" />
-            <Action label="Authorize (OAuth)" maturity="STAGING ONLY" title="Real providers need OAuth apps — external dependency" />
+            <Action label="Authorize (OAuth)" maturity="EXTERNAL DEPENDENCY" title="Real providers need OAuth apps — external dependency" />
           </>
         } />
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-4">

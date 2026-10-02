@@ -97,9 +97,9 @@ export function DashExecutionDetail({ id }: { id: string }) {
           ]} />
           <div className="mt-4 flex flex-wrap gap-3">
             <Action label="Reconcile now" maturity="HERMETIC ONLY" title="Governed read against provider state" />
-            <Action label="Escalate" maturity="HERMETIC ONLY" />
+            <Action label="Escalate" maturity="PLANNED" />
             {/* no manual retry for unsafe/unknown — button absent, not disabled */}
-            {!noManualRetry && <Action label="Retry" maturity="HERMETIC ONLY" />}
+            {!noManualRetry && <Action label="Retry" maturity="PLANNED" />}
           </div>
           {noManualRetry && (
             <p className="mt-3 text-[11.5px] text-[#5B6884]">No manual retry is offered: retry_safety is <span className="font-mono">{e.retry_safety}</span> for this tool. Reconciliation resolves it.</p>
