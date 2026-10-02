@@ -9,6 +9,9 @@
   C5  shell reads platform-status.json (single status source)
   C6  /app route patterns are counted mechanically from the router, and every
       static /app route has a prerendered shell in scripts/prerender.py
+  C8  API-mode pages (src/pages/dash/api, ApiRail, AuthGate) never import the
+      fixture stores — a backend failure can never be papered over with fake data
+  C9  the production build (dist/) contains no mock bearer token
   C7  no liveness copy over fixture data (real-time, fresh, all systems
       operational) and no enabled WIRED <Action> without an onClick handler
 """
@@ -75,6 +78,20 @@ m = re.search(r'Dashboard router — (\d+) /app route patterns', router)
 if not m or int(m.group(1)) != ROUTE_PATTERNS:
     fails.append(f'C6 router header comment does not state the mechanical count ({ROUTE_PATTERNS})')
 
+# C8 — no fixture imports on the API path
+API_FILES = [os.path.join(DASH, 'api', f) for f in os.listdir(os.path.join(DASH, 'api')) if f.endswith('.tsx')] + \
+    [os.path.join(SHELL, 'ApiRail.tsx'), os.path.join(SHELL, 'AuthGate.tsx'), os.path.join(SHELL, 'api-ui.tsx')]
+for f in API_FILES:
+    if re.search(r"from '[./]*lib/fixtures'", open(f).read()):
+        fails.append(f'C8 {os.path.relpath(f, SRC)} imports fixtures on the API path')
+
+# C9 — no mock credentials in the production bundle
+DIST = os.path.join(os.path.dirname(SRC), 'dist', 'assets')
+if os.path.isdir(DIST):
+    for fn in os.listdir(DIST):
+        if fn.endswith('.js') and re.search(r'mock-(operator|approver|viewer|apikey)', open(os.path.join(DIST, fn), errors='ignore').read()):
+            fails.append(f'C9 dist/assets/{fn} contains a mock bearer token')
+
 # C4 — four states on list routes
 LIST_ROUTES = ['Overview', 'Approvals', 'Executions', 'Receipts', 'Connections', 'Runs', 'SecurityEvents', 'Workspace']
 for fn in LIST_ROUTES:
@@ -92,4 +109,4 @@ if fails:
     for f in fails:
         print(' -', f)
     sys.exit(1)
-print(f'DASHBOARD GATES: green — C1 actions labelled, C3 claim ceiling intact, C4 four states present, C5 status shared, C6 {ROUTE_PATTERNS} route patterns ({len(static_routes)} static + {len(detail_routes)} detail) all shelled, C7 no liveness copy / no dead WIRED actions')
+print(f'DASHBOARD GATES: green — C1 actions labelled, C3 claim ceiling intact, C4 four states present, C5 status shared, C6 {ROUTE_PATTERNS} route patterns ({len(static_routes)} static + {len(detail_routes)} detail) all shelled, C7 no liveness copy / no dead WIRED actions, C8 API path fixture-free ({len(API_FILES)} files), C9 no mock tokens in dist')

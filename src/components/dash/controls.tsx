@@ -70,9 +70,11 @@ export function Dropdown({
 
 // ── Search modal — recent / popular / suggested ids ────────────────────────
 export function SearchModal({
-  open, initial, onClose, onSubmit,
+  open, initial, onClose, onSubmit, suggestions = true,
 }: {
   open: boolean; initial: string; onClose: () => void; onSubmit: (q: string) => void
+  // fixture ids are only suggested in demo mode
+  suggestions?: boolean
 }) {
   const [q, setQ] = useState(initial)
   const inputRef = useRef<HTMLInputElement>(null)
@@ -130,14 +132,14 @@ export function SearchModal({
               ))}
             </div>
           ))}
-          {section('Popular', (
+          {suggestions && section('Popular', (
             <div className="flex flex-wrap gap-1.5 px-1">
               {POPULAR_SEARCHES.map((r) => (
                 <button key={r} type="button" onClick={() => go(r)} className="px-2.5 py-1 rounded-full text-[11.5px] text-[#A9B6D3] bg-white/[0.04] border border-white/[0.08] hover:text-white hover:border-[#4D8DFF]/40 font-mono">{r}</button>
               ))}
             </div>
           ))}
-          {section('Suggested', (
+          {suggestions && section('Suggested', (
             <ul>
               {SUGGESTED.filter((s) => !q || s.id.includes(q) || s.label.toLowerCase().includes(q.toLowerCase())).map((s) => (
                 <li key={s.id}>

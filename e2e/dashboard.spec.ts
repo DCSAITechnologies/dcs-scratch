@@ -129,6 +129,8 @@ test.describe('console truthfulness', () => {
     const body = page.locator('body')
     await expect(body).not.toContainText(/real-time|all systems operational/i)
     await expect(body).toContainText('demo identity')
+    // fixture data is only ever shown under an unmistakable DEMO banner
+    await expect(page.getByTestId('demo-banner')).toContainText('DEMO / NON-PRODUCTION')
     await expect(body).toContainText('HERMETIC')
   })
 })

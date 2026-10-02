@@ -72,7 +72,11 @@ export function Action({
 const STATE_COLOR: Record<string, string> = {
   SUCCEEDED: '#21C87A', ISSUED: '#21C87A', active: '#21C87A', ACTIVE: '#21C87A', Granted: '#21C87A', verified: '#21C87A', delivered: '#21C87A', ALLOW: '#21C87A', new: '#21C87A', RECOVERED: '#21C87A',
   FAILED: '#EF4444', REFUSED: '#EF4444', BLOCKED: '#EF4444', Denied: '#EF4444', Revoked: '#EF4444', REVOKED: '#EF4444', rejected: '#EF4444', REFUSE: '#EF4444', KILL_SWITCH: '#EF4444', dropped: '#EF4444', revoked: '#EF4444',
-  PENDING: '#F5A524', Pending: '#F5A524', DEGRADED: '#F5A524', degraded: '#F5A524', OUTCOME_UNKNOWN: '#F5A524', RETRY_SCHEDULED: '#F5A524', APPROVAL_REQUIRED: '#F5A524', retrying: '#F5A524', Expired: '#F5A524', SUSPENDED: '#F5A524', suspended: '#F5A524', quarantined: '#F5A524',
+  // API (contract 1.0.0) states
+  GRANTED: '#21C87A', CONSUMED: '#4D8DFF', TESTED: '#4D8DFF', CREATED: '#A9B6D3', healthy: '#21C87A', connected: '#21C87A', allow: '#21C87A', restored: '#21C87A', closed: '#A9B6D3', open: '#4D8DFF', reconciled: '#21C87A',
+  DENIED: '#EF4444', deny: '#EF4444', unhealthy: '#EF4444', expired: '#EF4444', verification_failed: '#EF4444',
+  REQUESTED: '#F5A524', EXPIRED: '#F5A524', SUPERSEDED: '#A9B6D3', require_approval: '#F5A524', awaiting_approval: '#F5A524', escalated: '#F5A524', blocked: '#EF4444', pending: '#F5A524', refreshing: '#4D8DFF', not_dispatchable: '#A9B6D3', unverified_test_double: '#F5A524', not_verified: '#A9B6D3',
+    PENDING: '#F5A524', Pending: '#F5A524', DEGRADED: '#F5A524', degraded: '#F5A524', OUTCOME_UNKNOWN: '#F5A524', RETRY_SCHEDULED: '#F5A524', APPROVAL_REQUIRED: '#F5A524', retrying: '#F5A524', Expired: '#F5A524', SUSPENDED: '#F5A524', suspended: '#F5A524', quarantined: '#F5A524',
 }
 export function Pill({ v }: { v: string }) {
   if (v === '—' || v === '') return <span className="text-[#5B6884]">—</span>

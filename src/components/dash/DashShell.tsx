@@ -10,6 +10,9 @@ import { WORKSPACES, ENVIRONMENTS, APPROVALS, KILLS, RECEIPTS, USAGE, type Envir
 import { navigate } from '../../hooks/usePathRoute'
 import { MaturityTag } from './ui'
 import { Dropdown, SearchModal } from './controls'
+import { ApiRail } from './ApiRail'
+import { DATA_MODE, apiHost } from '../../lib/api/config'
+import { useAuth, signOut } from '../../lib/auth/session'
 import { searchTarget } from '../../lib/search-target'
 
 type NavItem = { label: string; to: string; icon: ReactNode }
@@ -97,7 +100,10 @@ export function DashShell({ path, children }: { path: string; children: ReactNod
     setPrevPath(path); setDrawer(false); setRailOpen(false)
   }
 
-  const pending = APPROVALS.filter((a) => a.state === 'Pending')
+  const demo = DATA_MODE === 'demo'
+  const auth = useAuth()
+  // fixture approvals feed the badge/alert only in demo mode; API mode shows the API rail
+  const pending = demo ? APPROVALS.filter((a) => a.state === 'Pending') : []
 
   const notifications = [
     { dot: '#EF4444', title: 'Receipt issuance failed', ctx: 'ex_01J2K30 · 5 min ago', to: '/app/executions/ex_01J2K30' },
@@ -144,13 +150,13 @@ export function DashShell({ path, children }: { path: string; children: ReactNod
   const navFoot = (
     <div className="px-3 py-2.5 border-t border-white/[0.06]">
       <div className="text-[10.5px] text-[#5B6884]">Connector OS v0.9.0 · claim {CLAIM_LEVEL}</div>
-      <div className="mt-0.5 flex items-center gap-1.5 text-[10.5px] text-[#21C87A]">
-        <span className="w-1.5 h-1.5 rounded-full bg-[#5B6884]" /> Hermetic build · no live services
+      <div className="mt-0.5 flex items-center gap-1.5 text-[10.5px] text-[#A9B6D3]">
+        <span className="w-1.5 h-1.5 rounded-full bg-[#5B6884]" /> {demo ? 'Demo data · no backend connected' : `API · ${apiHost()}`}
       </div>
     </div>
   )
 
-  const rail = (
+  const rail = !demo ? <ApiRail /> : (
     <div className="p-3 space-y-3">
       {/* Notifications */}
       <section className="rounded-xl border border-white/[0.07] bg-[#0C1330]/80 p-3.5">
@@ -230,7 +236,16 @@ export function DashShell({ path, children }: { path: string; children: ReactNod
 
   return (
     <div className="min-h-screen w-full" style={{ background: '#070B18' }}>
-      {/* Maturity banner — reads platform-status.json claim_level */}
+      {/* Data-mode banner. Demo mode must be unmistakable: fixture data is never production truth. */}
+      {demo ? (
+        <div role="note" data-testid="demo-banner" className="px-4 py-1 text-center text-[11px] font-bold tracking-wide text-[#1B1403] bg-[#F5A524]">
+          DEMO / NON-PRODUCTION — fixture data from the hermetic reference stores. No backend is connected; nothing here is live.
+        </div>
+      ) : (
+        <div role="note" data-testid="api-banner" className="px-4 py-1 text-center text-[11px] font-medium text-[#9FB8FF] bg-[#4D8DFF]/[0.1] border-b border-[#4D8DFF]/20">
+          Connected to <span className="font-mono">{apiHost()}</span> · environment {auth.principal?.environment ?? '—'}
+        </div>
+      )}
       <div className="px-4 py-0.5 text-center text-[10px] font-medium text-[#9FB8FF] bg-[#4D8DFF]/[0.07] border-b border-[#4D8DFF]/15">
         {CLAIM_BANNER[CLAIM_LEVEL] ?? CLAIM_BANNER.HERMETIC}
         <span className="text-[#5B6884]"> · claim level {CLAIM_LEVEL} · as of {STATUS_AS_OF} · </span>
@@ -248,13 +263,13 @@ export function DashShell({ path, children }: { path: string; children: ReactNod
           <span className="hidden sm:inline text-[9px] uppercase tracking-[0.18em] text-[#5B6884] font-bold mt-0.5">Console</span>
         </a>
 
-        <span className="hidden sm:block">
+        {demo && <span className="hidden sm:block">
           <Dropdown value={WORKSPACES.find((w) => w.id === ws)?.name ?? ws} options={WORKSPACES.map((w) => w.name)} ariaLabel="Workspace"
             onChange={(n) => setWs(WORKSPACES.find((w) => w.name === n)?.id ?? ws)} />
-        </span>
+        </span>}
 
-        <Dropdown value={env} options={ENVIRONMENTS} ariaLabel="Environment" onChange={(v) => setEnv(v as Environment)}
-          accent={env === 'Production' ? '#FF8A8A' : env === 'Staging' ? '#F5A524' : '#21C87A'} />
+        {demo && <Dropdown value={env} options={ENVIRONMENTS} ariaLabel="Environment" onChange={(v) => setEnv(v as Environment)}
+          accent={env === 'Production' ? '#FF8A8A' : env === 'Staging' ? '#F5A524' : '#21C87A'} />}
 
         {/* Search — opens centered modal (refinement item 4) */}
         <div className="flex-1 hidden md:flex justify-center px-2">
@@ -276,6 +291,7 @@ export function DashShell({ path, children }: { path: string; children: ReactNod
             {pending.length > 0 && <span className="absolute top-1 right-1 w-2 h-2 rounded-full bg-[#F5A524]" />}
           </button>
           <div className="hidden sm:block w-px h-6 bg-white/[0.09]" />
+          {demo ? (
           <div className="flex items-center gap-2">
             <span className="w-7 h-7 rounded-full flex items-center justify-center text-[10.5px] font-bold text-white" style={{ background: 'linear-gradient(135deg,#3B5BDB,#8B5CF6)' }} title="Demo identity — the console has no authentication yet">AS</span>
             <span className="hidden lg:block leading-tight">
@@ -283,6 +299,15 @@ export function DashShell({ path, children }: { path: string; children: ReactNod
               <span className="block text-[10px] text-[#5B6884]">Org admin · demo identity, no sign-in</span>
             </span>
           </div>
+          ) : (
+            <div className="flex items-center gap-2">
+              <span className="hidden lg:block leading-tight text-right">
+                <span className="block text-[12px] font-semibold text-white max-w-[180px] truncate">{auth.displayName}</span>
+                <span className="block text-[10px] text-[#5B6884]">{auth.principal?.kind === 'human' ? 'operator' : 'api key'}</span>
+              </span>
+              <button type="button" onClick={() => void signOut()} className="px-2.5 py-1 rounded-lg text-[11.5px] font-semibold text-[#9FB8FF] border border-[#4D8DFF]/40">Sign out</button>
+            </div>
+          )}
         </div>
       </header>
 
@@ -366,7 +391,7 @@ export function DashShell({ path, children }: { path: string; children: ReactNod
         </div>
       )}
 
-      <SearchModal open={searchOpen} initial={search} onClose={() => setSearchOpen(false)} onSubmit={(q) => { setSearch(q); setSearchOpen(false); navigate(searchTarget(q)) }} />
+      <SearchModal open={searchOpen} initial={search} suggestions={demo} onClose={() => setSearchOpen(false)} onSubmit={(q) => { setSearch(q); setSearchOpen(false); navigate(searchTarget(q)) }} />
     </div>
   )
 }

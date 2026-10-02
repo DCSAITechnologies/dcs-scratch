@@ -13,9 +13,15 @@
     "smoke": "python3 scripts/route-smoke.py",
     "test:e2e": "playwright test",
     "reconcile": "python3 scripts/reconcile-catalogue.py",
-    "verify": "npm run lint && npm run build && npm run prerender && npm run gates && npm run smoke && npm run test:e2e"
+    "verify": "npm run lint && npm run test:unit && npm run build && npm run prerender && npm run gates && npm run smoke && npm run build:mock && npm run test:e2e",
+    "mock:api": "node scripts/mock-api.mjs",
+    "dev:mock": "vite --mode mock",
+    "build:mock": "vite build --mode mock --outDir dist-mock",
+    "api:types": "openapi-typescript public/devportal/01_openapi/connector-os-v1.yaml -o src/lib/api/schema.gen.ts",
+    "test:unit": "vitest run"
   },
   "dependencies": {
+    "oidc-client-ts": "^3.5.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0"
   },
@@ -31,10 +37,12 @@
     "eslint-plugin-react-hooks": "^7.0.1",
     "eslint-plugin-react-refresh": "^0.4.24",
     "globals": "^16.5.0",
+    "openapi-typescript": "^7.13.0",
     "postcss": "^8.5.6",
     "tailwindcss": "^3.4.19",
     "typescript": "~5.9.3",
     "typescript-eslint": "^8.46.4",
-    "vite": "^7.2.4"
+    "vite": "^7.2.4",
+    "vitest": "^3.2.7"
   }
 }
