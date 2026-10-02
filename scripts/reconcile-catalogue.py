@@ -9,8 +9,11 @@ and retirement decisions belong to the core programme (Lane 6), and the
 website regenerates from core once they are made.
 
 Usage:
-  # against a local core checkout (scans packages/connectors/*/manifest.json —
-  # the path every snapshot row cites in source_provenance)
+  # against a local core checkout. Reads the registry
+  # packages/registry/data/catalogue.json (1009 rows per core's L5 inventory),
+  # plus dispatch-eligibility.json / staging-verified.json when present; falls
+  # back to packages/connectors/*/manifest.json (the path rows cite in
+  # source_provenance) if the registry file is missing
   python3 scripts/reconcile-catalogue.py --core "/path/to/connector-os-read-api"
 
   # against an exported id list (CSV with an id/slug column, or JSON list of
@@ -39,8 +42,48 @@ def arg(name):
     return sys.argv[sys.argv.index(name) + 1] if name in sys.argv else None
 
 
+def _rows(data):
+    if isinstance(data, dict):
+        for k in ('connectors', 'catalogue', 'rows', 'data', 'items'):
+            if isinstance(data.get(k), list):
+                return data[k]
+        if all(isinstance(v, dict) for v in data.values()):
+            return [{'id': k, **v} for k, v in data.items()]
+    return data if isinstance(data, list) else []
+
+
+def _id(row):
+    if isinstance(row, str):
+        return row
+    return row.get('id') or row.get('connector_id') or row.get('slug') or row.get('canonical_id')
+
+
 def core_from_repo(path):
-    """{id: manifest-dict} from <core>/packages/connectors/*/manifest.json."""
+    """{id: row} from the core registry (preferred) or connector manifests."""
+    reg = os.path.join(path, 'packages', 'registry', 'data')
+    cat = os.path.join(reg, 'catalogue.json')
+    if os.path.isfile(cat):
+        rows = _rows(json.load(open(cat)))
+        out = {}
+        for r in rows:
+            cid = _id(r)
+            if cid:
+                out[cid] = r if isinstance(r, dict) else {}
+        for extra, key in (('dispatch-eligibility.json', '_eligibility'), ('staging-verified.json', '_staging_verified')):
+            f = os.path.join(reg, extra)
+            if os.path.isfile(f):
+                d = json.load(open(f))
+                if key == '_staging_verified':
+                    for cid in (_id(x) for x in _rows(d)):
+                        if cid in out:
+                            out[cid]['_staging_verified'] = True
+                else:
+                    for x in _rows(d):
+                        cid = _id(x)
+                        if cid in out and isinstance(x, dict):
+                            out[cid]['_eligibility'] = x
+        out['__source__'] = {'_path': cat}
+        return out
     out = {}
     for mf in sorted(glob.glob(os.path.join(path, 'packages', 'connectors', '*', 'manifest.json'))):
         d = os.path.basename(os.path.dirname(mf))
@@ -76,9 +119,11 @@ def main():
 
     core, source = None, None
     if arg('--core'):
-        core, source = core_from_repo(arg('--core')), f"manifests under {arg('--core')}/packages/connectors"
+        core = core_from_repo(arg('--core'))
         if not core:
-            sys.exit(f'no manifests found under {arg("--core")}/packages/connectors/*/manifest.json')
+            sys.exit(f'no registry (packages/registry/data/catalogue.json) or manifests found under {arg("--core")}')
+        src = core.pop('__source__', None)
+        source = src['_path'] if src else f"manifests under {arg('--core')}/packages/connectors"
     elif arg('--ids'):
         core, source = core_from_ids(arg('--ids')), arg('--ids')
     elif '--self' not in sys.argv:
@@ -147,6 +192,24 @@ def main():
         w(f'| … of which match a website alias_of id (re-key) | {len(alias_hit)} |')
         w(f'| … of which are new to the website | {len(new)} |')
         w(f'| On website, not in core (retired / renamed?) | {len(extra)} |')
+        sv = sorted(i for i, r in core.items() if isinstance(r, dict) and r.get('_staging_verified'))
+        w(f'| Core staging-verified | {len(sv)} |')
+        if sv:
+            w(f'| … ids | {", ".join(sv)} |')
+        # status drift for rows present in both: name / category / hold
+        drift = []
+        for i in sorted(core_ids & snap):
+            r = core[i] if isinstance(core[i], dict) else {}
+            n = r.get('name') or r.get('n')
+            if n and n != cid[i]['n']:
+                drift.append(f'`{i}` name: site “{cid[i]["n"]}” vs core “{n}”')
+            cat = r.get('category') or r.get('cat')
+            if cat and cat != cid[i]['cat']:
+                drift.append(f'`{i}` category: site “{cid[i]["cat"]}” vs core “{cat}”')
+        w(f'| Name/category drift (rows in both) | {len(drift)} |')
+        if drift:
+            w('\n### Drift\n')
+            w('\n'.join(f'- {d}' for d in drift[:200]))
         for title, ids in (('Promote from legacy', promoted), ('Re-key alias', alias_hit), ('New in core', new), ('Website-only', extra)):
             if ids:
                 w(f'\n### {title} ({len(ids)})\n')

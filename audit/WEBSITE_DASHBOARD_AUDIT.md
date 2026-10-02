@@ -3,6 +3,18 @@
 **Date:** 02 Oct 2026 · **Scope:** `CONNECTOR_OS_WEBSITE_DASHBOARD_1000_FINAL (5).zip` (baseline commit `f0ba35b`) → branch `claude/new-session-e3y98d`
 **Companion documents:** `CATALOGUE_RECONCILIATION.md` · `DASHBOARD_WIRING_MATRIX.md` · `WEBSITE_ROUTE_MATRIX.md` · `FIX_PLAN.md` · `FINAL_RETURN.md`
 
+> **Later pass (02 Oct):** this document records the first audit. Work since then is summarised in `HANDOFF.md` (current state) and `FINAL_RETURN.md` (numbers):
+> - API mode with a typed client and an auth seam
+> - API-backed console pages and wired mutations
+> - the contact form
+> - accessibility, with zero axe violations
+> - a responsive/zoom matrix
+> - bundle splitting
+> - host rules and CSP
+> - a security sweep
+>
+> Two items in the tables below are superseded. `/contact` and `/enterprise/contact` now carry a working form. The enterprise page always published enterprise@ and developers@dcslabs.dev; the first audit missed that.
+
 ## Answers to the brief's nine questions
 
 | # | Question | Answer |

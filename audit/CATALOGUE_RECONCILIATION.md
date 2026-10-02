@@ -3,6 +3,42 @@
 **Date:** 02 Oct 2026 · **Package:** `CONNECTOR_OS_WEBSITE_DASHBOARD_1000_FINAL (5).zip`, imported unmodified as commit `f0ba35b`
 **Generated detail:** [`catalogue-snapshot-report.md`](catalogue-snapshot-report.md) (from `npm run reconcile -- --self`)
 
+## Update — core evidence found in the shipped contract docs (02 Oct, later pass)
+
+The core repo is still not accessible to this session. The ZIP does ship core's own status documents, though, and they settle the core total.
+
+| Fact | Value | Source (in this repo) |
+|---|---|---|
+| Core registry file | `packages/registry/data/catalogue.json` | `public/devportal/07_status/FINAL_L5_API_SURFACE_INVENTORY.md` |
+| **Core catalogue total** | **1009 rows** | same file; also `02_api/API_OVERVIEW.md` ("catalogue (1009 rows)") and `02_api/FINAL_PUBLIC_API_SURFACE.md` |
+| Dispatchable staging / production | 0 / 0 | same inventory |
+| Staging-verified | `[]` (none) | same inventory |
+| `github` is a canonical core connector | yes | OpenAPI examples (`connector_id: github`); `05_tools/CONNECTOR_KIT.md` ("golden connector") |
+| Website canonical total | 1000 | `src/lib/connectors.json` |
+
+So **core = 1009 and website = 1000, a difference of at least 9 rows**. GitHub is one of them: canonical in core, legacy reference on the website. The brief's "~1010" is consistent with one more change after the contract freeze (the Gmail change mentioned in the brief).
+
+`scripts/reconcile-catalogue.py --core <path>` now reads `packages/registry/data/catalogue.json` directly, falling back to manifests. It also reads `dispatch-eligibility.json` and `staging-verified.json`, and reports:
+- promote / re-key / new / website-only buckets
+- the staging-verified ids
+- name and category drift for rows present in both
+
+It was tested on a synthetic registry. **Running it against the real core is the one remaining step.**
+
+Reconciliation report fields (website side now; core side after `--core`):
+
+| Field | Value |
+|---|---|
+| Website count | 1000 canonical · 868 published |
+| Canonical / core count | 1009 (core's own inventory) |
+| Missing (in core, not on website) | ≥ 9 by count; `github` confirmed; full list needs `--core` |
+| Added | 0 by this work (no rows invented) |
+| Removed | 0 by this work |
+| Renamed | 63 alias rows (`alias_of` targets exist nowhere); exact core ids need `--core` (re-key bucket) |
+| HOLD | 132 (11 hold categories), hidden publicly, visible in the console |
+| Unpublished | 132 (= HOLD) |
+| Unresolved | OpenAI, Anthropic, Azure OpenAI, Gemini, Slack, Notion, Stripe, Salesforce, HubSpot, … (legacy reference); Gmail, Jira (absent from both); category/capability/logo/status drift against core |
+
 ## 0. What this document can and cannot settle
 
 The authoritative registry is the core repo `connector-os-read-api`. It lives on the founder's machine (`/Users/NEWUSER/Desktop/Project DCSAI/connector-os-read-api`). It is not on GitHub under any organisation this session can reach, so **this audit could not read it.** Everything below about the ZIP is measured. Everything about core is either quoted from documents shipped inside the ZIP or marked as a hypothesis to confirm.

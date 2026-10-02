@@ -1,66 +1,63 @@
-# Fix plan
+# Fix plan — status after the completion pass
 
-**Date:** 02 Oct 2026
+**Updated:** 02 Oct 2026
 
 Status legend:
-- ✅ done in this branch (evidence in `WEBSITE_DASHBOARD_AUDIT.md`)
-- ⏳ open
-- 🔒 blocked on core, founder or external
+- ✅ done and tested
+- 🔒 blocked on an owner or an external dependency (see `HANDOFF.md` §5)
+- ⏳ open, but no blocker
 
 ## P0 — wrong/missing data, broken routes, security/auth, false claims
 
-| Item | Status | Owner | Next action |
-|---|---|---|---|
-| Lockfile pinned to an unreachable private mirror | ✅ | — | — |
-| 53 alias rows → "Connector not found" (9 on homepage) | ✅ | — | confirm `alias_of` semantics with `--core` (re-key bucket) |
-| HOLD records readable by direct URL | ✅ | — | — |
-| Stale "750" meta; 1000-vs-868 headline | ✅ | — | stale-count gate keeps it fixed |
-| `/signin` credential form wired to nothing; "Free to start" claims | ✅ | — | — |
-| Console liveness claims; dead WIRED button | ✅ | — | gate C7 |
-| **Catalogue not reconciled to core (~1010)** | 🔒 | core owner | Run `npm run reconcile -- --core "<path to connector-os-read-api>" --out audit/core-reconciliation.md`. Decide each bucket (promote / re-key / new / website-only) in Lane 6. Then regenerate `connectors.json` from core, never by hand. |
-| **OpenAI / Anthropic / GitHub / Slack / Notion / Gmail discoverability as canonical** | 🔒 | core + Lane 6 | follows from the reconciliation; today they are honestly shown as legacy reference |
-| **No auth on `/app`** | 🔒 | core (IdP, status item 19) | Until an IdP exists, either (a) keep `/app` as an explicitly labelled demo (current state: noindex, demo identity, fixture banner), or (b) gate `/app` behind host-level basic auth on staging. **Founder decision.** |
-| Catalogue sync pipeline | ⏳ | site + core | `scripts/sync-catalogue.py` exporting from core's registry into the `Conn` field contract, run in CI before `npm run gates`. Needs a core export format. |
+| Item | Status | Evidence / next action |
+|---|---|---|
+| Lockfile pinned to a private mirror | ✅ | `npm ci` from the public registry |
+| 53 alias rows → "Connector not found" (9 on the homepage) | ✅ | e2e (every alias row) |
+| HOLD records readable by direct URL | ✅ | e2e; featured ids build-validated; no redirect into HOLD |
+| Stale "750" / 1000-vs-868 counts | ✅ | stale-count gate |
+| `/signin` credential form wired to nothing; "Free to start" | ✅ | e2e |
+| Console liveness claims; dead WIRED button | ✅ | gates C3/C7 |
+| Homepage orchestration visual rendered no nodes (non-canonical ids) | ✅ | build-validated featured ids |
+| `/developers/status` had no static shell | ✅ | e2e subpage-shell test |
+| Fixture data could be mistaken for live data | ✅ | DEMO banner (e2e); API mode never imports fixtures (gate C8) |
+| `/app` unauthenticated | ✅ seam / 🔒 IdP | Protected in API mode (refuses data without an identity). Demo build stays a labelled demo. Real IdP config needed. |
+| Mock credentials could ship | ✅ | honoured only in dev/mock builds; gate C9 |
+| **Catalogue not reconciled to core (1009)** | 🔒 core access | `npm run reconcile -- --core <path>` (registry-aware) |
 
-## P1 — missing product workflows
+## P1 — product workflows
 
-| Item | Status | Owner | Next action |
-|---|---|---|---|
-| Console catalogue limited to 60 rows | ✅ | — | — |
-| Console search stale / silent on legacy names | ✅ | — | — |
-| Publication state invisible in console | ✅ | — | — |
-| `/developers/status` not prerendered | ✅ | — | — |
-| Console not indexable-safe | ✅ | — | — |
-| **API client seam** (`src/lib/api.ts`, `VITE_COS_API_URL`, typed errors, real loading/error/stale states replacing `?state=` demo) | ⏳ | site | build first; fixtures remain the fallback when no URL is configured, labelled as such |
-| Wire contract-WIRED reads: `GET /v1/connectors`, `/{id}`, `/v1/environments`, `/v1/operator/eligibility` | ⏳ | site | after the client seam; verify paths against current core OpenAPI first |
-| Wire HERMETIC reads against the staging reference server (runs, approvals, executions, receipts, events, usage, policies) | 🔒 | core (rc.1 staging) | needs a staging URL and a credential |
-| Mutations (evaluate, connection test, grant/deny, reconcile, kill/revoke) with Idempotency-Key, env-naming confirmation and receipt display | 🔒 | core (IdP, stores) | per-action spec in `DASHBOARD_WIRING_MATRIX.md` |
-| Real connect flow (manifest-driven auth scheme, vault, OAuth apps, test-before-ACTIVE) | 🔒 | core + external | status items 20, 21 |
-| **Contact / waitlist capture** — `/contact`, `/enterprise/contact`, pricing and "Request access" all lead to pages with no form or address | 🔒 | founder | choose a channel (published address, or a form posting to an approved endpoint); do not invent one |
-| Relabel actions with no contract operation from HERMETIC ONLY to PLANNED (Cancel run, Escalate, Replay, Set MODE ceiling, Change role, Rename, policy authoring) | ⏳ | site | confirm against current core contract first |
-| HOLD display policy (hidden vs "under review" cards) | 🔒 | founder | one-line change once decided |
-| True HTTP 410 / 301 for legacy GONE / REDIRECT; SPA fallback for console detail ids | ⏳ | deploy | host rules (`_redirects` / headers) generated from `connectors-legacy.json` |
-| Re-sync devportal docs, `devex-matrix.json` and `platform-status.json` with current core | 🔒 | core | these are snapshots dated 2026-09-27 |
+| Item | Status | Evidence / next action |
+|---|---|---|
+| Typed API client (errors, retries, idempotency, correlation ids) | ✅ | 11 unit tests |
+| Console reads for all 25 routes with real states | ✅ (mock) / 🔒 real server | `e2e/api-mode.spec.ts`; needs a deployed `/v1` |
+| Mutations with confirmation + server result | ✅ (mock) / 🔒 real server | same |
+| Connect flow (connector → configure → vault reference → save → test → activate) | ✅ (mock) / 🔒 vault, OAuth apps | browser never handles a secret |
+| Auth: sign in/out, restore, expiry, 401/403, roles from `/v1/me` | ✅ (mock) / 🔒 IdP | `e2e/api-mode.spec.ts` |
+| Contact / request-access | ✅ | form + published addresses; set `VITE_CONTACT_ENDPOINT` for a form service (🔒 founder choice) |
+| Console pagination / search / publication state | ✅ | e2e |
+| Demo labels match the contract (PLANNED where no operation exists) | ✅ | commit "relabel actions" |
+| Host rules: 301 / 410 / console SPA fallback | ✅ | `dist/_redirects` (Netlify syntax; 🔒 confirm host) |
+| Catalogue sync pipeline (core → `connectors.json`) | 🔒 core export format | after reconciliation |
+| Re-sync devportal docs / DevEx matrix / platform-status with core | 🔒 core access | snapshots dated 2026-09-27 |
 
-## P2 — UX / visual / responsive / accessibility
+## P2 — UX / responsive / accessibility
 
-| Item | Status | Owner | Next action |
-|---|---|---|---|
-| Mobile overflow on `/` and `/connectors` | ✅ | — | — |
-| Duplicate page titles; duplicate meta on re-prerender | ✅ | — | — |
-| Nav categories didn't filter | ✅ | — | — |
-| Overview figures inconsistent with stores | ✅ | — | — |
-| Automated accessibility scan (axe) across public + console | ⏳ | site | add `@axe-core/playwright` to the e2e suite; fix criticals |
-| `FilterSelect` dropdown lacks listbox semantics / arrow keys | ⏳ | site | use Radix Select (already a dependency) or add ARIA + key handling |
-| Console tables scroll horizontally on mobile (by design) — no card layout | ⏳ | site | optional card view below `md` |
-| Mobile overflow verified only on 9 key pages | ⏳ | site | extend the responsive test to all static routes |
+| Item | Status | Evidence |
+|---|---|---|
+| axe WCAG 2.1 A/AA | ✅ 0 violations, 46 pages | `e2e/a11y.spec.ts` |
+| Keyboard mega-menu, listbox filters, focus-visible, reduced motion | ✅ | `e2e/a11y.spec.ts` |
+| Responsive + zoom (36 desktop viewports, 5 devices) | ✅ | `e2e/responsive.spec.ts` |
+| Console sidebar offset under the top bar | ✅ | responsive spec |
+| Duplicate titles / duplicate meta | ✅ | e2e |
+| Console tables on phones scroll horizontally (no card layout) | ⏳ | optional |
 
-## P3 — polish
+## P3 — polish / performance / hygiene
 
-| Item | Status | Owner | Next action |
-|---|---|---|---|
-| CTA wording (Launch status) | ✅ | — | revisit when a capture channel exists |
-| 3 MB single JS bundle | ⏳ | site | lazy-load `/app` (`React.lazy`) and the legacy JSON; split the catalogue JSON |
-| README is the Vite template; `info.md` is scaffolding | ⏳ | site | replace with a project README (scripts: `npm run verify`, `reconcile`) |
-| `kimi-plugin-inspect-react` (third-party scaffolding plugin) in `vite.config.ts` | ⏳ | site | confirm it is needed; otherwise remove |
-| Legacy logos missing for 160 rows | ⏳ | site | monogram fallback works; optional asset pass |
+| Item | Status | Evidence |
+|---|---|---|
+| Bundle: 3,057 KB entry → ~356 KB; catalogue JSON lazy | ✅ | build output |
+| Template code and 45 unused dependencies removed | ✅ | commit d7f0582 |
+| Project README | ✅ | `README.md` |
+| CSP + security headers | ✅ | `dist/_headers`, e2e CSP test |
+| `@vitest/mocker` moderate advisory (dev only) | ⏳ | upgrade to Vitest 4 |
+| 160 legacy rows without logos | ⏳ | monogram fallback works |

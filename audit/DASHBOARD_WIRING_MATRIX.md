@@ -2,6 +2,18 @@
 
 **Date:** 02 Oct 2026
 
+## Update — later pass (02 Oct): API mode implemented
+
+Everything below "Ground truth about the console today" describes the **demo** build, which is still the default when no API URL is configured.
+
+A second mode now exists. With `VITE_COS_API_URL` set, every one of the 25 route patterns renders an API-backed page from `src/pages/dash/api/*`:
+- reads use the typed client, with loading, empty, 401, 403, 404, 501 and unreachable states
+- the contract mutations are wired through a confirmation dialog: connection create/test/activate/revoke, approval grant/deny/revoke, reconcile, receipt verify, policy evaluate, kill-order create/restore
+- surfaces with no contract operation say "Not yet available"
+- auth is provider-agnostic OIDC, with mock identities only in mock/dev builds
+
+All of this is verified end-to-end against `scripts/mock-api.mjs` (`e2e/api-mode.spec.ts`). It has **not** been run against a real deployed `/v1` server, because none exists yet (core's only HTTP server is the founder-gated read-api). Demo-mode labels were corrected to the contract (PLANNED where no operation exists). See `HANDOFF.md` §3–5.
+
 ## Sources and caveats
 
 - **Endpoint source:** `public/devportal/02_api/API_ROUTE_MAP.md`, shipped in the ZIP. It is generated from `openapi/connector-os-v1.yaml` (contract 1.0.0, frozen) and lists 46 operations: WIRED 4 · HERMETIC 36 · PLANNED 6.
