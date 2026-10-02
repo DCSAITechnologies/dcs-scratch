@@ -31,6 +31,10 @@ def render(shell, path, title, desc, noindex=False):
     head = page_meta(title, desc).replace('{PATH}', path)
     if noindex:
         head += '\n    <meta name="robots" content="noindex, nofollow" />'
+    # idempotent: drop tags injected by a previous run (dist/index.html is both
+    # the shell and the '/' output, so re-running without a rebuild used to stack them)
+    shell = re.sub(r'\s*<meta (?:name="(?:description|robots)"|property="og:[a-z]+") content="[^"]*" />', '', shell)
+    shell = re.sub(r'\s*<link rel="canonical" href="[^"]*" />', '', shell)
     out = re.sub(r'<title>.*?</title>', head, shell, count=1, flags=re.S)
     return out
 
@@ -41,17 +45,28 @@ def write_route(path, html):
         f.write(html)
 
 def extract_subpage_routes():
-    """Pull (route, title, tagline) from the subpage TS files with regex."""
+    """Pull (route, title, tagline) from the subpage TS files with regex.
+    Taglines may be '...' or `...` template literals; ${STATUS_AS_OF} is the only
+    interpolation used and is filled from platform-status.json. Every route key in
+    the files must be extracted — a silent miss (as happened to
+    /developers/status) leaves a route with no static shell."""
+    as_of = json.load(open(os.path.join(SRC, 'lib', 'platform-status.json')))['as_of']
     routes = []
     files = ['subpages.ts', 'subpages-agents.ts', 'subpages-security.ts',
              'subpages-enterprise.ts', 'subpages-developers.ts', 'subpages-company.ts']
     for fn in files:
         s = open(os.path.join(SRC, 'lib', fn)).read()
-        for m in re.finditer(r"'(/[\w/-]+)':\s*\{[^}]*?title:\s*'((?:[^'\\]|\\.)*)'[^}]*?tagline:\s*'((?:[^'\\]|\\.)*)'", s):
-            route, title, tag = m.group(1), m.group(2), m.group(3)
+        keys = set(re.findall(r"^  '(/[\w/-]+)':\s*\{", s, re.M))
+        found = set()
+        for m in re.finditer(r"'(/[\w/-]+)':\s*\{[^}]*?title:\s*'((?:[^'\\]|\\.)*)'[^}]*?tagline:\s*(?:'((?:[^'\\]|\\.)*)'|`([^`]*)`)", s):
+            route, title = m.group(1), m.group(2)
+            tag = m.group(3) if m.group(3) is not None else m.group(4).replace('${STATUS_AS_OF}', as_of)
             title = title.replace("\\'", "'").replace('\\\\', '\\')
             tag = tag.replace("\\'", "'").replace('\\\\', '\\')
             routes.append((route, title, tag))
+            found.add(route)
+        if keys - found:
+            sys.exit(f'prerender: could not extract title/tagline for {sorted(keys - found)} in {fn}')
     return routes
 
 # Counts are derived from the catalogue at build time — never hard-coded (stale

@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test'
-import { readdirSync, statSync, existsSync } from 'node:fs'
+import { readdirSync, statSync, existsSync, readFileSync } from 'node:fs'
 import { join } from 'node:path'
 
 // Every prerendered static / subpage route (dist/<route>/index.html), excluding the
@@ -47,6 +47,7 @@ test('static pages have a unique title and a meta description', async ({ request
     const title = /<title>(.*?)<\/title>/.exec(html)?.[1] ?? ''
     expect(title, r).not.toBe('')
     expect(html, r).toMatch(/<meta name="description" content="[^"]+"/)
+    expect(html.match(/<meta name="description"/g)?.length, `${r}: exactly one meta description`).toBe(1)
     expect(titles.get(title), `${r} duplicates the title of ${titles.get(title)}`).toBeUndefined()
     titles.set(title, r)
   }
@@ -98,4 +99,13 @@ test('sign-in collects no credentials while no identity backend exists', async (
   await expect(page.locator('main')).not.toContainText(/free to start|no credit card/i)
   await page.goto('/pricing')
   await expect(page.locator('main')).not.toContainText(/join the waitlist/i)
+})
+
+test('every subpage route defined in src/lib has a prerendered shell', () => {
+  const lib = join(process.cwd(), 'src', 'lib')
+  const keys = readdirSync(lib).filter((f) => /^subpages.*\.ts$/.test(f))
+    .flatMap((f) => [...readFileSync(join(lib, f), 'utf8').matchAll(/^ {2}'(\/[\w/-]+)':\s*\{/gm)].map((m) => m[1]))
+  expect(keys.length).toBeGreaterThan(50)
+  const missing = keys.filter((k) => !existsSync(join(DIST, k, 'index.html')))
+  expect(missing).toEqual([])
 })
