@@ -40,23 +40,57 @@ export const isTemplated = (c: Conn): boolean => c.description_source === 'auto-
 export const isUnpublished = (c: Conn): boolean => c.unpublished === true
 export const PUBLISHED_CONNECTORS = CONNECTORS.filter((c) => !isUnpublished(c))
 
-// LEGACY_REFERENCE_SURFACES — 547 legacy 750-catalogue rows with no canonical-1000 mapping.
+// LEGACY_REFERENCE_SURFACES — legacy (750-row catalogue) rows with no canonical mapping.
 // Preserved for Lane 6 reconciliation (KEEP AS REFERENCE / MERGE-ALIAS / PROMOTE / RETIRE / DELETE).
-// Never counted in the 1000, never presented as engineered/runtime connectors.
+// Never counted in the canonical total, never presented as engineered/runtime connectors.
 export const LEGACY_REFERENCE_SURFACES: Conn[] = (connectorsLegacyJson as unknown as Conn[])
 export const LEGACY_REFERENCE_COUNT = LEGACY_REFERENCE_SURFACES.length
 export const LEGACY_REFERENCE_MAP = new Map(LEGACY_REFERENCE_SURFACES.map((c) => [c.id, c]))
 
-// alias rows resolve to their canonical record; unknown/legacy ids return null
+// alias_of semantics (Lane 6): the row is published under its own id; alias_of names
+// another identifier for the same connector. When that identifier is itself a
+// canonical row, the alias row redirects to it. When it is NOT a canonical row (true
+// for every alias in the current snapshot), the row stands on its own and the alias
+// identifier redirects here instead. Previously the row resolved to null and every
+// alias card rendered "Connector not found".
+const CANONICAL_MAP = new Map(CONNECTORS.map((c) => [c.id, c]))
+export const ALIAS_TARGET_MAP = new Map(
+  CONNECTORS.filter((c) => c.alias_of && !CANONICAL_MAP.has(c.alias_of)).map((c) => [c.alias_of as string, c])
+)
+
+export type Resolution =
+  | { kind: 'record'; c: Conn }
+  | { kind: 'redirect'; to: string; c: Conn }
+  | { kind: 'unpublished'; c: Conn }
+  | null
+
+// Public-site resolution: published canonical rows render; unpublished (HOLD) rows
+// never render their content, even on a direct URL.
+export function resolvePublic(id: string): Resolution {
+  const c = CANONICAL_MAP.get(id)
+  if (c) {
+    if (c.alias_of && CANONICAL_MAP.has(c.alias_of)) {
+      const t = CANONICAL_MAP.get(c.alias_of)!
+      return isUnpublished(t) ? { kind: 'unpublished', c: t } : { kind: 'redirect', to: `/connectors/${t.id}`, c: t }
+    }
+    return isUnpublished(c) ? { kind: 'unpublished', c } : { kind: 'record', c }
+  }
+  const viaAlias = ALIAS_TARGET_MAP.get(id)
+  if (viaAlias) {
+    return isUnpublished(viaAlias) ? { kind: 'unpublished', c: viaAlias } : { kind: 'redirect', to: `/connectors/${viaAlias.id}`, c: viaAlias }
+  }
+  return null
+}
+
+// Console resolution: every canonical row (published or HOLD) plus alias identifiers.
 export const byIdOrAlias = (id: string): Conn | null => {
-  const c = CONNECTORS.find((x) => x.id === id)
-  if (!c) return null
-  if (c.alias_of) return CONNECTORS.find((x) => x.id === c.alias_of) ?? null
-  return c
+  const r = resolvePublic(id)
+  return r ? r.c : null
 }
 export const PUBLISHED_MAP = new Map(PUBLISHED_CONNECTORS.map((c) => [c.id, c]))
 export const TOTAL_CATALOGUED = CONNECTORS.length
 export const PUBLISHED_COUNT = PUBLISHED_CONNECTORS.length
+export const UNPUBLISHED_COUNT = TOTAL_CATALOGUED - PUBLISHED_COUNT
 
 // Runtime status (M2): read from data so the flip to STAGING is a data edit
 export const runtimeStatusLabel = (c: Conn): string =>
@@ -67,9 +101,11 @@ export const runtimeStatusLabel = (c: Conn): string =>
 export const RUNTIME_STATUSES = ['Not yet runtime-verified', 'Staging-verified', 'Production-verified']
 export const RUNTIME_VERIFIED_COUNT = CONNECTORS.filter((c) => c.runtime_status && c.runtime_status !== 'not_verified').length
 
-export const CATEGORIES = ['All', ...Array.from(new Set(CONNECTORS.map((c) => c.cat)))]
-export const STATUSES = Array.from(new Set(CONNECTORS.map((c) => c.s)))
-export const AUTH_TYPES = Array.from(new Set(CONNECTORS.map((c) => c.auth))).sort()
+// Public filters are built from what the public grid can show (published rows),
+// so no filter option yields an always-empty result (e.g. the HOLD status).
+export const CATEGORIES = ['All', ...Array.from(new Set(PUBLISHED_CONNECTORS.map((c) => c.cat))).sort()]
+export const STATUSES = Array.from(new Set(PUBLISHED_CONNECTORS.map((c) => c.s)))
+export const AUTH_TYPES = Array.from(new Set(PUBLISHED_CONNECTORS.map((c) => c.auth))).sort()
 
 export const CATEGORY_COUNTS: Record<string, number> = {}
 CONNECTORS.forEach((c) => { CATEGORY_COUNTS[c.cat] = (CATEGORY_COUNTS[c.cat] ?? 0) + 1 })

@@ -2,7 +2,7 @@ import { SectionHeader } from '../components/primitives'
 import { Reveal } from '../hooks/Reveal'
 import { OrchestrationVisual } from '../components/OrchestrationVisual'
 import { ConnectorLogo } from '../components/ConnectorLogo'
-import { CONNECTORS, TOTAL_CATALOGUED, statusColor } from '../lib/data'
+import { PUBLISHED_CONNECTORS as CONNECTORS, PUBLISHED_COUNT, statusColor } from '../lib/data'
 import { LIFECYCLE_10 } from '../lib/lifecycle'
 import { v } from '../lib/status'
 
@@ -57,14 +57,14 @@ export function Home() {
                 <span className="text-gradient">Keep every action governed.</span>
               </h1>
               <p className="mt-6 max-w-xl text-[16px] leading-relaxed text-[#A9B6D3]">
-                One execution layer between your agents and a catalogue of {TOTAL_CATALOGUED} documented connectors — with policy checks, human approvals, verification and receipts for every action.
+                One execution layer between your agents and a catalogue of {PUBLISHED_COUNT} published, documented connectors — with policy checks, human approvals, verification and receipts for every action.
               </p>
               <div className="mt-8 flex flex-wrap gap-3">
                 <a href="/signin" className="cta-primary">Start building</a>
                 <a href="/connectors" className="cta-secondary">Explore connectors</a>
               </div>
               <div className="mt-8 flex flex-wrap gap-2.5">
-                {[`${TOTAL_CATALOGUED} catalogued connectors`, 'Governed agent access', 'Verifiable receipts', 'Secure by design'].map((c) => (
+                {[`${PUBLISHED_COUNT} published connectors`, 'Governed agent access', 'Receipts for every action', 'Secure by design'].map((c) => (
                   <span key={c} className="chip">{c}</span>
                 ))}
               <p className="mt-4 text-[11.5px] leading-relaxed text-[#93A0C2] max-w-md">
@@ -113,7 +113,7 @@ export function Home() {
             ))}
           </div>
           <Reveal className="mt-8 text-center">
-            <a href="/connectors" className="cta-secondary inline-block">Explore all {TOTAL_CATALOGUED} catalogued connectors</a>
+            <a href="/connectors" className="cta-secondary inline-block">Explore all {PUBLISHED_COUNT} published connectors</a>
           </Reveal>
         </div>
       </section>

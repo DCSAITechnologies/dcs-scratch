@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { PUBLISHED_CONNECTORS as CONNECTORS, TOTAL_CATALOGUED, byIdOrAlias, LEGACY_REFERENCE_MAP, statusColor, ctaLabel, runtimeStatusLabel, isTemplated, type Conn } from '../lib/data'
+import { TOTAL_CATALOGUED, resolvePublic, LEGACY_REFERENCE_MAP, statusColor, ctaLabel, runtimeStatusLabel, isTemplated, type Conn } from '../lib/data'
 import { ConnectorLogo } from '../components/ConnectorLogo'
 import { navigate } from '../hooks/usePathRoute'
 
@@ -16,22 +16,38 @@ function Row({ k, v, mono }: { k: string; v: string | null; mono?: boolean }) {
 }
 
 function RedirectSurface({ from, to }: { from: string; to: string }) {
-  // client-side 301-equivalent: legacy alias route lands on the canonical record
+  // client-side 301-equivalent: an alias or legacy id lands on the record it now resolves to
+  // (a canonical row, or — for 8 legacy redirects — another legacy reference surface)
   useEffect(() => { const t = setTimeout(() => navigate(to), 1200); return () => clearTimeout(t) }, [to])
   return (
     <div className="pt-32 pb-24 text-center mx-auto max-w-xl px-6">
       <div className="eyebrow mb-3">301 — Moved</div>
       <h1 className="text-2xl text-white font-semibold">This connector moved</h1>
       <p className="mt-3 text-[13.5px] text-[#A9B6D3] leading-relaxed">
-        The legacy record <span className="font-mono text-[12px]">{from}</span> now resolves to the canonical catalogue entry.
+        The identifier <span className="font-mono text-[12px]">{from}</span> now resolves to <span className="font-mono text-[12px]">{to}</span>.
       </p>
-      <a href={to} className="cta-primary inline-block mt-6">Open canonical record →</a>
+      <a href={to} className="cta-primary inline-block mt-6">Open record →</a>
     </div>
   )
 }
 
 export function ConnectorDetail({ id }: { id: string }) {
-  const resolved = byIdOrAlias(id)
+  const res = resolvePublic(id)
+  if (res?.kind === 'redirect') return <RedirectSurface from={id} to={res.to} />
+  if (res?.kind === 'unpublished') {
+    // HOLD rows stay in the data (audit trail) but their content never renders publicly
+    return (
+      <div className="pt-32 pb-24 text-center mx-auto max-w-xl px-6">
+        <div className="eyebrow mb-3">Not listed</div>
+        <h1 className="text-2xl text-white font-semibold">This connector is not publicly listed</h1>
+        <p className="mt-3 text-[13.5px] text-[#A9B6D3] leading-relaxed">
+          The record is held for review and is not published in the catalogue. No details are shown until the hold is resolved.
+        </p>
+        <a href="/connectors" className="cta-secondary inline-block mt-6">Browse the catalogue</a>
+      </div>
+    )
+  }
+  const resolved = res?.kind === 'record' ? res.c : null
   const legacy = LEGACY_REFERENCE_MAP.get(id)
   // Lane 6 route behaviors for legacy ids
   const legacyBehavior = legacy?.lane6_behavior
@@ -59,7 +75,7 @@ export function ConnectorDetail({ id }: { id: string }) {
       </div>
     )
   }
-  const c = resolved ?? (legacy && !CONNECTORS.some((x) => x.id === id) ? legacy : undefined)
+  const c = resolved ?? legacy
   if (!c) {
     return (
       <div className="pt-32 pb-24 text-center">
@@ -104,7 +120,7 @@ function ConnectorDetailView({ c, legacy, resolved }: { c: Conn; legacy?: Conn; 
             {legacy && !resolved && (
               <div className="mb-5 p-4 rounded-xl text-[12.5px] leading-relaxed" style={{ background: 'rgba(120,140,255,0.07)', border: '1px solid rgba(120,140,255,0.3)', color: '#A9B6D3' }}>
                 <span className="font-semibold text-[#D6E1FF]">REFERENCE / LEGACY CATALOGUE SURFACE.</span>{' '}
-                This is a preserved record from the legacy 750-row catalogue with no mapping into the canonical engineering 1000. It is not an engineered connector, carries no runtime status, and is excluded from all connector counts. Lane 6 is auditing it — outcomes: KEEP AS REFERENCE · MERGE/ALIAS · PROMOTE · RETIRE · DELETE.
+                This is a preserved record from the legacy 750-row catalogue with no mapping into the canonical engineering catalogue ({TOTAL_CATALOGUED} records). It is not an engineered connector, carries no runtime status, and is excluded from all connector counts. Lane 6 is auditing it — outcomes: KEEP AS REFERENCE · MERGE/ALIAS · PROMOTE · RETIRE · DELETE.
               </div>
             )}
             <div className="flex items-start gap-5">
@@ -152,8 +168,7 @@ function ConnectorDetailView({ c, legacy, resolved }: { c: Conn; legacy?: Conn; 
               <Row k="Read/write" v={c.rw === 'read' ? 'Read only' : 'Read + write'} />
               <Row k="Webhooks" v={c.wh ? 'Supported' : 'Not currently supported'} />
               <Row k="Access model" v={c.cta === 'notify' ? 'Notify at launch' : c.cta === 'request_access' ? 'Approval required' : c.cta === 'contact' ? 'Enterprise onboarding' : 'Waitlist'} />
-              <Row k="Regions" v="Global" />
-              <Row k="Docs verified" v={c.verified} />
+                            <Row k="Docs verified" v={c.verified} />
               <Row k="Catalogue rank" v={`#${c.r} of ${TOTAL_CATALOGUED} (documentation priority)`} />
             </div>
           </aside>
@@ -205,7 +220,7 @@ function ConnectorDetailView({ c, legacy, resolved }: { c: Conn; legacy?: Conn; 
                   </div>
                 )
               })}
-              <div className="px-5 py-3 text-[11px] text-[#93A0C2]">Tool-level identifiers are published per connector as they enter public availability; capabilities above reflect verified provider surfaces.</div>
+              <div className="px-5 py-3 text-[11px] text-[#93A0C2]">Tool-level identifiers are published per connector as they enter public availability; capabilities above are drafted from the connector manifest and provider documentation, and are not runtime-verified.</div>
             </div>
           )}
 

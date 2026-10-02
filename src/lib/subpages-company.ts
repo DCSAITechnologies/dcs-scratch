@@ -1,5 +1,5 @@
 import type { SubPage } from './subpages'
-import { TOTAL_CATALOGUED } from './data'
+import { TOTAL_CATALOGUED, PUBLISHED_COUNT } from './data'
 
 export const COMPANY_PAGES: Record<string, SubPage> = {
 
@@ -19,7 +19,7 @@ export const COMPANY_PAGES: Record<string, SubPage> = {
       {
         h: 'Status',
         p: [
-          `Connector OS is pre-launch. The public connector catalogue holds ${TOTAL_CATALOGUED} catalogued connector records; platform availability follows the staged release path.`,
+          `Connector OS is pre-launch. The canonical connector catalogue holds ${TOTAL_CATALOGUED} records, of which ${PUBLISHED_COUNT} are published; platform availability follows the staged release path.`,
           'The system is integrated and proven end-to-end against simulated providers — hermetically proven, not yet verified with real providers.',
           'Real-provider staging of the golden-five connectors is the next major gate; the full 30-item capability table is public on the Build status page.',
         ],

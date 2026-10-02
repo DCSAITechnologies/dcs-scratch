@@ -1,4 +1,4 @@
-import { TOTAL_CATALOGUED } from '../lib/data'
+import { PUBLISHED_COUNT } from '../lib/data'
 import { Logo } from './BrandIcon'
 
 const COLS: Record<string, [string, string][]> = {
@@ -15,7 +15,7 @@ export function Footer() {
         <div>
           <Logo />
           <p className="mt-4 text-[12.5px] leading-relaxed text-[#93A0C2] max-w-[240px]">
-            The governed execution layer between AI agents and real systems — {TOTAL_CATALOGUED} catalogued connectors, policy, approvals and receipts.
+            The governed execution layer between AI agents and real systems — {PUBLISHED_COUNT} published connectors, policy, approvals and receipts.
           </p>
         </div>
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-8">

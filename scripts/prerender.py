@@ -27,8 +27,10 @@ def page_meta(title, desc):
         f'    <meta property="og:url" content="{SITE}{{PATH}}" />'
     )
 
-def render(shell, path, title, desc):
+def render(shell, path, title, desc, noindex=False):
     head = page_meta(title, desc).replace('{PATH}', path)
+    if noindex:
+        head += '\n    <meta name="robots" content="noindex, nofollow" />'
     out = re.sub(r'<title>.*?</title>', head, shell, count=1, flags=re.S)
     return out
 
@@ -52,10 +54,16 @@ def extract_subpage_routes():
             routes.append((route, title, tag))
     return routes
 
+# Counts are derived from the catalogue at build time — never hard-coded (stale
+# "750" copy shipped in this file before the 1000-row catalogue landed).
+_CAT = json.load(open(os.path.join(SRC, 'lib', 'connectors.json')))
+CAT_TOTAL = len(_CAT)
+CAT_PUBLISHED = sum(1 for c in _CAT if not c.get('unpublished'))
+
 STATIC_ROUTES = [
-    ('/', 'DCS Connector OS — Governed execution for AI agents', 'The governed execution layer between AI agents and real systems — 750 catalogued connectors, policy, human approval and verifiable receipts for every action.'),
+    ('/', 'DCS Connector OS — Governed execution for AI agents', f'The governed execution layer between AI agents and real systems — {CAT_PUBLISHED} published connectors ({CAT_TOTAL} catalogued), policy, human approval and receipts for every action.'),
     ('/product', 'Product — Connector OS', 'What Connector OS is: the governed path from agent intent to verified execution.'),
-    ('/connectors', 'Connector catalogue — 750 catalogued connectors', 'Every connector documents capabilities, authentication, permissions, webhooks and official documentation, with verification status shown per connector.'),
+    ('/connectors', f'Connector catalogue — {CAT_PUBLISHED} published connectors', f'{CAT_TOTAL} catalogued, {CAT_PUBLISHED} published. Every connector documents capabilities, authentication, permissions, webhooks and official documentation, with verification status shown per connector.'),
     ('/agents', 'Agents — the Operations Agent Layer', 'More capable agents, under your control. The OAL reasons; Connector OS executes.'),
     ('/security', 'Security — twelve controls', 'The security model of Connector OS: credential isolation, tenant boundaries, approvals, kill controls and evidence.'),
     ('/enterprise', 'Enterprise — the operating model', 'Organizations, workspaces, roles, approval workflows, environments and audit — governance as an operating model.'),
@@ -99,11 +107,20 @@ def main():
         write_route(path, render(shell, path, f'{title} — DCS Connector OS' if 'Connector OS' not in title else title, desc))
         count += 1
 
-    # connector detail routes (published only)
-    data = json.load(open(os.path.join(SRC, 'lib', 'connectors.json')))
-    urls = [r[0] for r in STATIC_ROUTES] + [r[0] for r in extract_subpage_routes()]
+    # connector detail routes (published only). Alias rows are published under
+    # their own id, so they get a shell too (previously skipped, and the client
+    # rendered "Connector not found" for all of them).
+    data = _CAT
+    canonical_ids = {c['id'] for c in data}
+    urls = [r[0] for r in STATIC_ROUTES if r[0] != '/docs'] + [r[0] for r in extract_subpage_routes()]
     for c in data:
-        if c.get('unpublished') or c.get('alias_of'):
+        if c.get('unpublished'):
+            continue
+        if c.get('alias_of') and c['alias_of'] not in canonical_ids:
+            # the alias identifier redirects client-side to this row; give it a shell
+            write_route(f"/connectors/{c['alias_of']}", render(shell, f"/connectors/{c['alias_of']}", f"{c['n']} connector — DCS Connector OS", c['d'][:300], noindex=True))
+            count += 1
+        elif c.get('alias_of'):
             continue
         path = f"/connectors/{c['id']}"
         title = f"{c['n']} connector — DCS Connector OS"
@@ -117,7 +134,6 @@ def main():
     # client redirect notice). GONE / GONE_RETIRED / UNLIST rows intentionally get
     # NO shell — the SPA serves 410/404 for those at runtime.
     legacy = json.load(open(os.path.join(SRC, 'lib', 'connectors-legacy.json')))
-    canonical_ids = {c['id'] for c in data}
     legacy_count = 0
     for c in legacy:
         behavior = c.get('lane6_behavior')
@@ -128,8 +144,9 @@ def main():
         path = f"/connectors/{c['id']}"
         title = f"{c['n']} — legacy catalogue reference — DCS Connector OS"
         desc = (c.get('d') or f"Legacy catalogue reference surface for {c['n']}.")[:300]
-        write_route(path, render(shell, path, title, desc))
-        urls.append(path)
+        write_route(path, render(shell, path, title, desc, noindex=behavior == 'REDIRECT'))
+        if behavior != 'REDIRECT':
+            urls.append(path)  # redirect shells are not sitemap content
         count += 1
         legacy_count += 1
 
@@ -139,7 +156,7 @@ def main():
 
     # dashboard console routes (not in sitemap)
     for path, title, desc in DASH_ROUTES:
-        write_route(path, render(shell, path, f'{title} — DCS Connector OS', desc))
+        write_route(path, render(shell, path, f'{title} — DCS Connector OS', desc, noindex=True))
         count += 1
 
     # sitemap + robots
@@ -149,7 +166,7 @@ def main():
         sm.append(f'  <url><loc>{SITE}{u}</loc></url>')
     sm.append('</urlset>')
     open(os.path.join(DIST, 'sitemap.xml'), 'w').write('\n'.join(sm))
-    open(os.path.join(DIST, 'robots.txt'), 'w').write('User-agent: *\nAllow: /\nSitemap: %s/sitemap.xml\n' % SITE)
+    open(os.path.join(DIST, 'robots.txt'), 'w').write('User-agent: *\nAllow: /\nDisallow: /app\nSitemap: %s/sitemap.xml\n' % SITE)
 
     print(f'prerendered {count} routes + 404 + sitemap ({len(urls)} urls)')
     print(f'legacy reference surfaces prerendered: {legacy_count}')

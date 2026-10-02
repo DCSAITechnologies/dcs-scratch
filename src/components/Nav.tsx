@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { Logo } from './BrandIcon'
 import { ConnectorLogo } from './ConnectorLogo'
-import { CONNECTORS, TOTAL_CATALOGUED } from '../lib/data'
+import { PUBLISHED_CONNECTORS as CONNECTORS, PUBLISHED_COUNT } from '../lib/data'
 import { navigate } from '../hooks/usePathRoute'
 
 const NAV_ITEMS = ['Product', 'Connectors', 'Agents', 'Security', 'Enterprise', 'Developers', 'Pricing']
@@ -44,25 +44,25 @@ const DROPS: Record<string, Drop> = {
       {
         title: 'Categories',
         items: [
-          { label: 'AI & Models', sub: 'LLMs and model providers', to: '/connectors' },
-          { label: 'Productivity', sub: 'Docs, tasks and notes', to: '/connectors' },
-          { label: 'Communications', sub: 'Chat, email and calls', to: '/connectors' },
-          { label: 'Developer Tools', sub: 'Repos, CI and issues', to: '/connectors' },
-          { label: 'Cloud & Hosting', sub: 'Infra and deployments', to: '/connectors' },
-          { label: 'Databases & Search', sub: 'Stores and indexes', to: '/connectors' },
-          { label: 'CRM & Sales', sub: 'Pipelines and contacts', to: '/connectors' },
+          { label: 'AI & Models', sub: 'LLMs and model providers', to: '/connectors?cat=AI%20%26%20Models' },
+          { label: 'Productivity', sub: 'Docs, tasks and notes', to: '/connectors?cat=Productivity' },
+          { label: 'Communications', sub: 'Chat, email and calls', to: '/connectors?cat=Communications%20/%20Voice%20/%20Video' },
+          { label: 'Developer Tools', sub: 'Repos, CI and issues', to: '/connectors?cat=Developer%20Tools' },
+          { label: 'Cloud & Hosting', sub: 'Infra and deployments', to: '/connectors?cat=Cloud%20%26%20Hosting' },
+          { label: 'Databases & Search', sub: 'Stores and indexes', to: '/connectors?cat=Databases%20%26%20Search' },
+          { label: 'CRM & Sales', sub: 'Pipelines and contacts', to: '/connectors?cat=CRM%20%26%20Sales' },
         ],
       },
       {
         title: '',
         items: [
-          { label: 'Finance & Accounting', sub: 'Books and billing', to: '/connectors' },
-          { label: 'Payments & Fintech', sub: 'Payments and banking', to: '/connectors' },
-          { label: 'Commerce & Marketplaces', sub: 'Stores and orders', to: '/connectors' },
-          { label: 'Security & Identity', sub: 'Auth, SSO and scanning', to: '/connectors' },
-          { label: 'Healthcare & Life Sciences', sub: 'Care and lab systems', to: '/connectors' },
-          { label: 'Education', sub: 'Courses and students', to: '/connectors' },
-          { label: 'Government & Public Data', sub: 'Open public datasets', to: '/connectors' },
+          { label: 'Finance & Accounting', sub: 'Books and billing', to: '/connectors?cat=Finance%20/%20Accounting%20/%20Tax' },
+          { label: 'Payments & Fintech', sub: 'Payments and banking', to: '/connectors?cat=Payments%20/%20Banking%20/%20Fintech' },
+          { label: 'Commerce & Marketplaces', sub: 'Stores and orders', to: '/connectors?cat=Commerce%20/%20Marketplaces' },
+          { label: 'Security & Identity', sub: 'Auth, SSO and scanning', to: '/connectors?cat=Security%20%26%20Identity' },
+          { label: 'Healthcare & Life Sciences', sub: 'Care and lab systems', to: '/connectors?cat=Healthcare' },
+          { label: 'Education', sub: 'Courses and students', to: '/connectors?cat=Education' },
+          { label: 'Government & Public Data', sub: 'Open public datasets', to: '/connectors?cat=Government%20/%20Public%20Data' },
         ],
       },
       {
@@ -79,7 +79,7 @@ const DROPS: Record<string, Drop> = {
         ],
       },
     ],
-    featured: { title: 'Explore all connectors', desc: `${TOTAL_CATALOGUED} catalogued connectors across major categories.`, cta: 'Browse catalogue' },
+    featured: { title: 'Explore all connectors', desc: `${PUBLISHED_COUNT} published connectors across major categories.`, cta: 'Browse catalogue' },
   },
   Agents: {
     cols: [

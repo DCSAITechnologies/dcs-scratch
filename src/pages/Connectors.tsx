@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
-import { PUBLISHED_CONNECTORS as CONNECTORS, LEGACY_REFERENCE_SURFACES, TOTAL_CATALOGUED, CATEGORIES, STATUSES, AUTH_TYPES, RUNTIME_STATUSES, statusColor, runtimeStatusLabel, type Conn } from '../lib/data'
+import { PUBLISHED_CONNECTORS as CONNECTORS, LEGACY_REFERENCE_SURFACES, TOTAL_CATALOGUED, PUBLISHED_COUNT, UNPUBLISHED_COUNT, CATEGORIES, STATUSES, AUTH_TYPES, RUNTIME_STATUSES, statusColor, runtimeStatusLabel, type Conn } from '../lib/data'
 import { ConnectorLogo } from '../components/ConnectorLogo'
 
 const PAGE = 60
@@ -58,9 +58,16 @@ function FilterSelect({ value, onChange, options, width = 150, ariaLabel }: {
   )
 }
 
+const matchesQuery = (c: Conn, q: string) => {
+  const n = q.trim().toLowerCase()
+  return !n || c.n.toLowerCase().includes(n) || c.p.toLowerCase().includes(n) || c.id.includes(n)
+}
+
 export function Connectors() {
-  const [q, setQ] = useState('')
-  const [cat, setCat] = useState('All')
+  // ?q= and ?cat= deep links (used by the nav category menu and shared searches)
+  const params = new URLSearchParams(window.location.search)
+  const [q, setQ] = useState(params.get('q') ?? '')
+  const [cat, setCat] = useState(CATEGORIES.includes(params.get('cat') ?? '') ? params.get('cat')! : 'All')
   const [status, setStatus] = useState('')
   const [runtime, setRuntime] = useState('')
   const [auth, setAuth] = useState('')
@@ -78,7 +85,7 @@ export function Connectors() {
       (!auth || c.auth === auth) &&
       (!rw || (rw === 'Read only' ? c.rw === 'read' : c.rw.includes('write'))) &&
       (!wh || c.wh) &&
-      (!q || c.n.toLowerCase().includes(q.toLowerCase()) || c.p.toLowerCase().includes(q.toLowerCase()))
+      matchesQuery(c, q)
     )
     list = sort === 'rank' ? list.sort((a, b) => a.r - b.r) : list.sort((a, b) => a.n.localeCompare(b.n))
     return list
@@ -86,23 +93,28 @@ export function Connectors() {
 
   // Legacy reference surfaces match the same filters but stay out of the canonical count
   const filteredLegacy = useMemo(() => {
+    // legacy rows carry no runtime status, so a runtime filter excludes them all
+    if (runtime) return []
     let list = LEGACY_GRID.filter((c) =>
       (cat === 'All' || c.cat === cat) &&
       (!status || c.s === status) &&
       (!auth || c.auth === auth) &&
       (!rw || (rw === 'Read only' ? c.rw === 'read' : c.rw.includes('write'))) &&
       (!wh || c.wh) &&
-      (!q || c.n.toLowerCase().includes(q.toLowerCase()) || c.p.toLowerCase().includes(q.toLowerCase()))
+      matchesQuery(c, q)
     )
     list = sort === 'rank' ? list.sort((a, b) => a.r - b.r) : list.sort((a, b) => a.n.localeCompare(b.n))
     return list
-  }, [q, cat, status, auth, rw, wh, sort])
+  }, [q, cat, status, runtime, auth, rw, wh, sort])
 
   return (
     <div className="pt-24 pb-16">
-      <div className="mx-auto max-w-[1400px] px-8">
+      <div className="mx-auto max-w-[1400px] px-4 sm:px-8">
         <div className="eyebrow mb-3">Connector catalogue</div>
-        <h1 className="text-4xl font-semibold tracking-tight text-white">{TOTAL_CATALOGUED} catalogued connectors. One governed interface.</h1>
+        <h1 className="text-4xl font-semibold tracking-tight text-white">{PUBLISHED_COUNT} published connectors. One governed interface.</h1>
+        <p className="mt-2 text-[12.5px] text-[#93A0C2]" data-testid="catalogue-counts">
+          {TOTAL_CATALOGUED} records in the canonical catalogue · {PUBLISHED_COUNT} published · {UNPUBLISHED_COUNT} on hold (not listed pending policy, legal or provider review)
+        </p>
         <p className="mt-3 max-w-2xl text-[14px] text-[#A9B6D3]">
           Every connector documents capabilities, authentication, permissions, webhooks and official documentation — from official provider sources, with verification status shown per connector. Catalogue status describes documentation and access model; runtime verification is published per connector as it is earned.
         </p>
@@ -115,7 +127,7 @@ export function Connectors() {
         </div>
 
         <div className="mt-6 flex flex-wrap items-center gap-2.5">
-          <input value={q} onChange={(e) => { setQ(e.target.value); setShown(PAGE) }} placeholder="Search connectors or providers…" className="dcs-input w-[260px]" />
+          <input value={q} onChange={(e) => { setQ(e.target.value); setShown(PAGE) }} placeholder="Search connectors or providers…" aria-label="Search connectors" className="dcs-input w-full sm:w-[260px]" />
           <FilterSelect ariaLabel="Catalogue status filter" width={170} value={status}
             onChange={(v) => { setStatus(v); setShown(PAGE) }}
             options={[{ value: '', label: 'All statuses' }, ...STATUSES.map((s) => ({ value: s, label: s }))]} />
@@ -134,7 +146,7 @@ export function Connectors() {
           <FilterSelect width={130} value={sort}
             onChange={(v) => setSort(v as 'rank' | 'az')}
             options={[{ value: 'rank', label: 'Sort: rank' }, { value: 'az', label: 'Sort: A–Z' }]} />
-          <span className="ml-auto text-[12px] text-[#93A0C2]">{filtered.length} connectors</span>
+          <span className="ml-auto text-[12px] text-[#93A0C2]" data-testid="result-count">{filtered.length} connectors</span>
         </div>
 
         <div className="mt-4 flex flex-wrap gap-2">
@@ -168,6 +180,17 @@ export function Connectors() {
           ))}
         </div>
 
+        {filtered.length === 0 && (
+          <div className="glass-panel p-6 text-center" data-testid="no-canonical-match">
+            <p className="text-[13.5px] text-[#D6E1FF]">No published canonical connector matches these filters.</p>
+            <p className="mt-1.5 text-[12px] text-[#93A0C2]">
+              {filteredLegacy.length > 0
+                ? `${filteredLegacy.length} legacy reference ${filteredLegacy.length === 1 ? 'surface matches' : 'surfaces match'} below. Reference surfaces are not canonical connectors and carry no runtime status.`
+                : 'Try a different search or clear the filters.'}
+            </p>
+          </div>
+        )}
+
         {shown < filtered.length && (
           <div className="mt-10 text-center">
             <button onClick={() => setShown(shown + PAGE)} className="cta-secondary">Load more ({filtered.length - shown} remaining)</button>
@@ -178,7 +201,7 @@ export function Connectors() {
           <div className="mt-14">
             <div className="flex items-baseline gap-3 flex-wrap">
               <h2 className="text-xl font-semibold tracking-tight text-white">Legacy reference surfaces</h2>
-              <span className="text-[11.5px] text-[#93A0C2]">{filteredLegacy.length} preserved from the previous catalogue — reference only, not counted in the {TOTAL_CATALOGUED} above</span>
+              <span className="text-[11.5px] text-[#93A0C2]">{filteredLegacy.length} preserved from the previous catalogue — reference only, not part of the canonical catalogue or any count above</span>
             </div>
             <div className="mt-4 grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
               {filteredLegacy.slice(0, legacyShown).map((c: Conn) => (
@@ -201,7 +224,7 @@ export function Connectors() {
             </div>
             {legacyShown < filteredLegacy.length && (
               <div className="mt-8 text-center">
-                <button onClick={() => setLegacyShown(legacyShown + PAGE)} className="cta-secondary">Load more reference surfaces ({filteredLegacy.length - legacyShown} remaining)</button>
+                <button onClick={() => setLegacyShown(legacyShown + LEGACY_PAGE * 4)} className="cta-secondary">Load more reference surfaces ({filteredLegacy.length - legacyShown} remaining)</button>
               </div>
             )}
           </div>

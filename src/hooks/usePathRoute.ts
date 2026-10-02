@@ -5,20 +5,24 @@ import { useEffect, useState } from 'react'
 
 export function navigate(to: string) {
   if (to.startsWith('#')) to = to.slice(1)
-  if (to === window.location.pathname) return
+  if (to === window.location.pathname + window.location.search) return
   window.history.pushState({}, '', to)
   window.dispatchEvent(new PopStateEvent('popstate'))
   window.scrollTo({ top: 0 })
 }
 
+const currentLocation = () => (window.location.pathname || '/') + window.location.search
+
+// Returns the pathname. The query string is tracked too, so a navigation that only
+// changes ?q= / ?cat= still re-renders (pages key on window.location.search).
 export function usePathRoute(): string {
-  const [path, setPath] = useState(() => window.location.pathname || '/')
+  const [loc, setLoc] = useState(currentLocation)
   useEffect(() => {
-    const onPop = () => { setPath(window.location.pathname || '/'); window.scrollTo({ top: 0 }) }
+    const onPop = () => { setLoc(currentLocation()); window.scrollTo({ top: 0 }) }
     window.addEventListener('popstate', onPop)
     return () => window.removeEventListener('popstate', onPop)
   }, [])
-  return path
+  return loc.split('?')[0]
 }
 
 // Global interceptor: internal <a href="/…"> navigates client-side, no reload.

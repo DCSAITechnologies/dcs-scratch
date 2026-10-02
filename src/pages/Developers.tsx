@@ -1,4 +1,4 @@
-import { TOTAL_CATALOGUED } from '../lib/data'
+import { TOTAL_CATALOGUED, PUBLISHED_COUNT } from '../lib/data'
 import { Reveal } from '../hooks/Reveal'
 import { AreaLinks } from '../components/AreaLinks'
 
@@ -26,7 +26,7 @@ export function Developers() {
           <div className="eyebrow mb-4">Developers</div>
           <h1 className="text-4xl md:text-5xl font-semibold tracking-tight text-white">Built for developers. Designed for agents.</h1>
           <p className="mt-5 text-[15.5px] leading-relaxed text-[#A9B6D3]">
-            One governed integration model across a catalogue of {TOTAL_CATALOGUED} catalogued connectors — with policy, approval, verification and receipts built into every call.
+            One governed integration model across a catalogue of {TOTAL_CATALOGUED} catalogued connectors ({PUBLISHED_COUNT} published) — with policy, approval, verification and receipts built into every call.
           </p>
         </div>
 

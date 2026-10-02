@@ -55,7 +55,7 @@ export default function App() {
   } else {
     switch (route) {
       case '/product': page = <Product />; break
-      case '/connectors': page = <Connectors />; break
+      case '/connectors': page = <Connectors key={window.location.search} />; break
       case '/agents': page = <Agents />; break
       case '/security': page = <Security />; break
       case '/receipts': page = <Receipts />; break
