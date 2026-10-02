@@ -7,6 +7,10 @@
       AUDITED, except in negations/maturity labels)
   C4  every list route renders the four states via StateGate
   C5  shell reads platform-status.json (single status source)
+  C6  /app route patterns are counted mechanically from the router, and every
+      static /app route has a prerendered shell in scripts/prerender.py
+  C7  no liveness copy over fixture data (real-time, fresh, all systems
+      operational) and no enabled WIRED <Action> without an onClick handler
 """
 import os, re, sys
 
@@ -41,9 +45,35 @@ for folder in (DASH, SHELL):
                 if 'never' in ctx or 'no wording' in ctx:
                     continue
                 fails.append(f'C3 {fn}: forbidden claim term {term}')
+        # C7 — liveness wording over fixture data
+        for term in ('real-time', 'realtime', 'all systems operational', '> fresh<', ' fresh</'):
+            if term in s.lower():
+                fails.append(f'C7 {fn}: liveness wording {term!r} over fixture data')
         # 'LIVE' as a claim (allow 'live' lowercase UI words like "Runs (live)")
         for m in re.finditer(r'\bLIVE\b', s):
             fails.append(f'C3 {fn}: bare LIVE claim')
+
+# C7 — an enabled (WIRED) action must do something
+for fn in os.listdir(DASH):
+    if not fn.endswith('.tsx'):
+        continue
+    s = open(os.path.join(DASH, fn)).read()
+    for m in re.finditer(r'<Action\b[^>]*?maturity="WIRED"[^>]*?/>', s, re.S):
+        if 'onClick=' not in m.group(0):
+            fails.append(f'C7 {fn}: WIRED <Action> without onClick: {m.group(0)[:80]!r}')
+
+# C6 — mechanical /app route inventory
+router = open(os.path.join(DASH, 'index.tsx')).read()
+static_routes = sorted(set(re.findall(r"r === '(/app(?:/[a-z/-]*)?)'", router)) - {'/app/'})
+detail_routes = re.findall(r"m\(/\^(\\/app[^$]*)\$/\)", router)
+ROUTE_PATTERNS = len(static_routes) + len(detail_routes)
+pre = open(os.path.join(os.path.dirname(SRC), 'scripts', 'prerender.py')).read()
+for r in static_routes:
+    if f"('{r}'," not in pre:
+        fails.append(f'C6 static console route {r} has no prerendered shell')
+m = re.search(r'Dashboard router — (\d+) /app route patterns', router)
+if not m or int(m.group(1)) != ROUTE_PATTERNS:
+    fails.append(f'C6 router header comment does not state the mechanical count ({ROUTE_PATTERNS})')
 
 # C4 — four states on list routes
 LIST_ROUTES = ['Overview', 'Approvals', 'Executions', 'Receipts', 'Connections', 'Runs', 'SecurityEvents', 'Workspace']
@@ -62,4 +92,4 @@ if fails:
     for f in fails:
         print(' -', f)
     sys.exit(1)
-print('DASHBOARD GATES: green — C1 actions labelled, C3 claim ceiling intact, C4 four states present, C5 status shared')
+print(f'DASHBOARD GATES: green — C1 actions labelled, C3 claim ceiling intact, C4 four states present, C5 status shared, C6 {ROUTE_PATTERNS} route patterns ({len(static_routes)} static + {len(detail_routes)} detail) all shelled, C7 no liveness copy / no dead WIRED actions')

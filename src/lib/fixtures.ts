@@ -227,7 +227,12 @@ export const fmtConn = (id: string) => (id === '*' ? 'all connectors' : `${conn(
 // Catalogue-side runtime maturity for the dashboard Connectors view:
 // all catalogue records are not_verified today (wave-0 pipeline), so the console
 // shows runtime status next to catalogue status for every row.
+// Publication (public listing) is a separate field from catalogue status and
+// runtime status — the console shows all canonical rows, including HOLD rows.
 export const CATALOGUE_RUNTIME = CONNECTORS.map((c) => ({
   id: c.id, name: c.n, provider: c.p, category: c.cat, catalogue_status: c.s,
   runtime_status: c.runtime_status ?? 'not_verified', auth: c.auth, rw: c.rw, webhooks: c.wh,
+  published: c.unpublished !== true, hold_category: c.hold_category ?? null,
+  engineering_status: c.engineering_status ?? null, dispatch_eligibility: c.dispatch_eligibility ?? null,
+  alias_of: c.alias_of ?? null, rank: c.r,
 }))

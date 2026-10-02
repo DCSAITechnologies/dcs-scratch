@@ -16,6 +16,7 @@ const MATURITY_COLOR: Record<Maturity, string> = {
   'PLANNED': '#A9B6D3',
   'EXTERNAL DEPENDENCY': '#B07BFF',
   'PRE-LAUNCH': '#F5A524',
+  'SNAPSHOT': '#7DD3FC',
 }
 export function MaturityTag({ m, className = '' }: { m: Maturity; className?: string }) {
   const c = MATURITY_COLOR[m]

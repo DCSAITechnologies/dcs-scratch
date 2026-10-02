@@ -5,6 +5,8 @@
 import { useState } from 'react'
 import { PageHeader, Panel, Pill, Table, IdLink, EmptyState, StateGate, FilterBar, Filter, Action, KV, MaturityTag } from '../../components/dash/ui'
 import { CONNECTIONS, CATALOGUE_RUNTIME, TOOLS, EXECUTIONS, fmtConn } from '../../lib/fixtures'
+import { LEGACY_REFERENCE_SURFACES } from '../../lib/data'
+import { navigate } from '../../hooks/usePathRoute'
 
 // ── Connections list ───────────────────────────────────────────────────────
 export function DashConnections() {
@@ -131,39 +133,81 @@ export function DashConnectNew() {
 }
 
 // ── Connectors (console view: catalogue + runtime maturity side by side) ───
+const CONSOLE_PAGE = 50
+const LEGACY_LINKABLE = LEGACY_REFERENCE_SURFACES.filter((c) => c.lane6_behavior === 'PRESERVE_REFERENCE_SURFACE' || c.lane6_behavior === 'REDIRECT')
+
 export function DashConnectors() {
+  // q / page live in the URL so ⌘K search, back/forward and shared links all agree;
+  // DashApp keys this component on location.search so a new query re-mounts it.
+  const params = new URLSearchParams(window.location.search)
   const [cat, setCat] = useState('')
   const [runtime, setRuntime] = useState('')
-  const [q, setQ] = useState(new URLSearchParams(window.location.search).get('q') ?? '')
-  const rows = CATALOGUE_RUNTIME.filter((c) =>
+  const [pub, setPub] = useState('')
+  const [q, setQ] = useState(params.get('q') ?? '')
+  const [page, setPage] = useState(Math.max(1, Number(params.get('page')) || 1))
+  const needle = q.trim().toLowerCase()
+  const matching = CATALOGUE_RUNTIME.filter((c) =>
     (!cat || c.category === cat) && (!runtime || c.runtime_status === runtime) &&
-    (!q || c.name.toLowerCase().includes(q.toLowerCase()) || c.id.includes(q.toLowerCase()))
-  ).slice(0, 60)
+    (!pub || (pub === 'published' ? c.published : !c.published)) &&
+    (!needle || c.name.toLowerCase().includes(needle) || c.id.includes(needle) || c.provider.toLowerCase().includes(needle))
+  )
+  const pages = Math.max(1, Math.ceil(matching.length / CONSOLE_PAGE))
+  const current = Math.min(page, pages)
+  const from = (current - 1) * CONSOLE_PAGE
+  const rows = matching.slice(from, from + CONSOLE_PAGE)
+  const legacyHits = needle ? LEGACY_LINKABLE.filter((c) => c.n.toLowerCase().includes(needle) || c.id.includes(needle)) : []
+  const publishedTotal = CATALOGUE_RUNTIME.filter((c) => c.published).length
+  const setFilter = (fn: () => void) => { fn(); setPage(1) }
   return (
     <StateGate empty={<EmptyState text="The catalogue is always populated — this state is unreachable in practice." />}>
       <div>
         <PageHeader
           title="Connectors"
-          sub="Catalogue maturity and runtime maturity side by side — they are independent claims. Connect appears only when a row is runtime staging-verified and claim_level reaches STAGING; today no row qualifies."
-          maturity="WIRED"
+          sub="Every canonical catalogue row, including rows on hold that the public site does not list. Catalogue status, publication and runtime status are independent fields. Connect appears only when a row is runtime staging-verified and claim_level reaches STAGING; today no row qualifies."
+          maturity="SNAPSHOT"
         />
         <FilterBar>
-          <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search name or id" className="bg-[#0d1430] border border-white/[0.09] rounded-lg px-2.5 py-1.5 text-[12px] text-[#C7D2EA] placeholder-[#3E4A66] outline-none w-44" />
-          <Filter label="Category" value={cat} options={[...new Set(CATALOGUE_RUNTIME.map((c) => c.category))].sort()} onChange={setCat} />
-          <Filter label="Runtime" value={runtime} options={['not_verified', 'staging_verified', 'production_verified']} onChange={setRuntime} />
+          <input value={q} onChange={(e) => setFilter(() => setQ(e.target.value))} placeholder="Search name, provider or id" aria-label="Search connectors" className="bg-[#0d1430] border border-white/[0.09] rounded-lg px-2.5 py-1.5 text-[12px] text-[#C7D2EA] placeholder-[#3E4A66] outline-none w-52" />
+          <Filter label="Category" value={cat} options={[...new Set(CATALOGUE_RUNTIME.map((c) => c.category))].sort()} onChange={(v) => setFilter(() => setCat(v))} />
+          <Filter label="Publication" value={pub} options={['published', 'on hold']} onChange={(v) => setFilter(() => setPub(v))} />
+          <Filter label="Runtime" value={runtime} options={['not_verified', 'staging_verified', 'production_verified']} onChange={(v) => setFilter(() => setRuntime(v))} />
         </FilterBar>
+        {legacyHits.length > 0 && (
+          <div className="mb-4 px-4 py-3 rounded-xl border border-[#FFB224]/30 bg-[#FFB224]/[0.06] text-[12.5px] text-[#E8C98A]" data-testid="legacy-hint">
+            {legacyHits.length} legacy reference {legacyHits.length === 1 ? 'surface matches' : 'surfaces match'} “{q.trim()}” — not canonical connectors, not counted, no runtime status:{' '}
+            {legacyHits.slice(0, 6).map((c, i) => (
+              <span key={c.id}>{i > 0 && ', '}<a href={`/connectors/${c.id}`} className="underline underline-offset-2">{c.n}</a></span>
+            ))}
+            {legacyHits.length > 6 && ` and ${legacyHits.length - 6} more`}.
+          </div>
+        )}
         <div className="glass-card p-5">
-          <Table
-            head={['Connector', 'Provider', 'Category', 'Catalogue status', 'Runtime status', 'Auth', 'R/W', 'Webhooks', 'Actions']}
-            rows={rows.map((c) => [
-              <IdLink key="id" to={`/app/connectors/${c.id}`}>{c.name}</IdLink>,
-              c.provider, c.category, <Pill key="cs" v={c.catalogue_status} />,
-              <span key="rs" className="text-[12px] text-[#A9B6D3]">{c.runtime_status.replaceAll('_', ' ')}</span>,
-              c.auth, c.rw, c.webhooks ? 'yes' : '—',
-              <Action key="a" label="Connect" maturity="STAGING ONLY" title="Enabled when runtime status ≥ staging-verified and claim_level ≥ STAGING" />,
-            ])}
-          />
-          <div className="mt-3 text-[11px] text-[#5B6884]">Showing {rows.length} of {CATALOGUE_RUNTIME.length} catalogued connectors.</div>
+          {rows.length === 0 ? <EmptyState text="No canonical connector matches these filters." /> : (
+            <Table
+              head={['#', 'Connector', 'Provider', 'Category', 'Catalogue status', 'Publication', 'Runtime status', 'Auth', 'R/W', 'Webhooks', 'Actions']}
+              rows={rows.map((c) => [
+                <span key="r" className="text-[#5B6884]">{c.rank}</span>,
+                <IdLink key="id" to={`/app/connectors/${c.id}`}>{c.name}</IdLink>,
+                c.provider, c.category, <Pill key="cs" v={c.catalogue_status} />,
+                c.published ? <span key="p" className="text-[12px] text-[#A9B6D3]">published</span> : <span key="p" className="text-[12px] text-[#F5A524]" title={c.hold_category ?? undefined}>on hold</span>,
+                <span key="rs" className="text-[12px] text-[#A9B6D3]">{c.runtime_status.replaceAll('_', ' ')}</span>,
+                c.auth, c.rw, c.webhooks ? 'yes' : '—',
+                <Action key="a" label="Connect" maturity="STAGING ONLY" title="Enabled when runtime status ≥ staging-verified and claim_level ≥ STAGING" />,
+              ])}
+            />
+          )}
+          <div className="mt-3 flex flex-wrap items-center gap-3 text-[11px] text-[#5B6884]">
+            <span data-testid="dash-connector-count">
+              {matching.length ? `Showing ${from + 1}–${from + rows.length} of ${matching.length} matching` : '0 matching'} · {CATALOGUE_RUNTIME.length} catalogued ({publishedTotal} published, {CATALOGUE_RUNTIME.length - publishedTotal} on hold)
+            </span>
+            {pages > 1 && (
+              <nav className="ml-auto flex items-center gap-2" aria-label="Connector pages">
+                <button type="button" disabled={current <= 1} onClick={() => setPage(current - 1)} className="px-2.5 py-1 rounded-lg border border-white/[0.1] text-[#A9B6D3] disabled:opacity-40 disabled:cursor-not-allowed hover:text-white">← Prev</button>
+                <span data-testid="dash-page">Page {current} of {pages}</span>
+                <button type="button" disabled={current >= pages} onClick={() => setPage(current + 1)} className="px-2.5 py-1 rounded-lg border border-white/[0.1] text-[#A9B6D3] disabled:opacity-40 disabled:cursor-not-allowed hover:text-white">Next →</button>
+              </nav>
+            )}
+          </div>
         </div>
       </div>
     </StateGate>
@@ -172,23 +216,32 @@ export function DashConnectors() {
 
 export function DashConnectorDetail({ id }: { id: string }) {
   const c = CATALOGUE_RUNTIME.find((x) => x.id === id)
-  if (!c) return <EmptyState text="Connector not found." cta="Back to connectors" href="/app/connectors" />
+  if (!c) {
+    const legacy = LEGACY_REFERENCE_SURFACES.find((x) => x.id === id)
+    return legacy
+      ? <EmptyState text={`“${legacy.n}” is a legacy reference surface, not a canonical connector — it has no console record.`} cta="Open the public reference page" href={`/connectors/${legacy.id}`} />
+      : <EmptyState text="Connector not found." cta="Back to connectors" href="/app/connectors" />
+  }
   const tools = TOOLS.filter((t) => t.connector === id)
   const conns = CONNECTIONS.filter((x) => x.connector === id)
   const execs = EXECUTIONS.filter((e) => e.connector === id)
   return (
     <div>
-      <PageHeader title={c.name} sub={`${c.provider} · ${c.category}`} maturity="WIRED"
+      <PageHeader title={c.name} sub={`${c.provider} · ${c.category}`} maturity="SNAPSHOT"
         actions={<>
           <Action label="Connect" maturity="STAGING ONLY" title="Enabled when runtime staging-verified + claim_level ≥ STAGING" />
-          <Action label="Request access" maturity="WIRED" title="Limited access / provider-approval rows route to the contact flow" />
+          <Action label="Request access" maturity="WIRED" title="Opens the enterprise contact flow" onClick={() => navigate('/enterprise/contact')} />
           <Action label="Test" maturity="HERMETIC ONLY" title="Needs an existing connection" />
         </>} />
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 mb-4">
-        <Panel title="Facts — two statuses">
+        <Panel title="Facts — independent statuses">
           <KV items={[
             ['Catalogue status', <Pill key="c" v={c.catalogue_status} />],
+            ['Publication', c.published ? 'published on the public catalogue' : `on hold — not publicly listed${c.hold_category ? ` (${c.hold_category})` : ''}`],
             ['Runtime status', c.runtime_status.replaceAll('_', ' ')],
+            ['Engineering status', c.engineering_status ?? '—'],
+            ['Dispatch eligibility', c.dispatch_eligibility ?? '—'],
+            ['Alias', c.alias_of ? `also known as ${c.alias_of}` : '—'],
             ['Auth scheme', c.auth], ['Read/write', c.rw], ['Webhooks', c.webhooks ? 'yes' : 'no'],
             ['Runtime verification date', '—'],
           ]} />

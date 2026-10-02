@@ -73,9 +73,9 @@ function Bars({ data }: { data: { h: string; issued: number; pending: number; fa
         <text x={W - 26} y={H + 12} fill="#3E4A66" fontSize="7.5">18:00</text>
       </svg>
       <div className="mt-2 flex items-center gap-4 text-[11px]">
-        <span className="flex items-center gap-1.5 text-[#A9B6D3]"><span className="w-2 h-2 rounded-full bg-[#21C87A]" /> Issued ({USAGE.receipts_issued - 2})</span>
-        <span className="flex items-center gap-1.5 text-[#A9B6D3]"><span className="w-2 h-2 rounded-full bg-[#F5A524]" /> Pending ({USAGE.receipts_pending})</span>
-        <span className="flex items-center gap-1.5 text-[#A9B6D3]"><span className="w-2 h-2 rounded-full bg-[#EF4444]" /> Failed ({USAGE.receipts_failed})</span>
+        <span className="flex items-center gap-1.5 text-[#A9B6D3]"><span className="w-2 h-2 rounded-full bg-[#21C87A]" /> Issued ({SERIES_TOTALS.issued})</span>
+        <span className="flex items-center gap-1.5 text-[#A9B6D3]"><span className="w-2 h-2 rounded-full bg-[#F5A524]" /> Pending ({SERIES_TOTALS.pending})</span>
+        <span className="flex items-center gap-1.5 text-[#A9B6D3]"><span className="w-2 h-2 rounded-full bg-[#EF4444]" /> Failed ({SERIES_TOTALS.failed})</span>
       </div>
     </div>
   )
@@ -86,6 +86,20 @@ const RECEIPT_SERIES = Array.from({ length: 24 }, (_, h) => ({
   h: `${h}`, issued: [0,0,1,0,2,0,3,1,4,2,5,3,6,4,8,5,9,6,11,7,10,6,4,2][h] ?? 0,
   pending: h === 19 ? 1 : 0, failed: h === 21 ? 1 : 0,
 }))
+// Every figure on the receipts panel is computed from the series it labels —
+// no free-standing percentages.
+const SERIES_TOTALS = RECEIPT_SERIES.reduce((a, d) => ({ issued: a.issued + d.issued, pending: a.pending + d.pending, failed: a.failed + d.failed }), { issued: 0, pending: 0, failed: 0 })
+const SERIES_PEAK = RECEIPT_SERIES.reduce((m, d) => (d.issued > m.issued ? d : m), RECEIPT_SERIES[0])
+const ISSUANCE_RATE = (100 * SERIES_TOTALS.issued / Math.max(1, SERIES_TOTALS.issued + SERIES_TOTALS.pending + SERIES_TOTALS.failed)).toFixed(1)
+
+// Runs-by-outcome is derived from the run store (5 fixture runs), not typed in.
+const RUN_OUTCOMES = [
+  { label: 'Succeeded', value: RUNS.filter((r) => r.execution_outcome === 'SUCCEEDED').length, color: '#21C87A' },
+  { label: 'Outcome unknown', value: RUNS.filter((r) => r.execution_outcome === 'OUTCOME_UNKNOWN').length, color: '#F5A524' },
+  { label: 'Refused', value: RUNS.filter((r) => r.execution_outcome === 'REFUSED').length, color: '#EF4444' },
+  { label: 'No execution yet', value: RUNS.filter((r) => r.execution_outcome === '—').length, color: '#5B6884' },
+]
+const CLOSED_RUNS = RUN_OUTCOMES.slice(0, 3).reduce((s, p) => s + p.value, 0)
 
 const SEV: Record<string, string> = { HIGH: '#EF4444', MEDIUM: '#F5A524', LOW: '#4D8DFF' }
 
@@ -116,16 +130,13 @@ function Body({ pending, health, readonly = false }: { pending: typeof APPROVALS
             <span className="px-2 py-0.5 rounded text-[10px] font-bold tracking-wide uppercase bg-[#F5A524]/[0.12] text-[#F5A524] border border-[#F5A524]/35">Staging</span>
             <MaturityTag m="HERMETIC ONLY" />
           </div>
-          <p className="mt-0.5 text-[12px] text-[#A9B6D3]">Real-time view across your connectors, agents, and receipts.</p>
+          <p className="mt-0.5 text-[12px] text-[#A9B6D3]">Reference view across connectors, agent runs and receipts — fixture data from the hermetic reference stores, not live telemetry.</p>
         </div>
         <div className="md:text-right md:justify-self-end">
           <div className="text-[10.5px] text-[#93A0C2]">Hermetic reference data · Not production</div>
           <div className="mt-0.5 flex items-center gap-2.5 md:justify-end">
-            <span className="text-[10.5px] text-[#5B6884]">Last updated <span className="text-[#A9B6D3]">Sep 27, 2026 16:12:08</span></span>
-            <span className="flex items-center gap-1.5 text-[11.5px] font-semibold text-[#21C87A]"><span className="w-2 h-2 rounded-full bg-[#21C87A] anim-breathe" /> Fresh</span>
-            <button type="button" onClick={() => window.location.reload()} aria-label="Refresh" className="p-1.5 rounded-lg border border-white/[0.1] text-[#A9B6D3] hover:text-white hover:border-white/[0.2]">
-              <svg width="14" height="14" viewBox="0 0 20 20" fill="none"><path d="M16.5 10a6.5 6.5 0 1 1-1.9-4.6M16.5 3v3h-3" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" /></svg>
-            </button>
+            <span className="text-[10.5px] text-[#5B6884]">Fixture snapshot <span className="text-[#A9B6D3]">2026-09-27</span></span>
+            <span className="flex items-center gap-1.5 text-[11.5px] font-semibold text-[#93A0C2]"><span className="w-2 h-2 rounded-full bg-[#5B6884]" /> Static — no refresh source</span>
           </div>
         </div>
       </div>
@@ -134,7 +145,7 @@ function Body({ pending, health, readonly = false }: { pending: typeof APPROVALS
       <div className="grid grid-cols-2 xl:grid-cols-4 gap-3 mb-3">
         {([
           { label: 'Connections', value: CONNECTIONS.length, sub: `${health.active} healthy · ${health.degraded} degraded · ${health.suspended} suspended`, href: '/app/connections', icon: 'link', color: '#4D8DFF' },
-          { label: 'Runs (live)', value: live.length, sub: `${RUNS.length} total in store`, href: '/app/agents', icon: 'play', color: '#21C87A' },
+          { label: 'Runs (open)', value: live.length, sub: `${RUNS.length} total in store`, href: '/app/agents', icon: 'play', color: '#21C87A' },
           { label: 'Receipts issued', value: USAGE.receipts_issued, sub: `${USAGE.receipts_pending} pending · ${USAGE.receipts_failed} failed`, href: '/app/receipts', icon: 'doc', color: '#8B5CF6' },
           { label: 'Executions (24h)', value: USAGE.executions_24h, sub: `${USAGE.failed_24h} failed · ${USAGE.reconciled_24h} reconciled`, href: '/app/executions', icon: 'clock', color: '#4D8DFF' },
         ] as const).map((k) => (
@@ -184,25 +195,21 @@ function Body({ pending, health, readonly = false }: { pending: typeof APPROVALS
           <div className="mt-auto pt-2.5 border-t border-white/[0.06]"><a href="/app/approvals" className="text-[12px] font-semibold text-[#5A7BFF]">View all approvals →</a></div>
         </Panel>
 
-        <Panel title="Runs by outcome (last 24h)" className="flex flex-col">
+        <Panel title="Runs by outcome (run store)" className="flex flex-col">
           <div className="flex-1 flex items-center">
-            <Donut parts={[
-              { label: 'Succeeded', value: 4, color: '#21C87A' },
-              { label: 'Outcome unknown', value: 1, color: '#F5A524' },
-              { label: 'Refused', value: 1, color: '#EF4444' },
-            ]} />
+            <Donut parts={RUN_OUTCOMES} />
           </div>
           <div className="mt-3 pt-2.5 border-t border-white/[0.06] flex justify-between text-[10.5px] text-[#5B6884]">
-            <span>Success rate 67%</span><span>1 awaiting reconciliation</span>
+            <span>Succeeded {RUN_OUTCOMES[0].value} of {CLOSED_RUNS} with an outcome</span><span>{RUN_OUTCOMES[1].value} awaiting reconciliation</span>
           </div>
         </Panel>
 
-        <Panel title="Receipts (last 24h)" right={<span className="text-xl font-semibold text-white">{USAGE.receipts_issued}</span>} className="flex flex-col">
+        <Panel title="Receipts by hour (fixture series)" right={<span className="text-xl font-semibold text-white">{SERIES_TOTALS.issued}</span>} className="flex flex-col">
           <div className="flex-1 flex flex-col justify-center">
             <Bars data={RECEIPT_SERIES} />
           </div>
           <div className="mt-2.5 pt-2.5 border-t border-white/[0.06] flex justify-between text-[10.5px] text-[#5B6884]">
-            <span>Peak 11/h at 18:00</span><span>Issuance rate 98.5%</span>
+            <span>Peak {SERIES_PEAK.issued}/h at {SERIES_PEAK.h.padStart(2, '0')}:00</span><span>Issued {ISSUANCE_RATE}% of receipt attempts</span>
           </div>
         </Panel>
       </div>

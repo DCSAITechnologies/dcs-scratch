@@ -117,6 +117,7 @@ export function SearchModal({
             onChange={(e) => setQ(e.target.value)}
             onKeyDown={(e) => e.key === 'Enter' && go(q)}
             placeholder="Search id: run_, ex_, rc_, ap_, cn_, pol_, connector…"
+            aria-label="Search the console"
             className="w-full h-11 bg-transparent text-[13.5px] text-white placeholder-[#3E4A66] outline-none"
           />
           <kbd className="text-[9.5px] text-[#5B6884] border border-white/[0.1] rounded px-1.5 py-0.5 shrink-0">esc</kbd>

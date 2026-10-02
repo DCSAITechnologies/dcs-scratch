@@ -10,6 +10,7 @@ import { WORKSPACES, ENVIRONMENTS, APPROVALS, KILLS, RECEIPTS, USAGE, type Envir
 import { navigate } from '../../hooks/usePathRoute'
 import { MaturityTag } from './ui'
 import { Dropdown, SearchModal } from './controls'
+import { searchTarget } from '../../lib/search-target'
 
 type NavItem = { label: string; to: string; icon: ReactNode }
 type NavGroup = { label: string; items: NavItem[] }
@@ -102,7 +103,7 @@ export function DashShell({ path, children }: { path: string; children: ReactNod
     { dot: '#EF4444', title: 'Receipt issuance failed', ctx: 'ex_01J2K30 · 5 min ago', to: '/app/executions/ex_01J2K30' },
     { dot: '#F5A524', title: 'Reconciliation queued', ctx: 'ex_01J2P88 · 12 min ago', to: '/app/executions/ex_01J2P88' },
     { dot: '#4D8DFF', title: 'Connector degraded', ctx: 'Slack · 28 min ago', to: '/app/connections/cn_01HZX3D9' },
-    { dot: '#21C87A', title: 'Policy updated', ctx: 'pol_fin_refunds v3 · 1 hour ago', to: '/app/policies/pol_fin_refunds' },
+    { dot: '#21C87A', title: 'Policy updated', ctx: 'pol_fin_refunds v2 · fixture', to: '/app/policies/pol_fin_refunds' },
     { dot: '#4D8DFF', title: 'New team member', ctx: 'P. Nair joined · 3 hours ago', to: '/app/team' },
   ]
 
@@ -144,7 +145,7 @@ export function DashShell({ path, children }: { path: string; children: ReactNod
     <div className="px-3 py-2.5 border-t border-white/[0.06]">
       <div className="text-[10.5px] text-[#5B6884]">Connector OS v0.9.0 · claim {CLAIM_LEVEL}</div>
       <div className="mt-0.5 flex items-center gap-1.5 text-[10.5px] text-[#21C87A]">
-        <span className="w-1.5 h-1.5 rounded-full bg-[#21C87A]" /> All systems operational (hermetic build)
+        <span className="w-1.5 h-1.5 rounded-full bg-[#5B6884]" /> Hermetic build · no live services
       </div>
     </div>
   )
@@ -220,7 +221,7 @@ export function DashShell({ path, children }: { path: string; children: ReactNod
         <ul className="space-y-1.5 text-[11px] text-[#A9B6D3]">
           <li className="flex items-center gap-2"><span className="w-1.5 h-1.5 rounded-full bg-[#F5A524]" /> Kill: {KILLS.length ? `partial — ${KILLS.length} active` : 'none'}</li>
           <li className="flex items-center gap-2"><span className="w-1.5 h-1.5 rounded-full bg-[#21C87A]" /> Receipts: {RECEIPTS.filter((r) => r.state === 'PENDING').length} pending · {USAGE.receipts_failed} failed</li>
-          <li className="flex items-center gap-2"><span className="w-1.5 h-1.5 rounded-full bg-[#21C87A]" /> Providers: 4 healthy · 1 degraded (simulator)</li>
+          <li className="flex items-center gap-2"><span className="w-1.5 h-1.5 rounded-full bg-[#21C87A]" /> Providers: {PROVIDER_HEALTH.filter((p) => p.state === 'healthy').length} healthy · {PROVIDER_HEALTH.filter((p) => p.state !== 'healthy').length} degraded (simulator)</li>
           <li className="pt-0.5"><MaturityTag m="HERMETIC ONLY" /></li>
         </ul>
       </section>
@@ -276,10 +277,10 @@ export function DashShell({ path, children }: { path: string; children: ReactNod
           </button>
           <div className="hidden sm:block w-px h-6 bg-white/[0.09]" />
           <div className="flex items-center gap-2">
-            <span className="w-7 h-7 rounded-full flex items-center justify-center text-[10.5px] font-bold text-white" style={{ background: 'linear-gradient(135deg,#3B5BDB,#8B5CF6)' }}>AS</span>
+            <span className="w-7 h-7 rounded-full flex items-center justify-center text-[10.5px] font-bold text-white" style={{ background: 'linear-gradient(135deg,#3B5BDB,#8B5CF6)' }} title="Demo identity — the console has no authentication yet">AS</span>
             <span className="hidden lg:block leading-tight">
               <span className="block text-[12px] font-semibold text-white">A. Sharma</span>
-              <span className="block text-[10px] text-[#5B6884]">Org admin</span>
+              <span className="block text-[10px] text-[#5B6884]">Org admin · demo identity, no sign-in</span>
             </span>
           </div>
         </div>
@@ -365,7 +366,7 @@ export function DashShell({ path, children }: { path: string; children: ReactNod
         </div>
       )}
 
-      <SearchModal open={searchOpen} initial={search} onClose={() => setSearchOpen(false)} onSubmit={(q) => { setSearch(q); setSearchOpen(false); const v = q; if (/^rc_/.test(v)) navigate(`/app/receipts/${v}`); else if (/^ex_/.test(v)) navigate(`/app/executions/${v}`); else if (/^run_/.test(v)) navigate(`/app/agents/runs/${v}`); else if (/^ap_/.test(v)) navigate(`/app/approvals/${v}`); else if (/^cn_/.test(v)) navigate(`/app/connections/${v}`); else if (/^pol_/.test(v)) navigate(`/app/policies/${v}`); else navigate(`/app/connectors?q=${encodeURIComponent(v)}`) }} />
+      <SearchModal open={searchOpen} initial={search} onClose={() => setSearchOpen(false)} onSubmit={(q) => { setSearch(q); setSearchOpen(false); navigate(searchTarget(q)) }} />
     </div>
   )
 }

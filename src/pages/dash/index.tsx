@@ -1,4 +1,5 @@
-// Dashboard router — all 24 /app routes (FULL_ROUTE_MAP §3).
+// Dashboard router — 25 /app route patterns (18 list/static + 7 detail), counted
+// mechanically by scripts/dashboard-snapshot.py (gate C6). The earlier "24" was a miscount.
 // Unknown detail ids and unknown /app paths resolve to the console 404.
 
 import { DashShell } from '../../components/dash/DashShell'
@@ -26,7 +27,7 @@ export function DashApp({ path }: { path: string }) {
   const m = (re: RegExp) => r.match(re)
   let mm
   if (r === '/app' || r === '/app/') page = <DashOverview />
-  else if (r === '/app/connectors') page = <DashConnectors />
+  else if (r === '/app/connectors') page = <DashConnectors key={window.location.search} />
   else if ((mm = m(/^\/app\/connectors\/([^/]+)$/))) page = <DashConnectorDetail id={mm[1]} />
   else if (r === '/app/connections') page = <DashConnections />
   else if (r === '/app/connections/new') page = <DashConnectNew />
