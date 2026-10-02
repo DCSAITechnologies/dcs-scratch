@@ -469,7 +469,7 @@ export const ENTERPRISE_PAGES: Record<string, SubPage> = {
 
   '/enterprise/contact': {
     area: 'Enterprise',
-    title: 'Contact',
+    title: 'Enterprise contact',
     tagline: 'Talk through your governance model with the people building it.',
     noStatus: true,
     next: [['/enterprise/controls', 'Controls & rollout'], ['/developers/status', 'Build status']],

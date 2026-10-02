@@ -155,7 +155,7 @@ export function Connectors() {
           ))}
         </div>
 
-        <div className="mt-8 grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+        <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
           {filtered.slice(0, shown).map((c: Conn) => (
             <a key={c.id} href={`/connectors/${c.id}`} className="glass-card glass-card-hover p-5 flex flex-col">
               <div className="flex items-center gap-3 mb-3">
@@ -203,7 +203,7 @@ export function Connectors() {
               <h2 className="text-xl font-semibold tracking-tight text-white">Legacy reference surfaces</h2>
               <span className="text-[11.5px] text-[#93A0C2]">{filteredLegacy.length} preserved from the previous catalogue — reference only, not part of the canonical catalogue or any count above</span>
             </div>
-            <div className="mt-4 grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+            <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
               {filteredLegacy.slice(0, legacyShown).map((c: Conn) => (
                 <a key={`legacy-${c.id}`} href={`/connectors/${c.id}`} className="glass-card glass-card-hover p-5 flex flex-col">
                   <div className="flex items-center gap-3 mb-3">

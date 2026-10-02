@@ -58,11 +58,16 @@ def main():
         if not ok:
             failures.append(f"MAJOR legacy connector route missing: {mid}")
 
-    # 4. sitemap coverage
+    # 4. sitemap coverage — reference surfaces are listed; REDIRECT shells are
+    # not (a sitemap lists final 200 URLs, never URLs that redirect elsewhere)
     for c in preserved:
         if c['id'] in canonical_ids:
             continue
-        if f"/connectors/{c['id']}<" not in sitemap:
+        listed = f"/connectors/{c['id']}<" in sitemap
+        if c.get('lane6_behavior') == 'REDIRECT':
+            if listed:
+                failures.append(f"sitemap must NOT include redirecting legacy: {c['id']}")
+        elif not listed:
             failures.append(f"sitemap missing preserved legacy: {c['id']}")
     for c in removed:
         if f"/connectors/{c['id']}<" in sitemap:

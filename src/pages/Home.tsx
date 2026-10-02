@@ -168,7 +168,7 @@ export function Home() {
 
       {/* 6 · POLICIES & APPROVALS */}
       <section className="section-bg">
-        <div className="mx-auto max-w-[1400px] px-8 py-16 grid lg:grid-cols-2 gap-12 items-center">
+        <div className="mx-auto max-w-[1400px] px-8 py-16 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <Reveal>
             <div className="eyebrow mb-3">Policies & human approval</div>
             <h2 className="text-3xl md:text-4xl font-semibold tracking-tight text-white">Every action happens within policy.</h2>
@@ -219,7 +219,7 @@ export function Home() {
 
       {/* 8 · RECEIPTS */}
       <section className="section-bg">
-        <div className="mx-auto max-w-[1400px] px-8 py-16 grid lg:grid-cols-2 gap-12 items-center">
+        <div className="mx-auto max-w-[1400px] px-8 py-16 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <Reveal>
             <div className="eyebrow mb-3">Receipts & verifiable outcomes</div>
             <h2 className="text-3xl md:text-4xl font-semibold tracking-tight text-white">Know what happened — and prove it.</h2>
@@ -273,7 +273,7 @@ export function Home() {
 
       {/* 10 · DEVELOPERS */}
       <section className="section-bg">
-        <div className="mx-auto max-w-[1400px] px-8 py-16 grid lg:grid-cols-2 gap-12 items-center">
+        <div className="mx-auto max-w-[1400px] px-8 py-16 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <Reveal>
             <div className="eyebrow mb-3">Developer experience</div>
             <h2 className="text-3xl md:text-4xl font-semibold tracking-tight text-white">One governed path from code to receipt.</h2>
