@@ -313,7 +313,7 @@ export function DashShell({ path, children }: { path: string; children: ReactNod
 
       {/* Three-zone shell — full width, no max-width island (handoff §2.2) */}
       <div className="grid lg:grid-cols-[208px_minmax(0,1fr)] xl:grid-cols-[208px_minmax(0,1fr)_296px]">
-        <aside className="hidden lg:flex flex-col h-[calc(100vh-76px)] sticky top-[76px] border-r border-white/[0.06]" style={{ background: '#090F22' }}>
+        <aside className="hidden lg:flex flex-col h-[calc(100vh-54px)] sticky top-[54px] border-r border-white/[0.06]" style={{ background: '#090F22' }}>
           {navBody}
           {navFoot}
         </aside>
@@ -344,7 +344,7 @@ export function DashShell({ path, children }: { path: string; children: ReactNod
         </main>
 
         {/* Right utility rail — desktop */}
-        <aside className="hidden xl:block w-[296px] shrink-0 border-l border-white/[0.06] h-[calc(100vh-76px)] sticky top-[76px] overflow-y-auto" style={{ background: '#090F22' }}>
+        <aside className="hidden xl:block w-[296px] shrink-0 border-l border-white/[0.06] h-[calc(100vh-54px)] sticky top-[54px] overflow-y-auto" style={{ background: '#090F22' }}>
           {rail}
         </aside>
 

@@ -1,6 +1,7 @@
 import { test, expect } from '@playwright/test'
 import { readdirSync, statSync, existsSync, readFileSync } from 'node:fs'
 import { join } from 'node:path'
+import { CANONICAL as CANONICAL_ROWS, LEGACY as LEGACY_ROWS } from './catalogue'
 
 // Every prerendered static / subpage route (dist/<route>/index.html), excluding the
 // per-connector and console shells, which have their own suites.
@@ -135,5 +136,41 @@ test.describe('contact form (no endpoint configured → published addresses)', (
     await form.getByLabel(/What are you trying to do/).fill('We want to wire our agent to GitHub with approvals.')
     await form.getByRole('button', { name: 'Compose email' }).click()
     await expect(page.getByTestId('contact-emailed')).toContainText('developers@dcslabs.dev')
+  })
+})
+
+test.describe('host rules (dist/_redirects, dist/_headers)', () => {
+  const read = (f: string) => readFileSync(join(DIST, f), 'utf8')
+
+  test('redirects cover /docs, alias ids, legacy redirects (301) and removed legacy ids (410)', () => {
+    const rules = read('_redirects').split('\n').filter((l) => l && !l.startsWith('#')).map((l) => l.split(/\s+/))
+    const by = (from: string) => rules.find((r) => r[0] === from)
+    expect(by('/docs')).toEqual(['/docs', '/developers', '301!'])
+    expect(by('/app/*')).toEqual(['/app/*', '/app/index.html', '200'])
+    const gone = LEGACY_ROWS.filter((c) => c.lane6_behavior === 'GONE' || c.lane6_behavior === 'GONE_RETIRED_NOTICE')
+    for (const c of gone) expect(by(`/connectors/${c.id}`), c.id).toEqual([`/connectors/${c.id}`, '/404.html', '410'])
+    for (const c of LEGACY_ROWS.filter((x) => x.lane6_behavior === 'REDIRECT')) expect(by(`/connectors/${c.id}`)?.[1]).toBe(c.lane6_redirect_to)
+    // nothing redirects into a HOLD record
+    const hold = new Set(CANONICAL_ROWS.filter((c) => c.unpublished).map((c) => `/connectors/${c.id}`))
+    expect(rules.filter((r) => hold.has(r[1]))).toEqual([])
+  })
+
+  test('the generated CSP produces no violations on real page loads', async ({ page }) => {
+    const csp = /Content-Security-Policy: (.*)/.exec(read('_headers'))![1]
+    expect(csp).toContain("frame-ancestors 'none'")
+    expect(csp).toContain("object-src 'none'")
+    await page.route('**/*', async (route) => {
+      if (route.request().resourceType() !== 'document') return route.continue()
+      const res = await route.fetch()
+      await route.fulfill({ response: res, headers: { ...res.headers(), 'content-security-policy': csp } })
+    })
+    const violations: string[] = []
+    page.on('console', (m) => { if (/Content Security Policy|Refused to/i.test(m.text())) violations.push(m.text()) })
+    for (const p of ['/', '/connectors', '/connectors/deepl', '/enterprise/contact', '/developers/status', '/app', '/app/executions/ex_01J2P88']) {
+      await page.goto(p)
+      await page.locator('main').first().waitFor()
+      await page.waitForTimeout(300)
+    }
+    expect(violations).toEqual([])
   })
 })
