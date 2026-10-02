@@ -1,4 +1,4 @@
-import { PUBLISHED_COUNT } from '../lib/data'
+import { PUBLISHED_COUNT } from 'virtual:catalogue-summary'
 import { Logo } from './BrandIcon'
 
 const COLS: Record<string, [string, string][]> = {

@@ -23,9 +23,11 @@ test.describe('public catalogue', () => {
     const grid = page.locator('a[href^="/connectors/"]:has-text("Details →")')
     const legacyCards = page.locator('a[href^="/connectors/"]:has-text("Reference")')
     const canonicalCount = async () => (await grid.count()) - (await legacyCards.count())
-    expect(await canonicalCount()).toBe(60)
+    // the catalogue chunk loads lazily; wait for the grid before counting
+    await expect(page.getByTestId('result-count')).toHaveText(`${PUBLISHED.length} connectors`)
+    await expect.poll(canonicalCount).toBe(60)
     await page.getByRole('button', { name: /^Load more \(/ }).click()
-    expect(await canonicalCount()).toBe(120)
+    await expect.poll(canonicalCount).toBe(120)
   })
 
   for (const q of ['openai', 'anthropic']) {

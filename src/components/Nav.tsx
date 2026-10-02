@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { Logo } from './BrandIcon'
 import { ConnectorLogo } from './ConnectorLogo'
-import { PUBLISHED_CONNECTORS as CONNECTORS, PUBLISHED_COUNT } from '../lib/data'
+import { PUBLISHED_COUNT, FEATURED, FEATURED_ROWS } from 'virtual:catalogue-summary'
 import { navigate } from '../hooks/usePathRoute'
 
 const NAV_ITEMS = ['Product', 'Connectors', 'Agents', 'Security', 'Enterprise', 'Developers', 'Pricing']
@@ -14,11 +14,10 @@ const ITEM_ROUTES: Record<string, string> = {
 type DropCol = { title: string; w?: number; items: { label: string; sub?: string; to?: string; conn?: string; one?: boolean }[] }
 type Drop = { cols: DropCol[]; featured?: { title: string; desc: string; cta: string } }
 
-const popular = ['infisical', 'qualys', 'onelogin', 'stytch', 'descope', 'workos', 'jumpcloud', 'clerk']
-const popularRows = popular
-  .map((id) => CONNECTORS.find((c) => c.id === id))
-  .filter(Boolean)
-  .map((c) => ({ label: c!.n, sub: `${c!.cat} · ${c!.auth}`, conn: c!.id }))
+// featured ids live in src/lib/featured.json and are validated at build time
+const popularRows = FEATURED.navPopular
+  .map((id) => FEATURED_ROWS[id])
+  .map((c) => ({ label: c.n, sub: `${c.cat} · ${c.auth}`, conn: c.id }))
 
 const DROPS: Record<string, Drop> = {
   Product: {
@@ -236,7 +235,7 @@ export function Nav() {
                         {col.items.map((it, idx) => (
                           <button key={it.label} role="menuitem" onClick={() => go(it.conn ? `/connectors/${it.conn}` : it.to ?? ITEM_ROUTES[item])} className="nav-dropdown-row flex items-center gap-2.5 w-full text-left px-2 py-[7px]" style={idx < col.items.length - 1 ? { borderBottom: '1px solid rgba(120,140,255,0.09)' } : undefined}>
                             {it.conn ? (
-                              <ConnectorLogo name={it.label} src={CONNECTORS.find((c) => c.id === it.conn)!.logo} size={22} />
+                              <ConnectorLogo name={it.label} src={FEATURED_ROWS[it.conn].logo} size={22} />
                             ) : (
                               <span className="w-1 h-1 rounded-full bg-[#5A7BFF] shrink-0 ml-1" aria-hidden="true" />
                             )}

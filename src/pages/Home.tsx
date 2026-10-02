@@ -2,14 +2,14 @@ import { SectionHeader } from '../components/primitives'
 import { Reveal } from '../hooks/Reveal'
 import { OrchestrationVisual } from '../components/OrchestrationVisual'
 import { ConnectorLogo } from '../components/ConnectorLogo'
-import { PUBLISHED_CONNECTORS as CONNECTORS, PUBLISHED_COUNT, statusColor } from '../lib/data'
+import { PUBLISHED_COUNT, FEATURED, FEATURED_ROWS } from 'virtual:catalogue-summary'
+import { statusColor } from '../lib/connector-format'
 import { LIFECYCLE_10 } from '../lib/lifecycle'
 import { v } from '../lib/status'
 
-const STRIP_IDS = ['bugsnag', 'postman', 'make', 'rollbar', 'raygun', 'browserstack-automate', 'sauce-labs', 'testrail', 'checkly', 'percy', 'linode', 'appwrite', 'ovhcloud', 'algolia', 'sanity', 'storyblok', 'meilisearch', 'turso', 'typesense', 'ghost']
 
 function ConnectorStrip() {
-  const items = STRIP_IDS.map((id) => CONNECTORS.find((c) => c.id === id)).filter(Boolean) as typeof CONNECTORS
+  const items = FEATURED.homeStrip.map((id) => FEATURED_ROWS[id])
   const loop = [...items, ...items]
   return (
     <div className="marquee-mask overflow-hidden py-2">
@@ -40,10 +40,9 @@ const FLOW = [
 
 const LIFECYCLE = LIFECYCLE_10
 
-const PREVIEW_IDS = ['singlestore', 'surrealdb', 'dynatrace', 'sumo-logic', 'axiom', 'coralogix', 'uptimerobot', 'pingdom', 'workos', 'clerk', 'tailscale', 'vanta']
 
 export function Home() {
-  const preview = PREVIEW_IDS.map((id) => CONNECTORS.find((c) => c.id === id)).filter(Boolean) as typeof CONNECTORS
+  const preview = FEATURED.homePreview.map((id) => FEATURED_ROWS[id])
   return (
     <div className="pt-16">
       {/* 1 · HERO */}

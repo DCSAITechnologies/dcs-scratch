@@ -1,5 +1,5 @@
 import type { SubPage } from './subpages'
-import { TOTAL_CATALOGUED, PUBLISHED_COUNT } from './data'
+import { TOTAL_CATALOGUED, PUBLISHED_COUNT } from 'virtual:catalogue-summary'
 
 export const COMPANY_PAGES: Record<string, SubPage> = {
 

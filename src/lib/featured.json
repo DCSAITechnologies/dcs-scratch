@@ -1,0 +1,8 @@
+{
+  "_comment": "Connector ids shown on lightweight pages (home, nav, enterprise, hero visual). Validated at build time by the catalogue-summary Vite plugin: every id must be a published canonical row, or the build fails.",
+  "homeStrip": ["bugsnag", "postman", "make", "rollbar", "raygun", "browserstack-automate", "sauce-labs", "testrail", "checkly", "percy", "linode", "appwrite", "ovhcloud", "algolia", "sanity", "storyblok", "meilisearch", "turso", "typesense", "ghost"],
+  "homePreview": ["singlestore", "surrealdb", "dynatrace", "sumo-logic", "axiom", "coralogix", "uptimerobot", "pingdom", "workos", "clerk", "tailscale", "vanta"],
+  "navPopular": ["infisical", "qualys", "onelogin", "stytch", "descope", "workos", "jumpcloud", "clerk"],
+  "enterpriseLogos": ["infisical", "qualys", "onelogin", "stytch", "descope", "bitwarden"],
+  "heroNodes": ["mixpanel", "launchdarkly", "algolia", "brex", "ramp", "amplitude", "attio", "telnyx"]
+}

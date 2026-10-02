@@ -1,7 +1,7 @@
 import { SectionHeader } from '../components/primitives'
 import { Reveal } from '../hooks/Reveal'
 import { AreaLinks } from '../components/AreaLinks'
-import { CONNECTORS } from '../lib/data'
+import { FEATURED, FEATURED_ROWS } from 'virtual:catalogue-summary'
 import { ConnectorLogo } from '../components/ConnectorLogo'
 
 const FEATURES = [
@@ -43,8 +43,8 @@ export function Enterprise() {
         <Reveal className="mt-16">
           <div className="text-center text-[12px] uppercase tracking-[0.2em] text-[#93A0C2] mb-8">Connect to the tools your teams already use</div>
           <div className="flex flex-wrap items-center justify-center gap-x-10 gap-y-5">
-            {['infisical', 'qualys', 'onelogin', 'stytch', 'descope', 'bitwarden'].map((id) => {
-              const c = CONNECTORS.find((x) => x.id === id)!
+            {FEATURED.enterpriseLogos.map((id) => {
+              const c = FEATURED_ROWS[id]
               return (
                 <a key={id} href={`/connectors/${id}`} className="flex items-center gap-2.5 opacity-80 hover:opacity-100 transition-opacity">
                   <ConnectorLogo name={c.n} src={c.logo} size={26} />

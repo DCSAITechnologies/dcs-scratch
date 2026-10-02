@@ -1,4 +1,4 @@
-import { TOTAL_CATALOGUED } from '../lib/data'
+import { PUBLISHED_COUNT } from 'virtual:catalogue-summary'
 import { SectionHeader, TeaserCard } from '../components/primitives'
 import { Reveal } from '../hooks/Reveal'
 import { AreaLinks } from '../components/AreaLinks'
@@ -25,7 +25,7 @@ export function Product() {
           <div className="eyebrow mb-4">Product</div>
           <h1 className="text-4xl md:text-5xl font-semibold tracking-tight text-white">Connector OS, end to end</h1>
           <p className="mt-5 text-[15.5px] leading-relaxed text-[#A9B6D3]">
-            Connector OS is the governed execution layer between AI agents and real business systems. Agents plan; Connector OS authorizes, executes, verifies and receipts every action across a catalogue of {TOTAL_CATALOGUED} documented connectors.
+            Connector OS is the governed execution layer between AI agents and real business systems. Agents plan; Connector OS authorizes, executes, verifies and receipts every action across a catalogue of {PUBLISHED_COUNT} published, documented connectors.
           </p>
           <div className="mt-7 flex gap-3 flex-wrap">
             <a href="/signin" className="cta-primary">Start building</a>

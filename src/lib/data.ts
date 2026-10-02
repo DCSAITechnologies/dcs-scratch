@@ -1,5 +1,6 @@
 import connectorsJson from './connectors.json'
 import connectorsLegacyJson from './connectors-legacy.json'
+export { runtimeStatusLabel, RUNTIME_STATUSES, statusColor, ctaLabel } from './connector-format'
 
 export type Conn = {
   id: string; r: number; n: string; p: string; cat: string; s: string; auth: string
@@ -44,7 +45,6 @@ export const PUBLISHED_CONNECTORS = CONNECTORS.filter((c) => !isUnpublished(c))
 // Preserved for Lane 6 reconciliation (KEEP AS REFERENCE / MERGE-ALIAS / PROMOTE / RETIRE / DELETE).
 // Never counted in the canonical total, never presented as engineered/runtime connectors.
 export const LEGACY_REFERENCE_SURFACES: Conn[] = (connectorsLegacyJson as unknown as Conn[])
-export const LEGACY_REFERENCE_COUNT = LEGACY_REFERENCE_SURFACES.length
 export const LEGACY_REFERENCE_MAP = new Map(LEGACY_REFERENCE_SURFACES.map((c) => [c.id, c]))
 
 // alias_of semantics (Lane 6): the row is published under its own id; alias_of names
@@ -54,7 +54,7 @@ export const LEGACY_REFERENCE_MAP = new Map(LEGACY_REFERENCE_SURFACES.map((c) =>
 // identifier redirects here instead. Previously the row resolved to null and every
 // alias card rendered "Connector not found".
 const CANONICAL_MAP = new Map(CONNECTORS.map((c) => [c.id, c]))
-export const ALIAS_TARGET_MAP = new Map(
+const ALIAS_TARGET_MAP = new Map(
   CONNECTORS.filter((c) => c.alias_of && !CANONICAL_MAP.has(c.alias_of)).map((c) => [c.alias_of as string, c])
 )
 
@@ -82,23 +82,10 @@ export function resolvePublic(id: string): Resolution {
   return null
 }
 
-// Console resolution: every canonical row (published or HOLD) plus alias identifiers.
-export const byIdOrAlias = (id: string): Conn | null => {
-  const r = resolvePublic(id)
-  return r ? r.c : null
-}
-export const PUBLISHED_MAP = new Map(PUBLISHED_CONNECTORS.map((c) => [c.id, c]))
 export const TOTAL_CATALOGUED = CONNECTORS.length
 export const PUBLISHED_COUNT = PUBLISHED_CONNECTORS.length
 export const UNPUBLISHED_COUNT = TOTAL_CATALOGUED - PUBLISHED_COUNT
 
-// Runtime status (M2): read from data so the flip to STAGING is a data edit
-export const runtimeStatusLabel = (c: Conn): string =>
-  c.runtime_status === 'staging_verified' ? 'Staging-verified'
-  : c.runtime_status === 'production_verified' ? 'Production-verified'
-  : 'Not yet runtime-verified'
-
-export const RUNTIME_STATUSES = ['Not yet runtime-verified', 'Staging-verified', 'Production-verified']
 export const RUNTIME_VERIFIED_COUNT = CONNECTORS.filter((c) => c.runtime_status && c.runtime_status !== 'not_verified').length
 
 // Public filters are built from what the public grid can show (published rows),
@@ -107,57 +94,3 @@ export const CATEGORIES = ['All', ...Array.from(new Set(PUBLISHED_CONNECTORS.map
 export const STATUSES = Array.from(new Set(PUBLISHED_CONNECTORS.map((c) => c.s)))
 export const AUTH_TYPES = Array.from(new Set(PUBLISHED_CONNECTORS.map((c) => c.auth))).sort()
 
-export const CATEGORY_COUNTS: Record<string, number> = {}
-CONNECTORS.forEach((c) => { CATEGORY_COUNTS[c.cat] = (CATEGORY_COUNTS[c.cat] ?? 0) + 1 })
-
-export function statusColor(s: string): string {
-  switch (s) {
-    case 'Available': return '#21C87A'
-    case 'Read Only': return '#4D8DFF'
-    case 'Preview': return '#00C2FF'
-    case 'Limited Access': return '#F5A524'
-    case 'Provider Approval Required': return '#8B5CF6'
-    case 'Coming Soon': return '#93A0C2'
-    default: return '#A9B6D3'
-  }
-}
-
-export function ctaLabel(c: Conn): string {
-  switch (c.cta) {
-    // no notification capture exists yet — the CTA leads to launch status, not a signup
-    case 'notify': return 'Launch status'
-    case 'request_access': return 'Request Access'
-    case 'coming_soon': return 'Coming Soon'
-    case 'contact': return 'Contact Us'
-    default: return 'Launch status'
-  }
-}
-
-export const EXECUTIONS = [
-  { task: 'Summarise Q3 board notes', agent: 'Research Agent', connector: 'Notion', status: 'Success', duration: '12s', time: '2m ago' },
-  { task: 'Sync closed-won deals', agent: 'Sales Agent', connector: 'Salesforce', status: 'Success', duration: '28s', time: '4m ago' },
-  { task: 'Post launch update', agent: 'Marketing Agent', connector: 'Slack', status: 'Success', duration: '14s', time: '8m ago' },
-  { task: 'Reconcile payout report', agent: 'Finance Agent', connector: 'Stripe', status: 'Unknown', duration: '32s', time: '14m ago' },
-  { task: 'File expense receipts', agent: 'Ops Agent', connector: 'Google Drive', status: 'Success', duration: '19s', time: '36m ago' },
-]
-
-export const RECEIPTS = [
-  { id: 'rcpt_01J8K3F2', action: 'File created', tool: 'files.create', conn: 'google-drive' },
-  { id: 'rcpt_01J8K5P1', action: 'Message sent', tool: 'messages.send', conn: 'slack' },
-  { id: 'rcpt_01J8K3E9', action: 'Record updated', tool: 'opportunities.update', conn: 'salesforce' },
-  { id: 'rcpt_01J8K2E8', action: 'Page published', tool: 'pages.create', conn: 'notion' },
-  { id: 'rcpt_01J8K3E7', action: 'Refund issued', tool: 'refunds.create', conn: 'stripe' },
-]
-
-export const TRUTHFUL_STATES = [
-  { name: 'Refused', desc: 'Request explicitly refused by policy.', color: '#EF4444' },
-  { name: 'Blocked', desc: 'Blocked due to risk, policy or missing permission.', color: '#EF4444' },
-  { name: 'Started', desc: 'Request accepted and in progress.', color: '#4D8DFF' },
-  { name: 'Succeeded', desc: 'Completed successfully.', color: '#21C87A' },
-  { name: 'Failed', desc: 'Execution failed.', color: '#EF4444' },
-  { name: 'Provider unavailable', desc: 'Provider is unavailable or unreachable.', color: '#F5A524' },
-  { name: 'Retry scheduled', desc: 'Scheduled to retry after backoff.', color: '#8B5CF6' },
-  { name: 'Outcome unknown', desc: 'Final status yet to be determined.', color: '#A9B6D3' },
-  { name: 'Receipt pending', desc: 'Execution complete, receipt being generated.', color: '#00C2FF' },
-  { name: 'Receipt issued', desc: 'Verifiable receipt is available.', color: '#21C87A' },
-]

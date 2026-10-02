@@ -1,4 +1,4 @@
-import { TOTAL_CATALOGUED, PUBLISHED_COUNT } from '../lib/data'
+import { TOTAL_CATALOGUED, PUBLISHED_COUNT } from 'virtual:catalogue-summary'
 import { Reveal } from '../hooks/Reveal'
 import { AreaLinks } from '../components/AreaLinks'
 

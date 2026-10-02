@@ -4,9 +4,9 @@
 // Launch flip: edit the JSON (claim_level / as_of / item rows); nothing else changes.
 
 import statusJson from './platform-status.json'
-import { CONNECTORS, RUNTIME_VERIFIED_COUNT } from './data'
+import { TOTAL_CATALOGUED, RUNTIME_VERIFIED_COUNT } from 'virtual:catalogue-summary'
 
-export const CONNECTOR_COUNT = CONNECTORS.length
+export const CONNECTOR_COUNT = TOTAL_CATALOGUED
 
 export type ClaimLevel = 'HERMETIC' | 'STAGING' | 'PRODUCTION'
 export const CLAIM_LEVEL: ClaimLevel = statusJson.claim_level as ClaimLevel

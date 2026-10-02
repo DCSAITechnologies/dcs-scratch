@@ -1,5 +1,5 @@
 import type { SubPage } from './subpages'
-import { TOTAL_CATALOGUED } from './data'
+import { TOTAL_CATALOGUED } from 'virtual:catalogue-summary'
 import DEVEX_MATRIX from './devex-matrix.json'
 import { STATUS_ITEMS, v, STATUS_AS_OF } from './status'
 import { ATTEMPT_OUTCOMES, RUN_OUTCOMES, OUTCOME_TABLE_HEAD } from './outcomes'

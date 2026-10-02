@@ -1,8 +1,10 @@
-import { CONNECTORS } from '../lib/data'
+import { FEATURED, FEATURED_ROWS, type FeaturedRow } from 'virtual:catalogue-summary'
 import { ConnectorLogo } from './ConnectorLogo'
 
 const STEPS = ['Agent', 'Policy', 'Approve', 'Execute', 'Verify', 'Receipt']
-const NODE_IDS = ['slack', 'salesforce', 'github', 'stripe', 'notion', 'google-workspace', 'hubspot', 'shopify']
+// Previously slack/salesforce/github/… — none are canonical rows, so the visual
+// rendered with no nodes. Ids now come from featured.json (build-validated).
+const NODE_IDS = FEATURED.heroNodes
 // percentage positions around the core
 const POS = [
   { x: 8, y: 14 }, { x: 44, y: 2 }, { x: 78, y: 12 }, { x: 88, y: 46 },
@@ -11,9 +13,9 @@ const POS = [
 
 export function OrchestrationVisual() {
   const nodes = NODE_IDS.map((id, i) => {
-    const c = CONNECTORS.find((k) => k.id === id)
+    const c = FEATURED_ROWS[id]
     return c ? { c, ...POS[i] } : null
-  }).filter(Boolean) as { c: (typeof CONNECTORS)[number]; x: number; y: number }[]
+  }).filter(Boolean) as { c: FeaturedRow; x: number; y: number }[]
 
   return (
     <div className="relative w-[600px] h-[600px] max-w-full mx-auto select-none" aria-hidden>
