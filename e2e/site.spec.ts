@@ -109,3 +109,31 @@ test('every subpage route defined in src/lib has a prerendered shell', () => {
   const missing = keys.filter((k) => !existsSync(join(DIST, k, 'index.html')))
   expect(missing).toEqual([])
 })
+
+test.describe('contact form (no endpoint configured → published addresses)', () => {
+  test('validates required fields and email format with accessible errors', async ({ page }) => {
+    await page.goto('/enterprise/contact')
+    const form = page.getByTestId('contact-form')
+    await form.getByRole('button', { name: 'Compose email' }).click()
+    await expect(form.getByText('Enter your name.')).toBeVisible()
+    await expect(form.getByLabel('Name *')).toHaveAttribute('aria-invalid', 'true')
+    await expect(form.getByLabel('Name *')).toBeFocused()
+    await form.getByLabel('Name *').fill('Asha Rao')
+    await form.getByLabel('Work email *').fill('asha@acme')
+    await form.getByRole('button', { name: 'Compose email' }).click()
+    await expect(form.getByText('Enter a valid email address')).toBeVisible()
+    // enterprise contact preselects its topic
+    await expect(form.getByLabel('Topic *')).toHaveValue('enterprise')
+  })
+
+  test('a valid message hands off to the published address', async ({ page }) => {
+    await page.goto('/contact')
+    const form = page.getByTestId('contact-form')
+    await form.getByLabel('Name *').fill('Asha Rao')
+    await form.getByLabel('Work email *').fill('asha@acme.io')
+    await form.getByLabel('Topic *').selectOption('developers')
+    await form.getByLabel(/What are you trying to do/).fill('We want to wire our agent to GitHub with approvals.')
+    await form.getByRole('button', { name: 'Compose email' }).click()
+    await expect(page.getByTestId('contact-emailed')).toContainText('developers@dcslabs.dev')
+  })
+})

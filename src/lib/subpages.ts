@@ -23,6 +23,7 @@ export type SubPage = {
   next?: [string, string][]  // per-page "Next" links (spec §10)
   noStatus?: boolean
   badge?: 'CURRENT' | 'PRE-LAUNCH' | 'PLANNED'  // developer-surface maturity label (spec §4)
+  form?: { kind: 'contact'; topic?: 'enterprise' | 'developers' }  // rendered after the sections
 }
 
 export const AREA_ROUTES: Record<string, string> = {

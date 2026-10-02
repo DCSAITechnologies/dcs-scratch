@@ -31,6 +31,7 @@ export const COMPANY_PAGES: Record<string, SubPage> = {
     area: 'Company',
     title: 'Contact',
     tagline: 'Talk to the team — sales, support, security and partnership enquiries.',
+    form: { kind: 'contact' },
     sections: [
       {
         h: 'Sales and enterprise',
@@ -42,7 +43,7 @@ export const COMPANY_PAGES: Record<string, SubPage> = {
       },
       {
         h: 'Security enquiries',
-        p: ['For security questions or responsible disclosure, contact the team directly. We do not publish invented response-time commitments; we do take security reports seriously and route them to the people who own the systems.'],
+        p: ['For security questions or responsible disclosure, use the form below (Enterprise & governance) or write to enterprise@dcslabs.dev. We do not publish invented response-time commitments; we do take security reports seriously and route them to the people who own the systems.'],
       },
     ],
   },

@@ -114,6 +114,13 @@ const server = http.createServer(async (req, res) => {
   const url = new URL(req.url, `http://${req.headers.host}`)
   const p = url.pathname, q = url.searchParams
   if (p === '/healthz') return send(res, 200, { ok: true })
+  // contact-form endpoint stand-in (VITE_CONTACT_ENDPOINT in mock builds); no auth
+  if (p === '/forms/contact' && req.method === 'POST') {
+    const raw = await new Promise((r) => { let b = ''; req.on('data', (c) => (b += c)); req.on('end', () => r(b)) })
+    let f; try { f = JSON.parse(raw) } catch { return fail(res, 400, 'invalid_request', 'Body is not JSON.') }
+    if (!f.name || !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(f.email ?? '') || !f.topic || (f.message ?? '').length < 20) return fail(res, 400, 'invalid_request', 'Missing or invalid fields.')
+    return send(res, 201, { ok: true, id: `msg_${randomUUID().slice(0, 8)}` })
+  }
 
   const token = (req.headers.authorization ?? '').replace(/^Bearer\s+/i, '')
   const me = PRINCIPALS[token]

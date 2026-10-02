@@ -1,3 +1,4 @@
+import { ContactForm } from './ContactForm'
 import { AREA_LINKS, AREA_ROUTES, type SubPage, type Section } from '../lib/subpages'
 import { ArchDiagram, LifecycleDiagram, StateMachine, TwoColDiagram, FlowRow, TenantBoundaryDiagram, CredentialFlowDiagram, WebhookPipelineDiagram, RSeriesFlow } from './Diagrams'
 import { StatusCallout } from './StatusCallout'
@@ -147,6 +148,7 @@ export function SubPageLayout({ page, current }: { page: SubPage; current: strin
             )}
             <p className="mt-4 text-[15px] leading-relaxed text-[#A9B6D3] max-w-2xl">{page.tagline}</p>
             {page.sections.map((s) => <SectionBlock key={s.h} s={s} />)}
+            {page.form?.kind === 'contact' && <div className="mt-12"><ContactForm defaultTopic={page.form.topic} /></div>}
             {!page.noStatus && <StatusCallout route={current} />}
             {next.length > 0 ? (
               <div className="mt-12 grid sm:grid-cols-2 gap-4 max-w-3xl">

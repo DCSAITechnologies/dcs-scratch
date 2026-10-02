@@ -192,3 +192,34 @@ test('no fixture data appears in API mode', async ({ page }) => {
     for (const fixture of ['A. Sharma', 'run_01J0AA11', 'ex_01J2P88', 'cn_01HZX3A1', 'Acme']) expect(text, `${path} shows fixture ${fixture}`).not.toContain(fixture)
   }
 })
+
+test.describe('contact form with a configured endpoint', () => {
+  const fill = async (page: Page) => {
+    const form = page.getByTestId('contact-form')
+    await form.getByLabel('Name *').fill('Asha Rao')
+    await form.getByLabel('Work email *').fill('asha@acme.io')
+    await form.getByLabel(/What are you trying to do/).fill('We need governed writes to our CRM with approvals.')
+    return form
+  }
+  test('submits to the endpoint and confirms', async ({ page }) => {
+    await page.goto('/enterprise/contact')
+    const form = await fill(page)
+    await form.getByRole('button', { name: 'Send message' }).click()
+    await expect(page.getByTestId('contact-sent')).toContainText('your message was sent')
+  })
+  test('a server error keeps the message and says it was not sent', async ({ page }) => {
+    await page.route(`${API}/forms/contact`, (r) => r.fulfill({ status: 500, body: 'boom' }))
+    await page.goto('/enterprise/contact')
+    const form = await fill(page)
+    await form.getByRole('button', { name: 'Send message' }).click()
+    await expect(page.getByTestId('contact-error')).toContainText('was not sent')
+    await expect(form.getByLabel('Name *')).toHaveValue('Asha Rao')
+  })
+  test('rate limiting is explained', async ({ page }) => {
+    await page.route(`${API}/forms/contact`, (r) => r.fulfill({ status: 429, body: '' }))
+    await page.goto('/enterprise/contact')
+    const form = await fill(page)
+    await form.getByRole('button', { name: 'Send message' }).click()
+    await expect(page.getByTestId('contact-error')).toContainText('Too many submissions')
+  })
+})
