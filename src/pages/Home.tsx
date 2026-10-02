@@ -67,7 +67,7 @@ export function Home() {
                   <span key={c} className="chip">{c}</span>
                 ))}
               <p className="mt-4 text-[11.5px] leading-relaxed text-[#93A0C2] max-w-md">
-                {v('overall')} <a href="/developers/status" className="text-[#5A7BFF] hover:text-white transition-colors">Build status →</a>
+                {v('overall')} <a href="/developers/status" className="text-[#7EA2FF] underline underline-offset-2 hover:text-white transition-colors">Build status →</a>
               </p>
               </div>
             </Reveal>
@@ -156,7 +156,7 @@ export function Home() {
             {LIFECYCLE.map((s, i) => (
               <Reveal key={s} delay={i * 50}>
                 <div className="glass-card p-3.5 text-center h-full flex flex-col justify-center">
-                  <div className="text-[9.5px] font-bold text-[#8B5CF6] mb-1">{String(i + 1).padStart(2, '0')}</div>
+                  <div className="text-[9.5px] font-bold text-[#A78BFA] mb-1">{String(i + 1).padStart(2, '0')}</div>
                   <div className="text-[12.5px] font-semibold text-white">{s}</div>
                 </div>
               </Reveal>

@@ -83,13 +83,13 @@ function Diagram({ kind }: { kind: NonNullable<Section['diagram']> }) {
 function Table({ t, caption }: { t: NonNullable<Section['table']>; caption?: string }) {
   return (
     <div className="mt-6 max-w-3xl glass-panel overflow-hidden overflow-x-auto" role="table" aria-label={caption}>
-      <div className="grid px-5 py-3 text-[10.5px] font-semibold uppercase tracking-[0.14em] text-[#93A0C2] border-b border-[rgba(120,140,255,0.15)]" style={{ gridTemplateColumns: `repeat(${t.head.length}, minmax(120px, 1fr))` }}>
-        {t.head.map((h) => <span key={h}>{h}</span>)}
+      <div role="row" className="grid px-5 py-3 text-[10.5px] font-semibold uppercase tracking-[0.14em] text-[#93A0C2] border-b border-[rgba(120,140,255,0.15)]" style={{ gridTemplateColumns: `repeat(${t.head.length}, minmax(120px, 1fr))` }}>
+        {t.head.map((h) => <span key={h} role="columnheader">{h}</span>)}
       </div>
       {t.rows.map((r, i) => (
-        <div key={i} className="grid px-5 py-3 border-b border-[rgba(120,140,255,0.08)] last:border-0" style={{ gridTemplateColumns: `repeat(${t.head.length}, minmax(120px, 1fr))` }}>
+        <div key={i} role="row" className="grid px-5 py-3 border-b border-[rgba(120,140,255,0.08)] last:border-0" style={{ gridTemplateColumns: `repeat(${t.head.length}, minmax(120px, 1fr))` }}>
           {r.map((cell, j) => (
-            <span key={j} className={`text-[12px] leading-relaxed ${j === 0 ? 'text-[#D6E1FF] font-medium' : 'text-[#A9B6D3]'}`}>{cell}</span>
+            <span key={j} role="cell" className={`text-[12px] leading-relaxed ${j === 0 ? 'text-[#D6E1FF] font-medium' : 'text-[#A9B6D3]'}`}>{cell}</span>
           ))}
         </div>
       ))}
@@ -117,7 +117,7 @@ function SectionBlock({ s }: { s: Section }) {
       {s.code && (
         <div className="mt-6 max-w-3xl">
           <div className="text-[10px] font-semibold uppercase tracking-[0.16em] text-[#93A0C2] mb-2">Conceptual — contract frozen (EXEC-FACTS v1.0.0 / Manifest 1.3.0 / Webhook 1.0.0); public API surface pending</div>
-          <pre className="dcs-code overflow-x-auto"><code>{s.code}</code></pre>
+          <pre tabIndex={0} aria-label={`Code: ${s.h}`} className="dcs-code overflow-x-auto"><code>{s.code}</code></pre>
         </div>
       )}
       {s.note && (

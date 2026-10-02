@@ -16,7 +16,7 @@ export function ApiRail() {
       <section className={box}>
         <h2 className="text-[12.5px] font-semibold text-white mb-1.5">Signed in</h2>
         <p className="text-[12px] text-[#DCE4F7] break-all">{auth.displayName}</p>
-        <p className="text-[11px] text-[#5B6884] mt-0.5">{auth.principal?.capabilities.join(' · ') || 'no capabilities'}</p>
+        <p className="text-[11px] text-[#8592AE] mt-0.5">{auth.principal?.capabilities.join(' · ') || 'no capabilities'}</p>
         <button type="button" onClick={() => void signOut()} className="mt-2.5 text-[11.5px] font-semibold text-[#9FB8FF]">Sign out</button>
       </section>
       <section className={box}>
@@ -29,7 +29,7 @@ export function ApiRail() {
       <section className={box}>
         <h2 className="text-[12.5px] font-semibold text-white mb-1.5">Backend</h2>
         <p className="text-[11.5px] text-[#A9B6D3] font-mono break-all">{apiHost()}</p>
-        <p className="text-[11px] text-[#5B6884] mt-0.5">environment {auth.principal?.environment ?? '—'}</p>
+        <p className="text-[11px] text-[#8592AE] mt-0.5">environment {auth.principal?.environment ?? '—'}</p>
       </section>
     </div>
   )

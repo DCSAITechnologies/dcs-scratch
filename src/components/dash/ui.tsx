@@ -44,7 +44,7 @@ export function Action({
           type="button"
           disabled
           title={`${MATURITY_HINT[maturity]}${title ? ` — ${title}` : ''}`}
-          className="px-2.5 py-1 rounded-lg text-[12px] font-medium text-[#5B6884] bg-white/[0.03] border border-white/[0.07] cursor-not-allowed"
+          className="px-2.5 py-1 rounded-lg text-[12px] font-medium text-[#8592AE] bg-white/[0.03] border border-white/[0.07] cursor-not-allowed"
         >
           {label}
         </button>
@@ -79,7 +79,7 @@ const STATE_COLOR: Record<string, string> = {
     PENDING: '#F5A524', Pending: '#F5A524', DEGRADED: '#F5A524', degraded: '#F5A524', OUTCOME_UNKNOWN: '#F5A524', RETRY_SCHEDULED: '#F5A524', APPROVAL_REQUIRED: '#F5A524', retrying: '#F5A524', Expired: '#F5A524', SUSPENDED: '#F5A524', suspended: '#F5A524', quarantined: '#F5A524',
 }
 export function Pill({ v }: { v: string }) {
-  if (v === '—' || v === '') return <span className="text-[#5B6884]">—</span>
+  if (v === '—' || v === '') return <span className="text-[#8592AE]">—</span>
   const c = STATE_COLOR[v] ?? '#A9B6D3'
   return (
     <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[11px] font-semibold whitespace-nowrap" style={{ background: `${c}1a`, color: c, border: `1px solid ${c}40` }}>
@@ -92,12 +92,14 @@ export function Pill({ v }: { v: string }) {
 // ── Table ──────────────────────────────────────────────────────────────────
 export function Table({ head, rows, mobileScroll = true }: { head: string[]; rows: ReactNode[][]; mobileScroll?: boolean }) {
   return (
-    <div className={mobileScroll ? 'overflow-x-auto -mx-4 px-4 md:mx-0 md:px-0' : ''}>
+    // focusable + labelled so keyboard users can scroll a wide table (axe: scrollable-region-focusable)
+    <div className={mobileScroll ? 'overflow-x-auto -mx-4 px-4 md:mx-0 md:px-0 focus-visible:outline focus-visible:outline-1 focus-visible:outline-[#4D8DFF]/60' : ''}
+      {...(mobileScroll ? { tabIndex: 0, role: 'region', 'aria-label': `Table: ${head.slice(0, 3).join(', ')}` } : {})}>
       <table className="w-full text-left border-collapse min-w-[640px]">
         <thead>
           <tr>
             {head.map((h) => (
-              <th key={h} className="text-[10.5px] uppercase tracking-[0.12em] text-[#5B6884] font-semibold pb-2.5 pr-4 border-b border-white/[0.07] whitespace-nowrap">{h}</th>
+              <th key={h} className="text-[10.5px] uppercase tracking-[0.12em] text-[#8592AE] font-semibold pb-2.5 pr-4 border-b border-white/[0.07] whitespace-nowrap">{h}</th>
             ))}
           </tr>
         </thead>
@@ -147,7 +149,7 @@ export function Tile({ label, value, sub, tone = 'default' }: { label: string; v
   const c = tone === 'warn' ? '#F5A524' : tone === 'bad' ? '#EF4444' : tone === 'good' ? '#21C87A' : '#fff'
   return (
     <div className="glass-card p-3.5">
-      <div className="text-[10.5px] uppercase tracking-[0.12em] text-[#5B6884] font-semibold">{label}</div>
+      <div className="text-[10.5px] uppercase tracking-[0.12em] text-[#8592AE] font-semibold">{label}</div>
       <div className="mt-1 text-[26px] leading-tight font-semibold" style={{ color: c }}>{value}</div>
       {sub && <div className="mt-1 text-[11.5px] text-[#A9B6D3]">{sub}</div>}
     </div>
@@ -159,7 +161,7 @@ export function KV({ items }: { items: [string, ReactNode][] }) {
     <dl className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-3">
       {items.map(([k, v]) => (
         <div key={k}>
-          <dt className="text-[10.5px] uppercase tracking-[0.12em] text-[#5B6884] font-semibold">{k}</dt>
+          <dt className="text-[10.5px] uppercase tracking-[0.12em] text-[#8592AE] font-semibold">{k}</dt>
           <dd className="mt-1 text-[13px] text-[#C7D2EA] break-words">{v}</dd>
         </div>
       ))}
@@ -174,7 +176,7 @@ export function FilterBar({ children }: { children: ReactNode }) {
 export function Filter({ label, value, options, onChange }: { label: string; value: string; options: string[]; onChange: (v: string) => void }) {
   return (
     <label className="inline-flex items-center gap-2 text-[12px] text-[#A9B6D3]">
-      <span className="text-[#5B6884]">{label}</span>
+      <span className="text-[#8592AE]">{label}</span>
       <select
         value={value}
         onChange={(e) => onChange(e.target.value)}

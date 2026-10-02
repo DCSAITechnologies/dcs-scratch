@@ -78,14 +78,14 @@ export function DashReceiptDetail({ id }: { id: string }) {
             <div className="mt-4 flex items-center gap-3 flex-wrap">
               <Pill v={r.state} />
               <span className="text-[12.5px] text-[#21C87A] font-semibold">Verified — {r.verification}</span>
-              <span className="text-[11.5px] text-[#5B6884]">cached result · re-verify for freshness</span>
+              <span className="text-[11.5px] text-[#8592AE]">cached result · re-verify for freshness</span>
             </div>
           </Panel>
           <Panel title={`Causal chain — ${r.run}`}>
             <ol className="space-y-2">
               {chain.map((c) => (
                 <li key={c.id} className={`flex items-center gap-3 text-[12.5px] ${c.id === r.id ? 'text-white font-semibold' : 'text-[#A9B6D3]'}`}>
-                  <span className="w-5 text-[#5B6884] font-mono text-[11px]">#{c.sequence}</span>
+                  <span className="w-5 text-[#8592AE] font-mono text-[11px]">#{c.sequence}</span>
                   <IdLink to={`/app/receipts/${c.id}`}>{c.id}</IdLink>
                   <span className="font-mono text-[11.5px]">{c.tool}</span>
                   <Pill v={c.state} />

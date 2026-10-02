@@ -21,7 +21,7 @@ export function ApiErrorPanel({ error, onRetry }: { error: ApiError | Error; onR
       {e?.forbidden && typeof e.detail.capability === 'string' && <p className="mt-1 text-[12px] text-[#93A0C2]">Required capability: <b>{e.detail.capability}</b></p>}
       {e?.forbidden && typeof e.detail.scope === 'string' && <p className="mt-1 text-[12px] text-[#93A0C2]">Required scope: <b>{e.detail.scope}</b></p>}
       {(e?.requestId || e?.correlationId) && (
-        <p className="mt-2 text-[11px] text-[#5B6884] font-mono">{e.requestId ? `request ${e.requestId} · ` : ''}correlation {e.correlationId}</p>
+        <p className="mt-2 text-[11px] text-[#8592AE] font-mono">{e.requestId ? `request ${e.requestId} · ` : ''}correlation {e.correlationId}</p>
       )}
       <div className="mt-4 flex gap-2">
         {e?.unauthenticated
@@ -46,7 +46,7 @@ export function ApiView<T>({ result, empty, isEmpty, children }: {
 
 export function Freshness({ loadedAt, onRefresh }: { loadedAt: Date | null; onRefresh: () => void }) {
   return (
-    <div className="flex items-center gap-2 text-[11px] text-[#5B6884]">
+    <div className="flex items-center gap-2 text-[11px] text-[#8592AE]">
       {loadedAt && <span>Loaded {loadedAt.toLocaleTimeString()}</span>}
       <button type="button" onClick={onRefresh} className="px-2 py-1 rounded-md border border-white/[0.1] text-[#A9B6D3] hover:text-white">Refresh</button>
     </div>
@@ -60,7 +60,7 @@ export function PagedView<T>({ list, empty, children }: { list: ReturnType<typeo
   return (
     <div className="glass-card p-5">
       {children(list.items)}
-      <div className="mt-3 flex items-center gap-3 text-[11px] text-[#5B6884]">
+      <div className="mt-3 flex items-center gap-3 text-[11px] text-[#8592AE]">
         <span data-testid="api-count">{list.items.length} loaded{list.hasMore ? ' · more available' : ''}</span>
         {list.error && <span role="alert" className="text-[#FF8A8A]">{describeError(list.error).title} while loading more</span>}
         {list.hasMore && <button type="button" disabled={list.status === 'more'} onClick={list.loadMore} className="ml-auto px-2.5 py-1 rounded-lg border border-white/[0.1] text-[#A9B6D3] hover:text-white disabled:opacity-50">{list.status === 'more' ? 'Loading…' : 'Load more'}</button>}
@@ -153,12 +153,12 @@ function ConfirmDialog<R>({ title, body, fields, danger, submitLabel, run, onClo
               {f.type === 'textarea' ? <textarea required={f.required} rows={3} className={input} placeholder={f.placeholder} value={values[f.name]} onChange={(e) => setValues({ ...values, [f.name]: e.target.value })} />
                 : f.type === 'select' ? <select required={f.required} className={input} value={values[f.name]} onChange={(e) => setValues({ ...values, [f.name]: e.target.value })}><option value="">Choose…</option>{f.options?.map((o) => <option key={o} value={o}>{o}</option>)}</select>
                 : <input required={f.required} type={f.type === 'number' ? 'number' : 'text'} className={input} placeholder={f.placeholder} value={values[f.name]} onChange={(e) => setValues({ ...values, [f.name]: e.target.value })} />}
-              {f.help && <span className="block mt-1 text-[11px] text-[#5B6884]">{f.help}</span>}
+              {f.help && <span className="block mt-1 text-[11px] text-[#8592AE]">{f.help}</span>}
             </label>
           ))}
         </div>
         {error && <div className="mt-4"><ApiErrorPanel error={error} /></div>}
-        <p className="mt-4 text-[11px] text-[#5B6884] font-mono">Idempotency-Key {key}</p>
+        <p className="mt-4 text-[11px] text-[#8592AE] font-mono">Idempotency-Key {key}</p>
         <div className="mt-4 flex justify-end gap-2">
           <button type="button" disabled={busy} onClick={onClose} className="px-3 py-1.5 rounded-lg text-[12.5px] text-[#A9B6D3] border border-white/[0.1]">Cancel</button>
           <button type="button" disabled={busy || missing.length > 0} onClick={submit} data-testid="confirm-submit"

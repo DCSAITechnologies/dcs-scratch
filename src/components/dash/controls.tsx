@@ -102,7 +102,7 @@ export function SearchModal({
 
   const section = (title: string, items: ReactNode) => (
     <div className="px-3 pt-3">
-      <div className="px-1 pb-1.5 text-[9.5px] uppercase tracking-[0.16em] text-[#5B6884] font-semibold">{title}</div>
+      <div className="px-1 pb-1.5 text-[9.5px] uppercase tracking-[0.16em] text-[#8592AE] font-semibold">{title}</div>
       {items}
     </div>
   )
@@ -112,7 +112,7 @@ export function SearchModal({
       <div className="absolute inset-0 bg-black/60" onClick={onClose} style={{ backdropFilter: 'blur(3px)' }} />
       <div className="relative w-[min(600px,calc(100vw-32px))] rounded-2xl border border-white/[0.1] shadow-2xl overflow-hidden" style={{ background: '#0B1128' }}>
         <div className="flex items-center gap-2.5 px-4 border-b border-white/[0.08]">
-          <svg width="15" height="15" viewBox="0 0 20 20" fill="none" className="text-[#5B6884] shrink-0"><circle cx="9" cy="9" r="5.5" stroke="currentColor" strokeWidth="1.6" /><path d="m13.5 13.5 3 3" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" /></svg>
+          <svg width="15" height="15" viewBox="0 0 20 20" fill="none" className="text-[#8592AE] shrink-0"><circle cx="9" cy="9" r="5.5" stroke="currentColor" strokeWidth="1.6" /><path d="m13.5 13.5 3 3" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" /></svg>
           <input
             ref={inputRef}
             value={q}
@@ -120,9 +120,9 @@ export function SearchModal({
             onKeyDown={(e) => e.key === 'Enter' && go(q)}
             placeholder="Search id: run_, ex_, rc_, ap_, cn_, pol_, connector…"
             aria-label="Search the console"
-            className="w-full h-11 bg-transparent text-[13.5px] text-white placeholder-[#3E4A66] outline-none"
+            className="w-full h-11 bg-transparent text-[13.5px] text-white placeholder-[#8592AE] outline-none"
           />
-          <kbd className="text-[9.5px] text-[#5B6884] border border-white/[0.1] rounded px-1.5 py-0.5 shrink-0">esc</kbd>
+          <kbd className="text-[9.5px] text-[#8592AE] border border-white/[0.1] rounded px-1.5 py-0.5 shrink-0">esc</kbd>
         </div>
         <div className="max-h-[46vh] overflow-y-auto pb-3">
           {recent.length > 0 && section('Recent searches', (
@@ -147,14 +147,14 @@ export function SearchModal({
                     <span className="px-1.5 py-0.5 rounded text-[9px] font-bold uppercase tracking-wide bg-[#4D8DFF]/[0.12] text-[#7EA2FF] border border-[#4D8DFF]/25 w-[74px] text-center shrink-0">{s.type}</span>
                     <span className="font-mono text-[12px] text-[#7EA2FF]">{s.id}</span>
                     <span className="text-[11.5px] text-[#A9B6D3] truncate">{s.label}</span>
-                    <span className="ml-auto text-[10px] text-[#5B6884] shrink-0">{s.env}</span>
+                    <span className="ml-auto text-[10px] text-[#8592AE] shrink-0">{s.env}</span>
                   </button>
                 </li>
               ))}
             </ul>
           ))}
         </div>
-        <div className="px-4 py-2 border-t border-white/[0.06] text-[10px] text-[#5B6884]">Hermetic preview data — results resolve against the reference stores.</div>
+        <div className="px-4 py-2 border-t border-white/[0.06] text-[10px] text-[#8592AE]">Hermetic preview data — results resolve against the reference stores.</div>
       </div>
     </div>
   )

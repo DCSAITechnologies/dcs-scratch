@@ -20,7 +20,7 @@ export function DashDeveloper() {
         </Panel>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
           <Panel title="SDK / CLI" right={<MaturityTag m="PRE-LAUNCH" />}>
-            <pre className="text-[12px] text-[#C7D2EA] bg-black/30 rounded-lg p-3 overflow-x-auto">npm i @dcs-ai/connector-os   # PRE-LAUNCH — not published; install from source only
+            <pre tabIndex={0} aria-label="Install command" className="text-[12px] text-[#C7D2EA] bg-black/30 rounded-lg p-3 overflow-x-auto">npm i @dcs-ai/connector-os   # PRE-LAUNCH — not published; install from source only
 cos login                      # CLI ships at launch</pre>
           </Panel>
           <Panel title="MCP endpoint" right={<MaturityTag m="HERMETIC ONLY" />}>
@@ -50,7 +50,7 @@ export function DashUsage() {
             ['Reconciled 24 h', USAGE.reconciled_24h], ['Provider cost', 'not reported'],
           ].map(([l, v]) => (
             <div key={String(l)} className="glass-card p-4">
-              <div className="text-[10.5px] uppercase tracking-[0.12em] text-[#5B6884] font-semibold">{l}</div>
+              <div className="text-[10.5px] uppercase tracking-[0.12em] text-[#8592AE] font-semibold">{l}</div>
               <div className="mt-1.5 text-2xl font-semibold text-white">{v}</div>
             </div>
           ))}
@@ -91,7 +91,7 @@ export function DashTeam() {
               ...(Object.keys(ROLE_MATRIX) as RoleKey[]).map((r) => matrixCell(ROLE_MATRIX[r][cap])),
             ])}
           />
-          <p className="mt-3 text-[11.5px] text-[#5B6884]">Execute is never a human action — only the broker executes, on an approved step. Approval cells marked ✓ exclude the plan’s submitter.</p>
+          <p className="mt-3 text-[11.5px] text-[#8592AE]">Execute is never a human action — only the broker executes, on an approved step. Approval cells marked ✓ exclude the plan’s submitter.</p>
         </Panel>
       </div>
     </StateGate>

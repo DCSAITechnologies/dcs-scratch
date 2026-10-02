@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useEffect, useId, useMemo, useRef, useState } from 'react'
 import { PUBLISHED_CONNECTORS as CONNECTORS, LEGACY_REFERENCE_SURFACES, TOTAL_CATALOGUED, PUBLISHED_COUNT, UNPUBLISHED_COUNT, CATEGORIES, STATUSES, AUTH_TYPES, RUNTIME_STATUSES, statusColor, runtimeStatusLabel, type Conn } from '../lib/data'
 import { ConnectorLogo } from '../components/ConnectorLogo'
 
@@ -10,49 +10,66 @@ const LEGACY_GRID = LEGACY_REFERENCE_SURFACES.filter(
   (c) => c.lane6_behavior === 'PRESERVE_REFERENCE_SURFACE' || c.lane6_behavior === 'REDIRECT'
 )
 
-// Custom dark dropdown — native <select> renders OS-styled (white) panels
+// Custom dark dropdown — native <select> renders OS-styled (white) panels.
+// Listbox pattern: button (aria-haspopup/expanded) + listbox of options;
+// ArrowUp/Down/Home/End move, Enter/Space select, Escape/Tab/outside click close.
 function FilterSelect({ value, onChange, options, width = 150, ariaLabel }: {
   value: string
   onChange: (v: string) => void
   options: { value: string; label: string }[]
   width?: number
-  ariaLabel?: string
+  ariaLabel: string
 }) {
   const [open, setOpen] = useState(false)
+  const [active, setActive] = useState(0)
   const ref = useRef<HTMLDivElement>(null)
+  const listRef = useRef<HTMLUListElement>(null)
+  const buttonRef = useRef<HTMLButtonElement>(null)
+  const listId = useId()
   useEffect(() => {
     if (!open) return
     const close = (e: MouseEvent) => { if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false) }
     document.addEventListener('mousedown', close)
+    listRef.current?.focus()
     return () => document.removeEventListener('mousedown', close)
   }, [open])
   const current = options.find((o) => o.value === value) ?? options[0]
+  const openList = () => { setActive(Math.max(0, options.findIndex((o) => o.value === value))); setOpen(true) }
+  const choose = (i: number) => { onChange(options[i].value); setOpen(false); buttonRef.current?.focus() }
+  const onListKey = (e: React.KeyboardEvent) => {
+    if (e.key === 'ArrowDown') { e.preventDefault(); setActive((a) => Math.min(a + 1, options.length - 1)) }
+    else if (e.key === 'ArrowUp') { e.preventDefault(); setActive((a) => Math.max(a - 1, 0)) }
+    else if (e.key === 'Home') { e.preventDefault(); setActive(0) }
+    else if (e.key === 'End') { e.preventDefault(); setActive(options.length - 1) }
+    else if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); choose(active) }
+    else if (e.key === 'Escape') { e.preventDefault(); setOpen(false); buttonRef.current?.focus() }
+    else if (e.key === 'Tab') setOpen(false)
+  }
   return (
     <div ref={ref} className="relative" style={{ width }}>
-      <button type="button" aria-label={ariaLabel} onClick={() => setOpen(!open)}
+      <button ref={buttonRef} type="button" aria-label={ariaLabel} aria-haspopup="listbox" aria-expanded={open} aria-controls={open ? listId : undefined}
+        onClick={() => (open ? setOpen(false) : openList())}
+        onKeyDown={(e) => { if (e.key === 'ArrowDown' || e.key === 'ArrowUp') { e.preventDefault(); openList() } }}
         className="dcs-input !py-1.5 !px-3 text-[12px] w-full flex items-center justify-between gap-2 text-left">
         <span className={`truncate ${value ? 'text-white' : 'text-[#93A0C2]'}`}>{current.label}</span>
-        <svg width="10" height="6" viewBox="0 0 10 6" fill="none" className={`shrink-0 transition-transform ${open ? 'rotate-180' : ''}`}>
+        <svg width="10" height="6" viewBox="0 0 10 6" fill="none" aria-hidden="true" className={`shrink-0 transition-transform ${open ? 'rotate-180' : ''}`}>
           <path d="M1 1l4 4 4-4" stroke="#93A0C2" strokeWidth="1.5" strokeLinecap="round" />
         </svg>
       </button>
       {open && (
-        <div className="absolute z-40 mt-1.5 w-full max-h-[260px] overflow-auto rounded-xl p-1.5"
+        <ul ref={listRef} id={listId} role="listbox" aria-label={ariaLabel} tabIndex={-1} onKeyDown={onListKey}
+          aria-activedescendant={`${listId}-${active}`}
+          className="absolute z-40 mt-1.5 w-full max-h-[260px] overflow-auto rounded-xl p-1.5 outline-none"
           style={{ background: 'rgba(13,17,34,0.97)', border: '1px solid rgba(120,140,255,0.22)', boxShadow: '0 16px 40px rgba(0,0,0,0.5)', backdropFilter: 'blur(12px)' }}>
-          {options.map((o) => (
-            <button key={o.value} type="button"
-              onClick={() => { onChange(o.value); setOpen(false) }}
-              className="w-full text-left px-2.5 py-1.5 rounded-lg text-[12px] transition-colors"
-              style={{
-                color: o.value === value ? '#fff' : '#A9B6D3',
-                background: o.value === value ? 'rgba(108,99,255,0.18)' : 'transparent',
-              }}
-              onMouseEnter={(e) => { if (o.value !== value) e.currentTarget.style.background = 'rgba(120,140,255,0.10)' }}
-              onMouseLeave={(e) => { if (o.value !== value) e.currentTarget.style.background = 'transparent' }}>
+          {options.map((o, i) => (
+            <li key={o.value} id={`${listId}-${i}`} role="option" aria-selected={o.value === value}
+              onMouseDown={(e) => e.preventDefault()} onClick={() => choose(i)} onMouseEnter={() => setActive(i)}
+              className="w-full text-left px-2.5 py-1.5 rounded-lg text-[12px] cursor-pointer"
+              style={{ color: o.value === value ? '#fff' : '#A9B6D3', background: i === active ? 'rgba(120,140,255,0.16)' : o.value === value ? 'rgba(108,99,255,0.18)' : 'transparent' }}>
               {o.label}
-            </button>
+            </li>
           ))}
-        </div>
+        </ul>
       )}
     </div>
   )
@@ -134,16 +151,16 @@ export function Connectors() {
           <FilterSelect ariaLabel="Runtime status filter" width={190} value={runtime}
             onChange={(v) => { setRuntime(v); setShown(PAGE) }}
             options={[{ value: '', label: 'All runtime statuses' }, ...RUNTIME_STATUSES.map((s) => ({ value: s, label: s }))]} />
-          <FilterSelect width={160} value={auth}
+          <FilterSelect ariaLabel="Authentication filter" width={160} value={auth}
             onChange={(v) => { setAuth(v); setShown(PAGE) }}
             options={[{ value: '', label: 'All auth types' }, ...AUTH_TYPES.map((a) => ({ value: a, label: a }))]} />
-          <FilterSelect width={150} value={rw}
+          <FilterSelect ariaLabel="Read/write filter" width={150} value={rw}
             onChange={(v) => { setRw(v); setShown(PAGE) }}
             options={[{ value: '', label: 'Read + Write' }, { value: 'Read only', label: 'Read only' }, { value: 'write', label: 'Supports write' }]} />
           <label className="flex items-center gap-2 text-[12.5px] text-[#A9B6D3] cursor-pointer">
             <input type="checkbox" checked={wh} onChange={(e) => { setWh(e.target.checked); setShown(PAGE) }} className="accent-[#6C63FF]" /> Webhooks
           </label>
-          <FilterSelect width={130} value={sort}
+          <FilterSelect ariaLabel="Sort order" width={130} value={sort}
             onChange={(v) => setSort(v as 'rank' | 'az')}
             options={[{ value: 'rank', label: 'Sort: rank' }, { value: 'az', label: 'Sort: A–Z' }]} />
           <span className="ml-auto text-[12px] text-[#93A0C2]" data-testid="result-count">{filtered.length} connectors</span>

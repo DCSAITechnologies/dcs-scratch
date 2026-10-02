@@ -61,8 +61,8 @@ export function DashExecutionDetail({ id }: { id: string }) {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 mb-4">
         <Panel title="Two statuses">
           <div className="flex items-center gap-3 flex-wrap">
-            <div><div className="text-[10.5px] uppercase tracking-[0.12em] text-[#5B6884] font-semibold mb-1">Outcome</div><Pill v={e.outcome} /></div>
-            <div><div className="text-[10.5px] uppercase tracking-[0.12em] text-[#5B6884] font-semibold mb-1">Receipt state</div><Pill v={e.receipt_state} /></div>
+            <div><div className="text-[10.5px] uppercase tracking-[0.12em] text-[#8592AE] font-semibold mb-1">Outcome</div><Pill v={e.outcome} /></div>
+            <div><div className="text-[10.5px] uppercase tracking-[0.12em] text-[#8592AE] font-semibold mb-1">Receipt state</div><Pill v={e.receipt_state} /></div>
           </div>
           {e.receipt_state === 'FAILED' && (
             <p className="mt-3 text-[12px] text-[#E8C98A] leading-relaxed">The execution succeeded but receipt issuance failed. Behaviour per class (block vs PENDING) is founder decision FD-1 — surfaced in Settings.</p>
@@ -102,7 +102,7 @@ export function DashExecutionDetail({ id }: { id: string }) {
             {!noManualRetry && <Action label="Retry" maturity="PLANNED" />}
           </div>
           {noManualRetry && (
-            <p className="mt-3 text-[11.5px] text-[#5B6884]">No manual retry is offered: retry_safety is <span className="font-mono">{e.retry_safety}</span> for this tool. Reconciliation resolves it.</p>
+            <p className="mt-3 text-[11.5px] text-[#8592AE]">No manual retry is offered: retry_safety is <span className="font-mono">{e.retry_safety}</span> for this tool. Reconciliation resolves it.</p>
           )}
         </Panel>
       </div>

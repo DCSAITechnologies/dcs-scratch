@@ -381,8 +381,13 @@
 .dcs-code { font-family: 'JetBrains Mono', monospace; font-size: 12.5px; line-height: 1.7; color: #D6E1FF; }
 .dcs-code .k { color: #8B5CF6; } .dcs-code .s { color: #00C2FF; } .dcs-code .c { color: #93A0C2; } .dcs-code .f { color: #5A7BFF; }
 
+/* Visible keyboard focus everywhere (inputs keep their own glow). */
+:focus-visible { outline: 2px solid #9FB8FF; outline-offset: 2px; border-radius: 6px; }
+.dcs-input:focus-visible { outline: none; }
+
 @media (prefers-reduced-motion: reduce) {
   .anim-float, .anim-spin-slow, .anim-spin-rev, .anim-pulse-glow, .anim-breathe, .anim-sweep, .anim-shimmer-line, .anim-marquee,
   [class*="anim-"] { animation: none !important; }
-  * { transition-duration: 0.01ms !important; }
+  /* covers inline/keyframe animations too (nav dropdowns, marquee, skeletons) */
+  *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
 }

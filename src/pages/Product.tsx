@@ -48,7 +48,7 @@ export function Product() {
         <div className="mt-16">
           <SectionHeader eyebrow="Explore further" title="Go deeper on each layer" />
           <div className="mt-8 grid md:grid-cols-2 lg:grid-cols-4 gap-4">
-            <TeaserCard eyebrow="Agents" title="Operations Agent Layer" desc="Reasoning and execution, strictly separated — with governance over the full lifecycle." cta="Explore agents" href="/agents" icon={<span className="text-[#8B5CF6] text-lg">◈</span>} />
+            <TeaserCard eyebrow="Agents" title="Operations Agent Layer" desc="Reasoning and execution, strictly separated — with governance over the full lifecycle." cta="Explore agents" href="/agents" icon={<span className="text-[#A78BFA] text-lg">◈</span>} />
             <TeaserCard eyebrow="Security" title="Security model" desc="Credential isolation, tenant boundaries, egress control and kill controls." cta="Security overview" href="/security" icon={<span className="text-[#21C87A] text-lg">⛨</span>} />
             <TeaserCard eyebrow="Receipts" title="Verifiable outcomes" desc="Evidence records for every governed action your agents take." cta="See receipts" href="/receipts" icon={<span className="text-[#00C2FF] text-lg">✓</span>} />
             <TeaserCard eyebrow="Developers" title="Developer hub" desc="Quickstart, API reference, SDKs, MCP, webhooks and CLI." cta="Start building" href="/developers" icon={<span className="text-[#5A7BFF] text-lg">{ }</span>} />

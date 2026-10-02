@@ -26,7 +26,7 @@ function Donut({ parts }: { parts: { label: string; value: number; color: string
         </svg>
         <div className="absolute inset-0 flex flex-col items-center justify-center">
           <span className="text-2xl font-semibold text-white">{total}</span>
-          <span className="text-[10px] text-[#5B6884]">total runs</span>
+          <span className="text-[10px] text-[#8592AE]">total runs</span>
         </div>
       </div>
       <ul className="space-y-2">
@@ -35,7 +35,7 @@ function Donut({ parts }: { parts: { label: string; value: number; color: string
             <span className="w-2 h-2 rounded-full" style={{ background: p.color }} />
             <span className="text-[#A9B6D3]">{p.label}</span>
             <span className="ml-2 text-white font-semibold">{p.value}</span>
-            <span className="text-[#5B6884]">{total ? Math.round((p.value / total) * 100) : 0}%</span>
+            <span className="text-[#8592AE]">{total ? Math.round((p.value / total) * 100) : 0}%</span>
           </li>
         ))}
       </ul>
@@ -53,7 +53,7 @@ function Bars({ data }: { data: { h: string; issued: number; pending: number; fa
         {[0, 5, 10, 15, 20].map((t) => (
           <g key={t}>
             <line x1="0" x2={W} y1={H - (t / max) * H} y2={H - (t / max) * H} stroke="#151D3D" strokeWidth="1" />
-            <text x="0" y={H - (t / max) * H - 2} fill="#3E4A66" fontSize="7">{t}</text>
+            <text x="0" y={H - (t / max) * H - 2} fill="#8592AE" fontSize="7">{t}</text>
           </g>
         ))}
         {data.map((d, i) => {
@@ -67,10 +67,10 @@ function Bars({ data }: { data: { h: string; issued: number; pending: number; fa
             </g>
           )
         })}
-        <text x="0" y={H + 12} fill="#3E4A66" fontSize="7.5">00:00</text>
-        <text x={W / 3} y={H + 12} fill="#3E4A66" fontSize="7.5">06:00</text>
-        <text x={(W / 3) * 2} y={H + 12} fill="#3E4A66" fontSize="7.5">12:00</text>
-        <text x={W - 26} y={H + 12} fill="#3E4A66" fontSize="7.5">18:00</text>
+        <text x="0" y={H + 12} fill="#8592AE" fontSize="7.5">00:00</text>
+        <text x={W / 3} y={H + 12} fill="#8592AE" fontSize="7.5">06:00</text>
+        <text x={(W / 3) * 2} y={H + 12} fill="#8592AE" fontSize="7.5">12:00</text>
+        <text x={W - 26} y={H + 12} fill="#8592AE" fontSize="7.5">18:00</text>
       </svg>
       <div className="mt-2 flex items-center gap-4 text-[11px]">
         <span className="flex items-center gap-1.5 text-[#A9B6D3]"><span className="w-2 h-2 rounded-full bg-[#21C87A]" /> Issued ({SERIES_TOTALS.issued})</span>
@@ -97,7 +97,7 @@ const RUN_OUTCOMES = [
   { label: 'Succeeded', value: RUNS.filter((r) => r.execution_outcome === 'SUCCEEDED').length, color: '#21C87A' },
   { label: 'Outcome unknown', value: RUNS.filter((r) => r.execution_outcome === 'OUTCOME_UNKNOWN').length, color: '#F5A524' },
   { label: 'Refused', value: RUNS.filter((r) => r.execution_outcome === 'REFUSED').length, color: '#EF4444' },
-  { label: 'No execution yet', value: RUNS.filter((r) => r.execution_outcome === '—').length, color: '#5B6884' },
+  { label: 'No execution yet', value: RUNS.filter((r) => r.execution_outcome === '—').length, color: '#8592AE' },
 ]
 const CLOSED_RUNS = RUN_OUTCOMES.slice(0, 3).reduce((s, p) => s + p.value, 0)
 
@@ -135,7 +135,7 @@ function Body({ pending, health, readonly = false }: { pending: typeof APPROVALS
         <div className="md:text-right md:justify-self-end">
           <div className="text-[10.5px] text-[#93A0C2]">Hermetic reference data · Not production</div>
           <div className="mt-0.5 flex items-center gap-2.5 md:justify-end">
-            <span className="text-[10.5px] text-[#5B6884]">Fixture snapshot <span className="text-[#A9B6D3]">2026-09-27</span></span>
+            <span className="text-[10.5px] text-[#8592AE]">Fixture snapshot <span className="text-[#A9B6D3]">2026-09-27</span></span>
             <span className="flex items-center gap-1.5 text-[11.5px] font-semibold text-[#93A0C2]"><span className="w-2 h-2 rounded-full bg-[#5B6884]" /> Static — no refresh source</span>
           </div>
         </div>
@@ -157,11 +157,11 @@ function Body({ pending, health, readonly = false }: { pending: typeof APPROVALS
                 {k.icon === 'doc' && <svg width="16" height="16" viewBox="0 0 20 20" fill="none"><path d="M6 3h5l4 4v10H6V3Zm5 0v4h4" stroke={k.color} strokeWidth="1.5" strokeLinejoin="round" /></svg>}
                 {k.icon === 'clock' && <svg width="16" height="16" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="7" stroke={k.color} strokeWidth="1.5" /><path d="M10 6.5V10l2.5 2" stroke={k.color} strokeWidth="1.5" strokeLinecap="round" /></svg>}
               </span>
-              <span className="text-[#3E4A66] group-hover:text-[#5A7BFF] transition-colors">›</span>
+              <span className="text-[#8592AE] group-hover:text-[#5A7BFF] transition-colors">›</span>
             </div>
             <div className="mt-2 text-[12.5px] font-medium text-[#A9B6D3]">{k.label}</div>
             <div className="text-[28px] leading-tight font-semibold text-white">{k.value}</div>
-            <div className="mt-0.5 text-[11px] text-[#5B6884]">{k.sub}</div>
+            <div className="mt-0.5 text-[11px] text-[#8592AE]">{k.sub}</div>
           </a>
         ))}
       </div>
@@ -186,7 +186,7 @@ function Body({ pending, health, readonly = false }: { pending: typeof APPROVALS
                   </span>
                   <span className="text-right shrink-0">
                     <span className="block px-1.5 py-0.5 rounded text-[9.5px] font-bold" style={{ color: SEV[it.sev], background: `${SEV[it.sev]}1a`, border: `1px solid ${SEV[it.sev]}44` }}>{it.sev}</span>
-                    <span className="block mt-1 text-[10.5px] text-[#5B6884]">{it.age}</span>
+                    <span className="block mt-1 text-[10.5px] text-[#8592AE]">{it.age}</span>
                   </span>
                 </a>
               </li>
@@ -199,7 +199,7 @@ function Body({ pending, health, readonly = false }: { pending: typeof APPROVALS
           <div className="flex-1 flex items-center">
             <Donut parts={RUN_OUTCOMES} />
           </div>
-          <div className="mt-3 pt-2.5 border-t border-white/[0.06] flex justify-between text-[10.5px] text-[#5B6884]">
+          <div className="mt-3 pt-2.5 border-t border-white/[0.06] flex justify-between text-[10.5px] text-[#8592AE]">
             <span>Succeeded {RUN_OUTCOMES[0].value} of {CLOSED_RUNS} with an outcome</span><span>{RUN_OUTCOMES[1].value} awaiting reconciliation</span>
           </div>
         </Panel>
@@ -208,7 +208,7 @@ function Body({ pending, health, readonly = false }: { pending: typeof APPROVALS
           <div className="flex-1 flex flex-col justify-center">
             <Bars data={RECEIPT_SERIES} />
           </div>
-          <div className="mt-2.5 pt-2.5 border-t border-white/[0.06] flex justify-between text-[10.5px] text-[#5B6884]">
+          <div className="mt-2.5 pt-2.5 border-t border-white/[0.06] flex justify-between text-[10.5px] text-[#8592AE]">
             <span>Peak {SERIES_PEAK.issued}/h at {SERIES_PEAK.h.padStart(2, '0')}:00</span><span>Issued {ISSUANCE_RATE}% of receipt attempts</span>
           </div>
         </Panel>
@@ -220,7 +220,7 @@ function Body({ pending, health, readonly = false }: { pending: typeof APPROVALS
           <table className="w-full text-left border-collapse min-w-[760px]">
             <thead>
               <tr>{['Run', 'Connector', 'Agent', 'Stage', 'Outcome', 'Start time', 'Duration'].map((h) => (
-                <th key={h} className="text-[10px] uppercase tracking-[0.12em] text-[#5B6884] font-semibold pb-2.5 pr-4 border-b border-white/[0.06]">{h}</th>
+                <th key={h} className="text-[10px] uppercase tracking-[0.12em] text-[#8592AE] font-semibold pb-2.5 pr-4 border-b border-white/[0.06]">{h}</th>
               ))}</tr>
             </thead>
             <tbody>
@@ -239,7 +239,7 @@ function Body({ pending, health, readonly = false }: { pending: typeof APPROVALS
           </table>
         </div>
       </Panel>
-      {readonly && <p className="mt-3 text-[11.5px] text-[#5B6884]">Viewer role — read-only.</p>}
+      {readonly && <p className="mt-3 text-[11.5px] text-[#8592AE]">Viewer role — read-only.</p>}
     </div>
   )
 }

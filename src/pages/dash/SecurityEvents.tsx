@@ -79,7 +79,7 @@ export function DashEvents() {
           <Table head={['Subscription', 'Event', 'Delivery state', 'Attempts']} mobileScroll={false} rows={OUTBOUND_EVENTS.map((e) => [
             <span key="s" className="font-mono text-[11.5px]">{e.subscription}</span>, e.event, <Pill key="d" v={e.delivery} />, String(e.attempts),
           ])} />
-          <div className="mt-3 text-[11.5px] text-[#5B6884]">Event types: approval.requested · execution.state_changed · receipt.issued · receipt.failed · kill.activated</div>
+          <div className="mt-3 text-[11.5px] text-[#8592AE]">Event types: approval.requested · execution.state_changed · receipt.issued · receipt.failed · kill.activated</div>
         </Panel>
       </div>
     </StateGate>

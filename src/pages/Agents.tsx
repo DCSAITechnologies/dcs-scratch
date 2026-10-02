@@ -36,7 +36,7 @@ export function Agents() {
         <Reveal className="mt-12 max-w-3xl">
           <h2 className="text-xl font-semibold text-white">What the Operations Agent Layer is</h2>
           <p className="mt-3 text-[14px] leading-relaxed text-[#A9B6D3]">
-            The OAL is the reasoning layer of Connector OS: it observes signals, correlates them, diagnoses with evidence, plans over declared capabilities and recommends action. It is deliberately separated from everything that makes action real — credentials, provider APIs, execution and evidence. What it decides is governed; what it can touch is nothing. <a href="/agents/governance" className="text-[#5A7BFF] hover:text-white transition-colors">How the boundary works →</a>
+            The OAL is the reasoning layer of Connector OS: it observes signals, correlates them, diagnoses with evidence, plans over declared capabilities and recommends action. It is deliberately separated from everything that makes action real — credentials, provider APIs, execution and evidence. What it decides is governed; what it can touch is nothing. <a href="/agents/governance" className="text-[#7EA2FF] underline underline-offset-2 hover:text-white transition-colors">How the boundary works →</a>
           </p>
         </Reveal>
 
@@ -57,7 +57,7 @@ export function Agents() {
         {/* 3 · Canonical lifecycle */}
         <Reveal className="mt-12">
           <h2 className="text-xl font-semibold text-white mb-2">The lifecycle — ten stages, one definition</h2>
-          <p className="text-[13.5px] text-[#A9B6D3] mb-5 max-w-3xl">Every agent run moves through the same ten stages. Each stage has an input, an output, an owner and a fact. <a href="/agents/lifecycle" className="text-[#5A7BFF] hover:text-white transition-colors">Stage-by-stage detail →</a></p>
+          <p className="text-[13.5px] text-[#A9B6D3] mb-5 max-w-3xl">Every agent run moves through the same ten stages. Each stage has an input, an output, an owner and a fact. <a href="/agents/lifecycle" className="text-[#7EA2FF] underline underline-offset-2 hover:text-white transition-colors">Stage-by-stage detail →</a></p>
           <LifecycleDiagram stages={LIFECYCLE_10} modeBoundary={MODE_BOUNDARIES} />
         </Reveal>
 
@@ -68,7 +68,7 @@ export function Agents() {
             {MODES.map((m) => (
               <div key={m.m} className="glass-card p-6 h-full">
                 <div className="flex items-center justify-between mb-2 gap-2 flex-wrap">
-                  <span className="text-[12px] font-bold text-[#8B5CF6]" style={{ fontFamily: 'JetBrains Mono' }}>{m.m}</span>
+                  <span className="text-[12px] font-bold text-[#A78BFA]" style={{ fontFamily: 'JetBrains Mono' }}>{m.m}</span>
                   <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full" style={{ color: m.status.startsWith('Complete') ? '#21C87A' : m.status === 'Later' ? '#93A0C2' : '#F5A524', background: m.status.startsWith('Complete') ? 'rgba(33,200,122,0.12)' : m.status === 'Later' ? 'rgba(120,140,255,0.08)' : 'rgba(245,165,36,0.12)', border: `1px solid ${m.status.startsWith('Complete') ? '#21C87A55' : m.status === 'Later' ? 'rgba(120,140,255,0.25)' : '#F5A52455'}` }}>{m.status}</span>
                 </div>
                 <div className="text-[15px] font-semibold text-white mb-2">{m.t}</div>
@@ -91,7 +91,7 @@ export function Agents() {
               <li key={t} className="flex gap-3 text-[13.5px] leading-relaxed text-[#A9B6D3]"><span className="mt-[7px] w-1.5 h-1.5 rounded-full bg-[#00C2FF] shrink-0" />{t}</li>
             ))}
           </ul>
-          <p className="mt-4 text-[13px] text-[#93A0C2]">What never comes back: credentials, raw provider error bodies, provider secrets. <a href="/agents/executions" className="text-[#5A7BFF] hover:text-white transition-colors">The agent view of executions →</a></p>
+          <p className="mt-4 text-[13px] text-[#93A0C2]">What never comes back: credentials, raw provider error bodies, provider secrets. <a href="/agents/executions" className="text-[#7EA2FF] underline underline-offset-2 hover:text-white transition-colors">The agent view of executions →</a></p>
         </Reveal>
 
         <StatusCallout route="/agents" />

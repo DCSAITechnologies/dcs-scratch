@@ -195,8 +195,8 @@ export function ApiConnectNew() {
             <input className={input} value={connectorId} onChange={(e) => setConnectorId(e.target.value.trim())} placeholder="e.g. deepl" />
           </label>
           <div className="mt-3 text-[12.5px]">
-            {!connectorId ? <span className="text-[#5B6884]">Enter a connector id from the catalogue.</span>
-              : connector.status === 'loading' ? <span className="text-[#5B6884]">Checking…</span>
+            {!connectorId ? <span className="text-[#8592AE]">Enter a connector id from the catalogue.</span>
+              : connector.status === 'loading' ? <span className="text-[#8592AE]">Checking…</span>
               : connector.status === 'error' ? <span role="alert" className="text-[#FF8A8A]">Unknown connector.</span>
               : connector.data && <span className="text-[#C7D2EA]">{connector.data.name} — <Pill v={connector.data.availability} /></span>}
           </div>
@@ -207,7 +207,7 @@ export function ApiConnectNew() {
             <select className={input} value={environment} onChange={(e) => setEnvironment(e.target.value as typeof environment)}>
               <option value="staging">staging</option><option value="development">development</option><option value="sandbox">sandbox</option>
             </select>
-            <span className="block mt-1 text-[11px] text-[#5B6884]">Production connections are not offered from this console.</span>
+            <span className="block mt-1 text-[11px] text-[#8592AE]">Production connections are not offered from this console.</span>
           </label>
         </Panel>
         <Panel title="3 · Authenticate (vault reference)">
@@ -224,7 +224,7 @@ export function ApiConnectNew() {
                 confirmBody={<>Connector <b>{connectorId}</b> in <b>{environment}</b>, credential <span className="font-mono">{credentialRef.trim()}</span>.</>}
                 run={(_, key) => api.createConnection({ connector_id: connectorId, credential_ref: credentialRef.trim(), label: label || undefined, routing: { environment } }, key)}
                 onDone={(c) => navigate(`/app/connections/${c.connection_id}?created=${c.status}`)} />
-            : <button type="button" disabled className="px-2.5 py-1 rounded-lg text-[12px] text-[#5B6884] border border-white/[0.07] cursor-not-allowed">Create connection</button>}
+            : <button type="button" disabled className="px-2.5 py-1 rounded-lg text-[12px] text-[#8592AE] border border-white/[0.07] cursor-not-allowed">Create connection</button>}
         </Panel>
       </div>
     </div>

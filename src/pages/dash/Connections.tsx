@@ -68,7 +68,7 @@ export function DashConnectionDetail({ id }: { id: string }) {
         <Panel title="Lifecycle">
           <ol className="flex flex-wrap items-center gap-1.5">
             {[...lifecycle, 'DEGRADED/SUSPENDED/REVOKED'].map((s, i) => (
-              <li key={s} className={`px-2.5 py-1 rounded-full text-[11px] font-semibold border ${i <= idx ? 'bg-[#21C87A]/[0.08] text-[#21C87A] border-[#21C87A]/30' : c.state === s.split('/')[0] ? 'bg-[#F5A524]/[0.08] text-[#F5A524] border-[#F5A524]/30' : 'text-[#5B6884] border-white/[0.08]'}`}>{s}</li>
+              <li key={s} className={`px-2.5 py-1 rounded-full text-[11px] font-semibold border ${i <= idx ? 'bg-[#21C87A]/[0.08] text-[#21C87A] border-[#21C87A]/30' : c.state === s.split('/')[0] ? 'bg-[#F5A524]/[0.08] text-[#F5A524] border-[#F5A524]/30' : 'text-[#8592AE] border-white/[0.08]'}`}>{s}</li>
             ))}
           </ol>
           <div className="mt-4"><KV items={[
@@ -113,7 +113,7 @@ export function DashConnectNew() {
           <div className="space-y-2">
             {['stripe', 'shopify', 'salesforce', 'slack', 'razorpay'].map((id) => (
               <div key={id} className="flex items-center justify-between px-3 py-2 rounded-lg border border-white/[0.07] bg-white/[0.02]">
-                <span className="text-[13px] text-[#C7D2EA]">{fmtConn(id)} <span className="text-[10.5px] text-[#5B6884]">simulator</span></span>
+                <span className="text-[13px] text-[#C7D2EA]">{fmtConn(id)} <span className="text-[10.5px] text-[#8592AE]">simulator</span></span>
                 <Action label="Select" maturity="HERMETIC ONLY" />
               </div>
             ))}
@@ -167,7 +167,7 @@ export function DashConnectors() {
           maturity="SNAPSHOT"
         />
         <FilterBar>
-          <input value={q} onChange={(e) => setFilter(() => setQ(e.target.value))} placeholder="Search name, provider or id" aria-label="Search connectors" className="bg-[#0d1430] border border-white/[0.09] rounded-lg px-2.5 py-1.5 text-[12px] text-[#C7D2EA] placeholder-[#3E4A66] outline-none w-52" />
+          <input value={q} onChange={(e) => setFilter(() => setQ(e.target.value))} placeholder="Search name, provider or id" aria-label="Search connectors" className="bg-[#0d1430] border border-white/[0.09] rounded-lg px-2.5 py-1.5 text-[12px] text-[#C7D2EA] placeholder-[#8592AE] outline-none w-52" />
           <Filter label="Category" value={cat} options={[...new Set(CATALOGUE_RUNTIME.map((c) => c.category))].sort()} onChange={(v) => setFilter(() => setCat(v))} />
           <Filter label="Publication" value={pub} options={['published', 'on hold']} onChange={(v) => setFilter(() => setPub(v))} />
           <Filter label="Runtime" value={runtime} options={['not_verified', 'staging_verified', 'production_verified']} onChange={(v) => setFilter(() => setRuntime(v))} />
@@ -186,7 +186,7 @@ export function DashConnectors() {
             <Table
               head={['#', 'Connector', 'Provider', 'Category', 'Catalogue status', 'Publication', 'Runtime status', 'Auth', 'R/W', 'Webhooks', 'Actions']}
               rows={rows.map((c) => [
-                <span key="r" className="text-[#5B6884]">{c.rank}</span>,
+                <span key="r" className="text-[#8592AE]">{c.rank}</span>,
                 <IdLink key="id" to={`/app/connectors/${c.id}`}>{c.name}</IdLink>,
                 c.provider, c.category, <Pill key="cs" v={c.catalogue_status} />,
                 c.published ? <span key="p" className="text-[12px] text-[#A9B6D3]">published</span> : <span key="p" className="text-[12px] text-[#F5A524]" title={c.hold_category ?? undefined}>on hold</span>,
@@ -196,7 +196,7 @@ export function DashConnectors() {
               ])}
             />
           )}
-          <div className="mt-3 flex flex-wrap items-center gap-3 text-[11px] text-[#5B6884]">
+          <div className="mt-3 flex flex-wrap items-center gap-3 text-[11px] text-[#8592AE]">
             <span data-testid="dash-connector-count">
               {matching.length ? `Showing ${from + 1}–${from + rows.length} of ${matching.length} matching` : '0 matching'} · {CATALOGUE_RUNTIME.length} catalogued ({publishedTotal} published, {CATALOGUE_RUNTIME.length - publishedTotal} on hold)
             </span>

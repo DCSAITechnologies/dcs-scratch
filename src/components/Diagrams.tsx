@@ -49,14 +49,14 @@ export function ArchDiagram() {
 export function LifecycleDiagram({ stages, modeBoundary }: { stages: string[]; modeBoundary?: { mode: string; range: [number, number] }[] }) {
   return (
     <div className="glass-panel p-6">
-      <div className="text-[10.5px] font-semibold uppercase tracking-[0.16em] text-[#8B5CF6] mb-4">OAL lifecycle — canonical</div>
+      <div className="text-[10.5px] font-semibold uppercase tracking-[0.16em] text-[#A78BFA] mb-4">OAL lifecycle — canonical</div>
       <div className="flex flex-wrap items-center gap-y-3">
         {stages.map((s, i) => (
           <span key={s} className="flex items-center">
             <span className="px-3 py-2 rounded-lg text-[12px] font-medium text-[#D6E1FF] whitespace-nowrap" style={{ background: 'rgba(139,92,246,0.1)', border: '1px solid rgba(139,92,246,0.35)' }}>
-              <span className="text-[#8B5CF6] font-bold mr-1.5">{i + 1}</span>{s}
+              <span className="text-[#A78BFA] font-bold mr-1.5">{i + 1}</span>{s}
             </span>
-            {i < stages.length - 1 && <span className="mx-1.5 text-[#8B5CF6]">→</span>}
+            {i < stages.length - 1 && <span className="mx-1.5 text-[#A78BFA]">→</span>}
           </span>
         ))}
       </div>

@@ -126,7 +126,7 @@ export function DashShell({ path, children }: { path: string; children: ReactNod
     <nav className="flex-1 py-3 px-2 space-y-3.5 overflow-y-auto" aria-label="Console">
       {NAV.map((g, gi) => (
         <div key={gi}>
-          {g.label && <div className="px-2.5 mb-1 text-[9.5px] uppercase tracking-[0.16em] text-[#5B6884] font-semibold">{g.label}</div>}
+          {g.label && <div className="px-2.5 mb-1 text-[9.5px] uppercase tracking-[0.16em] text-[#8592AE] font-semibold">{g.label}</div>}
           {g.items.map((it) => {
             const active = it.to === '/app' ? path === '/app' || path === '/app/' : path.startsWith(it.to)
             return (
@@ -134,7 +134,7 @@ export function DashShell({ path, children }: { path: string; children: ReactNod
                 className={`flex items-center gap-2 px-2.5 py-[5px] rounded-lg text-[12.5px] transition-colors ${
                   active ? 'text-white bg-[#3B5BDB]/[0.28] border border-[#4D8DFF]/30' : 'text-[#A9B6D3] hover:text-white hover:bg-white/[0.04] border border-transparent'
                 }`}>
-                <span className={active ? 'text-[#9FB8FF]' : 'text-[#5B6884]'}>{it.icon}</span>
+                <span className={active ? 'text-[#9FB8FF]' : 'text-[#8592AE]'}>{it.icon}</span>
                 {it.label}
                 {it.label === 'Approvals' && pending.length > 0 && (
                   <span className="ml-auto px-1.5 py-0.5 rounded-full text-[10px] font-bold bg-[#F5A524]/15 text-[#F5A524] border border-[#F5A524]/40">{pending.length}</span>
@@ -149,7 +149,7 @@ export function DashShell({ path, children }: { path: string; children: ReactNod
 
   const navFoot = (
     <div className="px-3 py-2.5 border-t border-white/[0.06]">
-      <div className="text-[10.5px] text-[#5B6884]">Connector OS v0.9.0 · claim {CLAIM_LEVEL}</div>
+      <div className="text-[10.5px] text-[#8592AE]">Connector OS v0.9.0 · claim {CLAIM_LEVEL}</div>
       <div className="mt-0.5 flex items-center gap-1.5 text-[10.5px] text-[#A9B6D3]">
         <span className="w-1.5 h-1.5 rounded-full bg-[#5B6884]" /> {demo ? 'Demo data · no backend connected' : `API · ${apiHost()}`}
       </div>
@@ -171,7 +171,7 @@ export function DashShell({ path, children }: { path: string; children: ReactNod
                 <span className="mt-1.5 w-1.5 h-1.5 rounded-full shrink-0" style={{ background: n.dot }} />
                 <span>
                   <span className="block text-[12px] text-[#DCE4F7] group-hover:text-white leading-snug">{n.title}</span>
-                  <span className="block text-[10.5px] text-[#5B6884] mt-0.5 font-mono">{n.ctx}</span>
+                  <span className="block text-[10.5px] text-[#8592AE] mt-0.5 font-mono">{n.ctx}</span>
                 </span>
               </a>
             </li>
@@ -185,14 +185,14 @@ export function DashShell({ path, children }: { path: string; children: ReactNod
           <h2 className="text-[12.5px] font-semibold text-white">Provider health</h2>
           <a href="/app/connectors" className="text-[11px] font-semibold text-[#5A7BFF]">All providers →</a>
         </div>
-        <div className="mb-2 text-[9.5px] uppercase tracking-wide text-[#5B6884] font-semibold">Simulator providers · reference data</div>
+        <div className="mb-2 text-[9.5px] uppercase tracking-wide text-[#8592AE] font-semibold">Simulator providers · reference data</div>
         <ul className="space-y-1.5">
           {PROVIDER_HEALTH.map((p) => (
             <li key={p.name} className="flex items-center gap-2 text-[12px]">
               <span className="w-1.5 h-1.5 rounded-full shrink-0" style={{ background: p.state === 'healthy' ? '#21C87A' : p.state === 'degraded' ? '#F5A524' : '#EF4444' }} />
               <span className="text-[#DCE4F7]">{p.name}</span>
               <span className="ml-auto text-[11px]" style={{ color: p.state === 'healthy' ? '#21C87A' : '#F5A524' }}>{p.availability}</span>
-              <span className="text-[10.5px] text-[#5B6884] w-[48px] text-right">{p.latency}</span>
+              <span className="text-[10.5px] text-[#8592AE] w-[48px] text-right">{p.latency}</span>
             </li>
           ))}
         </ul>
@@ -248,7 +248,7 @@ export function DashShell({ path, children }: { path: string; children: ReactNod
       )}
       <div className="px-4 py-0.5 text-center text-[10px] font-medium text-[#9FB8FF] bg-[#4D8DFF]/[0.07] border-b border-[#4D8DFF]/15">
         {CLAIM_BANNER[CLAIM_LEVEL] ?? CLAIM_BANNER.HERMETIC}
-        <span className="text-[#5B6884]"> · claim level {CLAIM_LEVEL} · as of {STATUS_AS_OF} · </span>
+        <span className="text-[#8592AE]"> · claim level {CLAIM_LEVEL} · as of {STATUS_AS_OF} · </span>
         <a href="/developers/status" className="underline underline-offset-2">build status</a>
       </div>
 
@@ -260,7 +260,7 @@ export function DashShell({ path, children }: { path: string; children: ReactNod
         <a href="/app" className="flex items-center gap-2 shrink-0">
           <span className="w-6 h-6 rounded-full shrink-0" style={{ background: 'conic-gradient(from 210deg, #5A7BFF, #8B5CF6, #5A7BFF)' }} />
           <span className="text-[13px] font-semibold text-white tracking-tight">Connector OS</span>
-          <span className="hidden sm:inline text-[9px] uppercase tracking-[0.18em] text-[#5B6884] font-bold mt-0.5">Console</span>
+          <span className="hidden sm:inline text-[9px] uppercase tracking-[0.18em] text-[#8592AE] font-bold mt-0.5">Console</span>
         </a>
 
         {demo && <span className="hidden sm:block">
@@ -277,11 +277,11 @@ export function DashShell({ path, children }: { path: string; children: ReactNod
             type="button"
             onClick={() => setSearchOpen(true)}
             aria-label="Open search"
-            className="relative w-full max-w-xl text-left bg-[#0C1330] border border-white/[0.09] rounded-lg pl-8 pr-11 h-9 text-[12px] text-[#3E4A66] hover:border-[#4D8DFF]/40 transition-colors"
+            className="relative w-full max-w-xl text-left bg-[#0C1330] border border-white/[0.09] rounded-lg pl-8 pr-11 h-9 text-[12px] text-[#8592AE] hover:border-[#4D8DFF]/40 transition-colors"
           >
             Search id: run_, ex_, rc_, ap_, cn_, connector…
-            <svg className="absolute left-2.5 top-1/2 -translate-y-1/2 text-[#3E4A66]" width="13" height="13" viewBox="0 0 20 20" fill="none"><circle cx="9" cy="9" r="5.5" stroke="currentColor" strokeWidth="1.6" /><path d="m13.5 13.5 3 3" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" /></svg>
-            <kbd className="absolute right-2.5 top-1/2 -translate-y-1/2 text-[9.5px] text-[#5B6884] border border-white/[0.1] rounded px-1.5 py-0.5">⌘K</kbd>
+            <svg className="absolute left-2.5 top-1/2 -translate-y-1/2 text-[#8592AE]" width="13" height="13" viewBox="0 0 20 20" fill="none"><circle cx="9" cy="9" r="5.5" stroke="currentColor" strokeWidth="1.6" /><path d="m13.5 13.5 3 3" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" /></svg>
+            <kbd className="absolute right-2.5 top-1/2 -translate-y-1/2 text-[9.5px] text-[#8592AE] border border-white/[0.1] rounded px-1.5 py-0.5">⌘K</kbd>
           </button>
         </div>
 
@@ -296,14 +296,14 @@ export function DashShell({ path, children }: { path: string; children: ReactNod
             <span className="w-7 h-7 rounded-full flex items-center justify-center text-[10.5px] font-bold text-white" style={{ background: 'linear-gradient(135deg,#3B5BDB,#8B5CF6)' }} title="Demo identity — the console has no authentication yet">AS</span>
             <span className="hidden lg:block leading-tight">
               <span className="block text-[12px] font-semibold text-white">A. Sharma</span>
-              <span className="block text-[10px] text-[#5B6884]">Org admin · demo identity, no sign-in</span>
+              <span className="block text-[10px] text-[#8592AE]">Org admin · demo identity, no sign-in</span>
             </span>
           </div>
           ) : (
             <div className="flex items-center gap-2">
               <span className="hidden lg:block leading-tight text-right">
                 <span className="block text-[12px] font-semibold text-white max-w-[180px] truncate">{auth.displayName}</span>
-                <span className="block text-[10px] text-[#5B6884]">{auth.principal?.kind === 'human' ? 'operator' : 'api key'}</span>
+                <span className="block text-[10px] text-[#8592AE]">{auth.principal?.kind === 'human' ? 'operator' : 'api key'}</span>
               </span>
               <button type="button" onClick={() => void signOut()} className="px-2.5 py-1 rounded-lg text-[11.5px] font-semibold text-[#9FB8FF] border border-[#4D8DFF]/40">Sign out</button>
             </div>

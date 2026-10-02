@@ -54,7 +54,7 @@ function ApprovalsList({ rows, state, setState, risk, setRisk, readonly = false 
                 </div>
                 <div className="mt-2 text-[13.5px] text-white font-medium">{a.tool}</div>
                 <div className="mt-1 text-[12px] text-[#A9B6D3]">{fmtConn(a.connector)} · {a.operation_class} · risk {a.risk}{a.dual ? ` · dual ${a.dual}` : ''}</div>
-                <div className="mt-1 text-[11.5px] text-[#5B6884]">expires {a.expires} · {a.environment}</div>
+                <div className="mt-1 text-[11.5px] text-[#8592AE]">expires {a.expires} · {a.environment}</div>
               </a>
             ))}
           </div>
@@ -127,7 +127,7 @@ export function DashApprovalDetail({ id }: { id: string }) {
                 <Action label="Approve" maturity="HERMETIC ONLY" title="Single-use; binds plan hash + step" />
                 <Action label="Reject (reason required)" maturity="HERMETIC ONLY" danger />
                 <Action label="Revoke" maturity="HERMETIC ONLY" danger title="Only before consumption" />
-                <p className="text-[11.5px] text-[#5B6884] leading-relaxed">Actions render disabled in the preview: the approval store is in-process; durable approvals land with roadmap item 15.</p>
+                <p className="text-[11.5px] text-[#8592AE] leading-relaxed">Actions render disabled in the preview: the approval store is in-process; durable approvals land with roadmap item 15.</p>
               </div>
             ) : (
               <p className="text-[12.5px] text-[#A9B6D3]">This request is {a.state.toLowerCase()}{a.approver !== '—' ? ` by ${a.approver}` : ''}. No further action.</p>

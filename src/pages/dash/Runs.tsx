@@ -69,14 +69,14 @@ export function DashRunDetail({ id }: { id: string }) {
             return (
               <li key={s} className="flex items-center gap-1.5">
                 {b && <span className="text-[9.5px] uppercase tracking-wide text-[#B07BFF] font-bold px-1.5 py-0.5 rounded border border-[#B07BFF]/40">{b.mode}</span>}
-                <span className={`px-2.5 py-1 rounded-full text-[11px] font-semibold border ${i + 1 < r.stage ? 'bg-[#21C87A]/[0.08] text-[#21C87A] border-[#21C87A]/30' : i + 1 === r.stage ? 'bg-[#4D8DFF]/[0.14] text-white border-[#4D8DFF]/50' : 'text-[#5B6884] border-white/[0.08]'}`}>
+                <span className={`px-2.5 py-1 rounded-full text-[11px] font-semibold border ${i + 1 < r.stage ? 'bg-[#21C87A]/[0.08] text-[#21C87A] border-[#21C87A]/30' : i + 1 === r.stage ? 'bg-[#4D8DFF]/[0.14] text-white border-[#4D8DFF]/50' : 'text-[#8592AE] border-white/[0.08]'}`}>
                   {i + 1} · {s}
                 </span>
               </li>
             )
           })}
         </ol>
-        <p className="mt-3 text-[11.5px] text-[#5B6884]">MODE settings are per tenant × connector, set in Policies, displayed read-only here. MODE 2 enablement is <MaturityTag m="STAGING ONLY" /> (needs claim_level ≥ STAGING and a staging-verified connector). MODE 3/4 are not rendered.</p>
+        <p className="mt-3 text-[11.5px] text-[#8592AE]">MODE settings are per tenant × connector, set in Policies, displayed read-only here. MODE 2 enablement is <MaturityTag m="STAGING ONLY" /> (needs claim_level ≥ STAGING and a staging-verified connector). MODE 3/4 are not rendered.</p>
       </Panel>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
@@ -90,8 +90,8 @@ export function DashRunDetail({ id }: { id: string }) {
         <Panel title="Diagnosis">
           <ul className="space-y-2 text-[12.5px] text-[#C7D2EA]">
             <li><b className="text-white">h1</b> — duplicate charge batch from billing job (confidence 0.81)</li>
-            <li>h2 — provider-side double capture (confidence 0.14) · <span className="text-[#5B6884]">rejected: settlement report contradicts</span></li>
-            <li>h3 — manual duplicate (confidence 0.05) · <span className="text-[#5B6884]">rejected: no console actor</span></li>
+            <li>h2 — provider-side double capture (confidence 0.14) · <span className="text-[#8592AE]">rejected: settlement report contradicts</span></li>
+            <li>h3 — manual duplicate (confidence 0.05) · <span className="text-[#8592AE]">rejected: no console actor</span></li>
           </ul>
         </Panel>
         <Panel title="Recommendation & plan">
@@ -102,7 +102,7 @@ export function DashRunDetail({ id }: { id: string }) {
             <li>stripe.charges.get — verify read-back · policy <Pill v="ALLOW" /></li>
             <li>close — write run summary</li>
           </ol>
-          <p className="mt-3 text-[11.5px] text-[#5B6884]">The plan is a proposal. Nothing executes from this screen.</p>
+          <p className="mt-3 text-[11.5px] text-[#8592AE]">The plan is a proposal. Nothing executes from this screen.</p>
         </Panel>
         <Panel title={`Approvals (${approvals.length})`}>
           {approvals.length ? approvals.map((a) => (
@@ -127,7 +127,7 @@ export function DashRunDetail({ id }: { id: string }) {
               <IdLink to={`/app/receipts/${x.id}`}>{x.id}</IdLink><Pill v={x.state} />
             </div>
           )) : <p className="text-[12.5px] text-[#A9B6D3]">None yet.</p>}
-          <div className="mt-3 text-[11.5px] text-[#5B6884]">Recovery / escalation: {r.escalation}</div>
+          <div className="mt-3 text-[11.5px] text-[#8592AE]">Recovery / escalation: {r.escalation}</div>
         </Panel>
       </div>
     </div>

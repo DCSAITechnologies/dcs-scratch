@@ -14,7 +14,7 @@ export function StatusCallout({ route }: { route: string }) {
           </div>
         ))}
       </div>
-      <div className="mt-3 text-[10.5px] text-[#93A0C2]">as of {STATUS_AS_OF} · full table on <a href="/developers/status" className="text-[#5A7BFF] hover:text-white transition-colors">Build status</a></div>
+      <div className="mt-3 text-[10.5px] text-[#93A0C2]">as of {STATUS_AS_OF} · full table on <a href="/developers/status" className="text-[#7EA2FF] underline underline-offset-2 hover:text-white transition-colors">Build status</a></div>
     </div>
   )
 }

@@ -257,7 +257,7 @@ export function Receipts() {
                 <li>· The receipt pipeline is integrated and proven end-to-end against simulated providers — hermetically proven, not yet verified with real providers.</li>
                 <li>· Receipts are signed by a software test signer; no external audit or anchoring is claimed.</li>
                 <li>· The offline verifier is published as <span className="font-mono2 text-[12px] text-[#9FD3FF]">dcslabs-r2-verify</span>.</li>
-                <li>· The full capability table lives on <a href="/developers/status" className="text-[#5A7BFF] hover:text-white transition-colors">Build status →</a></li>
+                <li>· The full capability table lives on <a href="/developers/status" className="text-[#7EA2FF] underline underline-offset-2 hover:text-white transition-colors">Build status →</a></li>
               </ul>
             </div>
           </Reveal>

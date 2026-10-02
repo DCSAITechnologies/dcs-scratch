@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { Logo } from './BrandIcon'
 import { ConnectorLogo } from './ConnectorLogo'
 import { PUBLISHED_COUNT, FEATURED, FEATURED_ROWS } from 'virtual:catalogue-summary'
@@ -197,6 +197,53 @@ export function Nav() {
     return () => { document.body.style.overflow = '' }
   }, [mobileOpen])
 
+  // Keyboard + pointer model for the mega menu: ArrowDown/Enter-free open from
+  // the trigger moves focus to the first item; Arrow keys move between items;
+  // Escape closes and returns focus to the trigger; Tab or a click outside closes.
+  const navRef = useRef<HTMLElement>(null)
+  const menuRef = useRef<HTMLDivElement>(null)
+  const triggers = useRef<Record<string, HTMLButtonElement | null>>({})
+  const focusFirst = useRef(false)
+
+  useEffect(() => {
+    if (!open) return
+    const onDown = (e: MouseEvent) => { if (navRef.current && !navRef.current.contains(e.target as Node)) setOpen(null) }
+    document.addEventListener('mousedown', onDown)
+    return () => document.removeEventListener('mousedown', onDown)
+  }, [open])
+
+  useEffect(() => {
+    if (open && focusFirst.current) { menuRef.current?.querySelector<HTMLElement>('[role="menuitem"]')?.focus(); focusFirst.current = false }
+  }, [open])
+
+  // keep the panel inside the viewport (narrow windows, browser zoom): measure
+  // after layout and nudge with the CSS `translate` property (composes with the
+  // existing transform), no re-render needed
+  useLayoutEffect(() => {
+    const el = menuRef.current
+    if (!open || !el) return
+    el.style.translate = ''
+    const r = el.getBoundingClientRect()
+    const margin = 16
+    const dx = r.right > window.innerWidth - margin ? window.innerWidth - margin - r.right : r.left < margin ? margin - r.left : 0
+    if (dx) el.style.translate = `${Math.round(dx)}px 0`
+  }, [open])
+
+  const menuKeys = (e: React.KeyboardEvent, item: string) => {
+    const items = [...(menuRef.current?.querySelectorAll<HTMLElement>('[role="menuitem"]') ?? [])]
+    const i = items.indexOf(document.activeElement as HTMLElement)
+    if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+      e.preventDefault()
+      items[(i + (e.key === 'ArrowDown' ? 1 : -1) + items.length) % items.length]?.focus()
+    } else if (e.key === 'Home' || e.key === 'End') {
+      e.preventDefault(); items[e.key === 'Home' ? 0 : items.length - 1]?.focus()
+    } else if (e.key === 'Escape') {
+      e.preventDefault(); setOpen(null); triggers.current[item]?.focus()
+    } else if (e.key === 'Tab') {
+      setOpen(null)
+    }
+  }
+
   const enter = (item: string) => { clearTimeout(closeTimer.current); if (DROPS[item]) setOpen(item) }
   const leave = () => { closeTimer.current = setTimeout(() => setOpen(null), 150) }
   const go = (to: string) => { setOpen(null); setMobileOpen(false); navigate(to) }
@@ -208,12 +255,16 @@ export function Nav() {
     >
       <div className={`mx-auto max-w-[1400px] px-8 flex items-center justify-between transition-all duration-300 ${scrolled ? 'h-14' : 'h-16'}`}>
         <a href="/" className="shrink-0" onClick={() => setMobileOpen(false)}><Logo /></a>
-        <nav className="hidden lg:flex items-center gap-0.5" aria-label="Primary" onMouseLeave={leave}>
+        <nav ref={navRef} className="hidden lg:flex items-center gap-0.5" aria-label="Primary" onMouseLeave={leave}>
           {NAV_ITEMS.map((item) => (
             <div key={item} className="relative" onMouseEnter={() => enter(item)}>
               <button
+                ref={(el) => { triggers.current[item] = el }}
                 onClick={() => go(ITEM_ROUTES[item])}
-                onKeyDown={(e) => { if (e.key === 'ArrowDown' && DROPS[item]) { e.preventDefault(); setOpen(item) } if (e.key === 'Escape') setOpen(null) }}
+                onKeyDown={(e) => {
+                  if ((e.key === 'ArrowDown' || e.key === ' ') && DROPS[item]) { e.preventDefault(); focusFirst.current = true; setOpen(item) }
+                  if (e.key === 'Escape') setOpen(null)
+                }}
                 aria-haspopup={DROPS[item] ? 'menu' : undefined}
                 aria-expanded={open === item}
                 className={`px-3 py-2 text-[13.5px] font-medium rounded-lg transition-colors duration-200 flex items-center gap-1 ${open === item ? 'text-white' : 'text-[#A9B6D3] hover:text-white'}`}
@@ -227,8 +278,8 @@ export function Nav() {
               </button>
 
               {open === item && DROPS[item] && (
-                <div role="menu" aria-label={`${item} menu`} className="nav-dropdown absolute top-full" style={CENTER.has(item) ? { position: 'fixed', left: '50%', transform: 'translateX(-50%)', top: scrolled ? 56 : 64, paddingTop: 12, width: item === 'Connectors' ? 'min(1200px, calc(100vw - 48px))' : 880, animation: 'dropdownInCenter 200ms cubic-bezier(0.22,1,0.36,1)' } : RIGHT_ALIGN.has(item) ? { right: 0, paddingTop: 12, animation: 'dropdownIn 200ms cubic-bezier(0.22,1,0.36,1)' } : { left: 0, paddingTop: 12, animation: 'dropdownIn 200ms cubic-bezier(0.22,1,0.36,1)' }}>
-                  <div className="p-4 flex gap-5" style={CENTER.has(item) ? {} : { width: WIDE.has(item) ? 720 : 460 }}>
+                <div ref={menuRef} role="menu" aria-label={`${item} menu`} onKeyDown={(e) => menuKeys(e, item)} className="nav-dropdown absolute top-full" style={CENTER.has(item) ? { position: 'fixed', left: '50%', transform: 'translateX(-50%)', top: scrolled ? 56 : 64, paddingTop: 12, width: item === 'Connectors' ? 'min(1200px, calc(100vw - 48px))' : 880, animation: 'dropdownInCenter 200ms cubic-bezier(0.22,1,0.36,1)' } : RIGHT_ALIGN.has(item) ? { right: 0, paddingTop: 12, animation: 'dropdownIn 200ms cubic-bezier(0.22,1,0.36,1)' } : { left: 0, paddingTop: 12, animation: 'dropdownIn 200ms cubic-bezier(0.22,1,0.36,1)' }}>
+                  <div className="p-4 flex gap-5" style={CENTER.has(item) ? {} : { width: WIDE.has(item) ? 720 : 460, maxWidth: 'calc(100vw - 32px)' }}>
                     {DROPS[item].cols.map((col, ci) => (
                       <div key={col.title || ci} className={col.w ? 'shrink-0 min-w-0' : 'flex-1 min-w-0'} style={col.w ? { width: col.w } : undefined}>
                         <div className="text-[10.5px] font-semibold uppercase tracking-[0.16em] text-[#93A0C2] mb-2 px-2 min-h-[13px]">{col.title}</div>
