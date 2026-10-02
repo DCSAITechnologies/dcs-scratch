@@ -1,0 +1,307 @@
+{
+ "claim_level": "HERMETIC",
+ "as_of": "2026-09-27",
+ "items": [
+  {
+   "id": 1,
+   "name": "Canonical contract base",
+   "label": "Complete",
+   "note": "Contracts frozen: EXEC-FACTS v1.0.0, Manifest 1.3.0, Webhook 1.0.0.",
+   "pages": [
+    "/developers/api",
+    "/developers/connectors",
+    "/developers/webhooks"
+   ]
+  },
+  {
+   "id": 2,
+   "name": "Shared execution core",
+   "label": "Complete (integrated)",
+   "note": "Execution core integrated; real-provider validation is the next gate.",
+   "pages": [
+    "/product/execution-layer"
+   ]
+  },
+  {
+   "id": 3,
+   "name": "Retry / ambiguous-write safety",
+   "label": "Complete (hermetically proven)",
+   "note": "OUTCOME_UNKNOWN and reconciliation-before-retry proven against simulated providers; per-provider live proof pending.",
+   "pages": [
+    "/product/reliability-recovery",
+    "/security/retry-reconciliation"
+   ]
+  },
+  {
+   "id": 4,
+   "name": "Connector engineering programme",
+   "label": "In progress",
+   "note": "Engineering Ranks 1–1000 reconciled and dispositioned; the public catalogue now reflects the authoritative final dataset. Per-provider staging qualification pending.",
+   "pages": [
+    "/connectors",
+    "/developers/connectors"
+   ]
+  },
+  {
+   "id": 5,
+   "name": "Public connector catalogue",
+   "label": "In progress",
+   "note": "{COUNT} catalogued records; HOLD records unlisted. Legacy rows (547) preserved separately as reference surfaces for Lane 6 reconciliation. Documentation verification and logos continue per connector.",
+   "pages": [
+    "/connectors",
+    "/connectors/:id"
+   ]
+  },
+  {
+   "id": 6,
+   "name": "Connector-specific verification",
+   "label": "Pending",
+   "note": "Runtime verification is published per connector as it is earned.",
+   "pages": [
+    "/connectors/:id"
+   ]
+  },
+  {
+   "id": 7,
+   "name": "Access-gated / provider-dependent connectors",
+   "label": "External dependency",
+   "note": "Provider approval or commercial access required; shown per connector.",
+   "pages": [
+    "/connectors/:id"
+   ]
+  },
+  {
+   "id": 8,
+   "name": "OAL MODE 0 / MODE 1",
+   "label": "Complete (integrated)",
+   "note": "Observe → recommend implemented in the governed architecture.",
+   "pages": [
+    "/agents",
+    "/agents/lifecycle"
+   ]
+  },
+  {
+   "id": 9,
+   "name": "OAL MODE 2",
+   "label": "In progress",
+   "note": "Approval-gated execution integrated and hermetically proven; not enabled for customers.",
+   "pages": [
+    "/agents/approvals",
+    "/product/policies-approvals"
+   ]
+  },
+  {
+   "id": 10,
+   "name": "Ops Broker sole-write path",
+   "label": "Complete (integrated)",
+   "note": "Single governed write path; production enforcement audit pending.",
+   "pages": [
+    "/product/architecture",
+    "/agents/governance"
+   ]
+  },
+  {
+   "id": 11,
+   "name": "Runtime E",
+   "label": "In progress",
+   "note": "Connection lifecycle proven hermetically; hosted vault, operator identity and staging pending.",
+   "pages": [
+    "/developers/quickstart",
+    "/developers/authentication"
+   ]
+  },
+  {
+   "id": 12,
+   "name": "R-Series service seam",
+   "label": "In progress",
+   "note": "Fact → receipt → verify boundary exercised hermetically; deployed authenticated route pending.",
+   "pages": [
+    "/product/receipts-audit",
+    "/developers/receipts",
+    "/receipts"
+   ]
+  },
+  {
+   "id": 13,
+   "name": "Receipt-per-fact ruling",
+   "label": "Complete",
+   "note": "One receipt per execution fact; execution outcome and receipt state are separate.",
+   "pages": [
+    "/product/receipts-audit",
+    "/receipts"
+   ]
+  },
+  {
+   "id": 14,
+   "name": "R-Series tenant visibility",
+   "label": "Pending (release gate)",
+   "note": "Tenant-safe receipt storage must be proven before staging.",
+   "pages": [
+    "/security/tenant-boundaries",
+    "/security/receipts-verification"
+   ]
+  },
+  {
+   "id": 15,
+   "name": "Production persistence",
+   "label": "Pending",
+   "note": "Durable production state for approvals, run state, kill orders and the receipt index.",
+   "pages": [
+    "/product/reliability-recovery",
+    "/security/kill-controls",
+    "/security/failure-behavior"
+   ]
+  },
+  {
+   "id": 16,
+   "name": "R-Series staging database migrations",
+   "label": "Pending",
+   "note": "Staging database migrations for the evidence store.",
+   "pages": [
+    "/developers/status"
+   ]
+  },
+  {
+   "id": 17,
+   "name": "Authenticated R-Series route",
+   "label": "Pending",
+   "note": "Deployed authenticated route between Connector OS and R-Series.",
+   "pages": [
+    "/developers/receipts",
+    "/developers/status"
+   ]
+  },
+  {
+   "id": 18,
+   "name": "Production KMS/HSM signer",
+   "label": "Pending",
+   "note": "Receipts today are signed with a test signer; production key custody is a launch gate.",
+   "pages": [
+    "/product/receipts-audit",
+    "/security/receipts-verification",
+    "/receipts"
+   ]
+  },
+  {
+   "id": 19,
+   "name": "Operator identity provider",
+   "label": "Pending",
+   "note": "Human approvals are modelled and tested; production operator identity is a launch gate.",
+   "pages": [
+    "/agents/approvals",
+    "/enterprise/roles-permissions",
+    "/enterprise/approval-workflows"
+   ]
+  },
+  {
+   "id": 20,
+   "name": "Production vault",
+   "label": "Pending",
+   "note": "Credential-reference model is complete; hosted secret lifecycle is a launch gate.",
+   "pages": [
+    "/security/credential-isolation",
+    "/developers/authentication"
+   ]
+  },
+  {
+   "id": 21,
+   "name": "Golden-five real-provider staging",
+   "label": "Pending",
+   "note": "GitHub, Slack, Gmail, Notion and OpenAI end-to-end on the staging build — the next major gate.",
+   "pages": [
+    "/product/how-it-works",
+    "/developers/quickstart",
+    "/developers/status"
+   ]
+  },
+  {
+   "id": 22,
+   "name": "Webhook runtime",
+   "label": "In progress",
+   "note": "Verification and replay framework exists; provider-specific algorithms and durable dedupe pending.",
+   "pages": [
+    "/security/webhook-security",
+    "/developers/webhooks"
+   ]
+  },
+  {
+   "id": 23,
+   "name": "DR / recovery",
+   "label": "In progress",
+   "note": "Crash/restart, reconciliation, stolen-lease, blast-radius and inbound-firewall drills proven hermetically; infrastructure outage drills pending.",
+   "pages": [
+    "/product/reliability-recovery",
+    "/security/failure-behavior",
+    "/agents/recovery"
+   ]
+  },
+  {
+   "id": 24,
+   "name": "Observability / SRE",
+   "label": "Pending",
+   "note": "Operational observability for the production build.",
+   "pages": [
+    "/developers/status"
+   ]
+  },
+  {
+   "id": 25,
+   "name": "Kill / revoke control plane",
+   "label": "In progress",
+   "note": "Kill semantics tested; persistent multi-instance enforcement pending.",
+   "pages": [
+    "/security/kill-controls"
+   ]
+  },
+  {
+   "id": 26,
+   "name": "Public website",
+   "label": "In progress",
+   "note": "This website — content and catalogue under continuous verification.",
+   "pages": [
+    "/about"
+   ]
+  },
+  {
+   "id": 27,
+   "name": "Developer console",
+   "label": "In progress",
+   "note": "Control-plane information architecture defined; backend wiring pending.",
+   "pages": [
+    "/developers",
+    "/signin"
+   ]
+  },
+  {
+   "id": 28,
+   "name": "SDK / CLI / MCP developer experience",
+   "label": "In progress",
+   "note": "Packages not yet published; the MCP seam exists.",
+   "pages": [
+    "/developers/sdk",
+    "/developers/cli",
+    "/developers/mcp"
+   ]
+  },
+  {
+   "id": 29,
+   "name": "Independent security / cryptography review",
+   "label": "Pending",
+   "note": "Internal suites are strong; independent exact-SHA review precedes any assurance claim.",
+   "pages": [
+    "/security",
+    "/security/receipts-verification"
+   ]
+  },
+  {
+   "id": 30,
+   "name": "Release → staging → production",
+   "label": "Pending",
+   "note": "Staged release path; production follows staging verification.",
+   "pages": [
+    "/developers/status",
+    "/about"
+   ]
+  }
+ ]
+}

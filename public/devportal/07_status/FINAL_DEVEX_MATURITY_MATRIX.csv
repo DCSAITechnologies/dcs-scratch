@@ -1,0 +1,69 @@
+area,feature,status,evidence,production_blocker
+api-operation,GET /v1/me (getMe),HERMETIC,reference server contract tests (schema-validated responses),BLOCKED_BY_LANE3 (IdP / API-key issuance)
+api-operation,GET /v1/connectors (listConnectors),WIRED,reference server over packages/registry data; contract tests,deploy (Lane 4)
+api-operation,GET /v1/connectors/{connector_id} (getConnector),WIRED,reference server over packages/registry data; contract tests,deploy (Lane 4)
+api-operation,GET /v1/connections (listConnections),HERMETIC,reference server contract tests (schema-validated responses),BLOCKED_BY_LANE3 (connection store)
+api-operation,POST /v1/connections (createConnection),HERMETIC,reference server contract tests (schema-validated responses),BLOCKED_BY_LANE3 (vault / credential lifecycle) + EXTERNAL_DEPENDENCY (provider app registrations)
+api-operation,GET /v1/connections/{connection_id} (getConnection),HERMETIC,reference server contract tests (schema-validated responses),BLOCKED_BY_LANE3 (connection store)
+api-operation,POST /v1/connections/{connection_id}/test (testConnection),HERMETIC,reference server contract tests (schema-validated responses),BLOCKED_BY_LANE3 + EXTERNAL_DEPENDENCY (real provider probe; reference server tests simulator targets only)
+api-operation,POST /v1/connections/{connection_id}/activate (activateConnection),HERMETIC,reference server contract tests (schema-validated responses),BLOCKED_BY_LANE3 (connection store)
+api-operation,GET /v1/runs (listRuns),HERMETIC,reference server contract tests (schema-validated responses),BLOCKED_BY_LANE3 (OAL run-state store) + integrate/v1-rc
+api-operation,POST /v1/runs (createRun),HERMETIC,reference server contract tests (schema-validated responses),BLOCKED_BY_LANE3 + integrate/v1-rc
+api-operation,GET /v1/runs/{run_id} (getRun),HERMETIC,reference server contract tests (schema-validated responses),BLOCKED_BY_LANE3
+api-operation,POST /v1/runs/{run_id}/plans (createPlan),HERMETIC,reference server contract tests (schema-validated responses),BLOCKED_BY_LANE3 + integrate/v1-rc
+api-operation,GET /v1/runs/{run_id}/plans/{plan_id} (getPlan),HERMETIC,reference server contract tests (schema-validated responses),BLOCKED_BY_LANE3
+api-operation,GET /v1/approvals (listApprovals),HERMETIC,reference server contract tests (schema-validated responses),BLOCKED_BY_LANE3 (approval store)
+api-operation,POST /v1/approvals (requestApproval),HERMETIC,reference server contract tests (schema-validated responses),BLOCKED_BY_LANE3 (approval store)
+api-operation,GET /v1/approvals/{approval_id} (getApproval),HERMETIC,reference server contract tests (schema-validated responses),BLOCKED_BY_LANE3
+api-operation,POST /v1/approvals/{approval_id}/grant (grantApproval),HERMETIC,reference server contract tests (schema-validated responses),BLOCKED_BY_LANE3 (IdP + operator attestation)
+api-operation,POST /v1/approvals/{approval_id}/deny (denyApproval),HERMETIC,reference server contract tests (schema-validated responses),BLOCKED_BY_LANE3 (IdP)
+api-operation,POST /v1/approvals/{approval_id}/revoke (revokeApproval),HERMETIC,reference server contract tests (schema-validated responses),BLOCKED_BY_LANE3 (IdP)
+api-operation,GET /v1/executions (listExecutions),HERMETIC,reference server contract tests (schema-validated responses),BLOCKED_BY_LANE3 (execution ledger)
+api-operation,POST /v1/executions (submitExecution),HERMETIC,reference server contract tests (schema-validated responses),BLOCKED_BY_LANE3 + integrate/v1-rc + MODE 2 readiness (ops-broker)
+api-operation,GET /v1/executions/{execution_id} (getExecution),HERMETIC,reference server contract tests (schema-validated responses),BLOCKED_BY_LANE3
+api-operation,GET /v1/receipts (listReceipts),HERMETIC,reference server contract tests (schema-validated responses),BLOCKED_BY_LANE3 (authenticated R-Series route)
+api-operation,GET /v1/receipts/{receipt_id} (getReceipt),HERMETIC,reference server contract tests (schema-validated responses),BLOCKED_BY_LANE3 (authenticated R-Series route)
+api-operation,POST /v1/receipts/{receipt_id}/verify (verifyReceipt),HERMETIC,reference server contract tests (schema-validated responses),BLOCKED_BY_LANE3 + EXTERNAL_DEPENDENCY (R-Series verifier service)
+api-operation,GET /v1/policies (listPolicies),HERMETIC,reference server contract tests (schema-validated responses),BLOCKED_BY_LANE3 (policy store); authoring PLANNED
+api-operation,GET /v1/policies/{policy_id} (getPolicy),HERMETIC,reference server contract tests (schema-validated responses),BLOCKED_BY_LANE3
+api-operation,POST /v1/policies/evaluate (evaluatePolicy),HERMETIC,reference server contract tests (schema-validated responses),integrate/v1-rc (OAL policy binding)
+api-operation,GET /v1/events (listEvents),HERMETIC,reference server contract tests (schema-validated responses),BLOCKED_BY_LANE3 (eventbus persistence)
+api-operation,GET /v1/events/{event_id} (getEvent),HERMETIC,reference server contract tests (schema-validated responses),BLOCKED_BY_LANE3
+api-operation,GET /v1/webhooks (listWebhookEndpoints),PLANNED,answers 501 not_implemented,PLANNED: no outbound delivery service exists; signing scheme awaits founder decision FD-L5-1
+api-operation,POST /v1/webhooks (createWebhookEndpoint),PLANNED,answers 501 not_implemented,PLANNED + FD-L5-1
+api-operation,GET /v1/webhooks/{webhook_id} (getWebhookEndpoint),PLANNED,answers 501 not_implemented,PLANNED
+api-operation,DELETE /v1/webhooks/{webhook_id} (deleteWebhookEndpoint),PLANNED,answers 501 not_implemented,PLANNED
+api-operation,GET /v1/environments (listEnvironments),WIRED,reference server over packages/registry data; contract tests,deploy (Lane 4)
+api-operation,GET /v1/usage (getUsage),HERMETIC,reference server contract tests (schema-validated responses),BLOCKED_BY_LANE3 (execution ledger / receipt index)
+api-operation,GET /v1/operator/kill-orders (listKillOrders),HERMETIC,reference server contract tests (schema-validated responses),BLOCKED_BY_LANE3 (kill store + IdP)
+api-operation,POST /v1/operator/kill-orders (createKillOrder),HERMETIC,reference server contract tests (schema-validated responses),BLOCKED_BY_LANE3 (kill store + IdP)
+api-operation,POST /v1/operator/kill-orders/{kill_order_id}/restore (restoreKillOrder),HERMETIC,reference server contract tests (schema-validated responses),BLOCKED_BY_LANE3
+api-operation,POST /v1/operator/connections/{connection_id}/revoke (revokeConnection),HERMETIC,reference server contract tests (schema-validated responses),BLOCKED_BY_LANE3 (vault revoke)
+api-operation,GET /v1/operator/reconciliations (listReconciliations),HERMETIC,reference server contract tests (schema-validated responses),BLOCKED_BY_LANE3
+api-operation,POST /v1/operator/executions/{execution_id}/reconcile (reconcileExecution),HERMETIC,reference server contract tests (schema-validated responses),BLOCKED_BY_LANE3 + integrate/v1-rc
+api-operation,POST /v1/operator/audit-exports (createAuditExport),PLANNED,answers 501 not_implemented,BLOCKED_BY_LANE3 (persistence + IdP)
+api-operation,GET /v1/operator/audit-exports/{export_id} (getAuditExport),PLANNED,answers 501 not_implemented,BLOCKED_BY_LANE3
+api-operation,GET /v1/operator/eligibility (getEligibility),WIRED,reference server over packages/registry data; contract tests,deploy (Lane 4)
+api-operation,GET /v1/operator/provider-health (getProviderHealth),HERMETIC,reference server contract tests (schema-validated responses),EXTERNAL_DEPENDENCY (real provider probes) + BLOCKED_BY_LANE3
+contract,OpenAPI 3.1 contract openapi/connector-os-v1.yaml,HERMETIC,openapi-spec-validator OK; structural+governance+enum-agreement validator; 7 tooling tests,contract FROZEN; production server BLOCKED_BY_LANE3
+sdk-typescript,@dcs-ai/connector-os client (46 operations),HERMETIC,devex/sdk-typescript/test (25 tests) against the reference server,BLOCKED_BY_LANE3 (no production API); not published
+sdk-typescript,retry safety / idempotency / typed errors / pagination,HERMETIC,fake-fetch retry tests; contract tests,—
+sdk-typescript,"webhook helpers (window, parse, dedupe, verifier port)",HERMETIC,helpers.test.mjs,PLANNED outbound delivery; FD-L5-1 signing scheme
+sdk-typescript,webhook signature verification,PLANNED,SignatureVerifier port only; SIGNING_SCHEME=null,FD-L5-1 (founder decision + no-crypto allowlist)
+sdk-typescript,"receipt tooling (parse, metadata, verify via port, causal link)",HERMETIC,helpers.test.mjs,EXTERNAL_DEPENDENCY: R-Series verifier service; BLOCKED_BY_LANE3 route
+sdk-python,dcs-connector-os Client + AsyncClient,HERMETIC,pytest 53/53 on source tree and on the installed wheel,BLOCKED_BY_LANE3; not published
+cli,dcs read commands,HERMETIC,cli.test.mjs (17) incl. snapshots,BLOCKED_BY_LANE3
+cli,dcs kill/restore/revoke (privileged),HERMETIC,refusal paths tested; human operator session + capability + --confirm,BLOCKED_BY_LANE3 (IdP)
+cli,dcs receipts verify,HERMETIC,delegated to server verifier; local file → verification_unavailable,EXTERNAL_DEPENDENCY (R-Series)
+mcp,MCP server read tools (8),HERMETIC,mcp.test.mjs (9) incl. stdio process,BLOCKED_BY_LANE3
+mcp,MCP governed action tools (3),HERMETIC,governed path end to end; no grant/kill/raw provider tools,BLOCKED_BY_LANE3 + MODE 2 readiness
+mcp,hosted per-tenant MCP endpoint,PLANNED,—,Lane 4 deployment + Lane 3 identity
+connector-kit,dcs connector init/validate/test/pack,HERMETIC,connector-dev-kit tests (28); strict Manifest 1.3 validator,staging verification needs Lane 4
+connector-kit,marketplace publication,PLANNED,"pack prints ""not published""",manual process; out of scope
+api,authentication: API keys,BLOCKED_BY_LANE3,hermetic fixed test keys only,Lane 3 identity / key issuance
+api,authentication: human operator sessions + attestation,BLOCKED_BY_LANE3,hermetic fixed sessions only,Lane 3 IdP/RBAC seam
+api,execution (MODE 2),BLOCKED_BY_LANE3,locked by default (409 mode_locked); hermetic unlock for tests,integrate/v1-rc + ops-broker readiness + Lane 3 stores
+api,receipts from R-Series,EXTERNAL_DEPENDENCY,test-double receipts only (issuer_kind test_double),authenticated R-Series route (Lane 3) + R-Series service
+api,real provider dispatch,EXTERNAL_DEPENDENCY,simulator target only; 0/1009 connectors dispatchable,provider app registrations (Lane 4) + staging verification
+examples,"TypeScript, Python, CLI, MCP, webhook examples",HERMETIC,"every example executed in tests (TS/CLI/MCP/webhook 10, Python 8)",—
+portal,developer portal rendering,PLANNED,content handoff only (this package),Kimi owns frontend

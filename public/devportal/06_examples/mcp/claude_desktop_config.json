@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "dcs-connector-os": {
+      "command": "node",
+      "args": ["/ABSOLUTE/PATH/TO/devex/mcp-server/bin/dcs-mcp.mjs"],
+      "env": {
+        "DCS_BASE_URL": "http://127.0.0.1:4010",
+        "DCS_API_KEY": "${DCS_API_KEY}"
+      }
+    }
+  }
+}

@@ -1,0 +1,2444 @@
+openapi: 3.1.0
+jsonSchemaDialect: https://spec.openapis.org/oas/3.1/dialect/base
+info:
+  title: DCS Connector OS API
+  version: 1.0.0
+  summary: Governed connector execution — connectors, connections, runs, approvals, executions and receipts.
+  description: |
+    The public, versioned Connector OS API (`/v1`).
+
+    **Maturity.** Every operation carries `x-dcs-maturity`:
+    `WIRED` (reads a canonical in-repo source through its owning package),
+    `HERMETIC` (implemented by the reference server over in-memory adapters — not persistence, not deployed),
+    `CONTRACT_ONLY` (specified; the reference server answers `501 not_implemented`).
+    `x-dcs-production-blocker` names what production wiring still needs. **Nothing in this document is
+    production-deployed.** No connector is dispatchable in staging or production today; the API reports
+    that truthfully through `Connector.dispatch`.
+
+    **Governance path.** Every consequential action goes
+    `API → policy (OAL) → approval (human) → ops-broker → execution engine`. No handler calls a connector
+    or a provider. MODE 2 (execution) is locked until the ops-broker asserts readiness; while it is
+    locked, `POST /v1/executions` answers `409 mode_locked`.
+
+    **Outcomes.** `Execution.outcome` is the frozen EXEC-FACTS v1 enum, passed through verbatim.
+    `OUTCOME_UNKNOWN` means the provider may or may not have applied the effect: it is **not a failure**
+    and is **never retried** before reconciliation. Receipt status (`Execution.receipt.status`) is a
+    separate field and never stands in for the execution outcome.
+
+    **Receipts.** Connector OS performs no receipt cryptography. Verification is delegated to the
+    R-Series verifier; a result is `verified` only when an R-Series-kind verifier says so.
+
+    **Versioning.** See `x-dcs-versioning`. Breaking changes ship only under a new path major (`/v2`).
+  contact:
+    name: DCS AI Technologies India Private Limited
+  license:
+    name: Proprietary — pre-launch, not published
+    identifier: LicenseRef-DCS-Proprietary
+x-dcs-contract:
+  status: FROZEN
+  frozen_on: '2026-09-28'
+  lane: L5
+  base_sha: c40cd913bd8b6e4c24c5453d598819ea8d7431ed
+  sources:
+    - contracts/v1.3/exec-facts.v1.json
+    - contracts/v1/errors.v1.json
+    - contracts/v1/tool-result.v1.json
+    - contracts/v1.3/webhook-contract.v1.json
+    - packages/registry/data/dispatch-eligibility.json
+    - 'ec49ad8: packages/oal-runtime/src/schemas.mjs'
+    - 'ec49ad8: packages/ops-broker/src/{broker,approvals,kill-switch}.mjs'
+    - 'ec49ad8: packages/runtime/src/{evidence-slot,connection}.mjs'
+x-dcs-versioning:
+  path_major: v1
+  contract_version_header: DCS-API-Version
+  compatible_changes: [new operations, new optional request fields, new response fields, new values in enums marked x-dcs-enum-open]
+  breaking_changes_require: a new path major (/v2) — never shipped under /v1
+  closed_enums: Enums marked x-dcs-enum-closed come from frozen contracts (EXEC-FACTS, errors.v1, OAL schemas) and change only with those contracts.
+  deprecation: 'A deprecated operation keeps working and answers with `Deprecation` (RFC 9745) and `Sunset` (RFC 8594) headers plus `Link: <…>; rel="deprecation"`. Minimum notice between the first Deprecation header and Sunset: 180 days.'
+x-dcs-header-sets:
+  standard: &std
+    X-Request-Id: {$ref: '#/components/headers/X-Request-Id'}
+    X-Correlation-Id: {$ref: '#/components/headers/X-Correlation-Id'}
+    DCS-API-Version: {$ref: '#/components/headers/DCS-API-Version'}
+    DCS-Adapter: {$ref: '#/components/headers/DCS-Adapter'}
+    RateLimit-Limit: {$ref: '#/components/headers/RateLimit-Limit'}
+    RateLimit-Remaining: {$ref: '#/components/headers/RateLimit-Remaining'}
+    RateLimit-Reset: {$ref: '#/components/headers/RateLimit-Reset'}
+  write: &write
+    X-Request-Id: {$ref: '#/components/headers/X-Request-Id'}
+    X-Correlation-Id: {$ref: '#/components/headers/X-Correlation-Id'}
+    DCS-API-Version: {$ref: '#/components/headers/DCS-API-Version'}
+    DCS-Adapter: {$ref: '#/components/headers/DCS-Adapter'}
+    RateLimit-Limit: {$ref: '#/components/headers/RateLimit-Limit'}
+    RateLimit-Remaining: {$ref: '#/components/headers/RateLimit-Remaining'}
+    RateLimit-Reset: {$ref: '#/components/headers/RateLimit-Reset'}
+    Idempotent-Replayed: {$ref: '#/components/headers/Idempotent-Replayed'}
+servers:
+  - url: http://127.0.0.1:4010
+    description: Hermetic reference server (devex/api-server). In-memory adapters; not persistence; not deployed.
+  - url: https://api.connector-os.example/v1-not-deployed
+    description: Placeholder. No staging or production endpoint exists yet (Lane 4 owns deployment).
+security:
+  - apiKey: []
+tags:
+  - name: Connectors
+  - name: Connections
+  - name: Runs
+  - name: Approvals
+  - name: Executions
+  - name: Receipts
+  - name: Policies
+  - name: Events
+  - name: Webhooks
+  - name: Environments
+  - name: Usage
+  - name: Identity
+  - name: Operator
+    description: Privileged surfaces. Human operator session required; never available to API keys.
+
+paths:
+  /v1/me:
+    get:
+      tags: [Identity]
+      operationId: getMe
+      summary: Describe the calling credential
+      x-dcs-maturity: HERMETIC
+      x-dcs-production-blocker: BLOCKED_BY_LANE3 (IdP / API-key issuance)
+      security: [{apiKey: []}, {operatorSession: []}]
+      responses:
+        '200':
+          description: The credential's principal, tenant, environment and scopes. Never the secret.
+          headers: *std
+          content:
+            application/json:
+              schema: {$ref: '#/components/schemas/Principal'}
+              examples:
+                apiKey:
+                  value: {object: principal, kind: api_key, principal_id: key_ci_7f3a, tenant_id: ten_demo, environment: hermetic, scopes: ['connectors:read', 'runs:read'], capabilities: [], key_prefix: cosk_hermetic_}
+        '401': {$ref: '#/components/responses/Unauthenticated'}
+        '429': {$ref: '#/components/responses/RateLimited'}
+
+  /v1/connectors:
+    get:
+      tags: [Connectors]
+      operationId: listConnectors
+      summary: List catalogued connectors with their real dispatch eligibility
+      x-dcs-maturity: WIRED
+      x-dcs-production-blocker: deploy (Lane 4)
+      x-dcs-scope: connectors:read
+      parameters:
+        - $ref: '#/components/parameters/Limit'
+        - $ref: '#/components/parameters/Cursor'
+        - name: disposition
+          in: query
+          schema: {$ref: '#/components/schemas/ConnectorDisposition'}
+        - name: q
+          in: query
+          description: Case-insensitive substring match on connector_id or name.
+          schema: {type: string, maxLength: 64}
+      responses:
+        '200':
+          description: A page of connectors.
+          headers: *std
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/ListEnvelope'
+                  - properties:
+                      data: {type: array, items: {$ref: '#/components/schemas/Connector'}}
+        '400': {$ref: '#/components/responses/InvalidRequest'}
+        '401': {$ref: '#/components/responses/Unauthenticated'}
+        '403': {$ref: '#/components/responses/PermissionDenied'}
+        '429': {$ref: '#/components/responses/RateLimited'}
+
+  /v1/connectors/{connector_id}:
+    get:
+      tags: [Connectors]
+      operationId: getConnector
+      summary: Get one connector
+      x-dcs-maturity: WIRED
+      x-dcs-production-blocker: deploy (Lane 4)
+      x-dcs-scope: connectors:read
+      parameters:
+        - $ref: '#/components/parameters/ConnectorId'
+      responses:
+        '200':
+          description: The connector.
+          headers: *std
+          content:
+            application/json:
+              schema: {$ref: '#/components/schemas/Connector'}
+              examples:
+                deepl:
+                  value:
+                    object: connector
+                    connector_id: deepl
+                    name: DeepL
+                    pack: F01
+                    engineering_rank: 1
+                    generation: v1
+                    disposition: CODED_LOCALLY_TESTED
+                    availability: not_dispatchable
+                    dispatch: {staging: false, production: false, reasons: [not_integrated], production_reasons: [not_staging_verified]}
+        '400': {$ref: '#/components/responses/InvalidRequest'}
+        '401': {$ref: '#/components/responses/Unauthenticated'}
+        '404': {$ref: '#/components/responses/NotFound'}
+        '429': {$ref: '#/components/responses/RateLimited'}
+
+  /v1/connections:
+    get:
+      tags: [Connections]
+      operationId: listConnections
+      summary: List connections in the caller's tenant
+      x-dcs-maturity: HERMETIC
+      x-dcs-production-blocker: BLOCKED_BY_LANE3 (connection store)
+      x-dcs-scope: connections:read
+      parameters:
+        - $ref: '#/components/parameters/Limit'
+        - $ref: '#/components/parameters/Cursor'
+        - name: connector_id
+          in: query
+          schema: {$ref: '#/components/schemas/ConnectorIdValue'}
+        - name: status
+          in: query
+          schema: {$ref: '#/components/schemas/ConnectionStatus'}
+      responses:
+        '200':
+          description: A page of connections.
+          headers: *std
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/ListEnvelope'
+                  - properties:
+                      data: {type: array, items: {$ref: '#/components/schemas/Connection'}}
+        '400': {$ref: '#/components/responses/InvalidRequest'}
+        '401': {$ref: '#/components/responses/Unauthenticated'}
+        '403': {$ref: '#/components/responses/PermissionDenied'}
+        '429': {$ref: '#/components/responses/RateLimited'}
+    post:
+      tags: [Connections]
+      operationId: createConnection
+      summary: Register a connection by credential reference
+      description: |
+        Creates a connection in status `CREATED`. The body carries a **credential reference**
+        (`cref_<uuid>`) issued by the vault — never a secret. Any field that looks like a secret
+        (`access_token`, `api_key`, `client_secret`, `password`, …) is refused with `400 secret_in_request`.
+      x-dcs-maturity: HERMETIC
+      x-dcs-production-blocker: BLOCKED_BY_LANE3 (vault / credential lifecycle) + EXTERNAL_DEPENDENCY (provider app registrations)
+      x-dcs-scope: connections:write
+      parameters:
+        - $ref: '#/components/parameters/IdempotencyKeyRequired'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: {$ref: '#/components/schemas/ConnectionCreate'}
+            examples:
+              simulator:
+                value: {connector_id: github, credential_ref: cref_0b6f5d3e-3c1a-4b8e-9d2f-1a2b3c4d5e6f, routing: {target: simulator, environment: staging}, label: ci-bot}
+      responses:
+        '201':
+          description: Connection created.
+          headers: *write
+          content:
+            application/json:
+              schema: {$ref: '#/components/schemas/Connection'}
+        '400': {$ref: '#/components/responses/InvalidRequest'}
+        '401': {$ref: '#/components/responses/Unauthenticated'}
+        '403': {$ref: '#/components/responses/PermissionDenied'}
+        '404': {$ref: '#/components/responses/NotFound'}
+        '422': {$ref: '#/components/responses/IdempotencyConflict'}
+        '429': {$ref: '#/components/responses/RateLimited'}
+
+  /v1/connections/{connection_id}:
+    get:
+      tags: [Connections]
+      operationId: getConnection
+      summary: Get one connection
+      x-dcs-maturity: HERMETIC
+      x-dcs-production-blocker: BLOCKED_BY_LANE3 (connection store)
+      x-dcs-scope: connections:read
+      parameters:
+        - $ref: '#/components/parameters/ConnectionId'
+      responses:
+        '200':
+          description: The connection. A connection in another tenant is reported as 404.
+          headers: *std
+          content:
+            application/json:
+              schema: {$ref: '#/components/schemas/Connection'}
+        '400': {$ref: '#/components/responses/InvalidRequest'}
+        '401': {$ref: '#/components/responses/Unauthenticated'}
+        '404': {$ref: '#/components/responses/NotFound'}
+        '429': {$ref: '#/components/responses/RateLimited'}
+
+  /v1/connections/{connection_id}/test:
+    post:
+      tags: [Connections]
+      operationId: testConnection
+      summary: Run the connection's non-mutating test probe
+      x-dcs-maturity: HERMETIC
+      x-dcs-production-blocker: BLOCKED_BY_LANE3 + EXTERNAL_DEPENDENCY (real provider probe; reference server tests simulator targets only)
+      x-dcs-scope: connections:write
+      parameters:
+        - $ref: '#/components/parameters/ConnectionId'
+        - $ref: '#/components/parameters/IdempotencyKeyRequired'
+      responses:
+        '200':
+          description: Test result; on success status moves CREATED→TESTED (or stays TESTED).
+          headers: *write
+          content:
+            application/json:
+              schema: {$ref: '#/components/schemas/ConnectionTestResult'}
+        '400': {$ref: '#/components/responses/InvalidRequest'}
+        '401': {$ref: '#/components/responses/Unauthenticated'}
+        '403': {$ref: '#/components/responses/PermissionDenied'}
+        '404': {$ref: '#/components/responses/NotFound'}
+        '409': {$ref: '#/components/responses/Conflict'}
+        '422': {$ref: '#/components/responses/IdempotencyConflict'}
+        '429': {$ref: '#/components/responses/RateLimited'}
+
+  /v1/connections/{connection_id}/activate:
+    post:
+      tags: [Connections]
+      operationId: activateConnection
+      summary: Activate a tested connection (TESTED → ACTIVE)
+      description: Legal only from `TESTED` (Runtime-E lifecycle). Anything else is `409 illegal_transition`.
+      x-dcs-maturity: HERMETIC
+      x-dcs-production-blocker: BLOCKED_BY_LANE3 (connection store)
+      x-dcs-scope: connections:write
+      parameters:
+        - $ref: '#/components/parameters/ConnectionId'
+        - $ref: '#/components/parameters/IdempotencyKeyRequired'
+      responses:
+        '200':
+          description: Activated.
+          headers: *write
+          content:
+            application/json:
+              schema: {$ref: '#/components/schemas/Connection'}
+        '400': {$ref: '#/components/responses/InvalidRequest'}
+        '401': {$ref: '#/components/responses/Unauthenticated'}
+        '403': {$ref: '#/components/responses/PermissionDenied'}
+        '404': {$ref: '#/components/responses/NotFound'}
+        '409': {$ref: '#/components/responses/Conflict'}
+        '422': {$ref: '#/components/responses/IdempotencyConflict'}
+        '429': {$ref: '#/components/responses/RateLimited'}
+
+  /v1/runs:
+    get:
+      tags: [Runs]
+      operationId: listRuns
+      summary: List OAL runs
+      x-dcs-maturity: HERMETIC
+      x-dcs-production-blocker: BLOCKED_BY_LANE3 (OAL run-state store) + integrate/v1-rc
+      x-dcs-scope: runs:read
+      parameters:
+        - $ref: '#/components/parameters/Limit'
+        - $ref: '#/components/parameters/Cursor'
+        - name: status
+          in: query
+          schema: {$ref: '#/components/schemas/RunStatus'}
+      responses:
+        '200':
+          description: A page of runs.
+          headers: *std
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/ListEnvelope'
+                  - properties:
+                      data: {type: array, items: {$ref: '#/components/schemas/Run'}}
+        '400': {$ref: '#/components/responses/InvalidRequest'}
+        '401': {$ref: '#/components/responses/Unauthenticated'}
+        '403': {$ref: '#/components/responses/PermissionDenied'}
+        '429': {$ref: '#/components/responses/RateLimited'}
+    post:
+      tags: [Runs]
+      operationId: createRun
+      summary: Open an OAL run (trigger kind `operator`)
+      description: Opens a run in `mode_0` or `mode_1`. `mode_2` is never opened through this call; execution is reached only through an approved plan step submitted to `POST /v1/executions`.
+      x-dcs-maturity: HERMETIC
+      x-dcs-production-blocker: BLOCKED_BY_LANE3 + integrate/v1-rc
+      x-dcs-scope: runs:write
+      parameters:
+        - $ref: '#/components/parameters/IdempotencyKeyRequired'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: {$ref: '#/components/schemas/RunCreate'}
+            examples:
+              diagnose:
+                value: {mode: mode_1, objective: Investigate failing GitHub issue sync, connector_ids: [github], window_seconds: 3600}
+      responses:
+        '201':
+          description: Run opened.
+          headers: *write
+          content:
+            application/json:
+              schema: {$ref: '#/components/schemas/Run'}
+        '400': {$ref: '#/components/responses/InvalidRequest'}
+        '401': {$ref: '#/components/responses/Unauthenticated'}
+        '403': {$ref: '#/components/responses/PermissionDenied'}
+        '422': {$ref: '#/components/responses/IdempotencyConflict'}
+        '429': {$ref: '#/components/responses/RateLimited'}
+
+  /v1/runs/{run_id}:
+    get:
+      tags: [Runs]
+      operationId: getRun
+      summary: Inspect a run
+      x-dcs-maturity: HERMETIC
+      x-dcs-production-blocker: BLOCKED_BY_LANE3
+      x-dcs-scope: runs:read
+      parameters:
+        - $ref: '#/components/parameters/RunId'
+      responses:
+        '200':
+          description: The run, with its plans, approvals and executions referenced by id.
+          headers: *std
+          content:
+            application/json:
+              schema: {$ref: '#/components/schemas/Run'}
+        '400': {$ref: '#/components/responses/InvalidRequest'}
+        '401': {$ref: '#/components/responses/Unauthenticated'}
+        '404': {$ref: '#/components/responses/NotFound'}
+        '429': {$ref: '#/components/responses/RateLimited'}
+
+  /v1/runs/{run_id}/plans:
+    post:
+      tags: [Runs]
+      operationId: createPlan
+      summary: Request a recommendation-only plan for a run
+      description: Plans are recommendations. Each step carries a policy decision; a `require_approval` step must be approved by a human before it can be submitted for execution.
+      x-dcs-maturity: HERMETIC
+      x-dcs-production-blocker: BLOCKED_BY_LANE3 + integrate/v1-rc
+      x-dcs-scope: runs:write
+      parameters:
+        - $ref: '#/components/parameters/RunId'
+        - $ref: '#/components/parameters/IdempotencyKeyRequired'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: {$ref: '#/components/schemas/PlanCreate'}
+            examples:
+              oneStep:
+                value:
+                  operator_explanation: Re-open the issue the sync closed by mistake
+                  steps:
+                    - {connector_id: github, tool_id: update_issue, operation_class: write, connection_id: conn_01hermetic0000000000000001, rationale: restore state}
+      responses:
+        '201':
+          description: Plan created (recommendation only).
+          headers: *write
+          content:
+            application/json:
+              schema: {$ref: '#/components/schemas/Plan'}
+        '400': {$ref: '#/components/responses/InvalidRequest'}
+        '401': {$ref: '#/components/responses/Unauthenticated'}
+        '403': {$ref: '#/components/responses/PermissionDenied'}
+        '404': {$ref: '#/components/responses/NotFound'}
+        '409': {$ref: '#/components/responses/Conflict'}
+        '422': {$ref: '#/components/responses/IdempotencyConflict'}
+        '429': {$ref: '#/components/responses/RateLimited'}
+
+  /v1/runs/{run_id}/plans/{plan_id}:
+    get:
+      tags: [Runs]
+      operationId: getPlan
+      summary: Get a plan
+      x-dcs-maturity: HERMETIC
+      x-dcs-production-blocker: BLOCKED_BY_LANE3
+      x-dcs-scope: runs:read
+      parameters:
+        - $ref: '#/components/parameters/RunId'
+        - $ref: '#/components/parameters/PlanId'
+      responses:
+        '200':
+          description: The plan.
+          headers: *std
+          content:
+            application/json:
+              schema: {$ref: '#/components/schemas/Plan'}
+        '400': {$ref: '#/components/responses/InvalidRequest'}
+        '401': {$ref: '#/components/responses/Unauthenticated'}
+        '404': {$ref: '#/components/responses/NotFound'}
+        '429': {$ref: '#/components/responses/RateLimited'}
+
+  /v1/approvals:
+    get:
+      tags: [Approvals]
+      operationId: listApprovals
+      summary: List approvals
+      x-dcs-maturity: HERMETIC
+      x-dcs-production-blocker: BLOCKED_BY_LANE3 (approval store)
+      x-dcs-scope: approvals:read
+      security: [{apiKey: []}, {operatorSession: []}]
+      parameters:
+        - $ref: '#/components/parameters/Limit'
+        - $ref: '#/components/parameters/Cursor'
+        - name: state
+          in: query
+          schema: {$ref: '#/components/schemas/ApprovalState'}
+        - name: run_id
+          in: query
+          schema: {$ref: '#/components/schemas/RunIdValue'}
+      responses:
+        '200':
+          description: A page of approvals.
+          headers: *std
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/ListEnvelope'
+                  - properties:
+                      data: {type: array, items: {$ref: '#/components/schemas/Approval'}}
+        '400': {$ref: '#/components/responses/InvalidRequest'}
+        '401': {$ref: '#/components/responses/Unauthenticated'}
+        '403': {$ref: '#/components/responses/PermissionDenied'}
+        '429': {$ref: '#/components/responses/RateLimited'}
+    post:
+      tags: [Approvals]
+      operationId: requestApproval
+      summary: Request human approval for plan steps
+      description: Creates an approval in state `REQUESTED`. Requesting never grants. Only a human operator can grant (`POST /v1/approvals/{id}/grant`).
+      x-dcs-maturity: HERMETIC
+      x-dcs-production-blocker: BLOCKED_BY_LANE3 (approval store)
+      x-dcs-scope: approvals:request
+      parameters:
+        - $ref: '#/components/parameters/IdempotencyKeyRequired'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: {$ref: '#/components/schemas/ApprovalRequest'}
+      responses:
+        '201':
+          description: Approval requested.
+          headers: *write
+          content:
+            application/json:
+              schema: {$ref: '#/components/schemas/Approval'}
+        '400': {$ref: '#/components/responses/InvalidRequest'}
+        '401': {$ref: '#/components/responses/Unauthenticated'}
+        '403': {$ref: '#/components/responses/PermissionDenied'}
+        '404': {$ref: '#/components/responses/NotFound'}
+        '409': {$ref: '#/components/responses/Conflict'}
+        '422': {$ref: '#/components/responses/IdempotencyConflict'}
+        '429': {$ref: '#/components/responses/RateLimited'}
+
+  /v1/approvals/{approval_id}:
+    get:
+      tags: [Approvals]
+      operationId: getApproval
+      summary: Get an approval
+      x-dcs-maturity: HERMETIC
+      x-dcs-production-blocker: BLOCKED_BY_LANE3
+      x-dcs-scope: approvals:read
+      security: [{apiKey: []}, {operatorSession: []}]
+      parameters:
+        - $ref: '#/components/parameters/ApprovalId'
+      responses:
+        '200':
+          description: The approval. `state` is derived at read time (EXPIRED is never stored).
+          headers: *std
+          content:
+            application/json:
+              schema: {$ref: '#/components/schemas/Approval'}
+        '400': {$ref: '#/components/responses/InvalidRequest'}
+        '401': {$ref: '#/components/responses/Unauthenticated'}
+        '404': {$ref: '#/components/responses/NotFound'}
+        '429': {$ref: '#/components/responses/RateLimited'}
+
+  /v1/approvals/{approval_id}/grant:
+    post:
+      tags: [Approvals]
+      operationId: grantApproval
+      summary: Grant (human operator only)
+      description: Issues the OAL approval (`oal_status = ISSUED`). Requires a human operator session with the `approve` capability; an API key is refused with `403 human_required`.
+      x-dcs-maturity: HERMETIC
+      x-dcs-production-blocker: BLOCKED_BY_LANE3 (IdP + operator attestation)
+      x-dcs-capability: approve
+      security: [{operatorSession: []}]
+      parameters:
+        - $ref: '#/components/parameters/ApprovalId'
+        - $ref: '#/components/parameters/IdempotencyKeyRequired'
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema: {$ref: '#/components/schemas/ApprovalGrant'}
+      responses:
+        '200':
+          description: Granted.
+          headers: *write
+          content:
+            application/json:
+              schema: {$ref: '#/components/schemas/Approval'}
+        '400': {$ref: '#/components/responses/InvalidRequest'}
+        '401': {$ref: '#/components/responses/Unauthenticated'}
+        '403': {$ref: '#/components/responses/PermissionDenied'}
+        '404': {$ref: '#/components/responses/NotFound'}
+        '409': {$ref: '#/components/responses/Conflict'}
+        '422': {$ref: '#/components/responses/IdempotencyConflict'}
+        '429': {$ref: '#/components/responses/RateLimited'}
+
+  /v1/approvals/{approval_id}/deny:
+    post:
+      tags: [Approvals]
+      operationId: denyApproval
+      summary: Deny (human operator only)
+      x-dcs-maturity: HERMETIC
+      x-dcs-production-blocker: BLOCKED_BY_LANE3 (IdP)
+      x-dcs-capability: approve
+      security: [{operatorSession: []}]
+      parameters:
+        - $ref: '#/components/parameters/ApprovalId'
+        - $ref: '#/components/parameters/IdempotencyKeyRequired'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: {$ref: '#/components/schemas/ReasonBody'}
+      responses:
+        '200':
+          description: Denied.
+          headers: *write
+          content:
+            application/json:
+              schema: {$ref: '#/components/schemas/Approval'}
+        '400': {$ref: '#/components/responses/InvalidRequest'}
+        '401': {$ref: '#/components/responses/Unauthenticated'}
+        '403': {$ref: '#/components/responses/PermissionDenied'}
+        '404': {$ref: '#/components/responses/NotFound'}
+        '409': {$ref: '#/components/responses/Conflict'}
+        '422': {$ref: '#/components/responses/IdempotencyConflict'}
+        '429': {$ref: '#/components/responses/RateLimited'}
+
+  /v1/approvals/{approval_id}/revoke:
+    post:
+      tags: [Approvals]
+      operationId: revokeApproval
+      summary: Revoke an issued approval (human operator only)
+      description: Only an approval whose `oal_status` is `ISSUED` can be revoked (`NOT-REVOCABLE` otherwise). Reason of at least 3 characters.
+      x-dcs-maturity: HERMETIC
+      x-dcs-production-blocker: BLOCKED_BY_LANE3 (IdP)
+      x-dcs-capability: approve
+      security: [{operatorSession: []}]
+      parameters:
+        - $ref: '#/components/parameters/ApprovalId'
+        - $ref: '#/components/parameters/IdempotencyKeyRequired'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: {$ref: '#/components/schemas/ReasonBody'}
+      responses:
+        '200':
+          description: Revoked.
+          headers: *write
+          content:
+            application/json:
+              schema: {$ref: '#/components/schemas/Approval'}
+        '400': {$ref: '#/components/responses/InvalidRequest'}
+        '401': {$ref: '#/components/responses/Unauthenticated'}
+        '403': {$ref: '#/components/responses/PermissionDenied'}
+        '404': {$ref: '#/components/responses/NotFound'}
+        '409': {$ref: '#/components/responses/Conflict'}
+        '422': {$ref: '#/components/responses/IdempotencyConflict'}
+        '429': {$ref: '#/components/responses/RateLimited'}
+
+  /v1/executions:
+    get:
+      tags: [Executions]
+      operationId: listExecutions
+      summary: List executions
+      x-dcs-maturity: HERMETIC
+      x-dcs-production-blocker: BLOCKED_BY_LANE3 (execution ledger)
+      x-dcs-scope: executions:read
+      parameters:
+        - $ref: '#/components/parameters/Limit'
+        - $ref: '#/components/parameters/Cursor'
+        - name: run_id
+          in: query
+          schema: {$ref: '#/components/schemas/RunIdValue'}
+        - name: outcome
+          in: query
+          schema: {$ref: '#/components/schemas/ExecutionOutcome'}
+      responses:
+        '200':
+          description: A page of executions.
+          headers: *std
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/ListEnvelope'
+                  - properties:
+                      data: {type: array, items: {$ref: '#/components/schemas/Execution'}}
+        '400': {$ref: '#/components/responses/InvalidRequest'}
+        '401': {$ref: '#/components/responses/Unauthenticated'}
+        '403': {$ref: '#/components/responses/PermissionDenied'}
+        '429': {$ref: '#/components/responses/RateLimited'}
+    post:
+      tags: [Executions]
+      operationId: submitExecution
+      summary: Submit an approved plan step for execution
+      description: |
+        Hands one approved plan step to the ops-broker. The handler never calls a connector: it
+        re-reads the policy decision, consumes the approval atomically, and submits to the ops-broker,
+        which checks the kill switch and dispatches through the execution engine.
+
+        * `202` — accepted; the body is the execution as recorded so far. `outcome` may be any EXEC-FACTS
+          value, including `BLOCKED` (kill switch after consumption) and `OUTCOME_UNKNOWN`.
+        * `409 mode_locked` — MODE 2 is locked (the default until ops-broker readiness is asserted).
+        * `409 broker_refused` — the broker refused before dispatch; `error.detail.refusal_code` is the
+          broker's code verbatim (`APPROVAL-REQUIRED`, `APPROVAL-REPLAY`, `PLAN-HASH-MISMATCH`, …).
+
+        Submitting the same approved step again never dispatches twice: the broker answers
+        `APPROVAL-REPLAY`, and a repeated `Idempotency-Key` replays the original response.
+
+        **Clients must not retry this call after an ambiguous transport failure** (timeout, connection
+        reset, 502/504) except with the *same* `Idempotency-Key`, which makes the retry a replay.
+      x-dcs-maturity: HERMETIC
+      x-dcs-production-blocker: BLOCKED_BY_LANE3 + integrate/v1-rc + MODE 2 readiness (ops-broker)
+      x-dcs-scope: executions:write
+      x-dcs-consequential: true
+      security: [{apiKey: []}, {operatorSession: []}]
+      parameters:
+        - $ref: '#/components/parameters/IdempotencyKeyRequired'
+        - $ref: '#/components/parameters/OperatorAttestation'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: {$ref: '#/components/schemas/ExecutionSubmit'}
+            examples:
+              approvedStep:
+                value: {run_id: run_01hermetic00000001, plan_id: plan_01hermetic0000001, step_id: step_01hermetic0000001, approval_id: apr_01hermetic00000001}
+      responses:
+        '202':
+          description: Accepted by the ops-broker.
+          headers: *write
+          content:
+            application/json:
+              schema: {$ref: '#/components/schemas/Execution'}
+              examples:
+                outcomeUnknown:
+                  summary: Ambiguous write — preserved exactly, never retried
+                  value:
+                    object: execution
+                    execution_id: 5f0c1f7e-8a1b-4c2d-9e3f-0a1b2c3d4e5f
+                    run_id: run_01hermetic00000001
+                    plan_id: plan_01hermetic0000001
+                    step_id: step_01hermetic0000001
+                    approval_id: apr_01hermetic00000001
+                    connector_id: github
+                    connector_version: 1.0.0
+                    tool_id: update_issue
+                    operation_class: write
+                    provider_idempotency_semantics: none
+                    outcome: OUTCOME_UNKNOWN
+                    settled: false
+                    attempts:
+                      - {attempt_n: 1, outcome: STARTED, recorded_at: '2026-09-28T10:00:00Z'}
+                      - {attempt_n: 1, outcome: OUTCOME_UNKNOWN, error_class: timeout, reconciliation_ref: rcn_hermetic0001, recorded_at: '2026-09-28T10:00:05Z'}
+                    reconciliation: {required: true, reconciliation_ref: rcn_hermetic0001, strategy: probe_by_idempotency_key, status: pending}
+                    verification: {verification_ref: null, verdict: null}
+                    receipt: {status: PENDING, receipt_id: null, verification: not_verified, evidence_grade: none}
+                    created_at: '2026-09-28T10:00:00Z'
+                    updated_at: '2026-09-28T10:00:05Z'
+        '400': {$ref: '#/components/responses/InvalidRequest'}
+        '401': {$ref: '#/components/responses/Unauthenticated'}
+        '403': {$ref: '#/components/responses/PermissionDenied'}
+        '404': {$ref: '#/components/responses/NotFound'}
+        '409': {$ref: '#/components/responses/Conflict'}
+        '422': {$ref: '#/components/responses/IdempotencyConflict'}
+        '429': {$ref: '#/components/responses/RateLimited'}
+        '503': {$ref: '#/components/responses/Unavailable'}
+
+  /v1/executions/{execution_id}:
+    get:
+      tags: [Executions]
+      operationId: getExecution
+      summary: Inspect an execution (outcome, attempts, reconciliation, verification, receipt)
+      x-dcs-maturity: HERMETIC
+      x-dcs-production-blocker: BLOCKED_BY_LANE3
+      x-dcs-scope: executions:read
+      parameters:
+        - $ref: '#/components/parameters/ExecutionId'
+      responses:
+        '200':
+          description: The execution.
+          headers: *std
+          content:
+            application/json:
+              schema: {$ref: '#/components/schemas/Execution'}
+        '400': {$ref: '#/components/responses/InvalidRequest'}
+        '401': {$ref: '#/components/responses/Unauthenticated'}
+        '404': {$ref: '#/components/responses/NotFound'}
+        '429': {$ref: '#/components/responses/RateLimited'}
+
+  /v1/receipts:
+    get:
+      tags: [Receipts]
+      operationId: listReceipts
+      summary: List receipt records
+      x-dcs-maturity: HERMETIC
+      x-dcs-production-blocker: BLOCKED_BY_LANE3 (authenticated R-Series route)
+      x-dcs-scope: receipts:read
+      parameters:
+        - $ref: '#/components/parameters/Limit'
+        - $ref: '#/components/parameters/Cursor'
+        - name: execution_id
+          in: query
+          schema: {type: string, format: uuid}
+        - name: status
+          in: query
+          schema: {$ref: '#/components/schemas/ReceiptStatus'}
+      responses:
+        '200':
+          description: A page of receipts.
+          headers: *std
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/ListEnvelope'
+                  - properties:
+                      data: {type: array, items: {$ref: '#/components/schemas/Receipt'}}
+        '400': {$ref: '#/components/responses/InvalidRequest'}
+        '401': {$ref: '#/components/responses/Unauthenticated'}
+        '403': {$ref: '#/components/responses/PermissionDenied'}
+        '429': {$ref: '#/components/responses/RateLimited'}
+
+  /v1/receipts/{receipt_id}:
+    get:
+      tags: [Receipts]
+      operationId: getReceipt
+      summary: Get a receipt record and its R-Series document
+      x-dcs-maturity: HERMETIC
+      x-dcs-production-blocker: BLOCKED_BY_LANE3 (authenticated R-Series route)
+      x-dcs-scope: receipts:read
+      parameters:
+        - $ref: '#/components/parameters/ReceiptId'
+      responses:
+        '200':
+          description: The receipt. `document` is the R-Series receipt as issued, passed through unmodified; Connector OS does not interpret its signature.
+          headers: *std
+          content:
+            application/json:
+              schema: {$ref: '#/components/schemas/Receipt'}
+        '400': {$ref: '#/components/responses/InvalidRequest'}
+        '401': {$ref: '#/components/responses/Unauthenticated'}
+        '404': {$ref: '#/components/responses/NotFound'}
+        '429': {$ref: '#/components/responses/RateLimited'}
+
+  /v1/receipts/{receipt_id}/verify:
+    post:
+      tags: [Receipts]
+      operationId: verifyReceipt
+      summary: Verify a receipt through the R-Series verifier
+      description: |
+        Delegates to the R-Series verifier port (`verify(receipt_id, {execution_id, tenant_id, run_id})`).
+        The result is `verified` only when the verifier kind is `rseries`, its code is `OK`, the verified
+        execution outcome equals the recorded outcome, and the profile status is `frozen`. A test-double
+        verifier always yields `unverified_test_double`. This call has no side effects.
+      x-dcs-maturity: HERMETIC
+      x-dcs-production-blocker: BLOCKED_BY_LANE3 + EXTERNAL_DEPENDENCY (R-Series verifier service)
+      x-dcs-scope: receipts:verify
+      parameters:
+        - $ref: '#/components/parameters/ReceiptId'
+      responses:
+        '200':
+          description: The verification verdict (a verdict of `verification_failed` is still a 200).
+          headers: *std
+          content:
+            application/json:
+              schema: {$ref: '#/components/schemas/ReceiptVerification'}
+        '400': {$ref: '#/components/responses/InvalidRequest'}
+        '401': {$ref: '#/components/responses/Unauthenticated'}
+        '404': {$ref: '#/components/responses/NotFound'}
+        '429': {$ref: '#/components/responses/RateLimited'}
+        '503': {$ref: '#/components/responses/Unavailable'}
+
+  /v1/policies:
+    get:
+      tags: [Policies]
+      operationId: listPolicies
+      summary: List policies
+      x-dcs-maturity: HERMETIC
+      x-dcs-production-blocker: BLOCKED_BY_LANE3 (policy store); authoring PLANNED
+      x-dcs-scope: policies:read
+      parameters:
+        - $ref: '#/components/parameters/Limit'
+        - $ref: '#/components/parameters/Cursor'
+      responses:
+        '200':
+          description: A page of policies.
+          headers: *std
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/ListEnvelope'
+                  - properties:
+                      data: {type: array, items: {$ref: '#/components/schemas/Policy'}}
+        '400': {$ref: '#/components/responses/InvalidRequest'}
+        '401': {$ref: '#/components/responses/Unauthenticated'}
+        '403': {$ref: '#/components/responses/PermissionDenied'}
+        '429': {$ref: '#/components/responses/RateLimited'}
+
+  /v1/policies/{policy_id}:
+    get:
+      tags: [Policies]
+      operationId: getPolicy
+      summary: Get a policy
+      x-dcs-maturity: HERMETIC
+      x-dcs-production-blocker: BLOCKED_BY_LANE3
+      x-dcs-scope: policies:read
+      parameters:
+        - name: policy_id
+          in: path
+          required: true
+          schema: {type: string, pattern: '^[A-Za-z0-9][A-Za-z0-9_.:-]{1,127}$'}
+      responses:
+        '200':
+          description: The policy.
+          headers: *std
+          content:
+            application/json:
+              schema: {$ref: '#/components/schemas/Policy'}
+        '400': {$ref: '#/components/responses/InvalidRequest'}
+        '401': {$ref: '#/components/responses/Unauthenticated'}
+        '404': {$ref: '#/components/responses/NotFound'}
+        '429': {$ref: '#/components/responses/RateLimited'}
+
+  /v1/policies/evaluate:
+    post:
+      tags: [Policies]
+      operationId: evaluatePolicy
+      summary: Dry-run a policy decision for a proposed action
+      description: Pure evaluation with no side effects. A write or admin action is never `allow` under the default policy.
+      x-dcs-maturity: HERMETIC
+      x-dcs-production-blocker: integrate/v1-rc (OAL policy binding)
+      x-dcs-scope: policies:read
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: {$ref: '#/components/schemas/PolicyEvaluateRequest'}
+      responses:
+        '200':
+          description: The decision.
+          headers: *std
+          content:
+            application/json:
+              schema: {$ref: '#/components/schemas/PolicyDecision'}
+        '400': {$ref: '#/components/responses/InvalidRequest'}
+        '401': {$ref: '#/components/responses/Unauthenticated'}
+        '403': {$ref: '#/components/responses/PermissionDenied'}
+        '429': {$ref: '#/components/responses/RateLimited'}
+
+  /v1/events:
+    get:
+      tags: [Events]
+      operationId: listEvents
+      summary: List platform events (newest first)
+      x-dcs-maturity: HERMETIC
+      x-dcs-production-blocker: BLOCKED_BY_LANE3 (eventbus persistence)
+      x-dcs-scope: events:read
+      parameters:
+        - $ref: '#/components/parameters/Limit'
+        - $ref: '#/components/parameters/Cursor'
+        - name: type
+          in: query
+          schema: {$ref: '#/components/schemas/EventType'}
+      responses:
+        '200':
+          description: A page of events.
+          headers: *std
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/ListEnvelope'
+                  - properties:
+                      data: {type: array, items: {$ref: '#/components/schemas/Event'}}
+        '400': {$ref: '#/components/responses/InvalidRequest'}
+        '401': {$ref: '#/components/responses/Unauthenticated'}
+        '403': {$ref: '#/components/responses/PermissionDenied'}
+        '429': {$ref: '#/components/responses/RateLimited'}
+
+  /v1/events/{event_id}:
+    get:
+      tags: [Events]
+      operationId: getEvent
+      summary: Get an event
+      x-dcs-maturity: HERMETIC
+      x-dcs-production-blocker: BLOCKED_BY_LANE3
+      x-dcs-scope: events:read
+      parameters:
+        - name: event_id
+          in: path
+          required: true
+          schema: {$ref: '#/components/schemas/EventIdValue'}
+      responses:
+        '200':
+          description: The event.
+          headers: *std
+          content:
+            application/json:
+              schema: {$ref: '#/components/schemas/Event'}
+        '400': {$ref: '#/components/responses/InvalidRequest'}
+        '401': {$ref: '#/components/responses/Unauthenticated'}
+        '404': {$ref: '#/components/responses/NotFound'}
+        '429': {$ref: '#/components/responses/RateLimited'}
+
+  /v1/webhooks:
+    get:
+      tags: [Webhooks]
+      operationId: listWebhookEndpoints
+      summary: List outbound webhook endpoints
+      x-dcs-maturity: CONTRACT_ONLY
+      x-dcs-production-blocker: 'PLANNED: no outbound delivery service exists; signing scheme awaits founder decision FD-L5-1'
+      x-dcs-scope: webhooks:read
+      parameters:
+        - $ref: '#/components/parameters/Limit'
+        - $ref: '#/components/parameters/Cursor'
+      responses:
+        '200':
+          description: A page of webhook endpoints.
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/ListEnvelope'
+                  - properties:
+                      data: {type: array, items: {$ref: '#/components/schemas/WebhookEndpoint'}}
+        '400': {$ref: '#/components/responses/InvalidRequest'}
+        '401': {$ref: '#/components/responses/Unauthenticated'}
+        '501': {$ref: '#/components/responses/NotImplemented'}
+    post:
+      tags: [Webhooks]
+      operationId: createWebhookEndpoint
+      summary: Subscribe an endpoint to event types
+      x-dcs-maturity: CONTRACT_ONLY
+      x-dcs-production-blocker: PLANNED + FD-L5-1
+      x-dcs-scope: webhooks:write
+      parameters:
+        - $ref: '#/components/parameters/IdempotencyKeyRequired'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: {$ref: '#/components/schemas/WebhookEndpointCreate'}
+      responses:
+        '201':
+          description: Created.
+          content:
+            application/json:
+              schema: {$ref: '#/components/schemas/WebhookEndpoint'}
+        '400': {$ref: '#/components/responses/InvalidRequest'}
+        '401': {$ref: '#/components/responses/Unauthenticated'}
+        '501': {$ref: '#/components/responses/NotImplemented'}
+
+  /v1/webhooks/{webhook_id}:
+    get:
+      tags: [Webhooks]
+      operationId: getWebhookEndpoint
+      summary: Get a webhook endpoint
+      x-dcs-maturity: CONTRACT_ONLY
+      x-dcs-production-blocker: PLANNED
+      x-dcs-scope: webhooks:read
+      parameters:
+        - $ref: '#/components/parameters/WebhookId'
+      responses:
+        '200':
+          description: The endpoint.
+          content:
+            application/json:
+              schema: {$ref: '#/components/schemas/WebhookEndpoint'}
+        '400': {$ref: '#/components/responses/InvalidRequest'}
+        '401': {$ref: '#/components/responses/Unauthenticated'}
+        '404': {$ref: '#/components/responses/NotFound'}
+        '501': {$ref: '#/components/responses/NotImplemented'}
+    delete:
+      tags: [Webhooks]
+      operationId: deleteWebhookEndpoint
+      summary: Delete a webhook endpoint
+      x-dcs-maturity: CONTRACT_ONLY
+      x-dcs-production-blocker: PLANNED
+      x-dcs-scope: webhooks:write
+      parameters:
+        - $ref: '#/components/parameters/WebhookId'
+      responses:
+        '204':
+          description: Deleted.
+        '400': {$ref: '#/components/responses/InvalidRequest'}
+        '401': {$ref: '#/components/responses/Unauthenticated'}
+        '404': {$ref: '#/components/responses/NotFound'}
+        '501': {$ref: '#/components/responses/NotImplemented'}
+
+  /v1/environments:
+    get:
+      tags: [Environments]
+      operationId: listEnvironments
+      summary: Environments and their real dispatch eligibility counts
+      x-dcs-maturity: WIRED
+      x-dcs-production-blocker: deploy (Lane 4)
+      x-dcs-scope: environments:read
+      responses:
+        '200':
+          description: Environments.
+          headers: *std
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [object, data, credential_environment]
+                properties:
+                  object: {const: list}
+                  credential_environment: {$ref: '#/components/schemas/ApiEnvironment'}
+                  data: {type: array, items: {$ref: '#/components/schemas/Environment'}}
+        '401': {$ref: '#/components/responses/Unauthenticated'}
+        '429': {$ref: '#/components/responses/RateLimited'}
+
+  /v1/usage:
+    get:
+      tags: [Usage]
+      operationId: getUsage
+      summary: Usage rollup for the caller's tenant
+      x-dcs-maturity: HERMETIC
+      x-dcs-production-blocker: BLOCKED_BY_LANE3 (execution ledger / receipt index)
+      x-dcs-scope: usage:read
+      parameters:
+        - name: window
+          in: query
+          schema: {type: string, enum: [24h, 7d, 30d], default: 24h}
+      responses:
+        '200':
+          description: Usage.
+          headers: *std
+          content:
+            application/json:
+              schema: {$ref: '#/components/schemas/Usage'}
+        '400': {$ref: '#/components/responses/InvalidRequest'}
+        '401': {$ref: '#/components/responses/Unauthenticated'}
+        '429': {$ref: '#/components/responses/RateLimited'}
+
+  /v1/operator/kill-orders:
+    get:
+      tags: [Operator]
+      operationId: listKillOrders
+      summary: List kill orders
+      x-dcs-maturity: HERMETIC
+      x-dcs-production-blocker: BLOCKED_BY_LANE3 (kill store + IdP)
+      x-dcs-capability: view
+      security: [{operatorSession: []}]
+      parameters:
+        - $ref: '#/components/parameters/Limit'
+        - $ref: '#/components/parameters/Cursor'
+      responses:
+        '200':
+          description: Kill orders, newest first.
+          headers: *std
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/ListEnvelope'
+                  - properties:
+                      data: {type: array, items: {$ref: '#/components/schemas/KillOrder'}}
+        '400': {$ref: '#/components/responses/InvalidRequest'}
+        '401': {$ref: '#/components/responses/Unauthenticated'}
+        '403': {$ref: '#/components/responses/PermissionDenied'}
+    post:
+      tags: [Operator]
+      operationId: createKillOrder
+      summary: Kill (stop dispatch for a scope)
+      description: Scope `system` stops writes only (reads continue). Requires `reason` and `reviewer` (≥3 characters each) and the `kill` capability.
+      x-dcs-maturity: HERMETIC
+      x-dcs-production-blocker: BLOCKED_BY_LANE3 (kill store + IdP)
+      x-dcs-capability: kill
+      x-dcs-consequential: true
+      security: [{operatorSession: []}]
+      parameters:
+        - $ref: '#/components/parameters/IdempotencyKeyRequired'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: {$ref: '#/components/schemas/KillOrderCreate'}
+      responses:
+        '201':
+          description: Kill order active.
+          headers: *write
+          content:
+            application/json:
+              schema: {$ref: '#/components/schemas/KillOrder'}
+        '400': {$ref: '#/components/responses/InvalidRequest'}
+        '401': {$ref: '#/components/responses/Unauthenticated'}
+        '403': {$ref: '#/components/responses/PermissionDenied'}
+        '422': {$ref: '#/components/responses/IdempotencyConflict'}
+
+  /v1/operator/kill-orders/{kill_order_id}/restore:
+    post:
+      tags: [Operator]
+      operationId: restoreKillOrder
+      summary: Restore (lift a kill order)
+      description: Restore does not un-revoke connections or leases.
+      x-dcs-maturity: HERMETIC
+      x-dcs-production-blocker: BLOCKED_BY_LANE3
+      x-dcs-capability: restore
+      x-dcs-consequential: true
+      security: [{operatorSession: []}]
+      parameters:
+        - name: kill_order_id
+          in: path
+          required: true
+          schema: {type: string, pattern: '^kill_[A-Za-z0-9]{8,64}$'}
+        - $ref: '#/components/parameters/IdempotencyKeyRequired'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: {$ref: '#/components/schemas/ReviewedReasonBody'}
+      responses:
+        '200':
+          description: Restored.
+          headers: *write
+          content:
+            application/json:
+              schema: {$ref: '#/components/schemas/KillOrder'}
+        '400': {$ref: '#/components/responses/InvalidRequest'}
+        '401': {$ref: '#/components/responses/Unauthenticated'}
+        '403': {$ref: '#/components/responses/PermissionDenied'}
+        '404': {$ref: '#/components/responses/NotFound'}
+        '409': {$ref: '#/components/responses/Conflict'}
+        '422': {$ref: '#/components/responses/IdempotencyConflict'}
+
+  /v1/operator/connections/{connection_id}/revoke:
+    post:
+      tags: [Operator]
+      operationId: revokeConnection
+      summary: Revoke a connection (terminal)
+      x-dcs-maturity: HERMETIC
+      x-dcs-production-blocker: BLOCKED_BY_LANE3 (vault revoke)
+      x-dcs-capability: kill
+      x-dcs-consequential: true
+      security: [{operatorSession: []}]
+      parameters:
+        - $ref: '#/components/parameters/ConnectionId'
+        - $ref: '#/components/parameters/IdempotencyKeyRequired'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: {$ref: '#/components/schemas/ReviewedReasonBody'}
+      responses:
+        '200':
+          description: Revoked.
+          headers: *write
+          content:
+            application/json:
+              schema: {$ref: '#/components/schemas/Connection'}
+        '400': {$ref: '#/components/responses/InvalidRequest'}
+        '401': {$ref: '#/components/responses/Unauthenticated'}
+        '403': {$ref: '#/components/responses/PermissionDenied'}
+        '404': {$ref: '#/components/responses/NotFound'}
+        '409': {$ref: '#/components/responses/Conflict'}
+        '422': {$ref: '#/components/responses/IdempotencyConflict'}
+
+  /v1/operator/reconciliations:
+    get:
+      tags: [Operator]
+      operationId: listReconciliations
+      summary: Executions awaiting reconciliation (OUTCOME_UNKNOWN)
+      x-dcs-maturity: HERMETIC
+      x-dcs-production-blocker: BLOCKED_BY_LANE3
+      x-dcs-capability: view
+      security: [{operatorSession: []}]
+      parameters:
+        - $ref: '#/components/parameters/Limit'
+        - $ref: '#/components/parameters/Cursor'
+      responses:
+        '200':
+          description: Parked executions, oldest first.
+          headers: *std
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/ListEnvelope'
+                  - properties:
+                      data: {type: array, items: {$ref: '#/components/schemas/Execution'}}
+        '400': {$ref: '#/components/responses/InvalidRequest'}
+        '401': {$ref: '#/components/responses/Unauthenticated'}
+        '403': {$ref: '#/components/responses/PermissionDenied'}
+
+  /v1/operator/executions/{execution_id}/reconcile:
+    post:
+      tags: [Operator]
+      operationId: reconcileExecution
+      summary: Record the reconciled outcome of an OUTCOME_UNKNOWN execution
+      description: The only legal transitions are `OUTCOME_UNKNOWN → SUCCEEDED | FAILED`, carried by evidence. Anything else is `409 illegal_transition`.
+      x-dcs-maturity: HERMETIC
+      x-dcs-production-blocker: BLOCKED_BY_LANE3 + integrate/v1-rc
+      x-dcs-capability: execute
+      x-dcs-consequential: true
+      security: [{operatorSession: []}]
+      parameters:
+        - $ref: '#/components/parameters/ExecutionId'
+        - $ref: '#/components/parameters/IdempotencyKeyRequired'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: {$ref: '#/components/schemas/ReconcileRequest'}
+      responses:
+        '200':
+          description: Reconciled.
+          headers: *write
+          content:
+            application/json:
+              schema: {$ref: '#/components/schemas/Execution'}
+        '400': {$ref: '#/components/responses/InvalidRequest'}
+        '401': {$ref: '#/components/responses/Unauthenticated'}
+        '403': {$ref: '#/components/responses/PermissionDenied'}
+        '404': {$ref: '#/components/responses/NotFound'}
+        '409': {$ref: '#/components/responses/Conflict'}
+        '422': {$ref: '#/components/responses/IdempotencyConflict'}
+
+  /v1/operator/audit-exports:
+    post:
+      tags: [Operator]
+      operationId: createAuditExport
+      summary: Start an audit export
+      x-dcs-maturity: CONTRACT_ONLY
+      x-dcs-production-blocker: BLOCKED_BY_LANE3 (persistence + IdP)
+      x-dcs-capability: view
+      security: [{operatorSession: []}]
+      parameters:
+        - $ref: '#/components/parameters/IdempotencyKeyRequired'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: {$ref: '#/components/schemas/AuditExportCreate'}
+      responses:
+        '202':
+          description: Export accepted.
+          content:
+            application/json:
+              schema: {$ref: '#/components/schemas/AuditExport'}
+        '400': {$ref: '#/components/responses/InvalidRequest'}
+        '401': {$ref: '#/components/responses/Unauthenticated'}
+        '403': {$ref: '#/components/responses/PermissionDenied'}
+        '501': {$ref: '#/components/responses/NotImplemented'}
+
+  /v1/operator/audit-exports/{export_id}:
+    get:
+      tags: [Operator]
+      operationId: getAuditExport
+      summary: Get an audit export
+      x-dcs-maturity: CONTRACT_ONLY
+      x-dcs-production-blocker: BLOCKED_BY_LANE3
+      x-dcs-capability: view
+      security: [{operatorSession: []}]
+      parameters:
+        - name: export_id
+          in: path
+          required: true
+          schema: {type: string, pattern: '^aex_[A-Za-z0-9]{8,64}$'}
+      responses:
+        '200':
+          description: The export.
+          content:
+            application/json:
+              schema: {$ref: '#/components/schemas/AuditExport'}
+        '400': {$ref: '#/components/responses/InvalidRequest'}
+        '401': {$ref: '#/components/responses/Unauthenticated'}
+        '404': {$ref: '#/components/responses/NotFound'}
+        '501': {$ref: '#/components/responses/NotImplemented'}
+
+  /v1/operator/eligibility:
+    get:
+      tags: [Operator]
+      operationId: getEligibility
+      summary: Dispatch eligibility (default-deny) per connector and environment
+      x-dcs-maturity: WIRED
+      x-dcs-production-blocker: deploy (Lane 4)
+      x-dcs-capability: view
+      security: [{operatorSession: []}]
+      parameters:
+        - name: connector_id
+          in: query
+          schema: {$ref: '#/components/schemas/ConnectorIdValue'}
+        - name: tool_id
+          in: query
+          schema: {type: string, maxLength: 128}
+        - name: environment
+          in: query
+          schema: {type: string, enum: [staging, production], default: production}
+      responses:
+        '200':
+          description: Summary, and a per-connector check when connector_id is given.
+          headers: *std
+          content:
+            application/json:
+              schema: {$ref: '#/components/schemas/EligibilityReport'}
+        '400': {$ref: '#/components/responses/InvalidRequest'}
+        '401': {$ref: '#/components/responses/Unauthenticated'}
+        '403': {$ref: '#/components/responses/PermissionDenied'}
+
+  /v1/operator/provider-health:
+    get:
+      tags: [Operator]
+      operationId: getProviderHealth
+      summary: Connection health rolled up per connector
+      x-dcs-maturity: HERMETIC
+      x-dcs-production-blocker: EXTERNAL_DEPENDENCY (real provider probes) + BLOCKED_BY_LANE3
+      x-dcs-capability: view
+      security: [{operatorSession: []}]
+      responses:
+        '200':
+          description: Health rollup.
+          headers: *std
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [object, data]
+                properties:
+                  object: {const: list}
+                  data:
+                    type: array
+                    items: {$ref: '#/components/schemas/ProviderHealth'}
+        '401': {$ref: '#/components/responses/Unauthenticated'}
+        '403': {$ref: '#/components/responses/PermissionDenied'}
+
+webhooks:
+  event:
+    post:
+      operationId: deliverEvent
+      summary: Outbound event delivery to a subscribed endpoint (CONTRACT_ONLY)
+      description: |
+        Delivery contract for outbound events. **No delivery service exists yet (PLANNED)**, and the
+        signature scheme is **not defined** (founder decision FD-L5-1). Until it is, `DCS-Signature`
+        is absent and every delivery must be treated as an untrusted trigger (the Webhook Contract v1
+        `untrusted_trigger_only` treatment): re-read the referenced resource through the API before
+        acting on it.
+
+        Receivers must: reject a timestamp outside their replay window (both past and future skew),
+        deduplicate on `DCS-Event-Id` (identical across redeliveries), and answer 2xx only after
+        durably recording the delivery.
+      x-dcs-maturity: CONTRACT_ONLY
+      x-dcs-production-blocker: PLANNED (delivery service) + FD-L5-1 (signing scheme)
+      parameters:
+        - name: DCS-Event-Id
+          in: header
+          required: true
+          schema: {$ref: '#/components/schemas/EventIdValue'}
+        - name: DCS-Event-Timestamp
+          in: header
+          required: true
+          description: Unix seconds at which this delivery attempt was sent.
+          schema: {type: string, pattern: '^[0-9]{9,11}$'}
+        - name: DCS-Event-Type
+          in: header
+          required: true
+          schema: {$ref: '#/components/schemas/EventType'}
+        - name: DCS-Signature
+          in: header
+          required: false
+          description: RESERVED. Scheme not defined (FD-L5-1). Absent today.
+          schema: {type: string}
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: {$ref: '#/components/schemas/Event'}
+      responses:
+        '200':
+          description: Recorded (or already recorded — duplicates are acknowledged, not reprocessed).
+
+components:
+  securitySchemes:
+    apiKey:
+      type: http
+      scheme: bearer
+      bearerFormat: 'cosk_<environment>_<secret>'
+      description: |
+        Machine credential. Bound to one tenant and one environment; carries scopes
+        (`connectors:read`, `connections:read`, `connections:write`, `runs:read`, `runs:write`,
+        `approvals:read`, `approvals:request`, `executions:read`, `executions:write`, `receipts:read`,
+        `receipts:verify`, `policies:read`, `events:read`, `webhooks:read`, `webhooks:write`,
+        `environments:read`, `usage:read`). **An API key can never grant an approval, kill or restore.**
+        Issuance is BLOCKED_BY_LANE3 (identity); the reference server accepts fixed hermetic test keys.
+    operatorSession:
+      type: http
+      scheme: bearer
+      bearerFormat: 'coso_<session>'
+      description: |
+        Human operator session from the tenant's IdP. Carries capabilities from the shared role model
+        (`configure`, `approve`, `execute`, `kill`, `restore`, `view`). Its principal is always
+        `kind: human`. BLOCKED_BY_LANE3 (IdP/RBAC seam); the reference server accepts fixed hermetic test sessions.
+
+  parameters:
+    Limit:
+      name: limit
+      in: query
+      description: Page size.
+      schema: {type: integer, minimum: 1, maximum: 200, default: 50}
+    Cursor:
+      name: cursor
+      in: query
+      description: Opaque cursor from a previous page's `next_cursor`. Cursors are stable under concurrent writes and expire after 24 h.
+      schema: {type: string, maxLength: 512}
+    IdempotencyKeyRequired:
+      name: Idempotency-Key
+      in: header
+      required: true
+      description: |
+        Request-level replay protection (8–255 chars, `[A-Za-z0-9_.:-]`). Same key + same body within
+        24 h after a **successful (2xx)** response → that response is replayed with
+        `Idempotent-Replayed: true`. Same key + different body → `422 idempotency_key_reuse`. A refused
+        or failed request had no effect and is not recorded: re-sending its key is evaluated afresh
+        (so a submission refused before a human granted its approval succeeds once granted). This key is **never** used as the execution idempotency key,
+        which the ops-broker mints.
+      schema: {$ref: '#/components/schemas/IdempotencyKeyValue'}
+    OperatorAttestation:
+      name: DCS-Operator-Attestation
+      in: header
+      required: true
+      description: Reference to a human operator attestation for this submission (issued by the tenant's IdP). The broker verifies it to `{kind:'human', tenant_id, principal_id, attestation_ref}`.
+      schema: {type: string, pattern: '^att_[A-Za-z0-9_-]{8,128}$'}
+    ConnectorId:
+      name: connector_id
+      in: path
+      required: true
+      schema: {$ref: '#/components/schemas/ConnectorIdValue'}
+    ConnectionId:
+      name: connection_id
+      in: path
+      required: true
+      schema: {$ref: '#/components/schemas/ConnectionIdValue'}
+    RunId:
+      name: run_id
+      in: path
+      required: true
+      schema: {$ref: '#/components/schemas/RunIdValue'}
+    PlanId:
+      name: plan_id
+      in: path
+      required: true
+      schema: {$ref: '#/components/schemas/PlanIdValue'}
+    ApprovalId:
+      name: approval_id
+      in: path
+      required: true
+      schema: {$ref: '#/components/schemas/ApprovalIdValue'}
+    ExecutionId:
+      name: execution_id
+      in: path
+      required: true
+      schema: {type: string, format: uuid}
+    ReceiptId:
+      name: receipt_id
+      in: path
+      required: true
+      schema: {$ref: '#/components/schemas/ReceiptIdValue'}
+    WebhookId:
+      name: webhook_id
+      in: path
+      required: true
+      schema: {type: string, pattern: '^whe_[A-Za-z0-9]{8,64}$'}
+
+  headers:
+    X-Request-Id:
+      description: Server-assigned id for this HTTP request. Quote it in support requests.
+      schema: {type: string, pattern: '^req_[A-Za-z0-9]{16,64}$'}
+    X-Correlation-Id:
+      description: Echo of the client's `X-Correlation-Id` when supplied (1–128 chars of `[A-Za-z0-9_.:-]`), otherwise equal to X-Request-Id.
+      schema: {type: string, maxLength: 128}
+    DCS-API-Version:
+      description: Contract version of the answering server.
+      schema: {type: string, const: 1.0.0}
+    DCS-Adapter:
+      description: '`hermetic` when answered by in-memory reference adapters; `production` otherwise. Never omitted.'
+      schema: {type: string, enum: [hermetic, production]}
+    RateLimit-Limit:
+      description: Requests allowed in the current window.
+      schema: {type: integer}
+    RateLimit-Remaining:
+      description: Requests left in the current window.
+      schema: {type: integer}
+    RateLimit-Reset:
+      description: Seconds until the window resets.
+      schema: {type: integer}
+    Retry-After:
+      description: Seconds to wait before retrying.
+      schema: {type: integer}
+    Idempotent-Replayed:
+      description: '`true` when the response is a replay of an earlier request with the same Idempotency-Key.'
+      schema: {type: string, enum: ['true']}
+
+  responses:
+    InvalidRequest:
+      description: The request is malformed or violates the contract.
+      headers: {X-Request-Id: {$ref: '#/components/headers/X-Request-Id'}}
+      content:
+        application/json:
+          schema: {$ref: '#/components/schemas/ErrorResponse'}
+    Unauthenticated:
+      description: Missing, malformed or unknown credential.
+      headers: {X-Request-Id: {$ref: '#/components/headers/X-Request-Id'}}
+      content:
+        application/json:
+          schema: {$ref: '#/components/schemas/ErrorResponse'}
+          example: {error: {code: unauthenticated, message: A valid bearer credential is required., retriable: false, request_id: req_0000000000000000}}
+    PermissionDenied:
+      description: Authenticated, but the credential lacks the scope or capability (or a human is required).
+      headers: {X-Request-Id: {$ref: '#/components/headers/X-Request-Id'}}
+      content:
+        application/json:
+          schema: {$ref: '#/components/schemas/ErrorResponse'}
+    NotFound:
+      description: No such resource in the caller's tenant. A resource in another tenant is reported identically.
+      headers: {X-Request-Id: {$ref: '#/components/headers/X-Request-Id'}}
+      content:
+        application/json:
+          schema: {$ref: '#/components/schemas/ErrorResponse'}
+    Conflict:
+      description: State conflict — illegal transition, mode locked, broker refusal, approval state.
+      headers: {X-Request-Id: {$ref: '#/components/headers/X-Request-Id'}}
+      content:
+        application/json:
+          schema: {$ref: '#/components/schemas/ErrorResponse'}
+          examples:
+            modeLocked:
+              value: {error: {code: mode_locked, message: MODE 2 is locked, retriable: false, request_id: req_0000000000000000, detail: {pending: [SHARED_RETRY_RECONCILIATION, BROKER_ROUTING, RSERIES_BRIDGE_CONTRACT_TESTS, APPROVAL_STORE, KILL_SWITCH, OPERATOR_ATTESTATION]}}}
+            brokerRefused:
+              value: {error: {code: broker_refused, message: The ops-broker refused the submission., retriable: false, request_id: req_0000000000000000, detail: {refusal_code: APPROVAL-REPLAY}}}
+    IdempotencyConflict:
+      description: The Idempotency-Key was already used with a different request body.
+      headers: {X-Request-Id: {$ref: '#/components/headers/X-Request-Id'}}
+      content:
+        application/json:
+          schema: {$ref: '#/components/schemas/ErrorResponse'}
+    RateLimited:
+      description: Too many requests.
+      headers:
+        X-Request-Id: {$ref: '#/components/headers/X-Request-Id'}
+        Retry-After: {$ref: '#/components/headers/Retry-After'}
+        RateLimit-Limit: {$ref: '#/components/headers/RateLimit-Limit'}
+        RateLimit-Remaining: {$ref: '#/components/headers/RateLimit-Remaining'}
+        RateLimit-Reset: {$ref: '#/components/headers/RateLimit-Reset'}
+      content:
+        application/json:
+          schema: {$ref: '#/components/schemas/ErrorResponse'}
+    Unavailable:
+      description: A dependency (ops-broker, R-Series) is unavailable. For POST /v1/executions this is answered only when the request provably did not reach dispatch.
+      headers:
+        X-Request-Id: {$ref: '#/components/headers/X-Request-Id'}
+        Retry-After: {$ref: '#/components/headers/Retry-After'}
+      content:
+        application/json:
+          schema: {$ref: '#/components/schemas/ErrorResponse'}
+    NotImplemented:
+      description: CONTRACT_ONLY operation — specified but not implemented by this server.
+      headers: {X-Request-Id: {$ref: '#/components/headers/X-Request-Id'}}
+      content:
+        application/json:
+          schema: {$ref: '#/components/schemas/ErrorResponse'}
+
+  schemas:
+    # ── scalars ─────────────────────────────────────────────────────────────
+    ConnectorIdValue: {type: string, pattern: '^[a-z0-9][a-z0-9_-]{0,63}$'}
+    ConnectionIdValue: {type: string, pattern: '^conn_[A-Za-z0-9]{8,64}$'}
+    RunIdValue:
+      description: The EXEC-FACTS run_id.
+      type: string
+      pattern: '^[A-Za-z0-9][A-Za-z0-9_:.-]{7,127}$'
+    PlanIdValue: {type: string, pattern: '^plan_[A-Za-z0-9]{8,64}$'}
+    StepIdValue: {type: string, pattern: '^step_[A-Za-z0-9]{8,64}$'}
+    ApprovalIdValue: {type: string, pattern: '^apr_[A-Za-z0-9]{8,64}$'}
+    ReceiptIdValue: {type: string, minLength: 1, maxLength: 128, pattern: '^[A-Za-z0-9][A-Za-z0-9_:.-]{0,127}$'}
+    EventIdValue: {type: string, pattern: '^evt_[A-Za-z0-9]{8,64}$'}
+    IdempotencyKeyValue: {type: string, minLength: 8, maxLength: 255, pattern: '^[A-Za-z0-9_.:-]{8,255}$'}
+    Timestamp: {type: string, format: date-time}
+    ApiEnvironment:
+      description: Environment a credential is bound to. `hermetic` is the reference server only.
+      type: string
+      enum: [hermetic, staging, production]
+
+    # ── frozen enums (x-dcs-enum-closed) ───────────────────────────────────
+    ExecutionOutcome:
+      description: EXEC-FACTS v1 outcome, verbatim. OUTCOME_UNKNOWN is never a failure and is never retried before reconciliation. STARTED is the only non-terminal dispatch state.
+      type: string
+      enum: [REFUSED, BLOCKED, STARTED, SUCCEEDED, FAILED, PROVIDER_UNAVAILABLE, OUTCOME_UNKNOWN, RETRY_SCHEDULED, RETRY_EXHAUSTED]
+      x-dcs-enum-closed: contracts/v1.3/exec-facts.v1.json#/properties/outcome
+    OperationClass:
+      type: string
+      enum: [read, write, admin]
+      x-dcs-enum-closed: contracts/v1.3/exec-facts.v1.json#/properties/operation_class
+    ProviderIdempotencySemantics:
+      type: string
+      enum: [provider_key_header, provider_native, client_dedupe, none]
+      x-dcs-enum-closed: contracts/v1.3/exec-facts.v1.json
+    RefusalClass:
+      type: string
+      enum: [invalid_request, permission, policy_denied, consent_missing, contract_unknown_field, manifest_unknown_value, trust_level_insufficient]
+      x-dcs-enum-closed: contracts/v1.3/exec-facts.v1.json
+    BlockedBy:
+      type: string
+      enum: [kill_switch, connection_revoked, lease_invalid, blast_radius, egress_policy, inbound_firewall, breaker_open, rate_limit_local, residency_policy]
+      x-dcs-enum-closed: contracts/v1.3/exec-facts.v1.json
+    ErrorClass:
+      description: errors.v1 taxonomy, verbatim.
+      type: string
+      enum: [invalid_request, auth, permission, policy_denied, not_found, conflict, rate_limited, timeout, provider_unavailable, egress_blocked, breaker_open, internal]
+      x-dcs-enum-closed: contracts/v1/errors.v1.json
+    RunStatus:
+      type: string
+      enum: [open, awaiting_approval, blocked, escalated, closed]
+      x-dcs-enum-closed: 'oal-runtime schemas.mjs run_state.status'
+    RunMode:
+      type: string
+      enum: [mode_0, mode_1, mode_2]
+      x-dcs-enum-closed: 'oal-runtime dependencies.mjs Mode'
+    RunPhase:
+      type: string
+      enum: [observe, correlate, diagnose, plan, authorise, execute, verify, recover, escalate, close]
+      x-dcs-enum-closed: 'oal-runtime dependencies.mjs Phase'
+    PolicyDecisionValue:
+      type: string
+      enum: [allow, deny, require_approval]
+      x-dcs-enum-closed: 'oal-runtime schemas.mjs policy_decision.decision'
+    OalApprovalStatus:
+      description: OAL approval status verbatim (EXPIRED derived from the clock, never stored).
+      type: string
+      enum: [ISSUED, CONSUMED, REVOKED, EXPIRED]
+      x-dcs-enum-closed: 'oal-runtime approval.mjs ApprovalStatus'
+    ReceiptStatus:
+      type: string
+      enum: [ISSUED, PENDING, FAILED]
+      x-dcs-enum-closed: 'runtime evidence-slot.mjs ReceiptStatus'
+    ReceiptDisplayStatus:
+      description: Receipt status on an execution; adds `not_requested` for executions whose fact has not been submitted.
+      type: string
+      enum: [not_requested, ISSUED, PENDING, FAILED]
+    VerificationLabel:
+      type: string
+      enum: [not_verified, verified, verification_failed, verification_unavailable, unverified_test_double]
+      x-dcs-enum-closed: 'runtime evidence-slot.mjs VerificationLabel'
+    EvidenceGrade:
+      type: string
+      enum: [rseries_verified, rseries_issued_unverified, test_double_not_evidence, none]
+    VerifierKind:
+      type: string
+      enum: [rseries, test_double]
+    KillScope:
+      type: string
+      enum: [system, tenant, connection, connector, tool]
+      x-dcs-enum-closed: 'ops-broker kill-switch.mjs KillScope'
+    ConnectionStatus:
+      description: Runtime-E connection lifecycle. REVOKED is terminal.
+      type: string
+      enum: [CREATED, TESTED, ACTIVE, REVOKED]
+      x-dcs-enum-closed: 'runtime connection.mjs ConnectionStatus'
+    ConnectionHealth:
+      type: string
+      enum: [unknown, healthy, degraded, unhealthy, revoked]
+      x-dcs-enum-closed: 'runtime connection.mjs HealthState'
+    CredentialState:
+      description: Auth credential state (packages/contracts ConnectionState). Only `connected` is dispatchable.
+      type: string
+      enum: [pending, connected, refreshing, degraded, revoked, expired]
+      x-dcs-enum-closed: 'packages/contracts/src/types.mjs ConnectionState'
+    ConnectorDisposition:
+      type: string
+      enum: [CODED_LOCALLY_TESTED, SPEC_READY, ACCESS_GATED, PARKED, BLOCKED, RETIRED, EXTERNAL_DEPENDENCY, FOUNDER_LEGAL, NOT_STARTED]
+      x-dcs-enum-closed: 'packages/registry/src/catalogue.mjs Disposition'
+    ReconciliationStrategy:
+      type: string
+      enum: [probe_by_idempotency_key, probe_by_resource_id, provider_list_scan, manual]
+      x-dcs-enum-closed: 'packages/contracts/src/types.mjs ReconciliationStrategy'
+    ApprovalState:
+      description: |
+        Public approval lifecycle. `REQUESTED` → (`GRANTED` | `DENIED` | `SUPERSEDED` | `EXPIRED`).
+        `GRANTED` corresponds to OAL `ISSUED`; `CONSUMED`, `REVOKED`, `EXPIRED` mirror OAL verbatim.
+        `oal_status` on the object carries the OAL value exactly.
+      type: string
+      enum: [REQUESTED, GRANTED, DENIED, CONSUMED, EXPIRED, REVOKED, SUPERSEDED]
+      x-dcs-enum-open: true
+    EventType:
+      type: string
+      enum: [approval.requested, approval.granted, approval.denied, approval.revoked, execution.state_changed, receipt.issued, receipt.failed, run.opened, run.closed, kill_order.activated, kill_order.restored, connection.revoked]
+      x-dcs-enum-open: true
+    Capability:
+      type: string
+      enum: [configure, approve, execute, kill, restore, view]
+      x-dcs-enum-open: true
+
+    # ── envelopes ───────────────────────────────────────────────────────────
+    ListEnvelope:
+      type: object
+      required: [object, data, has_more, next_cursor]
+      properties:
+        object: {const: list}
+        data: {type: array}
+        has_more: {type: boolean}
+        next_cursor: {type: [string, 'null']}
+    ErrorResponse:
+      type: object
+      required: [error]
+      additionalProperties: false
+      properties:
+        error: {$ref: '#/components/schemas/Error'}
+    Error:
+      type: object
+      required: [code, message, retriable, request_id]
+      additionalProperties: false
+      properties:
+        code: {$ref: '#/components/schemas/ErrorCode'}
+        message:
+          type: string
+          description: Human-readable; never contains secrets, credentials or raw provider bodies.
+        retriable:
+          type: boolean
+          description: Whether the *same* request may be retried. Always false for ambiguous writes.
+        request_id: {type: string}
+        detail:
+          type: object
+          description: Machine-readable context. Known keys — `refusal_code` (ops-broker code, verbatim), `pending` (MODE 2 dependencies), `field`, `scope`, `capability`, `from`/`to` (illegal transition), `retry_after_seconds`.
+          additionalProperties: true
+        docs_url: {type: string, format: uri}
+    ErrorCode:
+      type: string
+      enum:
+        - invalid_request
+        - secret_in_request
+        - idempotency_key_required
+        - idempotency_key_reuse
+        - unauthenticated
+        - permission_denied
+        - human_required
+        - not_found
+        - conflict
+        - illegal_transition
+        - mode_locked
+        - broker_refused
+        - approval_not_grantable
+        - rate_limited
+        - dependency_unavailable
+        - not_implemented
+        - internal
+      x-dcs-enum-open: true
+      x-dcs-http-status:
+        invalid_request: 400
+        secret_in_request: 400
+        idempotency_key_required: 400
+        idempotency_key_reuse: 422
+        unauthenticated: 401
+        permission_denied: 403
+        human_required: 403
+        not_found: 404
+        conflict: 409
+        illegal_transition: 409
+        mode_locked: 409
+        broker_refused: 409
+        approval_not_grantable: 409
+        rate_limited: 429
+        dependency_unavailable: 503
+        not_implemented: 501
+        internal: 500
+
+    # ── identity ───────────────────────────────────────────────────────────
+    Principal:
+      type: object
+      required: [object, kind, principal_id, tenant_id, environment, scopes, capabilities]
+      properties:
+        object: {const: principal}
+        kind: {type: string, enum: [api_key, human]}
+        principal_id: {type: string}
+        tenant_id: {type: string}
+        environment: {$ref: '#/components/schemas/ApiEnvironment'}
+        scopes: {type: array, items: {type: string}}
+        capabilities: {type: array, items: {$ref: '#/components/schemas/Capability'}}
+        key_prefix: {type: string, description: 'Non-secret prefix only (e.g. cosk_staging_).'}
+
+    # ── connectors ─────────────────────────────────────────────────────────
+    Connector:
+      type: object
+      required: [object, connector_id, name, disposition, availability, dispatch]
+      properties:
+        object: {const: connector}
+        connector_id: {$ref: '#/components/schemas/ConnectorIdValue'}
+        name: {type: string}
+        pack: {type: [string, 'null']}
+        engineering_rank: {type: [integer, 'null']}
+        generation: {type: [string, 'null'], description: 'Manifest generation (v1 or 1.3).'}
+        disposition: {$ref: '#/components/schemas/ConnectorDisposition'}
+        availability:
+          description: |
+            Derived strictly from dispatch eligibility. `dispatchable_production` only when production
+            eligibility is true; `dispatchable_staging` only when staging eligibility is true; otherwise
+            `not_dispatchable`. The API never reports "Available" for a connector that cannot dispatch.
+          type: string
+          enum: [dispatchable_production, dispatchable_staging, not_dispatchable]
+        dispatch:
+          type: object
+          required: [staging, production, reasons]
+          properties:
+            staging: {type: boolean}
+            production: {type: boolean}
+            reasons: {type: array, items: {type: string}}
+            production_reasons: {type: array, items: {type: string}}
+        founder_holds: {type: array, items: {type: string}}
+
+    # ── connections ────────────────────────────────────────────────────────
+    RoutingContext:
+      type: object
+      additionalProperties: false
+      properties:
+        target: {type: string, description: '`simulator` is the only target the reference server accepts.'}
+        environment: {type: string, enum: [production, sandbox, staging, development]}
+        residency_requirement: {type: string}
+        expected_account: {type: string}
+        organization: {type: string}
+    ConnectionCreate:
+      type: object
+      required: [connector_id, credential_ref]
+      additionalProperties: false
+      properties:
+        connector_id: {$ref: '#/components/schemas/ConnectorIdValue'}
+        credential_ref:
+          type: string
+          pattern: '^cref_[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$'
+          description: Vault credential reference. Never a secret.
+        routing: {$ref: '#/components/schemas/RoutingContext'}
+        label: {type: string, maxLength: 64}
+    Connection:
+      type: object
+      required: [object, connection_id, connector_id, status, health, credential_state, created_at]
+      properties:
+        object: {const: connection}
+        connection_id: {$ref: '#/components/schemas/ConnectionIdValue'}
+        connector_id: {$ref: '#/components/schemas/ConnectorIdValue'}
+        label: {type: [string, 'null']}
+        status: {$ref: '#/components/schemas/ConnectionStatus'}
+        health: {$ref: '#/components/schemas/ConnectionHealth'}
+        credential_state: {$ref: '#/components/schemas/CredentialState'}
+        credential_ref_present:
+          type: boolean
+          description: The credential reference itself is never returned; only whether one is bound.
+        routing: {$ref: '#/components/schemas/RoutingContext'}
+        last_tested_at: {oneOf: [{$ref: '#/components/schemas/Timestamp'}, {type: 'null'}]}
+        revoked_at: {oneOf: [{$ref: '#/components/schemas/Timestamp'}, {type: 'null'}]}
+        created_at: {$ref: '#/components/schemas/Timestamp'}
+    ConnectionTestResult:
+      type: object
+      required: [object, connection_id, ok, status, health, tested_at]
+      properties:
+        object: {const: connection_test}
+        connection_id: {$ref: '#/components/schemas/ConnectionIdValue'}
+        ok: {type: boolean}
+        status: {$ref: '#/components/schemas/ConnectionStatus'}
+        health: {$ref: '#/components/schemas/ConnectionHealth'}
+        target: {type: string}
+        error_class: {oneOf: [{$ref: '#/components/schemas/ErrorClass'}, {type: 'null'}]}
+        tested_at: {$ref: '#/components/schemas/Timestamp'}
+
+    # ── runs / plans ───────────────────────────────────────────────────────
+    RunCreate:
+      type: object
+      required: [mode, objective]
+      additionalProperties: false
+      properties:
+        mode: {type: string, enum: [mode_0, mode_1]}
+        objective: {type: string, minLength: 3, maxLength: 500}
+        connector_ids: {type: array, maxItems: 16, items: {$ref: '#/components/schemas/ConnectorIdValue'}}
+        window_seconds: {type: integer, minimum: 60, maximum: 86400, default: 3600}
+    Run:
+      type: object
+      required: [object, run_id, mode, phase, status, trigger, window, opened_at, updated_at]
+      properties:
+        object: {const: run}
+        run_id: {$ref: '#/components/schemas/RunIdValue'}
+        mode: {$ref: '#/components/schemas/RunMode'}
+        phase: {$ref: '#/components/schemas/RunPhase'}
+        status: {$ref: '#/components/schemas/RunStatus'}
+        objective: {type: [string, 'null']}
+        trigger:
+          type: object
+          required: [kind]
+          properties:
+            kind: {type: string, enum: [ops_event, operator, schedule]}
+            principal_id: {type: [string, 'null']}
+        window:
+          type: object
+          required: [not_before, not_after]
+          properties:
+            not_before: {$ref: '#/components/schemas/Timestamp'}
+            not_after: {$ref: '#/components/schemas/Timestamp'}
+        connector_ids: {type: array, items: {$ref: '#/components/schemas/ConnectorIdValue'}}
+        plan_ids: {type: array, items: {$ref: '#/components/schemas/PlanIdValue'}}
+        approval_ids: {type: array, items: {$ref: '#/components/schemas/ApprovalIdValue'}}
+        execution_ids: {type: array, items: {type: string, format: uuid}}
+        opened_at: {$ref: '#/components/schemas/Timestamp'}
+        updated_at: {$ref: '#/components/schemas/Timestamp'}
+    PlanStepCreate:
+      type: object
+      required: [connector_id, tool_id, operation_class]
+      additionalProperties: false
+      properties:
+        connector_id: {$ref: '#/components/schemas/ConnectorIdValue'}
+        tool_id: {type: string, minLength: 1, maxLength: 128}
+        operation_class: {$ref: '#/components/schemas/OperationClass'}
+        connection_id: {$ref: '#/components/schemas/ConnectionIdValue'}
+        rationale: {type: string, maxLength: 500}
+    PlanCreate:
+      type: object
+      required: [steps]
+      additionalProperties: false
+      properties:
+        operator_explanation: {type: string, maxLength: 1000}
+        steps: {type: array, minItems: 1, maxItems: 32, items: {$ref: '#/components/schemas/PlanStepCreate'}}
+    PlanStep:
+      type: object
+      required: [step_id, connector_id, tool_id, operation_class, policy_decision]
+      properties:
+        step_id: {$ref: '#/components/schemas/StepIdValue'}
+        connector_id: {$ref: '#/components/schemas/ConnectorIdValue'}
+        connector_version: {type: [string, 'null']}
+        tool_id: {type: string}
+        operation_class: {$ref: '#/components/schemas/OperationClass'}
+        connection_id: {oneOf: [{$ref: '#/components/schemas/ConnectionIdValue'}, {type: 'null'}]}
+        rationale: {type: [string, 'null']}
+        policy_decision: {$ref: '#/components/schemas/PolicyDecision'}
+    Plan:
+      type: object
+      required: [object, plan_id, run_id, revision, recommendation_only, steps, created_at]
+      properties:
+        object: {const: plan}
+        plan_id: {$ref: '#/components/schemas/PlanIdValue'}
+        run_id: {$ref: '#/components/schemas/RunIdValue'}
+        revision: {type: integer, minimum: 1}
+        recommendation_only: {const: true}
+        operator_explanation: {type: [string, 'null']}
+        steps: {type: array, items: {$ref: '#/components/schemas/PlanStep'}}
+        created_at: {$ref: '#/components/schemas/Timestamp'}
+
+    # ── policies ───────────────────────────────────────────────────────────
+    Policy:
+      type: object
+      required: [object, policy_id, name, version, status, rules]
+      properties:
+        object: {const: policy}
+        policy_id: {type: string}
+        name: {type: string}
+        version: {type: string}
+        status: {type: string, enum: [active, disabled, draft]}
+        rules:
+          type: array
+          items:
+            type: object
+            required: [operation_class, decision]
+            properties:
+              operation_class: {$ref: '#/components/schemas/OperationClass'}
+              decision: {$ref: '#/components/schemas/PolicyDecisionValue'}
+              note: {type: string}
+    PolicyEvaluateRequest:
+      type: object
+      required: [connector_id, tool_id, operation_class]
+      additionalProperties: false
+      properties:
+        connector_id: {$ref: '#/components/schemas/ConnectorIdValue'}
+        tool_id: {type: string, minLength: 1, maxLength: 128}
+        operation_class: {$ref: '#/components/schemas/OperationClass'}
+        environment: {type: string, enum: [staging, production]}
+    PolicyDecision:
+      type: object
+      required: [object, decision, policy_id, reasons]
+      properties:
+        object: {const: policy_decision}
+        decision: {$ref: '#/components/schemas/PolicyDecisionValue'}
+        policy_id: {type: string}
+        decision_id: {type: [string, 'null']}
+        reasons: {type: array, items: {type: string}}
+        dispatch_eligible:
+          type: [boolean, 'null']
+          description: Registry eligibility for the requested environment (null when no environment was given). A policy `allow` does not make an ineligible connector dispatchable.
+
+    # ── approvals ──────────────────────────────────────────────────────────
+    ApprovalRequest:
+      type: object
+      required: [run_id, plan_id, step_ids]
+      additionalProperties: false
+      properties:
+        run_id: {$ref: '#/components/schemas/RunIdValue'}
+        plan_id: {$ref: '#/components/schemas/PlanIdValue'}
+        step_ids: {type: array, minItems: 1, maxItems: 32, items: {$ref: '#/components/schemas/StepIdValue'}}
+        note: {type: string, maxLength: 500}
+    ApprovalGrant:
+      type: object
+      additionalProperties: false
+      properties:
+        ttl_seconds:
+          type: integer
+          minimum: 60
+          maximum: 86400
+          default: 900
+          description: Default 15 min (ops-broker default); maximum 24 h (OAL MAX_APPROVAL_TTL_MS).
+        note: {type: string, maxLength: 500}
+    ReasonBody:
+      type: object
+      required: [reason]
+      additionalProperties: false
+      properties:
+        reason: {type: string, minLength: 3, maxLength: 500}
+    ReviewedReasonBody:
+      type: object
+      required: [reason, reviewer]
+      additionalProperties: false
+      properties:
+        reason: {type: string, minLength: 3, maxLength: 500}
+        reviewer: {type: string, minLength: 3, maxLength: 128}
+    ApprovedStep:
+      type: object
+      required: [step_id, operation_class]
+      properties:
+        step_id: {$ref: '#/components/schemas/StepIdValue'}
+        operation_class: {$ref: '#/components/schemas/OperationClass'}
+        execution_id: {type: [string, 'null'], format: uuid, description: 'Broker-minted at grant; null before.'}
+        consumed_at: {oneOf: [{$ref: '#/components/schemas/Timestamp'}, {type: 'null'}]}
+        recorded_outcome: {oneOf: [{$ref: '#/components/schemas/ExecutionOutcome'}, {type: 'null'}]}
+    Approval:
+      type: object
+      required: [object, approval_id, state, oal_status, run_id, plan_id, steps, requested_at]
+      properties:
+        object: {const: approval}
+        approval_id: {$ref: '#/components/schemas/ApprovalIdValue'}
+        state: {$ref: '#/components/schemas/ApprovalState'}
+        oal_status: {oneOf: [{$ref: '#/components/schemas/OalApprovalStatus'}, {type: 'null'}]}
+        run_id: {$ref: '#/components/schemas/RunIdValue'}
+        plan_id: {$ref: '#/components/schemas/PlanIdValue'}
+        plan_revision: {type: integer}
+        steps: {type: array, items: {$ref: '#/components/schemas/ApprovedStep'}}
+        requested_by: {type: [string, 'null']}
+        approved_by:
+          oneOf:
+            - type: 'null'
+            - type: object
+              required: [kind, principal_id]
+              properties:
+                kind: {const: human}
+                principal_id: {type: string}
+        decision_reason: {type: [string, 'null']}
+        policy_id: {type: [string, 'null']}
+        requested_at: {$ref: '#/components/schemas/Timestamp'}
+        granted_at: {oneOf: [{$ref: '#/components/schemas/Timestamp'}, {type: 'null'}]}
+        expires_at: {oneOf: [{$ref: '#/components/schemas/Timestamp'}, {type: 'null'}]}
+
+    # ── executions ─────────────────────────────────────────────────────────
+    ExecutionSubmit:
+      type: object
+      required: [run_id, plan_id, step_id]
+      additionalProperties: false
+      description: Identifies a plan step. `approval_id` is required whenever the step's policy decision is `require_approval` (the broker refuses with `APPROVAL-REQUIRED` otherwise). `execution_id`, `idempotency_key` and every other broker-minted field are refused if present.
+      properties:
+        run_id: {$ref: '#/components/schemas/RunIdValue'}
+        plan_id: {$ref: '#/components/schemas/PlanIdValue'}
+        step_id: {$ref: '#/components/schemas/StepIdValue'}
+        approval_id: {$ref: '#/components/schemas/ApprovalIdValue'}
+    Attempt:
+      description: One EXEC-FACTS fact, projected. Facts are append-only.
+      type: object
+      required: [attempt_n, outcome, recorded_at]
+      properties:
+        attempt_n: {type: integer, minimum: 1, maximum: 100}
+        outcome: {$ref: '#/components/schemas/ExecutionOutcome'}
+        refusal_class: {$ref: '#/components/schemas/RefusalClass'}
+        blocked_by: {$ref: '#/components/schemas/BlockedBy'}
+        error_class: {$ref: '#/components/schemas/ErrorClass'}
+        provider_request_id: {type: string}
+        provider_status: {type: integer}
+        reconciliation_ref: {type: string, pattern: '^rcn_[A-Za-z0-9_-]{8,128}$'}
+        verification_ref: {type: string, pattern: '^vrf_[A-Za-z0-9_-]{8,128}$'}
+        retry_at: {$ref: '#/components/schemas/Timestamp'}
+        recorded_at: {$ref: '#/components/schemas/Timestamp'}
+    ExecutionReceipt:
+      description: Receipt state for this execution — deliberately separate from `outcome`.
+      type: object
+      required: [status, verification, evidence_grade]
+      properties:
+        status: {$ref: '#/components/schemas/ReceiptDisplayStatus'}
+        receipt_id: {type: [string, 'null']}
+        verification: {$ref: '#/components/schemas/VerificationLabel'}
+        evidence_grade: {$ref: '#/components/schemas/EvidenceGrade'}
+    Execution:
+      type: object
+      required: [object, execution_id, run_id, connector_id, tool_id, operation_class, outcome, settled, attempts, receipt, created_at, updated_at]
+      properties:
+        object: {const: execution}
+        execution_id: {type: string, format: uuid}
+        run_id: {$ref: '#/components/schemas/RunIdValue'}
+        plan_id: {oneOf: [{$ref: '#/components/schemas/PlanIdValue'}, {type: 'null'}]}
+        step_id: {oneOf: [{$ref: '#/components/schemas/StepIdValue'}, {type: 'null'}]}
+        approval_id: {oneOf: [{$ref: '#/components/schemas/ApprovalIdValue'}, {type: 'null'}]}
+        connection_id: {oneOf: [{$ref: '#/components/schemas/ConnectionIdValue'}, {type: 'null'}]}
+        connector_id: {$ref: '#/components/schemas/ConnectorIdValue'}
+        connector_version: {type: [string, 'null']}
+        tool_id: {type: string}
+        operation_class: {$ref: '#/components/schemas/OperationClass'}
+        provider_idempotency_semantics: {$ref: '#/components/schemas/ProviderIdempotencySemantics'}
+        outcome:
+          $ref: '#/components/schemas/ExecutionOutcome'
+        settled:
+          type: boolean
+          description: True when `outcome` is terminal (REFUSED, BLOCKED, SUCCEEDED, FAILED, PROVIDER_UNAVAILABLE, RETRY_EXHAUSTED). OUTCOME_UNKNOWN and STARTED are never settled.
+        attempts: {type: array, items: {$ref: '#/components/schemas/Attempt'}}
+        reconciliation:
+          type: object
+          properties:
+            required: {type: boolean}
+            reconciliation_ref: {type: [string, 'null']}
+            strategy: {oneOf: [{$ref: '#/components/schemas/ReconciliationStrategy'}, {type: 'null'}]}
+            status: {type: string, enum: [not_required, pending, reconciled]}
+        verification:
+          type: object
+          properties:
+            verification_ref: {type: [string, 'null']}
+            verdict: {type: [string, 'null'], enum: [verified, not_verified, inconclusive, null]}
+        receipt: {$ref: '#/components/schemas/ExecutionReceipt'}
+        created_at: {$ref: '#/components/schemas/Timestamp'}
+        updated_at: {$ref: '#/components/schemas/Timestamp'}
+    ReconcileRequest:
+      type: object
+      required: [outcome, evidence]
+      additionalProperties: false
+      properties:
+        outcome: {type: string, enum: [SUCCEEDED, FAILED]}
+        evidence:
+          type: object
+          required: [method, note]
+          additionalProperties: false
+          properties:
+            method: {type: string, enum: [read_back_by_resource_id, read_back_by_idempotency_key, provider_list_scan, manual]}
+            provider_request_id: {type: string, maxLength: 256}
+            note: {type: string, minLength: 3, maxLength: 1000}
+
+    # ── receipts ───────────────────────────────────────────────────────────
+    ReceiptRef:
+      description: ToolResult v1 receipt_ref shape.
+      type: object
+      required: [receipt_id, v]
+      properties:
+        receipt_id: {type: string, minLength: 1, maxLength: 128}
+        v: {type: integer, minimum: 1}
+        inputs_hash: {type: string}
+        outputs_hash: {type: string}
+    Receipt:
+      type: object
+      required: [object, receipt_id, status, execution_id, attempt_n, execution_outcome, profile, profile_version]
+      properties:
+        object: {const: receipt}
+        receipt_id: {$ref: '#/components/schemas/ReceiptIdValue'}
+        status: {$ref: '#/components/schemas/ReceiptStatus'}
+        execution_id: {type: string, format: uuid}
+        run_id: {$ref: '#/components/schemas/RunIdValue'}
+        attempt_n: {type: integer, minimum: 1}
+        execution_outcome: {$ref: '#/components/schemas/ExecutionOutcome'}
+        profile: {const: cos-ops-v1}
+        profile_version: {type: string}
+        parent_receipt: {type: [string, 'null']}
+        seq: {type: [integer, 'null']}
+        recovery_state: {type: [string, 'null'], description: 'R-Series-derived (e.g. NONE, KILL_SWITCH, HUMAN_INTERVENTION, RECONCILED, RECOVERED).'}
+        receipt_ref: {oneOf: [{$ref: '#/components/schemas/ReceiptRef'}, {type: 'null'}]}
+        issued_at: {oneOf: [{$ref: '#/components/schemas/Timestamp'}, {type: 'null'}]}
+        issuer_kind: {$ref: '#/components/schemas/VerifierKind'}
+        document:
+          description: The R-Series receipt document as issued (opaque to Connector OS). Null while PENDING or FAILED.
+          type: [object, 'null']
+          additionalProperties: true
+    ReceiptVerification:
+      type: object
+      required: [object, receipt_id, verification, verifier_kind, evidence_grade, checked_at]
+      properties:
+        object: {const: receipt_verification}
+        receipt_id: {$ref: '#/components/schemas/ReceiptIdValue'}
+        verification: {$ref: '#/components/schemas/VerificationLabel'}
+        verifier_kind: {$ref: '#/components/schemas/VerifierKind'}
+        code: {type: [string, 'null'], description: 'Verifier code verbatim (OK, COS-VERIFY-*, COS-CHAIN-BROKEN).'}
+        execution_outcome_matches: {type: [boolean, 'null']}
+        profile_status: {type: [string, 'null']}
+        evidence_grade: {$ref: '#/components/schemas/EvidenceGrade'}
+        checked_at: {$ref: '#/components/schemas/Timestamp'}
+
+    # ── events / webhooks ──────────────────────────────────────────────────
+    Event:
+      type: object
+      required: [object, event_id, type, occurred_at, dedupe_key, data]
+      properties:
+        object: {const: event}
+        event_id: {$ref: '#/components/schemas/EventIdValue'}
+        type: {$ref: '#/components/schemas/EventType'}
+        occurred_at: {$ref: '#/components/schemas/Timestamp'}
+        dedupe_key:
+          type: string
+          description: Stable identity for consumer-side deduplication; identical across redeliveries.
+        run_id: {type: [string, 'null']}
+        data:
+          type: object
+          description: Reference-only payload (ids, states, outcomes). Never provider bodies or secrets.
+          additionalProperties: true
+    WebhookEndpointCreate:
+      type: object
+      required: [url, event_types]
+      additionalProperties: false
+      properties:
+        url: {type: string, format: uri, pattern: '^https://'}
+        event_types: {type: array, minItems: 1, items: {$ref: '#/components/schemas/EventType'}}
+        description: {type: string, maxLength: 200}
+    WebhookEndpoint:
+      type: object
+      required: [object, webhook_id, url, event_types, status, created_at]
+      properties:
+        object: {const: webhook_endpoint}
+        webhook_id: {type: string}
+        url: {type: string, format: uri}
+        event_types: {type: array, items: {$ref: '#/components/schemas/EventType'}}
+        status: {type: string, enum: [enabled, disabled]}
+        signing:
+          type: object
+          description: Signing scheme is NOT DEFINED (founder decision FD-L5-1). Consumers must treat deliveries as unauthenticated until it is.
+          properties:
+            scheme: {type: [string, 'null']}
+        created_at: {$ref: '#/components/schemas/Timestamp'}
+
+    # ── environments / usage ───────────────────────────────────────────────
+    Environment:
+      type: object
+      required: [object, name, dispatchable_connectors, dispatchable_tools]
+      properties:
+        object: {const: environment}
+        name: {type: string, enum: [staging, production]}
+        dispatchable_connectors: {type: integer, minimum: 0}
+        dispatchable_tools: {type: [integer, 'null'], minimum: 0}
+        catalogued_connectors: {type: integer, minimum: 0}
+        mode_ceiling: {$ref: '#/components/schemas/RunMode'}
+        notes: {type: array, items: {type: string}}
+    Usage:
+      type: object
+      required: [object, window, executions, receipts]
+      properties:
+        object: {const: usage}
+        window: {type: string, enum: [24h, 7d, 30d]}
+        executions:
+          type: object
+          required: [total, by_outcome]
+          properties:
+            total: {type: integer, minimum: 0}
+            by_outcome:
+              type: object
+              additionalProperties: {type: integer, minimum: 0}
+        receipts:
+          type: object
+          required: [ISSUED, PENDING, FAILED]
+          properties:
+            ISSUED: {type: integer, minimum: 0}
+            PENDING: {type: integer, minimum: 0}
+            FAILED: {type: integer, minimum: 0}
+        by_connector:
+          type: array
+          items:
+            type: object
+            required: [connector_id, executions]
+            properties:
+              connector_id: {type: string}
+              executions: {type: integer}
+        cost_note: {type: string}
+
+    # ── operator ───────────────────────────────────────────────────────────
+    KillOrderCreate:
+      type: object
+      required: [scope, target, reason, reviewer]
+      additionalProperties: false
+      properties:
+        scope: {$ref: '#/components/schemas/KillScope'}
+        target:
+          type: string
+          minLength: 1
+          maxLength: 200
+          description: "`*` for system; the tenant/connection/connector id; `<connector_id>/<tool_id>` for tool."
+        reason: {type: string, minLength: 3, maxLength: 500}
+        reviewer: {type: string, minLength: 3, maxLength: 128}
+    KillOrder:
+      type: object
+      required: [object, kill_order_id, scope, target, state, reason, reviewer, initiated_by, activated_at]
+      properties:
+        object: {const: kill_order}
+        kill_order_id: {type: string}
+        scope: {$ref: '#/components/schemas/KillScope'}
+        target: {type: string}
+        state: {type: string, enum: [active, restored]}
+        writes_only: {type: boolean, description: 'True for scope system — reads continue.'}
+        reason: {type: string}
+        reviewer: {type: string}
+        initiated_by: {type: string}
+        activated_at: {$ref: '#/components/schemas/Timestamp'}
+        restored_at: {oneOf: [{$ref: '#/components/schemas/Timestamp'}, {type: 'null'}]}
+        restore_reason: {type: [string, 'null']}
+    AuditExportCreate:
+      type: object
+      required: [from, to]
+      additionalProperties: false
+      properties:
+        from: {$ref: '#/components/schemas/Timestamp'}
+        to: {$ref: '#/components/schemas/Timestamp'}
+        classes: {type: array, items: {type: string, enum: [approvals, executions, kill_orders, connections, receipts]}}
+    AuditExport:
+      type: object
+      required: [object, export_id, status]
+      properties:
+        object: {const: audit_export}
+        export_id: {type: string}
+        status: {type: string, enum: [queued, running, complete, failed]}
+        download_url: {type: [string, 'null'], format: uri}
+    EligibilityReport:
+      type: object
+      required: [object, schema, summary]
+      properties:
+        object: {const: eligibility_report}
+        schema: {type: string}
+        summary:
+          type: object
+          additionalProperties: true
+        check:
+          type: [object, 'null']
+          properties:
+            connector_id: {type: string}
+            tool_id: {type: [string, 'null']}
+            environment: {type: string}
+            dispatchable: {type: boolean}
+            reasons: {type: array, items: {type: string}}
+            requires: {type: [object, 'null'], additionalProperties: true}
+    ProviderHealth:
+      type: object
+      required: [connector_id, connections, health]
+      properties:
+        connector_id: {type: string}
+        connections: {type: integer}
+        health:
+          type: object
+          additionalProperties: {type: integer}
+        probe: {type: string, enum: [hermetic_rollup, live_probe], description: '`live_probe` is EXTERNAL_DEPENDENCY and not implemented.'}
