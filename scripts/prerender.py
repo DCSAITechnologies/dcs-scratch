@@ -70,7 +70,7 @@ STATIC_ROUTES = [
     ('/developers', 'Developers — build against the governed path', 'Resource model, authentication, manifests, MCP, webhooks, receipts and build status.'),
     ('/pricing', 'Pricing — Connector OS', 'Plans without invented numbers. Final pricing is published when approved.'),
     ('/receipts', 'Receipts — what a receipt is', 'One illustrative run from the hermetic test suite: outcome vs receipt state, causal chain, verification.'),
-    ('/signin', 'Sign in — Connector OS', 'The developer console is pre-launch. Interest-only accounts; no simulated access.'),
+    ('/signin', 'Sign in — Connector OS', 'Sign-in opens at launch. No accounts can be created yet; the console preview runs on hermetic fixture data.'),
     ('/docs', 'Developers — Connector OS', 'Redirects to the developer portal.'),
 ]
 

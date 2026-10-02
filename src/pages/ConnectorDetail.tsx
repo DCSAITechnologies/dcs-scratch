@@ -167,7 +167,7 @@ function ConnectorDetailView({ c, legacy, resolved }: { c: Conn; legacy?: Conn; 
               <Row k="Authentication" v={c.auth} />
               <Row k="Read/write" v={c.rw === 'read' ? 'Read only' : 'Read + write'} />
               <Row k="Webhooks" v={c.wh ? 'Supported' : 'Not currently supported'} />
-              <Row k="Access model" v={c.cta === 'notify' ? 'Notify at launch' : c.cta === 'request_access' ? 'Approval required' : c.cta === 'contact' ? 'Enterprise onboarding' : 'Waitlist'} />
+              <Row k="Access model" v={c.cta === 'notify' ? 'Opens at launch' : c.cta === 'request_access' ? 'Approval required' : c.cta === 'contact' ? 'Enterprise onboarding' : 'Not yet available'} />
                             <Row k="Docs verified" v={c.verified} />
               <Row k="Catalogue rank" v={`#${c.r} of ${TOTAL_CATALOGUED} (documentation priority)`} />
             </div>

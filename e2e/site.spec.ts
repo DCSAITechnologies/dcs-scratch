@@ -55,7 +55,7 @@ test('static pages have a unique title and a meta description', async ({ request
 test('console shells are noindex and disallowed', async ({ request }) => {
   expect(await (await request.get('/app/')).text()).toContain('<meta name="robots" content="noindex, nofollow" />')
   expect(await (await request.get('/robots.txt')).text()).toContain('Disallow: /app')
-  expect(await (await request.get('/sitemap.xml')).text()).not.toMatch(/\.dev\/app[<\/]/)
+  expect(await (await request.get('/sitemap.xml')).text()).not.toMatch(/\.dev\/app[</]/)
 })
 
 test.describe('responsive', () => {
@@ -90,4 +90,12 @@ test('keyboard: the catalogue search is reachable by Tab and usable', async ({ p
   expect(reached).toBe(true)
   await page.keyboard.type('anthropic')
   await expect(page.getByTestId('no-canonical-match')).toBeVisible()
+})
+
+test('sign-in collects no credentials while no identity backend exists', async ({ page }) => {
+  await page.goto('/signin')
+  await expect(page.locator('input[type="password"], input[type="email"]')).toHaveCount(0)
+  await expect(page.locator('main')).not.toContainText(/free to start|no credit card/i)
+  await page.goto('/pricing')
+  await expect(page.locator('main')).not.toContainText(/join the waitlist/i)
 })

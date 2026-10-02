@@ -124,11 +124,12 @@ export function statusColor(s: string): string {
 
 export function ctaLabel(c: Conn): string {
   switch (c.cta) {
-    case 'notify': return 'Notify me at launch'
+    // no notification capture exists yet — the CTA leads to launch status, not a signup
+    case 'notify': return 'Launch status'
     case 'request_access': return 'Request Access'
     case 'coming_soon': return 'Coming Soon'
     case 'contact': return 'Contact Us'
-    default: return 'Notify me at launch'
+    default: return 'Launch status'
   }
 }
 

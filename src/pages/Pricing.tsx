@@ -3,15 +3,15 @@ import { Reveal } from '../hooks/Reveal'
 
 const PLANS = [
   {
-    name: 'Developer', tag: 'For individuals exploring governed agents.', cta: 'Get started', featured: false,
+    name: 'Developer', tag: 'For individuals exploring governed agents.', cta: 'Launch status', featured: false,
     features: ['Starter connector set', '1 workspace', 'Community support'],
   },
   {
-    name: 'Team', tag: 'For teams shipping agent workflows.', cta: 'Join the waitlist', featured: true,
+    name: 'Team', tag: 'For teams shipping agent workflows.', cta: 'Launch status', featured: true,
     features: ['Expanded connector set', 'Unlimited agents', 'Approval workflows', 'Advanced policies', 'Priority support'],
   },
   {
-    name: 'Business', tag: 'For organizations with compliance needs.', cta: 'Join the waitlist', featured: false,
+    name: 'Business', tag: 'For organizations with compliance needs.', cta: 'Launch status', featured: false,
     features: ['Full connector catalogue', 'Audit history', 'Environments', 'Governance controls'],
   },
   {
@@ -27,7 +27,7 @@ export function Pricing() {
         <SectionHeader
           titleAs="h1"          eyebrow="Pricing"
           title="Plans for every stage."
-          sub="Final pricing is published when approved. Join the waitlist to be notified — no placeholders, no invented numbers."
+          sub="Final pricing is published when approved — no placeholders, no invented numbers. Accounts and a launch waitlist are not open yet."
         />
 
         <div className="mt-12 grid sm:grid-cols-2 lg:grid-cols-4 gap-5 items-stretch">
@@ -52,7 +52,7 @@ export function Pricing() {
                     </li>
                   ))}
                 </ul>
-                <a href="/signin" className={`${p.featured ? 'cta-primary' : 'cta-secondary'} mt-6 justify-center w-full`}>{p.cta}</a>
+                <a href={p.cta === 'Contact sales' ? '/enterprise/contact' : '/signin'} className={`${p.featured ? 'cta-primary' : 'cta-secondary'} mt-6 justify-center w-full`}>{p.cta}</a>
               </div>
             </Reveal>
           ))}
