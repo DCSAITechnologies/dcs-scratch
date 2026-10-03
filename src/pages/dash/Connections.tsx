@@ -68,7 +68,7 @@ export function DashConnectionDetail({ id }: { id: string }) {
         <Panel title="Lifecycle">
           <ol className="flex flex-wrap items-center gap-1.5">
             {[...lifecycle, 'DEGRADED/SUSPENDED/REVOKED'].map((s, i) => (
-              <li key={s} className={`px-2.5 py-1 rounded-full text-[11px] font-semibold border ${i <= idx ? 'bg-[#21C87A]/[0.08] text-[#21C87A] border-[#21C87A]/30' : c.state === s.split('/')[0] ? 'bg-[#F5A524]/[0.08] text-[#F5A524] border-[#F5A524]/30' : 'text-[#8592AE] border-white/[0.08]'}`}>{s}</li>
+              <li key={s} className={`px-2.5 py-1 rounded-full text-[11px] font-semibold border ${i <= idx ? 'bg-[color-mix(in_srgb,var(--c-ok)_8%,transparent)] text-[var(--c-ok)] border-[color-mix(in_srgb,var(--c-ok)_30%,transparent)]' : c.state === s.split('/')[0] ? 'bg-[color-mix(in_srgb,var(--c-warn)_8%,transparent)] text-[var(--c-warn)] border-[color-mix(in_srgb,var(--c-warn)_30%,transparent)]' : 'text-[var(--c-muted)] border-[var(--c-border)]'}`}>{s}</li>
             ))}
           </ol>
           <div className="mt-4"><KV items={[
@@ -91,7 +91,7 @@ export function DashConnectionDetail({ id }: { id: string }) {
             <IdLink key="id" to={`/app/executions/${e.id}`}>{e.id}</IdLink>,
             <span key="t" className="font-mono text-[12px]">{e.tool}</span>, <Pill key="o" v={e.outcome} />, <Pill key="r" v={e.receipt_state} />, e.started,
           ])} />
-        ) : <p className="text-[12.5px] text-[#A9B6D3]">None yet.</p>}
+        ) : <p className="text-[12.5px] text-[var(--c-text-2)]">None yet.</p>}
       </Panel>
     </div>
   )
@@ -106,24 +106,24 @@ export function DashConnectNew() {
         sub="Four steps: connector → auth scheme → authorize → test. The preview runs against simulator providers only; real providers arrive with vault and OAuth apps."
         maturity="HERMETIC ONLY"
       />
-      <div className="mb-4 flex items-center gap-2 text-[11.5px] text-[#A9B6D3]"><MaturityTag m="STAGING ONLY" /> Real-provider Connect/Authorize · <MaturityTag m="EXTERNAL DEPENDENCY" /> provider OAuth apps, vault</div>
+      <div className="mb-4 flex items-center gap-2 text-[11.5px] text-[var(--c-text-2)]"><MaturityTag m="STAGING ONLY" /> Real-provider Connect/Authorize · <MaturityTag m="EXTERNAL DEPENDENCY" /> provider OAuth apps, vault</div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <Panel title="1 · Connector">
-          <p className="text-[12.5px] text-[#A9B6D3] mb-3">Runtime-verified connectors connect first. All {CATALOGUE_RUNTIME.length} catalogue rows are currently <b>not verified</b> at runtime, so the flow offers simulator connectors in this preview.</p>
+          <p className="text-[12.5px] text-[var(--c-text-2)] mb-3">Runtime-verified connectors connect first. All {CATALOGUE_RUNTIME.length} catalogue rows are currently <b>not verified</b> at runtime, so the flow offers simulator connectors in this preview.</p>
           <div className="space-y-2">
             {['stripe', 'shopify', 'salesforce', 'slack', 'razorpay'].map((id) => (
-              <div key={id} className="flex items-center justify-between px-3 py-2 rounded-lg border border-white/[0.07] bg-white/[0.02]">
-                <span className="text-[13px] text-[#C7D2EA]">{fmtConn(id)} <span className="text-[10.5px] text-[#8592AE]">simulator</span></span>
+              <div key={id} className="flex items-center justify-between px-3 py-2 rounded-lg border border-[var(--c-border)] bg-[var(--c-card-2)]">
+                <span className="text-[13px] text-[var(--c-text-2)]">{fmtConn(id)} <span className="text-[10.5px] text-[var(--c-muted)]">simulator</span></span>
                 <Action label="Select" maturity="HERMETIC ONLY" />
               </div>
             ))}
           </div>
         </Panel>
         <Panel title="2–4 · Scheme, authorize, test">
-          <ol className="space-y-3 text-[12.5px] text-[#A9B6D3]">
-            <li><b className="text-white">Auth scheme</b> — from the connector manifest (API Key / OAuth2). Credentials are issued to the vault at runtime; here a simulator credential reference is created.</li>
-            <li><b className="text-white">Authorize</b> — OAuth redirect for real providers <MaturityTag m="STAGING ONLY" />; simulator grants inline.</li>
-            <li><b className="text-white">Test</b> — a governed read proves the connection before it can go ACTIVE. The test itself is receipted.</li>
+          <ol className="space-y-3 text-[12.5px] text-[var(--c-text-2)]">
+            <li><b className="text-[var(--c-text)]">Auth scheme</b> — from the connector manifest (API Key / OAuth2). Credentials are issued to the vault at runtime; here a simulator credential reference is created.</li>
+            <li><b className="text-[var(--c-text)]">Authorize</b> — OAuth redirect for real providers <MaturityTag m="STAGING ONLY" />; simulator grants inline.</li>
+            <li><b className="text-[var(--c-text)]">Test</b> — a governed read proves the connection before it can go ACTIVE. The test itself is receipted.</li>
           </ol>
           <div className="mt-5"><Action label="Create connection (simulator)" maturity="HERMETIC ONLY" title="Creates in the reference store; durable persistence is roadmap item 15" /></div>
         </Panel>
@@ -176,7 +176,7 @@ export function DashConnectors() {
           maturity="SNAPSHOT"
         />
         <FilterBar>
-          <input value={q} onChange={(e) => setFilter(() => setQ(e.target.value))} placeholder="Search name, provider or id" aria-label="Search connectors" className="bg-[#0d1430] border border-white/[0.09] rounded-lg px-2.5 py-1.5 text-[12px] text-[#C7D2EA] placeholder-[#8592AE] outline-none w-52" />
+          <input value={q} onChange={(e) => setFilter(() => setQ(e.target.value))} placeholder="Search name, provider or id" aria-label="Search connectors" className="bg-[var(--c-card)] border border-[var(--c-border)] rounded-lg px-2.5 py-1.5 text-[12px] text-[var(--c-text-2)] placeholder-[var(--c-muted)] outline-none w-52" />
           <Filter label="Category" value={cat} options={[...new Set(CATALOGUE_RUNTIME.map((c) => c.category))].sort()} onChange={(v) => setFilter(() => setCat(v))} />
           <Filter label="Publication" value={pub} options={['published', 'on hold']} onChange={(v) => setFilter(() => setPub(v))} />
           <Filter label="Runtime" value={runtime} options={['not_verified', 'staging_verified', 'production_verified']} onChange={(v) => setFilter(() => setRuntime(v))} />
@@ -188,7 +188,7 @@ export function DashConnectors() {
           <Filter label="Sort" value={sort === 'rank' ? '' : sort} options={['name']} onChange={(v) => setFilter(() => setSort(v || 'rank'))} />
         </FilterBar>
         {legacyHits.length > 0 && (
-          <div className="mb-4 px-4 py-3 rounded-xl border border-[#FFB224]/30 bg-[#FFB224]/[0.06] text-[12.5px] text-[#E8C98A]" data-testid="legacy-hint">
+          <div className="mb-4 px-4 py-3 rounded-xl border border-[color-mix(in_srgb,var(--c-warn)_30%,transparent)] bg-[color-mix(in_srgb,var(--c-warn)_6%,transparent)] text-[12.5px] text-[var(--c-warn)]" data-testid="legacy-hint">
             {legacyHits.length} legacy reference {legacyHits.length === 1 ? 'surface matches' : 'surfaces match'} “{q.trim()}” — not canonical connectors, not counted, no runtime status:{' '}
             {legacyHits.slice(0, 6).map((c, i) => (
               <span key={c.id}>{i > 0 && ', '}<a href={`/connectors/${c.id}`} className="underline underline-offset-2">{c.n}</a></span>
@@ -201,27 +201,27 @@ export function DashConnectors() {
             <Table
               head={['#', 'Connector', 'Provider', 'Category', 'Catalogue status', 'Publication', 'Availability', 'Runtime status', 'Engineering', 'Auth', 'R/W', 'Webhooks', 'Actions']}
               rows={rows.map((c) => [
-                <span key="r" className="text-[#8592AE]">{c.rank ?? (c.pack === 'GOLDEN-FIVE' ? 'G5' : '—')}</span>,
+                <span key="r" className="text-[var(--c-muted)]">{c.rank ?? (c.pack === 'GOLDEN-FIVE' ? 'G5' : '—')}</span>,
                 <IdLink key="id" to={`/app/connectors/${c.id}`}>{c.name}</IdLink>,
                 c.provider, c.category, <Pill key="cs" v={c.catalogue_status} />,
-                c.published ? <span key="p" className="text-[12px] text-[#A9B6D3]">published</span> : <span key="p" className="text-[12px] text-[#F5A524]" title={c.hold_category ?? undefined}>on hold</span>,
-                <span key="av" className="text-[12px] text-[#A9B6D3]" title={c.dispatch_reasons.join(', ')}>{c.available ? 'available' : 'not available'}</span>,
-                <span key="rs" className="text-[12px] text-[#A9B6D3]">{c.runtime_status.replaceAll('_', ' ')}</span>,
-                <span key="es" className="text-[12px] text-[#A9B6D3]">{(c.engineering_status ?? '—').replaceAll('_', ' ').toLowerCase()}</span>,
+                c.published ? <span key="p" className="text-[12px] text-[var(--c-text-2)]">published</span> : <span key="p" className="text-[12px] text-[var(--c-warn)]" title={c.hold_category ?? undefined}>on hold</span>,
+                <span key="av" className="text-[12px] text-[var(--c-text-2)]" title={c.dispatch_reasons.join(', ')}>{c.available ? 'available' : 'not available'}</span>,
+                <span key="rs" className="text-[12px] text-[var(--c-text-2)]">{c.runtime_status.replaceAll('_', ' ')}</span>,
+                <span key="es" className="text-[12px] text-[var(--c-text-2)]">{(c.engineering_status ?? '—').replaceAll('_', ' ').toLowerCase()}</span>,
                 c.auth, c.rw, c.webhooks ? 'yes' : '—',
                 <Action key="a" label="Connect" maturity="STAGING ONLY" title="Enabled when runtime status ≥ staging-verified and claim_level ≥ STAGING" />,
               ])}
             />
           )}
-          <div className="mt-3 flex flex-wrap items-center gap-3 text-[11px] text-[#8592AE]">
+          <div className="mt-3 flex flex-wrap items-center gap-3 text-[11px] text-[var(--c-muted)]">
             <span data-testid="dash-connector-count">
               {matching.length ? `Showing ${from + 1}–${from + rows.length} of ${matching.length} matching` : '0 matching'} · {CATALOGUE_RUNTIME.length} catalogued ({publishedTotal} published, {CATALOGUE_RUNTIME.length - publishedTotal} on hold)
             </span>
             {pages > 1 && (
               <nav className="ml-auto flex items-center gap-2" aria-label="Connector pages">
-                <button type="button" disabled={current <= 1} onClick={() => setPage(current - 1)} className="px-2.5 py-1 rounded-lg border border-white/[0.1] text-[#A9B6D3] disabled:opacity-40 disabled:cursor-not-allowed hover:text-white">← Prev</button>
+                <button type="button" disabled={current <= 1} onClick={() => setPage(current - 1)} className="px-2.5 py-1 rounded-lg border border-[var(--c-border)] text-[var(--c-text-2)] disabled:opacity-40 disabled:cursor-not-allowed hover:text-[var(--c-text)]">← Prev</button>
                 <span data-testid="dash-page">Page {current} of {pages}</span>
-                <button type="button" disabled={current >= pages} onClick={() => setPage(current + 1)} className="px-2.5 py-1 rounded-lg border border-white/[0.1] text-[#A9B6D3] disabled:opacity-40 disabled:cursor-not-allowed hover:text-white">Next →</button>
+                <button type="button" disabled={current >= pages} onClick={() => setPage(current + 1)} className="px-2.5 py-1 rounded-lg border border-[var(--c-border)] text-[var(--c-text-2)] disabled:opacity-40 disabled:cursor-not-allowed hover:text-[var(--c-text)]">Next →</button>
               </nav>
             )}
           </div>
@@ -279,7 +279,7 @@ export function DashConnectorDetail({ id }: { id: string }) {
               <IdLink to={`/app/executions/${e.id}`}>{e.id}</IdLink>
               <span className="flex gap-2"><Pill v={e.outcome} /><Pill v={e.receipt_state} /></span>
             </div>
-          )) : <p className="text-[12.5px] text-[#A9B6D3]">None yet.</p>}
+          )) : <p className="text-[12.5px] text-[var(--c-text-2)]">None yet.</p>}
         </Panel>
       </div>
       <Panel title={`Tools (${tools.length} discovered on workspace connections)`}>
@@ -287,7 +287,7 @@ export function DashConnectorDetail({ id }: { id: string }) {
           <Table head={['Tool', 'Capability class', 'Side effects', 'Retry safety', 'Verification', 'Webhook events']} rows={tools.map((t) => [
             <span key="t" className="font-mono text-[12px]">{t.id}</span>, t.operation_class, t.side_effects ? 'yes' : 'no', t.retry_safety, t.verification, t.webhook_events.join(', ') || '—',
           ])} />
-        ) : <p className="text-[12.5px] text-[#A9B6D3]">Tools are discovered per connection — connect this connector to enumerate its tools from the manifest registry.</p>}
+        ) : <p className="text-[12.5px] text-[var(--c-text-2)]">Tools are discovered per connection — connect this connector to enumerate its tools from the manifest registry.</p>}
       </Panel>
     </div>
   )
@@ -311,7 +311,7 @@ export function DashTools() {
               <span key="t" className="font-mono text-[12px]">{t.id}</span>, fmtConn(t.connector),
               <IdLink key="c" to={`/app/connections/${t.connection}`}>{t.connection}</IdLink>,
               t.operation_class, t.side_effects ? 'yes' : 'no', t.approval_class, t.retry_safety,
-              <span key="v" className="text-[12px] text-[#A9B6D3]">{t.verification}</span>, <Pill key="p" v={t.policy_preview} />,
+              <span key="v" className="text-[12px] text-[var(--c-text-2)]">{t.verification}</span>, <Pill key="p" v={t.policy_preview} />,
             ])}
           />
         </div>

@@ -465,3 +465,31 @@ html[data-theme='light'] .dcs-tab.active { color: #0B1220; background: #FFFFFF; 
 html[data-theme='light'] .dcs-table-row:hover { background: #F5F7FB; }
 /* code blocks stay dark on the light site (readable, conventional) */
 html[data-theme='light'] pre.dcs-code { background: #0B1220; border: 1px solid #1C2436; border-radius: 12px; padding: 16px 18px; }
+
+/* ───────────────────────── Console theme (/app) ─────────────────────────
+   Dark (default) is a neutral, Cursor-style grey on near-black; light reuses the
+   website palette. Console code uses only these tokens (scripts/console-theme-codemod.py).
+   The visitor's choice is stored per browser (src/lib/console-theme.ts). */
+html[data-theme='dark'] {
+  color-scheme: dark;
+  --c-bg: #141414; --c-panel: #181818; --c-card: #1D1D1D; --c-card-2: #242424;
+  --c-border: #2A2A2A; --c-border-2: #383838; --c-active: #2A2A2A;
+  --c-text: #EDEDED; --c-text-2: #CFCFCF; --c-muted: #A3A3A3; --c-subtle: #8F8F8F;
+  --c-link: #A8C1FF; --c-ok: #4ADE80; --c-warn: #FBBF24; --c-err: #F87171; --c-info: #93B4FF;
+  --c-violet: #C4A7FF; --c-sky: #7DD3FC; --c-on-warn: #1B1403; --c-primary: #EDEDED; --c-on-primary: #141414;
+}
+html[data-theme='light'] {
+  --c-bg: #F5F6F8; --c-panel: #FFFFFF; --c-card: #FFFFFF; --c-card-2: #F5F7FB;
+  --c-border: #E3E7EE; --c-border-2: #D2D8E2; --c-active: #EDF2FF;
+  --c-text: #0B1220; --c-text-2: #2B3446; --c-muted: #566074; --c-subtle: #5E6779;
+  --c-link: #1E40AF; --c-ok: #065F46; --c-warn: #92400E; --c-err: #991B1B; --c-info: #1E40AF;
+  --c-violet: #5B21B6; --c-sky: #075985; --c-on-warn: #FFFFFF; --c-primary: #0B1220; --c-on-primary: #FFFFFF;
+}
+html[data-theme='dark'] body { background-color: var(--c-bg); }
+html .console { background: var(--c-bg); color: var(--c-text); }
+html .console .glass-card { background: var(--c-card); border: 1px solid var(--c-border); border-radius: 12px; box-shadow: none; }
+html .console .glass-card-hover:hover { border-color: var(--c-border-2); transform: none; box-shadow: none; }
+html .console :focus-visible { outline-color: var(--c-link); }
+html .console ::selection { background: color-mix(in srgb, var(--c-link) 30%, transparent); }
+html[data-theme='dark'] .console ::-webkit-scrollbar-track { background: var(--c-bg); }
+html[data-theme='dark'] .console ::-webkit-scrollbar-thumb { background: #333; }

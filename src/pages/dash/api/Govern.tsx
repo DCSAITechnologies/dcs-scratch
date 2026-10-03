@@ -64,7 +64,7 @@ export function ApiUsage() {
     <div>
       <PageHeader title="Usage" maturity="WIRED" sub="Counts from the execution ledger and receipt index. Not billing." />
       <FilterBar>
-        <label className="text-[12px] text-[#A9B6D3]">Window <select value={w} onChange={(e) => setW(e.target.value as typeof w)} className="ml-1 bg-[#0d1430] border border-white/[0.09] rounded-lg px-2 py-1 text-[12px] text-[#C7D2EA]"><option>24h</option><option>7d</option><option>30d</option></select></label>
+        <label className="text-[12px] text-[var(--c-text-2)]">Window <select value={w} onChange={(e) => setW(e.target.value as typeof w)} className="ml-1 bg-[var(--c-card)] border border-[var(--c-border)] rounded-lg px-2 py-1 text-[12px] text-[var(--c-text-2)]"><option>24h</option><option>7d</option><option>30d</option></select></label>
         <span className="ml-auto"><Freshness loadedAt={r.loadedAt} onRefresh={r.reload} /></span>
       </FilterBar>
       <ApiView result={r}>{(u) => (
@@ -139,9 +139,9 @@ export function ApiDeveloper() {
 export function NotInContract({ what, why }: { what: string; why: string }) {
   return (
     <div className="glass-card p-6" data-testid="not-in-contract">
-      <div className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#A9B6D3]">Not yet available</div>
-      <p className="mt-2 text-[13.5px] text-[#D6E1FF]">{what}</p>
-      <p className="mt-1 text-[12.5px] text-[#93A0C2]">{why}</p>
+      <div className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[var(--c-text-2)]">Not yet available</div>
+      <p className="mt-2 text-[13.5px] text-[var(--c-text-2)]">{what}</p>
+      <p className="mt-1 text-[12.5px] text-[var(--c-muted)]">{why}</p>
     </div>
   )
 }
@@ -163,7 +163,7 @@ export function ApiAudit() {
       <FilterBar><span className="ml-auto"><Freshness loadedAt={list.loadedAt} onRefresh={list.reload} /></span></FilterBar>
       <PagedView list={list} empty="No events recorded.">
         {(rows) => <Table head={['When', 'Event', 'Run', 'Data']} rows={rows.map((ev) => [when(ev.occurred_at), ev.type, ev.run_id ?? '—',
-          <span key="d" className="font-mono text-[11px] text-[#93A0C2]">{Object.entries(ev.data).map(([k, v]) => `${k}=${String(v)}`).join(' ')}</span>])} />}
+          <span key="d" className="font-mono text-[11px] text-[var(--c-muted)]">{Object.entries(ev.data).map(([k, v]) => `${k}=${String(v)}`).join(' ')}</span>])} />}
       </PagedView>
       <div className="mt-4"><NotInContract what="Export (CSV + receipt bundle)" why="Audit export is CONTRACT_ONLY: the server answers 501 not_implemented." /></div>
     </div>

@@ -17,7 +17,7 @@ export function DashReceipts() {
           sub="Evidence, not an activity log. One receipt per execution fact, chained by causal identity. Two statuses on every row: execution outcome and receipt state."
           maturity="HERMETIC ONLY"
         />
-        <div className="mb-4 flex flex-wrap items-center gap-2 text-[11.5px] text-[#A9B6D3]">
+        <div className="mb-4 flex flex-wrap items-center gap-2 text-[11.5px] text-[var(--c-text-2)]">
           <MaturityTag m="EXTERNAL DEPENDENCY" /> Signing posture is the test signer; KMS/HSM lands with roadmap item 18. Verify over the authenticated route is <MaturityTag m="STAGING ONLY" />
         </div>
         <FilterBar>
@@ -33,7 +33,7 @@ export function DashReceipts() {
                 r.type, String(r.sequence), <span key="p" className="font-mono text-[11.5px]">{r.parent}</span>,
                 <IdLink key="r" to={`/app/agents/runs/${r.run}`}>{r.run}</IdLink>,
                 fmtConn(r.connector), <span key="t" className="font-mono text-[12px]">{r.tool}</span>,
-                r.issued_at, <span key="v" className="text-[12px] text-[#A9B6D3]">{r.verification}</span>,
+                r.issued_at, <span key="v" className="text-[12px] text-[var(--c-text-2)]">{r.verification}</span>,
               ])}
             />
           </div>
@@ -56,9 +56,9 @@ export function DashReceiptDetail({ id }: { id: string }) {
         maturity="HERMETIC ONLY"
         actions={
           <>
-            <div className="flex rounded-lg border border-white/[0.09] overflow-hidden">
-              <button type="button" onClick={() => setAdvanced(false)} className={`px-3 py-1.5 text-[12px] font-semibold ${!advanced ? 'bg-[#4D8DFF]/15 text-white' : 'text-[#A9B6D3]'}`}>Normal</button>
-              <button type="button" onClick={() => setAdvanced(true)} className={`px-3 py-1.5 text-[12px] font-semibold ${advanced ? 'bg-[#4D8DFF]/15 text-white' : 'text-[#A9B6D3]'}`}>Advanced</button>
+            <div className="flex rounded-lg border border-[var(--c-border)] overflow-hidden">
+              <button type="button" onClick={() => setAdvanced(false)} className={`px-3 py-1.5 text-[12px] font-semibold ${!advanced ? 'bg-[color-mix(in_srgb,var(--c-info)_15%,transparent)] text-[var(--c-text)]' : 'text-[var(--c-text-2)]'}`}>Normal</button>
+              <button type="button" onClick={() => setAdvanced(true)} className={`px-3 py-1.5 text-[12px] font-semibold ${advanced ? 'bg-[color-mix(in_srgb,var(--c-info)_15%,transparent)] text-[var(--c-text)]' : 'text-[var(--c-text-2)]'}`}>Advanced</button>
             </div>
             <Action label="Verify receipt" maturity="HERMETIC ONLY" title="In-process verifier today; authenticated route on staging" />
             <Action label="Export receipt + proof" maturity="PLANNED" />
@@ -70,22 +70,22 @@ export function DashReceiptDetail({ id }: { id: string }) {
       {!advanced ? (
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
           <Panel title="Trust summary">
-            <p className="text-[13.5px] text-[#C7D2EA] leading-relaxed">
+            <p className="text-[13.5px] text-[var(--c-text-2)] leading-relaxed">
               This receipt attests that step <b>{r.tool}</b> on <b>{fmtConn(r.connector)}</b> finished with outcome
               <span className="mx-1"><Pill v={r.execution_outcome} /></span>
               inside run <IdLink to={`/app/agents/runs/${r.run}`}>{r.run}</IdLink>, under the policy decision and approval recorded in its digests.
             </p>
             <div className="mt-4 flex items-center gap-3 flex-wrap">
               <Pill v={r.state} />
-              <span className="text-[12.5px] text-[#21C87A] font-semibold">Verified — {r.verification}</span>
-              <span className="text-[11.5px] text-[#8592AE]">cached result · re-verify for freshness</span>
+              <span className="text-[12.5px] text-[var(--c-ok)] font-semibold">Verified — {r.verification}</span>
+              <span className="text-[11.5px] text-[var(--c-muted)]">cached result · re-verify for freshness</span>
             </div>
           </Panel>
           <Panel title={`Causal chain — ${r.run}`}>
             <ol className="space-y-2">
               {chain.map((c) => (
-                <li key={c.id} className={`flex items-center gap-3 text-[12.5px] ${c.id === r.id ? 'text-white font-semibold' : 'text-[#A9B6D3]'}`}>
-                  <span className="w-5 text-[#8592AE] font-mono text-[11px]">#{c.sequence}</span>
+                <li key={c.id} className={`flex items-center gap-3 text-[12.5px] ${c.id === r.id ? 'text-[var(--c-text)] font-semibold' : 'text-[var(--c-text-2)]'}`}>
+                  <span className="w-5 text-[var(--c-muted)] font-mono text-[11px]">#{c.sequence}</span>
                   <IdLink to={`/app/receipts/${c.id}`}>{c.id}</IdLink>
                   <span className="font-mono text-[11.5px]">{c.tool}</span>
                   <Pill v={c.state} />

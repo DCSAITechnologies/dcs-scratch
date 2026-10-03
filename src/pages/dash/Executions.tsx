@@ -23,8 +23,8 @@ export function DashExecutions() {
         <FilterBar>
           <Filter label="Outcome" value={outcome} options={EXECUTION_STATES} onChange={setOutcome} />
           <Filter label="Connector" value={connector} options={[...new Set(EXECUTIONS.map((e) => e.connector))].map(fmtConn)} onChange={(v) => setConnector(EXECUTIONS.find((e) => fmtConn(e.connector) === v)?.connector ?? '')} />
-          <label className="inline-flex items-center gap-2 text-[12px] text-[#A9B6D3]">
-            <input type="checkbox" checked={recon} onChange={(e) => setRecon(e.target.checked)} className="accent-[#4D8DFF]" />
+          <label className="inline-flex items-center gap-2 text-[12px] text-[var(--c-text-2)]">
+            <input type="checkbox" checked={recon} onChange={(e) => setRecon(e.target.checked)} className="accent-[var(--c-info)]" />
             needs reconciliation
           </label>
         </FilterBar>
@@ -39,8 +39,8 @@ export function DashExecutions() {
                 <span key="t" className="font-mono text-[12px]">{e.tool}</span>,
                 e.operation_class, String(e.attempts.length || '—'),
                 <Pill key="o" v={e.outcome} />, <Pill key="rs" v={e.receipt_state} />,
-                <span key="v" className="text-[12px] text-[#A9B6D3]">{e.verification}</span>,
-                <span key="rc" className="text-[12px] text-[#A9B6D3]">{e.reconciliation}</span>,
+                <span key="v" className="text-[12px] text-[var(--c-text-2)]">{e.verification}</span>,
+                <span key="rc" className="text-[12px] text-[var(--c-text-2)]">{e.reconciliation}</span>,
                 e.started, e.environment,
               ])}
             />
@@ -61,11 +61,11 @@ export function DashExecutionDetail({ id }: { id: string }) {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 mb-4">
         <Panel title="Two statuses">
           <div className="flex items-center gap-3 flex-wrap">
-            <div><div className="text-[10.5px] uppercase tracking-[0.12em] text-[#8592AE] font-semibold mb-1">Outcome</div><Pill v={e.outcome} /></div>
-            <div><div className="text-[10.5px] uppercase tracking-[0.12em] text-[#8592AE] font-semibold mb-1">Receipt state</div><Pill v={e.receipt_state} /></div>
+            <div><div className="text-[10.5px] uppercase tracking-[0.12em] text-[var(--c-muted)] font-semibold mb-1">Outcome</div><Pill v={e.outcome} /></div>
+            <div><div className="text-[10.5px] uppercase tracking-[0.12em] text-[var(--c-muted)] font-semibold mb-1">Receipt state</div><Pill v={e.receipt_state} /></div>
           </div>
           {e.receipt_state === 'FAILED' && (
-            <p className="mt-3 text-[12px] text-[#E8C98A] leading-relaxed">The execution succeeded but receipt issuance failed. Behaviour per class (block vs PENDING) is founder decision FD-1 — surfaced in Settings.</p>
+            <p className="mt-3 text-[12px] text-[var(--c-warn)] leading-relaxed">The execution succeeded but receipt issuance failed. Behaviour per class (block vs PENDING) is founder decision FD-1 — surfaced in Settings.</p>
           )}
         </Panel>
         <Panel title="Routing context">
@@ -88,7 +88,7 @@ export function DashExecutionDetail({ id }: { id: string }) {
             <Table head={['n', 'Started', 'Provider classification', 'Outcome', 'provider_request_id']} rows={e.attempts.map((a) => [
               String(a.n), a.started, a.classification, <Pill key="o" v={a.outcome} />, <span key="p" className="font-mono text-[11.5px]">{a.provider_request_id}</span>,
             ])} />
-          ) : <p className="text-[12.5px] text-[#A9B6D3]">Policy refused dispatch — the provider was never called.</p>}
+          ) : <p className="text-[12.5px] text-[var(--c-text-2)]">Policy refused dispatch — the provider was never called.</p>}
         </Panel>
         <Panel title="Verification & reconciliation">
           <KV items={[
@@ -102,7 +102,7 @@ export function DashExecutionDetail({ id }: { id: string }) {
             {!noManualRetry && <Action label="Retry" maturity="PLANNED" />}
           </div>
           {noManualRetry && (
-            <p className="mt-3 text-[11.5px] text-[#8592AE]">No manual retry is offered: retry_safety is <span className="font-mono">{e.retry_safety}</span> for this tool. Reconciliation resolves it.</p>
+            <p className="mt-3 text-[11.5px] text-[var(--c-muted)]">No manual retry is offered: retry_safety is <span className="font-mono">{e.retry_safety}</span> for this tool. Reconciliation resolves it.</p>
           )}
         </Panel>
       </div>

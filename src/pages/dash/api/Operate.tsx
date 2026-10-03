@@ -112,7 +112,7 @@ export function ApiApprovalDetail({ id }: { id: string }) {
               {a.state === 'GRANTED' && <MutationButton label="Revoke" danger capability="approve" testId="approval-revoke" confirmTitle="Revoke this grant?"
                 confirmBody="Unused steps can no longer execute. The reason is recorded." fields={[{ name: 'reason', label: 'Reason', required: true, type: 'textarea' }]}
                 run={(v, key) => api.revokeApproval(a.approval_id, { reason: v.reason }, key)} onDone={done} />}
-              {a.state !== 'REQUESTED' && a.state !== 'GRANTED' && <span className="text-[12px] text-[#93A0C2]">{a.state} — no further decision is possible.</span>}
+              {a.state !== 'REQUESTED' && a.state !== 'GRANTED' && <span className="text-[12px] text-[var(--c-muted)]">{a.state} — no further decision is possible.</span>}
             </>} />
           <Panel title="Decision">
             <KV items={[['State', <Pill key="s" v={a.state} />], ['OAL status', a.oal_status ?? '—'], ['Policy', a.policy_id ?? '—'], ['Requested by', a.requested_by ?? '—'],
@@ -158,7 +158,7 @@ export function ApiExecutionDetail({ id }: { id: string }) {
                     { name: 'provider_request_id', label: 'Provider request id' }, { name: 'note', label: 'Evidence note', required: true, type: 'textarea' }]}
                   run={(v, key) => api.reconcileExecution(e.execution_id, { outcome: v.outcome as 'SUCCEEDED' | 'FAILED', evidence: { method: v.method as S['ReconcileRequest']['evidence']['method'], provider_request_id: v.provider_request_id || undefined, note: v.note } }, key)}
                   onDone={(x) => { setNotice(`Reconciled as ${x.outcome}.`); r.reload() }} />
-              : <span className="text-[12px] text-[#93A0C2]">Retries are owned by the broker; no manual retry is exposed.</span>} />
+              : <span className="text-[12px] text-[var(--c-muted)]">Retries are owned by the broker; no manual retry is exposed.</span>} />
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
             <Panel title="Outcome">
               <KV items={[['Outcome', <Pill key="o" v={e.outcome} />], ['Settled', e.settled ? 'yes' : 'no'], ['Op class', e.operation_class],
@@ -206,7 +206,7 @@ export function ApiReceiptDetail({ id }: { id: string }) {
             <div className="mb-4" data-testid="verify-result"><Panel title="Verification result">
               <KV items={[['Verification', <Pill key="v" v={result.verification} />], ['Verifier', result.verifier_kind], ['Evidence grade', result.evidence_grade.replaceAll('_', ' ')],
                 ['Outcome matches', result.execution_outcome_matches == null ? '—' : result.execution_outcome_matches ? 'yes' : 'no'], ['Checked', when(result.checked_at)]]} />
-              {result.verifier_kind === 'test_double' && <p className="mt-3 text-[12px] text-[#E8C98A]">Test-double verifier: this is not evidence.</p>}
+              {result.verifier_kind === 'test_double' && <p className="mt-3 text-[12px] text-[var(--c-warn)]">Test-double verifier: this is not evidence.</p>}
             </Panel></div>
           )}
           <Panel title="Receipt">
@@ -263,6 +263,6 @@ export function ApiEvents() {
     render={(rows) => <Table head={['Event', 'Type', 'Occurred', 'Run', 'Data']} rows={rows.map((ev) => [
       <span key="i" className="font-mono text-[12px]">{ev.event_id}</span>, ev.type, when(ev.occurred_at),
       ev.run_id ? <IdLink key="r" to={`/app/agents/runs/${ev.run_id}`}>{ev.run_id}</IdLink> : '—',
-      <span key="d" className="font-mono text-[11px] text-[#93A0C2]">{Object.entries(ev.data).map(([k, v]) => `${k}=${String(v)}`).join(' ')}</span>,
+      <span key="d" className="font-mono text-[11px] text-[var(--c-muted)]">{Object.entries(ev.data).map(([k, v]) => `${k}=${String(v)}`).join(' ')}</span>,
     ])} />} />
 }

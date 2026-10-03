@@ -13,31 +13,31 @@ import { DEV_TOKENS, apiHost } from '../../lib/api/config'
 
 function Screen({ title, children }: { title: string; children: ReactNode }) {
   return (
-    <div className="min-h-screen flex items-center justify-center px-4" style={{ background: '#070B18' }}>
-      <main className="w-full max-w-md rounded-2xl border border-white/[0.08] bg-[#0C1330]/90 p-7">
+    <div className="min-h-screen flex items-center justify-center px-4" style={{ background: 'var(--c-bg)' }}>
+      <main className="w-full max-w-md rounded-2xl border border-[var(--c-border)] bg-[color-mix(in_srgb,var(--c-card)_90%,transparent)] p-7">
         <div className="flex items-center gap-2 mb-5">
-          <span className="w-6 h-6 rounded-full" style={{ background: 'conic-gradient(from 210deg, #5A7BFF, #8B5CF6, #5A7BFF)' }} aria-hidden="true" />
-          <span className="text-[13px] font-semibold text-white">Connector OS Console</span>
+          <span className="w-6 h-6 rounded-full" style={{ background: 'conic-gradient(from 210deg, var(--c-info), var(--c-violet), var(--c-info))' }} aria-hidden="true" />
+          <span className="text-[13px] font-semibold text-[var(--c-text)]">Connector OS Console</span>
         </div>
-        <h1 className="text-xl font-semibold text-white">{title}</h1>
-        <div className="mt-3 text-[13px] leading-relaxed text-[#A9B6D3] space-y-4">{children}</div>
+        <h1 className="text-xl font-semibold text-[var(--c-text)]">{title}</h1>
+        <div className="mt-3 text-[13px] leading-relaxed text-[var(--c-text-2)] space-y-4">{children}</div>
       </main>
     </div>
   )
 }
 
-const btn = 'w-full px-4 py-2.5 rounded-lg text-[13px] font-semibold text-white bg-[#3B5BDB] hover:bg-[#4C6EF5] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#9FB8FF]'
+const btn = 'w-full px-4 py-2.5 rounded-lg text-[13px] font-semibold text-[var(--c-text)] bg-[var(--c-info)] hover:bg-[var(--c-info)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--c-link)]'
 
 export function SignInPanel({ returnTo }: { returnTo: string }) {
   return (
     <Screen title="Sign in to the console">
-      <p>Connected API: <span className="font-mono text-[12px] text-[#D6E1FF]">{apiHost()}</span></p>
+      <p>Connected API: <span className="font-mono text-[12px] text-[var(--c-text-2)]">{apiHost()}</span></p>
       {AUTH_PROVIDER === 'oidc' && (
         <button type="button" className={btn} onClick={() => signIn({ returnTo })}>Sign in with your organisation</button>
       )}
       {AUTH_PROVIDER === 'dev' && (
         <>
-          <p className="rounded-lg border border-[#F5A524]/30 bg-[#F5A524]/[0.06] px-3 py-2 text-[12px] text-[#E8C98A]">
+          <p className="rounded-lg border border-[color-mix(in_srgb,var(--c-warn)_30%,transparent)] bg-[color-mix(in_srgb,var(--c-warn)_6%,transparent)] px-3 py-2 text-[12px] text-[var(--c-warn)]">
             {import.meta.env.MODE === 'core'
               ? "Development build: Connector OS core's hermetic test identities for its local reference server. A production build never offers this."
               : 'Development build: mock identities for the local mock API. A production build never offers this.'}
@@ -61,7 +61,7 @@ export function AuthGate({ path, children }: { path: string; children: ReactNode
     return (
       <Screen title="Sign-in is not configured">
         <p>This console is connected to an API (<span className="font-mono text-[12px]">{apiHost()}</span>) but no identity provider is configured, so it will not load any data.</p>
-        <p className="text-[12px] text-[#93A0C2]">Set <span className="font-mono">VITE_OIDC_ISSUER</span> and <span className="font-mono">VITE_OIDC_CLIENT_ID</span> for this build.</p>
+        <p className="text-[12px] text-[var(--c-muted)]">Set <span className="font-mono">VITE_OIDC_ISSUER</span> and <span className="font-mono">VITE_OIDC_CLIENT_ID</span> for this build.</p>
       </Screen>
     )
   }

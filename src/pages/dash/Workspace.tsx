@@ -20,7 +20,7 @@ export function DashDeveloper() {
         </Panel>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
           <Panel title="SDK / CLI" right={<MaturityTag m="PRE-LAUNCH" />}>
-            <pre tabIndex={0} aria-label="Install command" className="text-[12px] text-[#C7D2EA] bg-black/30 rounded-lg p-3 overflow-x-auto">npm i @dcs-ai/connector-os   # PRE-LAUNCH — not published; install from source only
+            <pre tabIndex={0} aria-label="Install command" className="text-[12px] text-[var(--c-text-2)] bg-black/30 rounded-lg p-3 overflow-x-auto">npm i @dcs-ai/connector-os   # PRE-LAUNCH — not published; install from source only
 cos login                      # CLI ships at launch</pre>
           </Panel>
           <Panel title="MCP endpoint" right={<MaturityTag m="HERMETIC ONLY" />}>
@@ -50,8 +50,8 @@ export function DashUsage() {
             ['Reconciled 24 h', USAGE.reconciled_24h], ['Provider cost', 'not reported'],
           ].map(([l, v]) => (
             <div key={String(l)} className="glass-card p-4">
-              <div className="text-[10.5px] uppercase tracking-[0.12em] text-[#8592AE] font-semibold">{l}</div>
-              <div className="mt-1.5 text-2xl font-semibold text-white">{v}</div>
+              <div className="text-[10.5px] uppercase tracking-[0.12em] text-[var(--c-muted)] font-semibold">{l}</div>
+              <div className="mt-1.5 text-2xl font-semibold text-[var(--c-text)]">{v}</div>
             </div>
           ))}
         </div>
@@ -63,7 +63,7 @@ export function DashUsage() {
             <Table head={['Agent', 'Executions']} mobileScroll={false} rows={USAGE.by_agent.map(([a, n]) => [a, n])} />
           </Panel>
         </div>
-        <p className="mt-4 text-[12px] text-[#A9B6D3]">{USAGE.cost_note} <MaturityTag m="PLANNED" /></p>
+        <p className="mt-4 text-[12px] text-[var(--c-text-2)]">{USAGE.cost_note} <MaturityTag m="PLANNED" /></p>
       </div>
     </StateGate>
   )
@@ -76,7 +76,7 @@ export function DashTeam() {
       <div>
         <PageHeader title="Team / Roles" sub="Humans and roles — separate from agent policy. The matrix below is the same roles.ts the website renders, so the two never diverge." maturity="PLANNED"
           actions={<Action label="Invite" maturity="PLANNED" title="Needs IdP (roadmap item 19)" />} />
-        <div className="mb-4 flex items-center gap-2 text-[11.5px] text-[#A9B6D3]"><MaturityTag m="HERMETIC ONLY" /> role model · <MaturityTag m="PLANNED" /> identity, invites</div>
+        <div className="mb-4 flex items-center gap-2 text-[11.5px] text-[var(--c-text-2)]"><MaturityTag m="HERMETIC ONLY" /> role model · <MaturityTag m="PLANNED" /> identity, invites</div>
         <Panel title="Members" className="mb-4">
           <Table head={['Name', 'Email', 'Role', 'Last active', 'Actions']} rows={TEAM.map((m) => [
             m.name, m.email, ROLE_LABELS[m.role], m.last_active,
@@ -91,7 +91,7 @@ export function DashTeam() {
               ...(Object.keys(ROLE_MATRIX) as RoleKey[]).map((r) => matrixCell(ROLE_MATRIX[r][cap])),
             ])}
           />
-          <p className="mt-3 text-[11.5px] text-[#8592AE]">Execute is never a human action — only the broker executes, on an approved step. Approval cells marked ✓ exclude the plan’s submitter.</p>
+          <p className="mt-3 text-[11.5px] text-[var(--c-muted)]">Execute is never a human action — only the broker executes, on an approved step. Approval cells marked ✓ exclude the plan’s submitter.</p>
         </Panel>
       </div>
     </StateGate>
@@ -115,7 +115,7 @@ export function DashAudit() {
             e.time, <span key="a" className="text-[12.5px]">{e.actor}</span>, e.class,
             <span key="ac" className="whitespace-normal min-w-[200px] inline-block">{e.action}</span>,
             <span key="t" className="font-mono text-[11.5px]">{e.target}</span>, e.environment,
-            e.receipt === 'PENDING' ? <Pill key="r" v="PENDING" /> : <span key="r" className="text-[12px] text-[#21C87A]">{e.receipt}</span>,
+            e.receipt === 'PENDING' ? <Pill key="r" v="PENDING" /> : <span key="r" className="text-[12px] text-[var(--c-ok)]">{e.receipt}</span>,
           ])} />
         </div>
       </div>
@@ -134,13 +134,13 @@ export function DashSettings() {
           <div className="mt-4"><Action label="Rename" maturity="PLANNED" /></div>
         </Panel>
         <Panel title="Receipt-service policy (FD-1)" right={<MaturityTag m="HERMETIC ONLY" />}>
-          <p className="text-[12.5px] text-[#A9B6D3] leading-relaxed">When the receipt service is unavailable: <b className="text-white">block</b> the step, or proceed and mark the receipt <Pill v="PENDING" />. This is founder decision FD-1 — parked; the current build shows PENDING on failure. Once ruled, this becomes a per-class setting.</p>
+          <p className="text-[12.5px] text-[var(--c-text-2)] leading-relaxed">When the receipt service is unavailable: <b className="text-[var(--c-text)]">block</b> the step, or proceed and mark the receipt <Pill v="PENDING" />. This is founder decision FD-1 — parked; the current build shows PENDING on failure. Once ruled, this becomes a per-class setting.</p>
         </Panel>
         <Panel title="Notification channels" right={<MaturityTag m="PLANNED" />}>
-          <p className="text-[12.5px] text-[#A9B6D3]">Approval requests, kill events, receipt failures, escalations — delivery channels (email / webhook) are planned.</p>
+          <p className="text-[12.5px] text-[var(--c-text-2)]">Approval requests, kill events, receipt failures, escalations — delivery channels (email / webhook) are planned.</p>
         </Panel>
         <Panel title="Data retention (FD-2, read-only)" right={<MaturityTag m="PLANNED" />}>
-          <p className="text-[12.5px] text-[#A9B6D3]">Raw-evidence retention (customer-local vs DCS-held) is founder decision FD-2. Displayed read-only here once ruled; the Receipts/Audit export design depends on it.</p>
+          <p className="text-[12.5px] text-[var(--c-text-2)]">Raw-evidence retention (customer-local vs DCS-held) is founder decision FD-2. Displayed read-only here once ruled; the Receipts/Audit export design depends on it.</p>
         </Panel>
       </div>
     </div>

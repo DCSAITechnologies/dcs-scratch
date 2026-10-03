@@ -31,8 +31,8 @@ export function ApiConnectors() {
       <FilterBar>
         <form onSubmit={(e) => { e.preventDefault(); apply() }} className="flex gap-2">
           <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search name or id" aria-label="Search connectors"
-            className="bg-[#0d1430] border border-white/[0.09] rounded-lg px-2.5 py-1.5 text-[12px] text-[#C7D2EA] w-52" />
-          <button type="submit" className="px-2.5 py-1 rounded-lg text-[12px] text-[#9FB8FF] border border-[#4D8DFF]/40">Search</button>
+            className="bg-[var(--c-card)] border border-[var(--c-border)] rounded-lg px-2.5 py-1.5 text-[12px] text-[var(--c-text-2)] w-52" />
+          <button type="submit" className="px-2.5 py-1 rounded-lg text-[12px] text-[var(--c-link)] border border-[color-mix(in_srgb,var(--c-info)_40%,transparent)]">Search</button>
         </form>
         <Filter label="Disposition" value={disposition} options={DISPOSITIONS} onChange={setDisposition} />
         <span className="ml-auto"><Freshness loadedAt={list.loadedAt} onRefresh={list.reload} /></span>
@@ -45,7 +45,7 @@ export function ApiConnectors() {
             c.disposition.replaceAll('_', ' ').toLowerCase(),
             <Pill key="a" v={c.availability} />,
             c.dispatch.staging ? 'dispatchable' : '—', c.dispatch.production ? 'dispatchable' : '—',
-            c.founder_holds?.length ? <span key="h" className="text-[#F5A524]">{c.founder_holds.join(', ')}</span> : '—',
+            c.founder_holds?.length ? <span key="h" className="text-[var(--c-warn)]">{c.founder_holds.join(', ')}</span> : '—',
           ])} />
         )}
       </PagedView>
@@ -62,8 +62,8 @@ export function ApiConnectorDetail({ id }: { id: string }) {
         <div>
           <PageHeader title={c.name} sub={`${c.connector_id} · ${c.disposition.replaceAll('_', ' ').toLowerCase()}`} maturity="WIRED"
             actions={c.availability === 'not_dispatchable'
-              ? <span className="text-[12px] text-[#93A0C2]">Not dispatchable in any environment — connecting is not offered.</span>
-              : <button type="button" onClick={() => navigate(`/app/connections/new?connector=${encodeURIComponent(c.connector_id)}`)} className="px-2.5 py-1 rounded-lg text-[12px] font-semibold text-[#9FB8FF] bg-[#4D8DFF]/10 border border-[#4D8DFF]/40">Connect</button>} />
+              ? <span className="text-[12px] text-[var(--c-muted)]">Not dispatchable in any environment — connecting is not offered.</span>
+              : <button type="button" onClick={() => navigate(`/app/connections/new?connector=${encodeURIComponent(c.connector_id)}`)} className="px-2.5 py-1 rounded-lg text-[12px] font-semibold text-[var(--c-link)] bg-[color-mix(in_srgb,var(--c-info)_10%,transparent)] border border-[color-mix(in_srgb,var(--c-info)_40%,transparent)]">Connect</button>} />
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
             <Panel title="Dispatch eligibility (API)">
               <KV items={[
@@ -111,7 +111,7 @@ export function ApiConnections() {
     <div>
       <PageHeader title="Connections" maturity="WIRED"
         sub="Bound credentials, by vault reference only — the API never returns a secret, and the console never sends one."
-        actions={hasCapability('configure') ? <button type="button" onClick={() => navigate('/app/connections/new')} className="px-2.5 py-1 rounded-lg text-[12px] font-semibold text-[#9FB8FF] bg-[#4D8DFF]/10 border border-[#4D8DFF]/40">New connection</button> : undefined} />
+        actions={hasCapability('configure') ? <button type="button" onClick={() => navigate('/app/connections/new')} className="px-2.5 py-1 rounded-lg text-[12px] font-semibold text-[var(--c-link)] bg-[color-mix(in_srgb,var(--c-info)_10%,transparent)] border border-[color-mix(in_srgb,var(--c-info)_40%,transparent)]">New connection</button> : undefined} />
       <FilterBar>
         <Filter label="Status" value={status} options={CONNECTION_STATUSES} onChange={setStatus} />
         <span className="ml-auto"><Freshness loadedAt={list.loadedAt} onRefresh={list.reload} /></span>
@@ -139,7 +139,7 @@ export function ApiConnectionDetail({ id }: { id: string }) {
         <div>
           {notice && <Notice text={notice} onClose={() => setNotice(null)} />}
           <PageHeader title={c.connection_id} sub={`${c.connector_id} · ${lifecycleLabel(c)}`} maturity="WIRED"
-            actions={c.status === 'REVOKED' ? <span className="text-[12px] text-[#93A0C2]">Revoked {when(c.revoked_at)} — no further actions.</span> : <>
+            actions={c.status === 'REVOKED' ? <span className="text-[12px] text-[var(--c-muted)]">Revoked {when(c.revoked_at)} — no further actions.</span> : <>
               <MutationButton label="Test" capability="configure" testId="conn-test" confirmTitle="Test this connection?"
                 confirmBody={<>Runs the governed test probe for <b>{c.connection_id}</b>. The result is recorded by the API.</>}
                 run={(_, key) => api.testConnection(c.connection_id, key)}
@@ -182,49 +182,49 @@ export function ApiConnectNew() {
   const connector = useApi(`connect-connector:${connectorId}`, () => (connectorId ? api.getConnector(connectorId) : Promise.resolve(null)))
   const canConfigure = hasCapability('configure')
   const valid = connector.status === 'ready' && connector.data && CREF.test(credentialRef.trim())
-  const input = 'w-full mt-1 bg-[#0d1430] border border-white/[0.12] rounded-lg px-3 py-2 text-[13px] text-[#E6ECFF]'
+  const input = 'w-full mt-1 bg-[var(--c-card)] border border-[var(--c-border)] rounded-lg px-3 py-2 text-[13px] text-[var(--c-text)]'
 
   return (
     <div>
       <PageHeader title="Connect a provider" maturity="WIRED"
         sub="Connector → configure → authenticate (vault reference) → save → test → activate. No secret is ever entered here." />
-      {!canConfigure && <p role="alert" className="mb-4 text-[12.5px] text-[#E8C98A]">Creating connections requires the “configure” capability.</p>}
+      {!canConfigure && <p role="alert" className="mb-4 text-[12.5px] text-[var(--c-warn)]">Creating connections requires the “configure” capability.</p>}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
         <Panel title="1 · Connector">
-          <label className="block text-[12px] text-[#A9B6D3]">Connector id
+          <label className="block text-[12px] text-[var(--c-text-2)]">Connector id
             <input className={input} value={connectorId} onChange={(e) => setConnectorId(e.target.value.trim())} placeholder="e.g. deepl" />
           </label>
           <div className="mt-3 text-[12.5px]">
-            {!connectorId ? <span className="text-[#8592AE]">Enter a connector id from the catalogue.</span>
-              : connector.status === 'loading' ? <span className="text-[#8592AE]">Checking…</span>
-              : connector.status === 'error' ? <span role="alert" className="text-[#FF8A8A]">Unknown connector.</span>
-              : connector.data && <span className="text-[#C7D2EA]">{connector.data.name} — <Pill v={connector.data.availability} /></span>}
+            {!connectorId ? <span className="text-[var(--c-muted)]">Enter a connector id from the catalogue.</span>
+              : connector.status === 'loading' ? <span className="text-[var(--c-muted)]">Checking…</span>
+              : connector.status === 'error' ? <span role="alert" className="text-[var(--c-err)]">Unknown connector.</span>
+              : connector.data && <span className="text-[var(--c-text-2)]">{connector.data.name} — <Pill v={connector.data.availability} /></span>}
           </div>
         </Panel>
         <Panel title="2 · Configure">
-          <label className="block text-[12px] text-[#A9B6D3]">Label (optional)<input className={input} value={label} onChange={(e) => setLabel(e.target.value)} /></label>
-          <label className="block mt-3 text-[12px] text-[#A9B6D3]">Environment
+          <label className="block text-[12px] text-[var(--c-text-2)]">Label (optional)<input className={input} value={label} onChange={(e) => setLabel(e.target.value)} /></label>
+          <label className="block mt-3 text-[12px] text-[var(--c-text-2)]">Environment
             <select className={input} value={environment} onChange={(e) => setEnvironment(e.target.value as typeof environment)}>
               <option value="staging">staging</option><option value="development">development</option><option value="sandbox">sandbox</option>
             </select>
-            <span className="block mt-1 text-[11px] text-[#8592AE]">Production connections are not offered from this console.</span>
+            <span className="block mt-1 text-[11px] text-[var(--c-muted)]">Production connections are not offered from this console.</span>
           </label>
         </Panel>
         <Panel title="3 · Authenticate (vault reference)">
-          <p className="text-[12px] text-[#93A0C2] mb-2">OAuth and API-key capture happen in the credential broker / vault, which returns a reference. Paste that reference — never a key or token.</p>
-          <label className="block text-[12px] text-[#A9B6D3]">Credential reference
+          <p className="text-[12px] text-[var(--c-muted)] mb-2">OAuth and API-key capture happen in the credential broker / vault, which returns a reference. Paste that reference — never a key or token.</p>
+          <label className="block text-[12px] text-[var(--c-text-2)]">Credential reference
             <input className={`${input} font-mono`} value={credentialRef} onChange={(e) => setCredentialRef(e.target.value)} placeholder="cref_…" autoComplete="off" spellCheck={false} aria-invalid={credentialRef !== '' && !CREF.test(credentialRef.trim())} />
           </label>
-          {credentialRef !== '' && !CREF.test(credentialRef.trim()) && <p role="alert" className="mt-1 text-[11.5px] text-[#FF8A8A]">Must be a vault reference (cref_ followed by an id). Secrets are refused.</p>}
+          {credentialRef !== '' && !CREF.test(credentialRef.trim()) && <p role="alert" className="mt-1 text-[11.5px] text-[var(--c-err)]">Must be a vault reference (cref_ followed by an id). Secrets are refused.</p>}
         </Panel>
         <Panel title="4 · Save">
-          <p className="text-[12px] text-[#93A0C2] mb-3">Creates the connection in state CREATED. You then test it, and activate it once the test passes.</p>
+          <p className="text-[12px] text-[var(--c-muted)] mb-3">Creates the connection in state CREATED. You then test it, and activate it once the test passes.</p>
           {canConfigure && valid
             ? <MutationButton label="Create connection" capability="configure" testId="conn-create" confirmTitle="Create this connection?"
                 confirmBody={<>Connector <b>{connectorId}</b> in <b>{environment}</b>, credential <span className="font-mono">{credentialRef.trim()}</span>.</>}
                 run={(_, key) => api.createConnection({ connector_id: connectorId, credential_ref: credentialRef.trim(), label: label || undefined, routing: { environment } }, key)}
                 onDone={(c) => navigate(`/app/connections/${c.connection_id}?created=${c.status}`)} />
-            : <button type="button" disabled className="px-2.5 py-1 rounded-lg text-[12px] text-[#8592AE] border border-white/[0.07] cursor-not-allowed">Create connection</button>}
+            : <button type="button" disabled className="px-2.5 py-1 rounded-lg text-[12px] text-[var(--c-muted)] border border-[var(--c-border)] cursor-not-allowed">Create connection</button>}
         </Panel>
       </div>
     </div>

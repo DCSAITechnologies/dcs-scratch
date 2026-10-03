@@ -4,6 +4,7 @@
 
 import { Panel, Pill, IdLink, EmptyState, StateGate, PermissionNote, MaturityTag } from '../../components/dash/ui'
 import { APPROVALS, RUNS, CONNECTIONS, USAGE, fmtConn } from '../../lib/fixtures'
+import { tint } from '../../lib/console-theme'
 
 // ── Donut chart (SVG, accessible text equivalent below) ────────────────────
 function Donut({ parts }: { parts: { label: string; value: number; color: string }[] }) {
@@ -13,7 +14,7 @@ function Donut({ parts }: { parts: { label: string; value: number; color: string
     <div className="flex items-center gap-5">
       <div className="relative shrink-0">
         <svg width="124" height="124" viewBox="0 0 128 128" role="img" aria-label={`Runs by outcome: ${parts.map((p) => `${p.label} ${p.value}`).join(', ')}`}>
-          <circle cx="64" cy="64" r={R} fill="none" stroke="#151D3D" strokeWidth="16" />
+          <circle cx="64" cy="64" r={R} fill="none" stroke="var(--c-card)" strokeWidth="16" />
           {parts.map((p, idx) => {
             const frac = total ? p.value / total : 0
             const dash = `${frac * C} ${C}`
@@ -25,17 +26,17 @@ function Donut({ parts }: { parts: { label: string; value: number; color: string
           })}
         </svg>
         <div className="absolute inset-0 flex flex-col items-center justify-center">
-          <span className="text-2xl font-semibold text-white">{total}</span>
-          <span className="text-[10px] text-[#8592AE]">total runs</span>
+          <span className="text-2xl font-semibold text-[var(--c-text)]">{total}</span>
+          <span className="text-[10px] text-[var(--c-muted)]">total runs</span>
         </div>
       </div>
       <ul className="space-y-2">
         {parts.map((p) => (
           <li key={p.label} className="flex items-center gap-2 text-[12.5px]">
             <span className="w-2 h-2 rounded-full" style={{ background: p.color }} />
-            <span className="text-[#A9B6D3]">{p.label}</span>
-            <span className="ml-2 text-white font-semibold">{p.value}</span>
-            <span className="text-[#8592AE]">{total ? Math.round((p.value / total) * 100) : 0}%</span>
+            <span className="text-[var(--c-text-2)]">{p.label}</span>
+            <span className="ml-2 text-[var(--c-text)] font-semibold">{p.value}</span>
+            <span className="text-[var(--c-muted)]">{total ? Math.round((p.value / total) * 100) : 0}%</span>
           </li>
         ))}
       </ul>
@@ -52,8 +53,8 @@ function Bars({ data }: { data: { h: string; issued: number; pending: number; fa
       <svg width="100%" viewBox={`0 0 ${W} ${H + 16}`} role="img" aria-label={data.map((d) => `${d.h}: issued ${d.issued}, pending ${d.pending}, failed ${d.failed}`).join('; ')}>
         {[0, 5, 10, 15, 20].map((t) => (
           <g key={t}>
-            <line x1="0" x2={W} y1={H - (t / max) * H} y2={H - (t / max) * H} stroke="#151D3D" strokeWidth="1" />
-            <text x="0" y={H - (t / max) * H - 2} fill="#8592AE" fontSize="7">{t}</text>
+            <line x1="0" x2={W} y1={H - (t / max) * H} y2={H - (t / max) * H} stroke="var(--c-card)" strokeWidth="1" />
+            <text x="0" y={H - (t / max) * H - 2} fill="var(--c-muted)" fontSize="7">{t}</text>
           </g>
         ))}
         {data.map((d, i) => {
@@ -61,21 +62,21 @@ function Bars({ data }: { data: { h: string; issued: number; pending: number; fa
           const hi = (d.issued / max) * H, hp = (d.pending / max) * H, hf = (d.failed / max) * H
           return (
             <g key={d.h}>
-              <rect x={x} y={H - hi} width={w} height={hi} rx="1.5" fill="#21C87A" opacity="0.9" />
-              {hp > 0 && <rect x={x} y={H - hi - hp - 1} width={w} height={hp} rx="1" fill="#F5A524" />}
-              {hf > 0 && <rect x={x} y={H - hi - hp - hf - 2} width={w} height={hf} rx="1" fill="#EF4444" />}
+              <rect x={x} y={H - hi} width={w} height={hi} rx="1.5" fill="var(--c-ok)" opacity="0.9" />
+              {hp > 0 && <rect x={x} y={H - hi - hp - 1} width={w} height={hp} rx="1" fill="var(--c-warn)" />}
+              {hf > 0 && <rect x={x} y={H - hi - hp - hf - 2} width={w} height={hf} rx="1" fill="var(--c-err)" />}
             </g>
           )
         })}
-        <text x="0" y={H + 12} fill="#8592AE" fontSize="7.5">00:00</text>
-        <text x={W / 3} y={H + 12} fill="#8592AE" fontSize="7.5">06:00</text>
-        <text x={(W / 3) * 2} y={H + 12} fill="#8592AE" fontSize="7.5">12:00</text>
-        <text x={W - 26} y={H + 12} fill="#8592AE" fontSize="7.5">18:00</text>
+        <text x="0" y={H + 12} fill="var(--c-muted)" fontSize="7.5">00:00</text>
+        <text x={W / 3} y={H + 12} fill="var(--c-muted)" fontSize="7.5">06:00</text>
+        <text x={(W / 3) * 2} y={H + 12} fill="var(--c-muted)" fontSize="7.5">12:00</text>
+        <text x={W - 26} y={H + 12} fill="var(--c-muted)" fontSize="7.5">18:00</text>
       </svg>
       <div className="mt-2 flex items-center gap-4 text-[11px]">
-        <span className="flex items-center gap-1.5 text-[#A9B6D3]"><span className="w-2 h-2 rounded-full bg-[#21C87A]" /> Issued ({SERIES_TOTALS.issued})</span>
-        <span className="flex items-center gap-1.5 text-[#A9B6D3]"><span className="w-2 h-2 rounded-full bg-[#F5A524]" /> Pending ({SERIES_TOTALS.pending})</span>
-        <span className="flex items-center gap-1.5 text-[#A9B6D3]"><span className="w-2 h-2 rounded-full bg-[#EF4444]" /> Failed ({SERIES_TOTALS.failed})</span>
+        <span className="flex items-center gap-1.5 text-[var(--c-text-2)]"><span className="w-2 h-2 rounded-full bg-[var(--c-ok)]" /> Issued ({SERIES_TOTALS.issued})</span>
+        <span className="flex items-center gap-1.5 text-[var(--c-text-2)]"><span className="w-2 h-2 rounded-full bg-[var(--c-warn)]" /> Pending ({SERIES_TOTALS.pending})</span>
+        <span className="flex items-center gap-1.5 text-[var(--c-text-2)]"><span className="w-2 h-2 rounded-full bg-[var(--c-err)]" /> Failed ({SERIES_TOTALS.failed})</span>
       </div>
     </div>
   )
@@ -94,14 +95,14 @@ const ISSUANCE_RATE = (100 * SERIES_TOTALS.issued / Math.max(1, SERIES_TOTALS.is
 
 // Runs-by-outcome is derived from the run store (5 fixture runs), not typed in.
 const RUN_OUTCOMES = [
-  { label: 'Succeeded', value: RUNS.filter((r) => r.execution_outcome === 'SUCCEEDED').length, color: '#21C87A' },
-  { label: 'Outcome unknown', value: RUNS.filter((r) => r.execution_outcome === 'OUTCOME_UNKNOWN').length, color: '#F5A524' },
-  { label: 'Refused', value: RUNS.filter((r) => r.execution_outcome === 'REFUSED').length, color: '#EF4444' },
-  { label: 'No execution yet', value: RUNS.filter((r) => r.execution_outcome === '—').length, color: '#8592AE' },
+  { label: 'Succeeded', value: RUNS.filter((r) => r.execution_outcome === 'SUCCEEDED').length, color: 'var(--c-ok)' },
+  { label: 'Outcome unknown', value: RUNS.filter((r) => r.execution_outcome === 'OUTCOME_UNKNOWN').length, color: 'var(--c-warn)' },
+  { label: 'Refused', value: RUNS.filter((r) => r.execution_outcome === 'REFUSED').length, color: 'var(--c-err)' },
+  { label: 'No execution yet', value: RUNS.filter((r) => r.execution_outcome === '—').length, color: 'var(--c-muted)' },
 ]
 const CLOSED_RUNS = RUN_OUTCOMES.slice(0, 3).reduce((s, p) => s + p.value, 0)
 
-const SEV: Record<string, string> = { HIGH: '#EF4444', MEDIUM: '#F5A524', LOW: '#4D8DFF' }
+const SEV: Record<string, string> = { HIGH: 'var(--c-err)', MEDIUM: 'var(--c-warn)', LOW: 'var(--c-info)' }
 
 export function DashOverview() {
   const pending = APPROVALS.filter((a) => a.state === 'Pending')
@@ -126,17 +127,17 @@ function Body({ pending, health, readonly = false }: { pending: typeof APPROVALS
       <div className="grid grid-cols-1 md:grid-cols-[minmax(0,1fr)_auto] items-start gap-2 md:gap-3 mb-2.5">
         <div className="min-w-0">
           <div className="flex items-center gap-3 flex-wrap">
-            <h1 className="text-xl md:text-[22px] font-semibold tracking-tight text-white">Operations overview</h1>
-            <span className="px-2 py-0.5 rounded text-[10px] font-bold tracking-wide uppercase bg-[#F5A524]/[0.12] text-[#F5A524] border border-[#F5A524]/35">Staging</span>
+            <h1 className="text-xl md:text-[22px] font-semibold tracking-tight text-[var(--c-text)]">Operations overview</h1>
+            <span className="px-2 py-0.5 rounded text-[10px] font-bold tracking-wide uppercase bg-[color-mix(in_srgb,var(--c-warn)_12%,transparent)] text-[var(--c-warn)] border border-[color-mix(in_srgb,var(--c-warn)_35%,transparent)]">Staging</span>
             <MaturityTag m="HERMETIC ONLY" />
           </div>
-          <p className="mt-0.5 text-[12px] text-[#A9B6D3]">Reference view across connectors, agent runs and receipts — fixture data from the hermetic reference stores, not live telemetry.</p>
+          <p className="mt-0.5 text-[12px] text-[var(--c-text-2)]">Reference view across connectors, agent runs and receipts — fixture data from the hermetic reference stores, not live telemetry.</p>
         </div>
         <div className="md:text-right md:justify-self-end">
-          <div className="text-[10.5px] text-[#93A0C2]">Hermetic reference data · Not production</div>
+          <div className="text-[10.5px] text-[var(--c-muted)]">Hermetic reference data · Not production</div>
           <div className="mt-0.5 flex items-center gap-2.5 md:justify-end">
-            <span className="text-[10.5px] text-[#8592AE]">Fixture snapshot <span className="text-[#A9B6D3]">2026-09-27</span></span>
-            <span className="flex items-center gap-1.5 text-[11.5px] font-semibold text-[#93A0C2]"><span className="w-2 h-2 rounded-full bg-[#5B6884]" /> Static — no refresh source</span>
+            <span className="text-[10.5px] text-[var(--c-muted)]">Fixture snapshot <span className="text-[var(--c-text-2)]">2026-09-27</span></span>
+            <span className="flex items-center gap-1.5 text-[11.5px] font-semibold text-[var(--c-muted)]"><span className="w-2 h-2 rounded-full bg-[var(--c-subtle)]" /> Static — no refresh source</span>
           </div>
         </div>
       </div>
@@ -144,31 +145,31 @@ function Body({ pending, health, readonly = false }: { pending: typeof APPROVALS
       {/* §5.3 KPI row */}
       <div className="grid grid-cols-2 xl:grid-cols-4 gap-3 mb-3">
         {([
-          { label: 'Connections', value: CONNECTIONS.length, sub: `${health.active} healthy · ${health.degraded} degraded · ${health.suspended} suspended`, href: '/app/connections', icon: 'link', color: '#4D8DFF' },
-          { label: 'Runs (open)', value: live.length, sub: `${RUNS.length} total in store`, href: '/app/agents', icon: 'play', color: '#21C87A' },
-          { label: 'Receipts issued', value: USAGE.receipts_issued, sub: `${USAGE.receipts_pending} pending · ${USAGE.receipts_failed} failed`, href: '/app/receipts', icon: 'doc', color: '#8B5CF6' },
-          { label: 'Executions (24h)', value: USAGE.executions_24h, sub: `${USAGE.failed_24h} failed · ${USAGE.reconciled_24h} reconciled`, href: '/app/executions', icon: 'clock', color: '#4D8DFF' },
+          { label: 'Connections', value: CONNECTIONS.length, sub: `${health.active} healthy · ${health.degraded} degraded · ${health.suspended} suspended`, href: '/app/connections', icon: 'link', color: 'var(--c-info)' },
+          { label: 'Runs (open)', value: live.length, sub: `${RUNS.length} total in store`, href: '/app/agents', icon: 'play', color: 'var(--c-ok)' },
+          { label: 'Receipts issued', value: USAGE.receipts_issued, sub: `${USAGE.receipts_pending} pending · ${USAGE.receipts_failed} failed`, href: '/app/receipts', icon: 'doc', color: 'var(--c-violet)' },
+          { label: 'Executions (24h)', value: USAGE.executions_24h, sub: `${USAGE.failed_24h} failed · ${USAGE.reconciled_24h} reconciled`, href: '/app/executions', icon: 'clock', color: 'var(--c-info)' },
         ] as const).map((k) => (
-          <a key={k.label} href={k.href} className="group rounded-xl border border-white/[0.07] bg-[#0C1330]/80 p-3.5 hover:border-[#4D8DFF]/30 transition-colors">
+          <a key={k.label} href={k.href} className="group rounded-xl border border-[var(--c-border)] bg-[color-mix(in_srgb,var(--c-card)_80%,transparent)] p-3.5 hover:border-[color-mix(in_srgb,var(--c-info)_30%,transparent)] transition-colors">
             <div className="flex items-start justify-between">
-              <span className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ background: `${k.color}1a`, border: `1px solid ${k.color}33` }}>
+              <span className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ background: tint(k.color, 10), border: `1px solid ${k.color}33` }}>
                 {k.icon === 'link' && <svg width="16" height="16" viewBox="0 0 20 20" fill="none"><path d="M8 12a3.5 3.5 0 0 0 5 .3l2-2a3.5 3.5 0 0 0-5-5l-1 1M12 8a3.5 3.5 0 0 0-5-.3l-2 2a3.5 3.5 0 0 0 5 5l1-1" stroke={k.color} strokeWidth="1.5" strokeLinecap="round" /></svg>}
                 {k.icon === 'play' && <svg width="16" height="16" viewBox="0 0 20 20" fill="none"><path d="M6 4.5v11l9-5.5-9-5.5Z" stroke={k.color} strokeWidth="1.5" strokeLinejoin="round" /></svg>}
                 {k.icon === 'doc' && <svg width="16" height="16" viewBox="0 0 20 20" fill="none"><path d="M6 3h5l4 4v10H6V3Zm5 0v4h4" stroke={k.color} strokeWidth="1.5" strokeLinejoin="round" /></svg>}
                 {k.icon === 'clock' && <svg width="16" height="16" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="7" stroke={k.color} strokeWidth="1.5" /><path d="M10 6.5V10l2.5 2" stroke={k.color} strokeWidth="1.5" strokeLinecap="round" /></svg>}
               </span>
-              <span className="text-[#8592AE] group-hover:text-[#5A7BFF] transition-colors">›</span>
+              <span className="text-[var(--c-muted)] group-hover:text-[var(--c-info)] transition-colors">›</span>
             </div>
-            <div className="mt-2 text-[12.5px] font-medium text-[#A9B6D3]">{k.label}</div>
-            <div className="text-[28px] leading-tight font-semibold text-white">{k.value}</div>
-            <div className="mt-0.5 text-[11px] text-[#8592AE]">{k.sub}</div>
+            <div className="mt-2 text-[12.5px] font-medium text-[var(--c-text-2)]">{k.label}</div>
+            <div className="text-[28px] leading-tight font-semibold text-[var(--c-text)]">{k.value}</div>
+            <div className="mt-0.5 text-[11px] text-[var(--c-muted)]">{k.sub}</div>
           </a>
         ))}
       </div>
 
       {/* §5.4 three-panel operational row */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 mb-3.5">
-        <Panel title="Action queue" className="flex flex-col" right={<span className="px-1.5 py-0.5 rounded text-[10px] font-bold bg-[#EF4444]/15 text-[#FF8A8A] border border-[#EF4444]/30">3 items</span>}>
+        <Panel title="Action queue" className="flex flex-col" right={<span className="px-1.5 py-0.5 rounded text-[10px] font-bold bg-[color-mix(in_srgb,var(--c-err)_15%,transparent)] text-[var(--c-err)] border border-[color-mix(in_srgb,var(--c-err)_30%,transparent)]">3 items</span>}>
           <ul className="space-y-2.5">
             {[
               { id: 'ex_01J2K30', label: 'Receipt reconciliation required', sev: 'HIGH', age: '5 min ago', to: '/app/executions/ex_01J2K30' },
@@ -177,69 +178,69 @@ function Body({ pending, health, readonly = false }: { pending: typeof APPROVALS
             ].map((it) => (
               <li key={it.id}>
                 <a href={it.to} className="flex items-start gap-3 group">
-                  <span className="mt-0.5 w-7 h-7 rounded-lg bg-white/[0.04] border border-white/[0.08] flex items-center justify-center shrink-0">
-                    <svg width="13" height="13" viewBox="0 0 20 20" fill="none"><path d="M6 3h5l4 4v10H6V3Zm5 0v4h4" stroke="#5B6884" strokeWidth="1.4" strokeLinejoin="round" /></svg>
+                  <span className="mt-0.5 w-7 h-7 rounded-lg bg-[var(--c-card-2)] border border-[var(--c-border)] flex items-center justify-center shrink-0">
+                    <svg width="13" height="13" viewBox="0 0 20 20" fill="none"><path d="M6 3h5l4 4v10H6V3Zm5 0v4h4" stroke="var(--c-subtle)" strokeWidth="1.4" strokeLinejoin="round" /></svg>
                   </span>
                   <span className="min-w-0 flex-1">
-                    <span className="block font-mono text-[12px] text-[#7EA2FF] group-hover:underline truncate">{it.id}</span>
-                    <span className="block text-[12px] text-[#A9B6D3] leading-snug truncate max-w-[220px]" title={it.label}>{it.label}</span>
+                    <span className="block font-mono text-[12px] text-[var(--c-link)] group-hover:underline truncate">{it.id}</span>
+                    <span className="block text-[12px] text-[var(--c-text-2)] leading-snug truncate max-w-[220px]" title={it.label}>{it.label}</span>
                   </span>
                   <span className="text-right shrink-0">
-                    <span className="block px-1.5 py-0.5 rounded text-[9.5px] font-bold" style={{ color: SEV[it.sev], background: `${SEV[it.sev]}1a`, border: `1px solid ${SEV[it.sev]}44` }}>{it.sev}</span>
-                    <span className="block mt-1 text-[10.5px] text-[#8592AE]">{it.age}</span>
+                    <span className="block px-1.5 py-0.5 rounded text-[9.5px] font-bold" style={{ color: SEV[it.sev], background: tint(SEV[it.sev], 10), border: `1px solid ${SEV[it.sev]}44` }}>{it.sev}</span>
+                    <span className="block mt-1 text-[10.5px] text-[var(--c-muted)]">{it.age}</span>
                   </span>
                 </a>
               </li>
             ))}
           </ul>
-          <div className="mt-auto pt-2.5 border-t border-white/[0.06]"><a href="/app/approvals" className="text-[12px] font-semibold text-[#5A7BFF]">View all approvals →</a></div>
+          <div className="mt-auto pt-2.5 border-t border-[var(--c-border)]"><a href="/app/approvals" className="text-[12px] font-semibold text-[var(--c-info)]">View all approvals →</a></div>
         </Panel>
 
         <Panel title="Runs by outcome (run store)" className="flex flex-col">
           <div className="flex-1 flex items-center">
             <Donut parts={RUN_OUTCOMES} />
           </div>
-          <div className="mt-3 pt-2.5 border-t border-white/[0.06] flex justify-between text-[10.5px] text-[#8592AE]">
+          <div className="mt-3 pt-2.5 border-t border-[var(--c-border)] flex justify-between text-[10.5px] text-[var(--c-muted)]">
             <span>Succeeded {RUN_OUTCOMES[0].value} of {CLOSED_RUNS} with an outcome</span><span>{RUN_OUTCOMES[1].value} awaiting reconciliation</span>
           </div>
         </Panel>
 
-        <Panel title="Receipts by hour (fixture series)" right={<span className="text-xl font-semibold text-white">{SERIES_TOTALS.issued}</span>} className="flex flex-col">
+        <Panel title="Receipts by hour (fixture series)" right={<span className="text-xl font-semibold text-[var(--c-text)]">{SERIES_TOTALS.issued}</span>} className="flex flex-col">
           <div className="flex-1 flex flex-col justify-center">
             <Bars data={RECEIPT_SERIES} />
           </div>
-          <div className="mt-2.5 pt-2.5 border-t border-white/[0.06] flex justify-between text-[10.5px] text-[#8592AE]">
+          <div className="mt-2.5 pt-2.5 border-t border-[var(--c-border)] flex justify-between text-[10.5px] text-[var(--c-muted)]">
             <span>Peak {SERIES_PEAK.issued}/h at {SERIES_PEAK.h.padStart(2, '0')}:00</span><span>Issued {ISSUANCE_RATE}% of receipt attempts</span>
           </div>
         </Panel>
       </div>
 
       {/* §5.5 runs by stage — wide table */}
-      <Panel title="Runs by stage" right={<a href="/app/agents" className="text-[12px] font-semibold text-[#5A7BFF]">View all runs →</a>}>
+      <Panel title="Runs by stage" right={<a href="/app/agents" className="text-[12px] font-semibold text-[var(--c-info)]">View all runs →</a>}>
         <div className="overflow-x-auto -mx-5 px-5">
           <table className="w-full text-left border-collapse min-w-[760px]">
             <thead>
               <tr>{['Run', 'Connector', 'Agent', 'Stage', 'Outcome', 'Start time', 'Duration'].map((h) => (
-                <th key={h} className="text-[10px] uppercase tracking-[0.12em] text-[#8592AE] font-semibold pb-2.5 pr-4 border-b border-white/[0.06]">{h}</th>
+                <th key={h} className="text-[10px] uppercase tracking-[0.12em] text-[var(--c-muted)] font-semibold pb-2.5 pr-4 border-b border-[var(--c-border)]">{h}</th>
               ))}</tr>
             </thead>
             <tbody>
               {RUNS.map((r) => (
-                <tr key={r.id} className="border-b border-white/[0.04] hover:bg-white/[0.02] cursor-pointer" onClick={() => { window.history.pushState({}, '', `/app/agents/runs/${r.id}`); window.dispatchEvent(new PopStateEvent('popstate')) }}>
+                <tr key={r.id} className="border-b border-[var(--c-border)] hover:bg-[var(--c-card-2)] cursor-pointer" onClick={() => { window.history.pushState({}, '', `/app/agents/runs/${r.id}`); window.dispatchEvent(new PopStateEvent('popstate')) }}>
                   <td className="py-2 pr-4"><IdLink to={`/app/agents/runs/${r.id}`}>{r.id}</IdLink></td>
-                  <td className="py-2 pr-4 text-[12.5px] text-[#C7D2EA]">{r.connectors.map(fmtConn).join(', ')}</td>
-                  <td className="py-2 pr-4 text-[12.5px] text-[#A9B6D3]">{r.agent}</td>
-                  <td className="py-2 pr-4 text-[12.5px] text-[#A9B6D3]">{r.stage}/10</td>
+                  <td className="py-2 pr-4 text-[12.5px] text-[var(--c-text-2)]">{r.connectors.map(fmtConn).join(', ')}</td>
+                  <td className="py-2 pr-4 text-[12.5px] text-[var(--c-text-2)]">{r.agent}</td>
+                  <td className="py-2 pr-4 text-[12.5px] text-[var(--c-text-2)]">{r.stage}/10</td>
                   <td className="py-2 pr-4"><Pill v={r.execution_outcome} /></td>
-                  <td className="py-2 pr-4 text-[12px] text-[#A9B6D3]">{r.started}</td>
-                  <td className="py-2 text-[12px] text-[#A9B6D3]">{({ run_01J0AA11: '2m 14s', run_01J0A9ZK: '4m 02s', run_01J0A7QM: '6m 18s', run_01J0A5TT: '1m 03s', run_01J0A3BB: '3m 27s' } as Record<string, string>)[r.id] ?? '—'}</td>
+                  <td className="py-2 pr-4 text-[12px] text-[var(--c-text-2)]">{r.started}</td>
+                  <td className="py-2 text-[12px] text-[var(--c-text-2)]">{({ run_01J0AA11: '2m 14s', run_01J0A9ZK: '4m 02s', run_01J0A7QM: '6m 18s', run_01J0A5TT: '1m 03s', run_01J0A3BB: '3m 27s' } as Record<string, string>)[r.id] ?? '—'}</td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
       </Panel>
-      {readonly && <p className="mt-3 text-[11.5px] text-[#8592AE]">Viewer role — read-only.</p>}
+      {readonly && <p className="mt-3 text-[11.5px] text-[var(--c-muted)]">Viewer role — read-only.</p>}
     </div>
   )
 }

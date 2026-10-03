@@ -14,10 +14,10 @@ export function DashSecurity() {
           sub="Emergency control and its audit. Kill is available on mobile with a two-step confirm — emergencies happen on phones. Restore is dual-control and desktop-only."
           maturity="HERMETIC ONLY"
         />
-        <div className="mb-4 flex items-center gap-2 text-[11.5px] text-[#A9B6D3]"><MaturityTag m="EXTERNAL DEPENDENCY" /> Restore’s second identity ships with IdP (item 19). System-scope kill requires org admin + second identity.</div>
+        <div className="mb-4 flex items-center gap-2 text-[11.5px] text-[var(--c-text-2)]"><MaturityTag m="EXTERNAL DEPENDENCY" /> Restore’s second identity ships with IdP (item 19). System-scope kill requires org admin + second identity.</div>
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 mb-4">
-          <Panel title="Kill" className="border-[#EF4444]/30">
-            <p className="text-[12.5px] text-[#A9B6D3] mb-3 leading-relaxed">Scopes: system · tenant · workspace · connection · connector · tool. Reason required; the confirmation names the scope and environment.</p>
+          <Panel title="Kill" className="border-[color-mix(in_srgb,var(--c-err)_30%,transparent)]">
+            <p className="text-[12.5px] text-[var(--c-text-2)] mb-3 leading-relaxed">Scopes: system · tenant · workspace · connection · connector · tool. Reason required; the confirmation names the scope and environment.</p>
             <div className="flex flex-col gap-3 items-start">
               <Action label="Kill a scope…" maturity="HERMETIC ONLY" danger title="Reason required; confirmation names scope + environment" />
               <Action label="Restore" maturity="HERMETIC ONLY" title="Second identity required — until IdP" />
@@ -27,9 +27,9 @@ export function DashSecurity() {
           <Panel title={`Active kills (${KILLS.length})`} className="lg:col-span-2">
             {KILLS.length ? (
               <Table head={['Scope', 'Target', 'Initiated by', 'Reason', 'Time', 'Affected work', 'Restore authorization']} rows={KILLS.map((k) => [
-                k.scope, k.target, k.initiated_by, <span key="r" className="text-[12px] text-[#A9B6D3] whitespace-normal min-w-[180px] inline-block">{k.reason}</span>, k.time, k.affected, k.restore_auth,
+                k.scope, k.target, k.initiated_by, <span key="r" className="text-[12px] text-[var(--c-text-2)] whitespace-normal min-w-[180px] inline-block">{k.reason}</span>, k.time, k.affected, k.restore_auth,
               ])} />
-            ) : <p className="text-[12.5px] text-[#A9B6D3]">None.</p>}
+            ) : <p className="text-[12.5px] text-[var(--c-text-2)]">None.</p>}
           </Panel>
         </div>
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
@@ -40,7 +40,7 @@ export function DashSecurity() {
             ])} />
           </Panel>
           <Panel title="Egress policy (read-only)">
-            <p className="text-[12.5px] text-[#A9B6D3] leading-relaxed">{EGRESS_SUMMARY}</p>
+            <p className="text-[12.5px] text-[var(--c-text-2)] leading-relaxed">{EGRESS_SUMMARY}</p>
           </Panel>
           <Panel title="Stolen-lease drill (CI evidence, read-only)">
             <KV items={[['Last run', STOLEN_LEASE_DRILL.last_run], ['Result', STOLEN_LEASE_DRILL.result]]} />
@@ -70,7 +70,7 @@ export function DashEvents() {
               fmtConn(e.connector), <IdLink key="c" to={`/app/connections/${e.connection}`}>{e.connection}</IdLink>,
               <span key="t" className="font-mono text-[12px]">{e.event_type}</span>, e.received,
               <Pill key="v" v={e.verification} />, e.algorithm, e.dedupe, e.replay,
-              <span key="d" className="text-[12px] text-[#A9B6D3] whitespace-normal min-w-[160px] inline-block">{e.downstream}</span>,
+              <span key="d" className="text-[12px] text-[var(--c-text-2)] whitespace-normal min-w-[160px] inline-block">{e.downstream}</span>,
               <Action key="a" label="Replay" maturity="PLANNED" title="Governed replay to downstream" />,
             ])}
           />
@@ -79,7 +79,7 @@ export function DashEvents() {
           <Table head={['Subscription', 'Event', 'Delivery state', 'Attempts']} mobileScroll={false} rows={OUTBOUND_EVENTS.map((e) => [
             <span key="s" className="font-mono text-[11.5px]">{e.subscription}</span>, e.event, <Pill key="d" v={e.delivery} />, String(e.attempts),
           ])} />
-          <div className="mt-3 text-[11.5px] text-[#8592AE]">Event types: approval.requested · execution.state_changed · receipt.issued · receipt.failed · kill.activated</div>
+          <div className="mt-3 text-[11.5px] text-[var(--c-muted)]">Event types: approval.requested · execution.state_changed · receipt.issued · receipt.failed · kill.activated</div>
         </Panel>
       </div>
     </StateGate>

@@ -107,3 +107,26 @@ test('catalogue filter dropdowns are keyboard-operable listboxes', async ({ page
   await expect(page.getByRole('listbox')).toBeHidden()
   await expect(button).toContainText('Sort: A–Z')
 })
+
+test('console theme: dark by default, Light/Dark toggle persists, axe clean in light', async ({ page }) => {
+  test.setTimeout(120_000)
+  await page.goto('/app')
+  await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark')
+  await page.getByRole('group', { name: 'Colour theme' }).getByRole('button', { name: 'Light' }).click()
+  await expect(page.locator('html')).toHaveAttribute('data-theme', 'light')
+  await page.reload()
+  await expect(page.locator('html')).toHaveAttribute('data-theme', 'light')
+  const found: string[] = []
+  for (const p of ['/app', '/app/connectors', '/app/approvals', '/app/executions/ex_01J2P88', '/app/security']) {
+    await page.goto(p)
+    await page.locator('main').first().waitFor()
+    await page.waitForTimeout(250)
+    const r = await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa']).analyze()
+    for (const v of r.violations) found.push(`${p} ${v.id} (${v.impact}) ×${v.nodes.length}: ${v.nodes[0].html.slice(0, 100)}`)
+  }
+  expect(found).toEqual([])
+  // the public site stays light whatever the console preference
+  await page.getByRole('group', { name: 'Colour theme' }).getByRole('button', { name: 'Dark' }).click()
+  await page.goto('/pricing')
+  await expect(page.locator('html')).toHaveAttribute('data-theme', 'light')
+})

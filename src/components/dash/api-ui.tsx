@@ -16,17 +16,17 @@ export function ApiErrorPanel({ error, onRetry }: { error: ApiError | Error; onR
   const e = error instanceof ApiError ? error : null
   return (
     <div className={panel} role="alert" data-testid="api-error" data-code={e?.code ?? 'unexpected'}>
-      <div className="text-[13px] font-semibold text-[#FF8A8A]">{title}</div>
-      <p className="mt-1.5 text-[13px] text-[#A9B6D3]">{body}</p>
-      {e?.forbidden && typeof e.detail.capability === 'string' && <p className="mt-1 text-[12px] text-[#93A0C2]">Required capability: <b>{e.detail.capability}</b></p>}
-      {e?.forbidden && typeof e.detail.scope === 'string' && <p className="mt-1 text-[12px] text-[#93A0C2]">Required scope: <b>{e.detail.scope}</b></p>}
+      <div className="text-[13px] font-semibold text-[var(--c-err)]">{title}</div>
+      <p className="mt-1.5 text-[13px] text-[var(--c-text-2)]">{body}</p>
+      {e?.forbidden && typeof e.detail.capability === 'string' && <p className="mt-1 text-[12px] text-[var(--c-muted)]">Required capability: <b>{e.detail.capability}</b></p>}
+      {e?.forbidden && typeof e.detail.scope === 'string' && <p className="mt-1 text-[12px] text-[var(--c-muted)]">Required scope: <b>{e.detail.scope}</b></p>}
       {(e?.requestId || e?.correlationId) && (
-        <p className="mt-2 text-[11px] text-[#8592AE] font-mono">{e.requestId ? `request ${e.requestId} · ` : ''}correlation {e.correlationId}</p>
+        <p className="mt-2 text-[11px] text-[var(--c-muted)] font-mono">{e.requestId ? `request ${e.requestId} · ` : ''}correlation {e.correlationId}</p>
       )}
       <div className="mt-4 flex gap-2">
         {e?.unauthenticated
-          ? <button type="button" onClick={() => signIn({ returnTo: window.location.pathname + window.location.search })} className="px-3 py-1.5 rounded-lg text-[12.5px] font-semibold text-[#9FB8FF] bg-[#4D8DFF]/10 border border-[#4D8DFF]/40">Sign in again</button>
-          : onRetry && !e?.notFound && !e?.notImplemented && !e?.forbidden && <button type="button" onClick={onRetry} className="px-3 py-1.5 rounded-lg text-[12.5px] font-semibold text-[#9FB8FF] bg-[#4D8DFF]/10 border border-[#4D8DFF]/40">Retry</button>}
+          ? <button type="button" onClick={() => signIn({ returnTo: window.location.pathname + window.location.search })} className="px-3 py-1.5 rounded-lg text-[12.5px] font-semibold text-[var(--c-link)] bg-[color-mix(in_srgb,var(--c-info)_10%,transparent)] border border-[color-mix(in_srgb,var(--c-info)_40%,transparent)]">Sign in again</button>
+          : onRetry && !e?.notFound && !e?.notImplemented && !e?.forbidden && <button type="button" onClick={onRetry} className="px-3 py-1.5 rounded-lg text-[12.5px] font-semibold text-[var(--c-link)] bg-[color-mix(in_srgb,var(--c-info)_10%,transparent)] border border-[color-mix(in_srgb,var(--c-info)_40%,transparent)]">Retry</button>}
       </div>
     </div>
   )
@@ -40,15 +40,15 @@ export function ApiView<T>({ result, empty, isEmpty, children }: {
 }) {
   if (result.status === 'loading') return <LoadingSkeleton />
   if (result.status === 'error') return <ApiErrorPanel error={result.error} onRetry={result.reload} />
-  if (isEmpty?.(result.data)) return <div className={`${panel} text-center text-[13.5px] text-[#A9B6D3]`} data-testid="api-empty">{empty ?? 'Nothing here yet.'}</div>
+  if (isEmpty?.(result.data)) return <div className={`${panel} text-center text-[13.5px] text-[var(--c-text-2)]`} data-testid="api-empty">{empty ?? 'Nothing here yet.'}</div>
   return <>{children(result.data)}</>
 }
 
 export function Freshness({ loadedAt, onRefresh }: { loadedAt: Date | null; onRefresh: () => void }) {
   return (
-    <div className="flex items-center gap-2 text-[11px] text-[#8592AE]">
+    <div className="flex items-center gap-2 text-[11px] text-[var(--c-muted)]">
       {loadedAt && <span>Loaded {loadedAt.toLocaleTimeString()}</span>}
-      <button type="button" onClick={onRefresh} className="px-2 py-1 rounded-md border border-white/[0.1] text-[#A9B6D3] hover:text-white">Refresh</button>
+      <button type="button" onClick={onRefresh} className="px-2 py-1 rounded-md border border-[var(--c-border)] text-[var(--c-text-2)] hover:text-[var(--c-text)]">Refresh</button>
     </div>
   )
 }
@@ -56,14 +56,14 @@ export function Freshness({ loadedAt, onRefresh }: { loadedAt: Date | null; onRe
 export function PagedView<T>({ list, empty, children }: { list: ReturnType<typeof usePagedList<T>>; empty: ReactNode; children: (items: T[]) => ReactNode }) {
   if (list.status === 'loading') return <LoadingSkeleton />
   if (list.status === 'error' && list.error && list.items.length === 0) return <ApiErrorPanel error={list.error} onRetry={list.reload} />
-  if (list.items.length === 0) return <div className={`${panel} text-center text-[13.5px] text-[#A9B6D3]`} data-testid="api-empty">{empty}</div>
+  if (list.items.length === 0) return <div className={`${panel} text-center text-[13.5px] text-[var(--c-text-2)]`} data-testid="api-empty">{empty}</div>
   return (
     <div className="glass-card p-5">
       {children(list.items)}
-      <div className="mt-3 flex items-center gap-3 text-[11px] text-[#8592AE]">
+      <div className="mt-3 flex items-center gap-3 text-[11px] text-[var(--c-muted)]">
         <span data-testid="api-count">{list.items.length} loaded{list.hasMore ? ' · more available' : ''}</span>
-        {list.error && <span role="alert" className="text-[#FF8A8A]">{describeError(list.error).title} while loading more</span>}
-        {list.hasMore && <button type="button" disabled={list.status === 'more'} onClick={list.loadMore} className="ml-auto px-2.5 py-1 rounded-lg border border-white/[0.1] text-[#A9B6D3] hover:text-white disabled:opacity-50">{list.status === 'more' ? 'Loading…' : 'Load more'}</button>}
+        {list.error && <span role="alert" className="text-[var(--c-err)]">{describeError(list.error).title} while loading more</span>}
+        {list.hasMore && <button type="button" disabled={list.status === 'more'} onClick={list.loadMore} className="ml-auto px-2.5 py-1 rounded-lg border border-[var(--c-border)] text-[var(--c-text-2)] hover:text-[var(--c-text)] disabled:opacity-50">{list.status === 'more' ? 'Loading…' : 'Load more'}</button>}
       </div>
     </div>
   )
@@ -95,8 +95,8 @@ export function MutationButton<R>({ label, capability, danger, confirmTitle, con
       <button type="button" disabled={!allowed} onClick={() => setOpen(true)} data-testid={testId}
         title={allowed ? undefined : `Requires the "${capability}" capability`}
         className={`px-2.5 py-1 rounded-lg text-[12px] font-semibold transition-colors disabled:cursor-not-allowed disabled:opacity-45 ${danger
-          ? 'text-[#FF8A8A] bg-[#EF4444]/10 border border-[#EF4444]/40 hover:bg-[#EF4444]/20'
-          : 'text-[#9FB8FF] bg-[#4D8DFF]/10 border border-[#4D8DFF]/40 hover:bg-[#4D8DFF]/20'}`}>
+          ? 'text-[var(--c-err)] bg-[color-mix(in_srgb,var(--c-err)_10%,transparent)] border border-[color-mix(in_srgb,var(--c-err)_40%,transparent)] hover:bg-[color-mix(in_srgb,var(--c-err)_20%,transparent)]'
+          : 'text-[var(--c-link)] bg-[color-mix(in_srgb,var(--c-info)_10%,transparent)] border border-[color-mix(in_srgb,var(--c-info)_40%,transparent)] hover:bg-[color-mix(in_srgb,var(--c-info)_20%,transparent)]'}`}>
         {label}
       </button>
       {!allowed && <span className="sr-only">Requires the {capability} capability</span>}
@@ -139,30 +139,30 @@ function ConfirmDialog<R>({ title, body, fields, danger, submitLabel, run, onClo
     setBusy(true); setError(null)
     try { onDone(await run(values, key)) } catch (e) { setError(e as Error) } finally { setBusy(false) }
   }
-  const input = 'w-full mt-1 bg-[#0d1430] border border-white/[0.12] rounded-lg px-3 py-2 text-[13px] text-[#E6ECFF] outline-none focus:border-[#4D8DFF]/60'
+  const input = 'w-full mt-1 bg-[var(--c-card)] border border-[var(--c-border)] rounded-lg px-3 py-2 text-[13px] text-[var(--c-text)] outline-none focus:border-[color-mix(in_srgb,var(--c-info)_60%,transparent)]'
   return (
     <div className="fixed inset-0 z-[90] flex items-center justify-center p-4">
       <div className="absolute inset-0 bg-black/70" onClick={() => !busy && onClose()} />
-      <div ref={dialogRef} role="dialog" aria-modal="true" aria-labelledby={`${id}-t`} className="relative w-full max-w-md rounded-2xl border border-white/[0.1] p-6" style={{ background: '#0B1128' }}>
-        <h2 id={`${id}-t`} className={`text-[16px] font-semibold ${danger ? 'text-[#FF8A8A]' : 'text-white'}`}>{title}</h2>
-        <div className="mt-2 text-[13px] text-[#A9B6D3] leading-relaxed">{body}</div>
+      <div ref={dialogRef} role="dialog" aria-modal="true" aria-labelledby={`${id}-t`} className="relative w-full max-w-md rounded-2xl border border-[var(--c-border)] p-6" style={{ background: 'var(--c-panel)' }}>
+        <h2 id={`${id}-t`} className={`text-[16px] font-semibold ${danger ? 'text-[var(--c-err)]' : 'text-[var(--c-text)]'}`}>{title}</h2>
+        <div className="mt-2 text-[13px] text-[var(--c-text-2)] leading-relaxed">{body}</div>
         <div className="mt-4 space-y-3">
           {fields.map((f) => (
-            <label key={f.name} className="block text-[12px] text-[#A9B6D3]">
-              {f.label}{f.required && <span aria-hidden="true" className="text-[#FF8A8A]"> *</span>}
+            <label key={f.name} className="block text-[12px] text-[var(--c-text-2)]">
+              {f.label}{f.required && <span aria-hidden="true" className="text-[var(--c-err)]"> *</span>}
               {f.type === 'textarea' ? <textarea required={f.required} rows={3} className={input} placeholder={f.placeholder} value={values[f.name]} onChange={(e) => setValues({ ...values, [f.name]: e.target.value })} />
                 : f.type === 'select' ? <select required={f.required} className={input} value={values[f.name]} onChange={(e) => setValues({ ...values, [f.name]: e.target.value })}><option value="">Choose…</option>{f.options?.map((o) => <option key={o} value={o}>{o}</option>)}</select>
                 : <input required={f.required} type={f.type === 'number' ? 'number' : 'text'} className={input} placeholder={f.placeholder} value={values[f.name]} onChange={(e) => setValues({ ...values, [f.name]: e.target.value })} />}
-              {f.help && <span className="block mt-1 text-[11px] text-[#8592AE]">{f.help}</span>}
+              {f.help && <span className="block mt-1 text-[11px] text-[var(--c-muted)]">{f.help}</span>}
             </label>
           ))}
         </div>
         {error && <div className="mt-4"><ApiErrorPanel error={error} /></div>}
-        <p className="mt-4 text-[11px] text-[#8592AE] font-mono">Idempotency-Key {key}</p>
+        <p className="mt-4 text-[11px] text-[var(--c-muted)] font-mono">Idempotency-Key {key}</p>
         <div className="mt-4 flex justify-end gap-2">
-          <button type="button" disabled={busy} onClick={onClose} className="px-3 py-1.5 rounded-lg text-[12.5px] text-[#A9B6D3] border border-white/[0.1]">Cancel</button>
+          <button type="button" disabled={busy} onClick={onClose} className="px-3 py-1.5 rounded-lg text-[12.5px] text-[var(--c-text-2)] border border-[var(--c-border)]">Cancel</button>
           <button type="button" disabled={busy || missing.length > 0} onClick={submit} data-testid="confirm-submit"
-            className={`px-3 py-1.5 rounded-lg text-[12.5px] font-semibold text-white disabled:opacity-50 ${danger ? 'bg-[#DC2626]' : 'bg-[#3B5BDB]'}`}>
+            className={`px-3 py-1.5 rounded-lg text-[12.5px] font-semibold text-[var(--c-text)] disabled:opacity-50 ${danger ? 'bg-[var(--c-err)]' : 'bg-[var(--c-info)]'}`}>
             {busy ? 'Working…' : `Confirm ${submitLabel.toLowerCase()}`}
           </button>
         </div>
@@ -174,9 +174,9 @@ function ConfirmDialog<R>({ title, body, fields, danger, submitLabel, run, onClo
 // Inline success notice after a mutation (reads back the resource, not the request).
 export function Notice({ text, onClose }: { text: string; onClose: () => void }) {
   return (
-    <div role="status" className="mb-3 flex items-center gap-3 px-4 py-2.5 rounded-xl border border-[#21C87A]/30 bg-[#21C87A]/[0.07] text-[12.5px] text-[#9BE7C4]">
+    <div role="status" className="mb-3 flex items-center gap-3 px-4 py-2.5 rounded-xl border border-[color-mix(in_srgb,var(--c-ok)_30%,transparent)] bg-[color-mix(in_srgb,var(--c-ok)_7%,transparent)] text-[12.5px] text-[var(--c-ok)]">
       <span>{text}</span>
-      <button type="button" onClick={onClose} aria-label="Dismiss" className="ml-auto text-[#9BE7C4]">✕</button>
+      <button type="button" onClick={onClose} aria-label="Dismiss" className="ml-auto text-[var(--c-ok)]">✕</button>
     </div>
   )
 }

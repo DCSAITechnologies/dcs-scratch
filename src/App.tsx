@@ -2,6 +2,7 @@ import { lazy, Suspense, useLayoutEffect, type ReactElement } from 'react'
 import { Nav } from './components/Nav'
 import { Footer } from './components/Footer'
 import { usePathRoute, navigate } from './hooks/usePathRoute'
+import { useConsoleTheme } from './lib/console-theme'
 import { Home } from './pages/Home'
 import { Product } from './pages/Product'
 import { Agents } from './pages/Agents'
@@ -37,8 +38,9 @@ function RouteLoading({ console: inConsole = false }: { console?: boolean }) {
 
 export default function App() {
   const route = usePathRoute()
-  // the public website is light; the console keeps its dark theme until it is redesigned
-  const theme = route.startsWith('/app') ? 'dark' : 'light'
+  // the public website is light; the console is dark by default, light on request
+  const consoleTheme = useConsoleTheme()
+  const theme = route.startsWith('/app') ? consoleTheme : 'light'
   useLayoutEffect(() => { document.documentElement.dataset.theme = theme }, [theme])
 
   // Dashboard console (Track C) — own shell, no public Nav/Footer.

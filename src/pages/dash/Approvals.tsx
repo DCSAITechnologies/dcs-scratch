@@ -33,7 +33,7 @@ function ApprovalsList({ rows, state, setState, risk, setRisk, readonly = false 
         sub="The human gate. Approving binds the plan hash and the exact step — single-use, expiring, revocable before consumption. Editing scope, parameters or step is not possible: no widening. Approver is never the identity that submitted the plan."
         maturity="HERMETIC ONLY"
       />
-      <div className="mb-4 flex items-center gap-2 text-[11.5px] text-[#A9B6D3]">
+      <div className="mb-4 flex items-center gap-2 text-[11.5px] text-[var(--c-text-2)]">
         <MaturityTag m="EXTERNAL DEPENDENCY" /> Real approver identity ships with the IdP seam (roadmap item 19); approvals then require step-up auth on mobile.
       </div>
       <FilterBar>
@@ -49,12 +49,12 @@ function ApprovalsList({ rows, state, setState, risk, setRisk, readonly = false 
             {rows.map((a) => (
               <a key={a.id} href={`/app/approvals/${a.id}`} className="block glass-card p-4">
                 <div className="flex items-center justify-between gap-2">
-                  <span className="font-mono text-[12px] text-[#7EA2FF]">{a.id}</span>
+                  <span className="font-mono text-[12px] text-[var(--c-link)]">{a.id}</span>
                   <Pill v={a.state} />
                 </div>
-                <div className="mt-2 text-[13.5px] text-white font-medium">{a.tool}</div>
-                <div className="mt-1 text-[12px] text-[#A9B6D3]">{fmtConn(a.connector)} · {a.operation_class} · risk {a.risk}{a.dual ? ` · dual ${a.dual}` : ''}</div>
-                <div className="mt-1 text-[11.5px] text-[#8592AE]">expires {a.expires} · {a.environment}</div>
+                <div className="mt-2 text-[13.5px] text-[var(--c-text)] font-medium">{a.tool}</div>
+                <div className="mt-1 text-[12px] text-[var(--c-text-2)]">{fmtConn(a.connector)} · {a.operation_class} · risk {a.risk}{a.dual ? ` · dual ${a.dual}` : ''}</div>
+                <div className="mt-1 text-[11.5px] text-[var(--c-muted)]">expires {a.expires} · {a.environment}</div>
               </a>
             ))}
           </div>
@@ -73,7 +73,7 @@ function ApprovalsList({ rows, state, setState, risk, setRisk, readonly = false 
         </>
       )}
       {!readonly && rows.some((a) => a.state === 'Pending') && (
-        <div className="mt-4 text-[12px] text-[#A9B6D3]">Open a request to approve, reject or revoke. Decisions produce an audit record; a <span className="font-mono">security.event</span> receipt follows once the bridge route ships — until then the audit row shows Receipt: PENDING.</div>
+        <div className="mt-4 text-[12px] text-[var(--c-text-2)]">Open a request to approve, reject or revoke. Decisions produce an audit record; a <span className="font-mono">security.event</span> receipt follows once the bridge route ships — until then the audit row shows Receipt: PENDING.</div>
       )}
     </div>
   )
@@ -109,14 +109,14 @@ export function DashApprovalDetail({ id }: { id: string }) {
         </Panel>
         <div className="space-y-4">
           <Panel title="State">
-            <div className="flex items-center gap-2"><Pill v={a.state} />{a.dual && <span className="text-[12px] text-[#F5A524] font-semibold">dual approval · {a.dual}</span>}</div>
-            <div className="mt-3 text-[12.5px] text-[#A9B6D3] leading-relaxed">
+            <div className="flex items-center gap-2"><Pill v={a.state} />{a.dual && <span className="text-[12px] text-[var(--c-warn)] font-semibold">dual approval · {a.dual}</span>}</div>
+            <div className="mt-3 text-[12.5px] text-[var(--c-text-2)] leading-relaxed">
               Approve binds plan hash <span className="font-mono text-[11.5px]">{a.plan_hash}</span> and {a.step}. Single-use; consumed-by link appears on the execution. No widening.
             </div>
           </Panel>
           <Panel title="Evidence refs">
-            <div className="space-y-1.5 text-[12.5px] text-[#C7D2EA]">
-              <div>Diagnosis: <span className="font-mono text-[11.5px] text-[#7EA2FF]">ev_01J3A2</span> (charge.refunded, verified)</div>
+            <div className="space-y-1.5 text-[12.5px] text-[var(--c-text-2)]">
+              <div>Diagnosis: <span className="font-mono text-[11.5px] text-[var(--c-link)]">ev_01J3A2</span> (charge.refunded, verified)</div>
               <div>Observations: 2 · inbound_trust=verified</div>
               <div>Prior attempts: 0 on this step</div>
             </div>
@@ -127,10 +127,10 @@ export function DashApprovalDetail({ id }: { id: string }) {
                 <Action label="Approve" maturity="HERMETIC ONLY" title="Single-use; binds plan hash + step" />
                 <Action label="Reject (reason required)" maturity="HERMETIC ONLY" danger />
                 <Action label="Revoke" maturity="HERMETIC ONLY" danger title="Only before consumption" />
-                <p className="text-[11.5px] text-[#8592AE] leading-relaxed">Actions render disabled in the preview: the approval store is in-process; durable approvals land with roadmap item 15.</p>
+                <p className="text-[11.5px] text-[var(--c-muted)] leading-relaxed">Actions render disabled in the preview: the approval store is in-process; durable approvals land with roadmap item 15.</p>
               </div>
             ) : (
-              <p className="text-[12.5px] text-[#A9B6D3]">This request is {a.state.toLowerCase()}{a.approver !== '—' ? ` by ${a.approver}` : ''}. No further action.</p>
+              <p className="text-[12.5px] text-[var(--c-text-2)]">This request is {a.state.toLowerCase()}{a.approver !== '—' ? ` by ${a.approver}` : ''}. No further action.</p>
             )}
           </Panel>
         </div>
