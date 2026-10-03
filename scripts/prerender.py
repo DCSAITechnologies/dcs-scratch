@@ -91,6 +91,13 @@ STATIC_ROUTES = [
 
 # Dashboard console routes (Track C) — pre-rendered shells with per-page meta,
 # but EXCLUDED from sitemap.xml (console is not public content).
+PREVIEW_ROUTES = [
+    ('/preview/heroes', 'Hero concepts'),
+    ('/preview/hero-a', 'HERO-A · Control plane canvas'),
+    ('/preview/hero-b', 'HERO-B · Four-stage ledger'),
+    ('/preview/hero-c', 'HERO-C · Catalogue field'),
+]
+
 DASH_ROUTES = [
     ('/app', 'Console — Overview', 'Action-required first, then health, then history. Preview console connected to the integrated build.'),
     ('/app/connectors', 'Console — Connectors', 'Catalogue maturity and runtime maturity side by side.'),
@@ -174,6 +181,11 @@ def main():
         write_route(path, render(shell, path, f'{title} — DCS Connector OS', desc, noindex=True))
         count += 1
 
+    # founder-review hero concepts (noindex, not in sitemap, disallowed)
+    for path, title in PREVIEW_ROUTES:
+        write_route(path, render(shell, path, f'{title} — DCS Connector OS', 'Homepage hero concept for founder review. Not the live homepage.', noindex=True))
+        count += 1
+
     # sitemap + robots
     sm = ['<?xml version="1.0" encoding="UTF-8"?>',
           '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
@@ -181,7 +193,7 @@ def main():
         sm.append(f'  <url><loc>{SITE}{u}</loc></url>')
     sm.append('</urlset>')
     open(os.path.join(DIST, 'sitemap.xml'), 'w').write('\n'.join(sm))
-    open(os.path.join(DIST, 'robots.txt'), 'w').write('User-agent: *\nAllow: /\nDisallow: /app\nSitemap: %s/sitemap.xml\n' % SITE)
+    open(os.path.join(DIST, 'robots.txt'), 'w').write('User-agent: *\nAllow: /\nDisallow: /app\nDisallow: /preview\nSitemap: %s/sitemap.xml\n' % SITE)
 
     write_host_rules(data, legacy)
     print(f'prerendered {count} routes + 404 + sitemap ({len(urls)} urls)')
@@ -240,6 +252,8 @@ def write_host_rules(canonical, legacy):
         '/app/*',
         '  X-Robots-Tag: noindex, nofollow',
         '  Cache-Control: no-store',
+        '/preview/*',
+        '  X-Robots-Tag: noindex, nofollow',
         '/assets/*',
         '  Cache-Control: public, max-age=31536000, immutable',
     ]

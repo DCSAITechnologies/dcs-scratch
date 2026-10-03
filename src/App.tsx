@@ -22,6 +22,8 @@ import { areaLoader } from './lib/subpage-areas'
 const Connectors = lazy(() => import('./pages/Connectors').then((m) => ({ default: m.Connectors })))
 const ConnectorDetail = lazy(() => import('./pages/ConnectorDetail').then((m) => ({ default: m.ConnectorDetail })))
 const DashApp = lazy(() => import('./pages/dash').then((m) => ({ default: m.DashApp })))
+// Founder-review hero concepts (noindex; not linked from the site)
+const HeroPreview = lazy(() => import('./pages/preview/HeroConcepts').then((m) => ({ default: m.HeroPreview })))
 
 function RouteLoading({ console: inConsole = false }: { console?: boolean }) {
   return (
@@ -39,6 +41,10 @@ export default function App() {
   // Dashboard console (Track C) — own shell, no public Nav/Footer.
   if (route.startsWith('/app')) {
     return <Suspense fallback={<RouteLoading console />}><DashApp path={route} /></Suspense>
+  }
+
+  if (/^\/preview\/(heroes|hero-[abc])\/?$/.test(route)) {
+    return <Suspense fallback={<RouteLoading />}><HeroPreview route={route} /></Suspense>
   }
 
   let page: ReactElement
