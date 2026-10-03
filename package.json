@@ -24,7 +24,9 @@
     "core:assemble": "bash scripts/assemble-core.sh",
     "core:api": "node \"${COS_CORE_TREE:-.core/tree}/devex/api-server/bin/serve.mjs\" --port 4020",
     "preview:core": "COS_CORE_PROXY=http://127.0.0.1:4020 vite preview --outDir dist-core --port 4330 --strictPort --host 127.0.0.1",
-    "logos": "node scripts/build-logos.mjs && npm run sync:catalogue"
+    "logos": "node scripts/build-logos.mjs && npm run sync:catalogue",
+    "build:cloudflare": "vite build && DEPLOY_HOST=cloudflare python3 scripts/prerender.py",
+    "deploy:cloudflare": "bash scripts/deploy-cloudflare.sh"
   },
   "dependencies": {
     "oidc-client-ts": "^3.5.0",
