@@ -14,7 +14,7 @@ test.describe('public catalogue', () => {
     await page.goto('/connectors')
     await expect(page.locator('h1')).toContainText(`${PUBLISHED.length} published connectors`)
     await expect(page.getByTestId('catalogue-counts')).toContainText(
-      `${CANONICAL.length} records in the canonical catalogue · ${PUBLISHED.length} published · ${HOLD.length} on hold`)
+      `${CANONICAL.length.toLocaleString('en-US')} records in the canonical catalogue · ${PUBLISHED.length} published · ${HOLD.length} on hold`)
     await expect(page.getByTestId('result-count')).toHaveText(`${PUBLISHED.length} connectors`)
   })
 

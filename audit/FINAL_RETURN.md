@@ -1,5 +1,12 @@
 # Final return: Connector OS website + dashboard completion
 
+> **Addendum, 03 Oct (later):**
+> - The whole public site is now the light theme, and the homepage uses the founder-selected HERO-A ↔ HERO-C rotation with HERO-B as "How it works".
+> - Connector logos are real brand marks in colour and rendered larger: 160 vector marks; 241 published connectors still on a monogram, listed in `audit/LOGO_SOURCES.md`.
+> - 99/99 e2e (desktop, api-mode, core-api) and axe 0 violations.
+> - The console stays dark for the dashboard phase.
+> - The keys below are unchanged except `SITE_HEAD`: see the latest commit on the branch.
+
 **Date:** 03 Oct 2026
 **Repo:** DCSAITechnologies/dcs-scratch · `claude/new-session-e3y98d` (pushed)
 **Production:** not touched. Nothing was deployed. Core was not modified. No repository was created.

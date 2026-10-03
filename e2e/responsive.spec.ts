@@ -76,7 +76,7 @@ test('console: sticky top bar, sidebar and wide tables scroll inside their regio
 
 test('browser back/forward through public and console routes', async ({ page }) => {
   await page.goto('/')
-  await page.getByRole('link', { name: 'Explore connectors' }).first().click()
+  await page.getByRole('link', { name: /Explore the catalogue/ }).first().click()
   await expect(page).toHaveURL(/\/connectors$/)
   await page.locator('a[href^="/connectors/"]:has-text("Details →")').first().click()
   await expect(page).toHaveURL(/\/connectors\/[a-z0-9-]+$/)

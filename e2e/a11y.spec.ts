@@ -16,7 +16,9 @@ test('axe: no WCAG 2.1 A/AA violations', async ({ page }) => {
   for (const p of PAGES) {
     await page.goto(p)
     await page.locator('main').first().waitFor()
-    await page.waitForTimeout(250)
+    // check the settled page: scroll-reveal fades are decorative (reduced motion shows the final state at once)
+    await page.evaluate(() => document.querySelectorAll('.reveal').forEach((e) => e.classList.add('revealed')))
+    await page.waitForTimeout(700)
     const r = await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa']).analyze()
     for (const v of r.violations) found.push(`${p} ${v.id} (${v.impact}) ×${v.nodes.length}: ${v.nodes[0].html.slice(0, 100)}`)
   }

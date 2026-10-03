@@ -48,10 +48,10 @@ const FIELD_GROUPS: [string, string, string][] = [
 
 function Pill({ children, tone }: { children: string; tone: 'green' | 'amber' | 'slate' | 'red' }) {
   const colors = {
-    green: 'rgba(52,211,153,0.14); border-color: rgba(52,211,153,0.4); color: #6EE7B7',
-    amber: 'rgba(251,191,36,0.12); border-color: rgba(251,191,36,0.4); color: #FCD34D',
-    red: 'rgba(248,113,113,0.12); border-color: rgba(248,113,113,0.4); color: #FCA5A5',
-    slate: 'rgba(120,140,255,0.10); border-color: rgba(120,140,255,0.3); color: #9FB4FF',
+    green: 'rgba(52,211,153,0.14); border-color: rgba(52,211,153,0.4); color: #065F46',
+    amber: 'rgba(251,191,36,0.12); border-color: rgba(251,191,36,0.4); color: #B45309',
+    red: 'rgba(248,113,113,0.12); border-color: rgba(248,113,113,0.4); color: #991B1B',
+    slate: '#F5F7FB; border-color: #E3E7EE; color: #1E40AF',
   } as const
   return (
     <span className="text-[10.5px] font-semibold px-2 py-0.5 rounded-full border" style={{ background: colors[tone].split(';')[0], borderColor: colors[tone].split(';')[1].replace('border-color: ', ''), color: colors[tone].split(';')[2].replace('color: ', '') }}>
@@ -86,27 +86,27 @@ export function Receipts() {
         {/* R-Series presentation rules — the same three things, in this order, everywhere receipts appear */}
         <Reveal className="mt-12">
           <div className="glass-card p-6">
-            <h2 className="text-[16px] font-semibold text-white mb-3">Who does what</h2>
-            <ol className="space-y-2.5 text-[13.5px] text-[#A9B6D3] leading-relaxed max-w-3xl">
-              <li><span className="text-[#00C2FF] font-bold mr-2">1.</span>Facts come from execution, never from the agent.</li>
-              <li><span className="text-[#00C2FF] font-bold mr-2">2.</span>Connector OS emits facts; R-Series creates, signs, chains and verifies receipts — Connector OS performs no receipt cryptography.</li>
-              <li><span className="text-[#00C2FF] font-bold mr-2">3.</span>Execution outcome and receipt state are two fields.</li>
+            <h2 className="text-[16px] font-semibold text-[#0B1220] mb-3">Who does what</h2>
+            <ol className="space-y-2.5 text-[13.5px] text-[#3A4357] leading-relaxed max-w-3xl">
+              <li><span className="text-[#0E7490] font-bold mr-2">1.</span>Facts come from execution, never from the agent.</li>
+              <li><span className="text-[#0E7490] font-bold mr-2">2.</span>Connector OS emits facts; R-Series creates, signs, chains and verifies receipts — Connector OS performs no receipt cryptography.</li>
+              <li><span className="text-[#0E7490] font-bold mr-2">3.</span>Execution outcome and receipt state are two fields.</li>
             </ol>
-            <div className="mt-4 flex items-center gap-2 flex-wrap text-[11px] font-mono2 text-[#9FD3FF]">
+            <div className="mt-4 flex items-center gap-2 flex-wrap text-[11px] font-mono2 text-[#0369A1]">
               {['ExecutionEngine', 'EXEC-FACTS', 'EvidenceClient', 'R-Series', 'Receipt', 'Verify', 'Audit'].map((x, xi, xa) => (
                 <span key={x} className="flex items-center gap-2">
-                  <span className="px-2.5 py-1 rounded-lg" style={{ background: 'rgba(16,26,56,0.7)', border: '1px solid rgba(0,194,255,0.3)' }}>{x}</span>
-                  {xi < xa.length - 1 && <span className="text-[#00C2FF]">→</span>}
+                  <span className="px-2.5 py-1 rounded-lg" style={{ background: '#FFFFFF', border: '1px solid rgba(0,194,255,0.3)' }}>{x}</span>
+                  {xi < xa.length - 1 && <span className="text-[#0E7490]">→</span>}
                 </span>
               ))}
             </div>
-            <p className="mt-3 text-[11.5px] text-[#93A0C2]">Receipts today are signed with a test signer; production key custody is a launch gate.</p>
+            <p className="mt-3 text-[11.5px] text-[#566074]">Receipts today are signed with a test signer; production key custody is a launch gate.</p>
           </div>
         </Reveal>
 
         {/* Three audiences */}
         <Reveal className="mt-8">
-          <h2 className="text-[16px] font-semibold text-white mb-3">Three audiences, one record</h2>
+          <h2 className="text-[16px] font-semibold text-[#0B1220] mb-3">Three audiences, one record</h2>
           <div className="grid md:grid-cols-3 gap-4">
             {[
               { a: 'Normal customer', sees: 'The example run with both statuses per row, the timeline, and a plain-language what-this-proves.', never: 'digests, key ids' },
@@ -114,9 +114,9 @@ export function Receipts() {
               { a: 'Security / audit', sees: 'The integrity group: signature suite, chain position, sequence, causal parent, verification levels — with the limitation stated (test signer, no external audit).', never: 'nothing withheld' },
             ].map((x) => (
               <div key={x.a} className="glass-card p-5 h-full">
-                <div className="text-[13.5px] font-semibold text-white mb-2">{x.a}</div>
-                <p className="text-[12.5px] leading-relaxed text-[#A9B6D3]"><span className="text-[#6EE7B7] font-medium">Sees:</span> {x.sees}</p>
-                <p className="mt-2 text-[12px] leading-relaxed text-[#93A0C2]"><span className="text-[#FCA5A5] font-medium">Never sees:</span> {x.never}</p>
+                <div className="text-[13.5px] font-semibold text-[#0B1220] mb-2">{x.a}</div>
+                <p className="text-[12.5px] leading-relaxed text-[#3A4357]"><span className="text-[#065F46] font-medium">Sees:</span> {x.sees}</p>
+                <p className="mt-2 text-[12px] leading-relaxed text-[#566074]"><span className="text-[#991B1B] font-medium">Never sees:</span> {x.never}</p>
               </div>
             ))}
           </div>
@@ -125,10 +125,10 @@ export function Receipts() {
         {/* Outcome vs receipt state */}
         <Reveal className="mt-12">
           <div className="glass-card p-6">
-            <h2 className="text-[16px] font-semibold text-white mb-2">Outcome vs receipt state — two different fields</h2>
-            <p className="text-[13.5px] text-[#A9B6DA] leading-relaxed max-w-3xl">
-              The <span className="text-white font-medium">outcome</span> is what happened at the provider (SUCCEEDED, FAILED, OUTCOME_UNKNOWN…).
-              The <span className="text-white font-medium">receipt state</span> is whether the evidence record finished issuing (ISSUED, PENDING, FAILED).
+            <h2 className="text-[16px] font-semibold text-[#0B1220] mb-2">Outcome vs receipt state — two different fields</h2>
+            <p className="text-[13.5px] text-[#3A4357] leading-relaxed max-w-3xl">
+              The <span className="text-[#0B1220] font-medium">outcome</span> is what happened at the provider (SUCCEEDED, FAILED, OUTCOME_UNKNOWN…).
+              The <span className="text-[#0B1220] font-medium">receipt state</span> is whether the evidence record finished issuing (ISSUED, PENDING, FAILED).
               They are tracked separately on purpose: an execution is never delayed by its paperwork, and a missing receipt is a visible state — never silently assumed.
             </p>
           </div>
@@ -137,11 +137,11 @@ export function Receipts() {
         {/* Example run */}
         <Reveal className="mt-8">
           <div className="flex items-center justify-between flex-wrap gap-2">
-            <h2 className="text-[16px] font-semibold text-white">Example run — five receipts in causal order</h2>
-            <span className="text-[11px] text-[#93A0C2] italic">{LABEL}</span>
+            <h2 className="text-[16px] font-semibold text-[#0B1220]">Example run — five receipts in causal order</h2>
+            <span className="text-[11px] text-[#566074] italic">{LABEL}</span>
           </div>
           <div className="glass-card p-4 mt-3">
-            <div className="grid grid-cols-[2rem_1fr_9rem_8rem_6rem] gap-2 px-3 pb-2 text-[10.5px] uppercase tracking-wider text-[#93A0C2]">
+            <div className="grid grid-cols-[2rem_1fr_9rem_8rem_6rem] gap-2 px-3 pb-2 text-[10.5px] uppercase tracking-wider text-[#566074]">
               <span>Seq</span><span>Type · receipt</span><span>Outcome</span><span>Receipt state</span><span>Parent</span>
             </div>
             {RUN.map((rc, i) => (
@@ -149,17 +149,17 @@ export function Receipts() {
                 key={rc.id}
                 onClick={() => setSelected(i)}
                 className={`w-full grid grid-cols-[2rem_1fr_9rem_8rem_6rem] gap-2 items-center p-3 rounded-xl text-left transition-all duration-200 ${
-                  selected === i ? 'bg-[rgba(108,99,255,0.14)] border border-[rgba(124,77,255,0.4)]' : 'border border-transparent hover:bg-[rgba(108,99,255,0.07)]'
+                  selected === i ? 'bg-[#EDF2FF] border border-[#B9C9F6]' : 'border border-transparent hover:bg-[#B9C9F6]'
                 }`}
               >
-                <span className="font-mono2 text-[12px] text-[#93A0C2]">{rc.seq}</span>
+                <span className="font-mono2 text-[12px] text-[#566074]">{rc.seq}</span>
                 <span className="min-w-0">
-                  <span className="block text-[13px] font-medium text-white truncate">{rc.type}</span>
-                  <span className="block text-[11px] text-[#93A0C2] font-mono2 truncate">{rc.id}</span>
+                  <span className="block text-[13px] font-medium text-[#0B1220] truncate">{rc.type}</span>
+                  <span className="block text-[11px] text-[#566074] font-mono2 truncate">{rc.id}</span>
                 </span>
                 <Pill tone={outcomeTone(rc.outcome) as never}>{rc.outcome}</Pill>
                 <Pill tone={rc.receiptState === 'ISSUED' ? 'green' : rc.receiptState === 'PENDING' ? 'amber' : 'red'}>{rc.receiptState}</Pill>
-                <span className="font-mono2 text-[11px] text-[#93A0C2] truncate">{rc.parent === '—' ? '—' : '…' + rc.parent.slice(-2)}</span>
+                <span className="font-mono2 text-[11px] text-[#566074] truncate">{rc.parent === '—' ? '—' : '…' + rc.parent.slice(-2)}</span>
               </button>
             ))}
           </div>
@@ -167,73 +167,73 @@ export function Receipts() {
 
         {/* Timelines */}
         <Reveal className="mt-8">
-          <h2 className="text-[16px] font-semibold text-white">The causal chain — success run</h2>
+          <h2 className="text-[16px] font-semibold text-[#0B1220]">The causal chain — success run</h2>
           <div className="glass-card p-5 mt-3 overflow-x-auto">
             <div className="flex items-stretch gap-2 min-w-[900px]">
               {RUN.map((rc, i) => (
                 <div key={rc.id} className="flex items-center gap-2 flex-1">
-                  <div className="flex-1 p-3 rounded-xl" style={{ background: 'rgba(16,26,56,0.6)', border: '1px solid rgba(120,140,255,0.18)' }}>
-                    <div className="text-[11px] font-semibold text-white">{rc.type}</div>
+                  <div className="flex-1 p-3 rounded-xl" style={{ background: '#FFFFFF', border: '1px solid #E3E7EE' }}>
+                    <div className="text-[11px] font-semibold text-[#0B1220]">{rc.type}</div>
                     <div className="mt-1.5 flex flex-col gap-1">
                       <Pill tone={outcomeTone(rc.outcome) as never}>{rc.outcome}</Pill>
                       <Pill tone="green">{rc.receiptState}</Pill>
                     </div>
                   </div>
-                  {i < RUN.length - 1 && <span className="text-[#5A7BFF]">→</span>}
+                  {i < RUN.length - 1 && <span className="text-[#2850D8]">→</span>}
                 </div>
               ))}
             </div>
-            <div className="mt-2 text-[11px] text-[#93A0C2] italic">{LABEL}</div>
+            <div className="mt-2 text-[11px] text-[#566074] italic">{LABEL}</div>
           </div>
 
-          <h2 className="text-[16px] font-semibold text-white mt-8">Failures get receipts too — the recovery chain</h2>
+          <h2 className="text-[16px] font-semibold text-[#0B1220] mt-8">Failures get receipts too — the recovery chain</h2>
           <div className="glass-card p-5 mt-3 overflow-x-auto">
             <div className="flex items-stretch gap-2 min-w-[620px]">
               {FAILURE_RUN.map((n, i) => (
                 <div key={n.t + i} className="flex items-center gap-2 flex-1">
-                  <div className="flex-1 p-3 rounded-xl" style={{ background: 'rgba(16,26,56,0.6)', border: '1px solid rgba(120,140,255,0.18)' }}>
-                    <div className="text-[11px] font-semibold text-white">{n.t}</div>
+                  <div className="flex-1 p-3 rounded-xl" style={{ background: '#FFFFFF', border: '1px solid #E3E7EE' }}>
+                    <div className="text-[11px] font-semibold text-[#0B1220]">{n.t}</div>
                     <div className="mt-1.5"><Pill tone={outcomeTone(n.o) as never}>{n.o}</Pill></div>
-                    <div className="mt-1.5 text-[10.5px] text-[#93A0C2]">{n.note}</div>
+                    <div className="mt-1.5 text-[10.5px] text-[#566074]">{n.note}</div>
                   </div>
-                  {i < FAILURE_RUN.length - 1 && <span className="text-[#5A7BFF]">→</span>}
+                  {i < FAILURE_RUN.length - 1 && <span className="text-[#2850D8]">→</span>}
                 </div>
               ))}
             </div>
-            <p className="mt-3 text-[12.5px] text-[#A9B6DA] leading-relaxed">
+            <p className="mt-3 text-[12.5px] text-[#3A4357] leading-relaxed">
               A timeout after the provider call is recorded as OUTCOME_UNKNOWN — not guessed at.
               A governed reconciliation read finds the effect, and the run closes RECOVERED, with every hop on the same chain.
               Evidence matters most exactly when things go wrong.
             </p>
-            <div className="mt-2 text-[11px] text-[#93A0C2] italic">{LABEL}</div>
+            <div className="mt-2 text-[11px] text-[#566074] italic">{LABEL}</div>
           </div>
         </Reveal>
 
         {/* Inspector */}
         <Reveal className="mt-8">
           <div className="flex items-center justify-between flex-wrap gap-2">
-            <h2 className="text-[16px] font-semibold text-white">Inspector — field groups of the selected receipt</h2>
+            <h2 className="text-[16px] font-semibold text-[#0B1220]">Inspector — field groups of the selected receipt</h2>
             <Pill tone="slate">Signature: illustrative</Pill>
           </div>
           <div className="glass-card p-6 mt-3">
             <div className="flex items-center justify-between flex-wrap gap-2 mb-4">
-              <div className="text-[13px] font-mono2 text-[#9FD3FF]">{r.id} · {r.type} · seq {r.seq}</div>
+              <div className="text-[13px] font-mono2 text-[#0369A1]">{r.id} · {r.type} · seq {r.seq}</div>
               <div className="flex gap-2">
                 <Pill tone={outcomeTone(r.outcome) as never}>{r.outcome}</Pill>
                 <Pill tone="green">{r.receiptState}</Pill>
               </div>
             </div>
-            <p className="text-[12.5px] text-[#A9B6DA] mb-5">{r.detail}</p>
+            <p className="text-[12.5px] text-[#3A4357] mb-5">{r.detail}</p>
             <div className="grid md:grid-cols-2 gap-3">
               {FIELD_GROUPS.map(([g, contents, verify]) => (
-                <div key={g} className="p-3.5 rounded-lg" style={{ background: 'rgba(16,26,56,0.6)', border: '1px solid rgba(120,140,255,0.14)' }}>
-                  <div className="text-[10.5px] uppercase tracking-wider text-[#93A0C2]">{g}</div>
-                  <div className="text-[12.5px] font-medium text-[#D6E1FF] mt-1">{contents}</div>
-                  <div className="text-[11px] text-[#93A0C2] mt-1.5">What you would verify: {verify}.</div>
+                <div key={g} className="p-3.5 rounded-lg" style={{ background: '#FFFFFF', border: '1px solid #E3E7EE' }}>
+                  <div className="text-[10.5px] uppercase tracking-wider text-[#566074]">{g}</div>
+                  <div className="text-[12.5px] font-medium text-[#1E2638] mt-1">{contents}</div>
+                  <div className="text-[11px] text-[#566074] mt-1.5">What you would verify: {verify}.</div>
                 </div>
               ))}
             </div>
-            <div className="mt-4 text-[11px] text-[#93A0C2] italic">{LABEL}</div>
+            <div className="mt-4 text-[11px] text-[#566074] italic">{LABEL}</div>
           </div>
         </Reveal>
 
@@ -241,8 +241,8 @@ export function Receipts() {
         <div className="mt-8 grid lg:grid-cols-2 gap-6">
           <Reveal>
             <div className="glass-card p-6 h-full">
-              <h2 className="text-[16px] font-semibold text-white mb-3">What verification proves</h2>
-              <ul className="space-y-2.5 text-[13px] text-[#A9B6DA] leading-relaxed">
+              <h2 className="text-[16px] font-semibold text-[#0B1220] mb-3">What verification proves</h2>
+              <ul className="space-y-2.5 text-[13px] text-[#3A4357] leading-relaxed">
                 <li>· The receipt was signed over exactly this body — recompute and compare.</li>
                 <li>· The plan, intent and evidence digests match what actually executed.</li>
                 <li>· The causal chain is complete: every parent resolves, no gaps, no re-ordering.</li>
@@ -252,12 +252,12 @@ export function Receipts() {
           </Reveal>
           <Reveal delay={80}>
             <div className="glass-card p-6 h-full">
-              <h2 className="text-[16px] font-semibold text-white mb-3">Current status</h2>
-              <ul className="space-y-2.5 text-[13px] text-[#A9B6DA] leading-relaxed">
+              <h2 className="text-[16px] font-semibold text-[#0B1220] mb-3">Current status</h2>
+              <ul className="space-y-2.5 text-[13px] text-[#3A4357] leading-relaxed">
                 <li>· The receipt pipeline is integrated and proven end-to-end against simulated providers — hermetically proven, not yet verified with real providers.</li>
                 <li>· Receipts are signed by a software test signer; no external audit or anchoring is claimed.</li>
-                <li>· The offline verifier is published as <span className="font-mono2 text-[12px] text-[#9FD3FF]">dcslabs-r2-verify</span>.</li>
-                <li>· The full capability table lives on <a href="/developers/status" className="text-[#7EA2FF] underline underline-offset-2 hover:text-white transition-colors">Build status →</a></li>
+                <li>· The offline verifier is published as <span className="font-mono2 text-[12px] text-[#0369A1]">dcslabs-r2-verify</span>.</li>
+                <li>· The full capability table lives on <a href="/developers/status" className="text-[#2850D8] underline underline-offset-2 hover:text-[#0B1220] transition-colors">Build status →</a></li>
               </ul>
             </div>
           </Reveal>

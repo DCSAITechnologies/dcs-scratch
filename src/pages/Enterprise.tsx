@@ -30,25 +30,25 @@ export function Enterprise() {
           {FEATURES.map((f, i) => (
             <Reveal key={f.t} delay={i * 60}>
               <div className="glass-card glass-card-hover p-6 h-full">
-                <div className="w-11 h-11 rounded-xl flex items-center justify-center mb-4" style={{ background: 'rgba(108,99,255,0.13)', border: '1px solid rgba(120,140,255,0.3)' }}>
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d={f.icon} stroke="#8B9BFF" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg>
+                <div className="w-11 h-11 rounded-xl flex items-center justify-center mb-4" style={{ background: '#EDF2FF', border: '1px solid #E3E7EE' }}>
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d={f.icon} stroke="#2850D8" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg>
                 </div>
-                <h3 className="text-[15px] font-semibold text-white mb-1.5">{f.t}</h3>
-                <p className="text-[13px] leading-relaxed text-[#A9B6D3]">{f.d}</p>
+                <h3 className="text-[15px] font-semibold text-[#0B1220] mb-1.5">{f.t}</h3>
+                <p className="text-[13px] leading-relaxed text-[#3A4357]">{f.d}</p>
               </div>
             </Reveal>
           ))}
         </div>
 
         <Reveal className="mt-16">
-          <div className="text-center text-[12px] uppercase tracking-[0.2em] text-[#93A0C2] mb-8">Connect to the tools your teams already use</div>
+          <div className="text-center text-[12px] uppercase tracking-[0.2em] text-[#566074] mb-8">Connect to the tools your teams already use</div>
           <div className="flex flex-wrap items-center justify-center gap-x-10 gap-y-5">
             {FEATURED.enterpriseLogos.map((id) => {
               const c = FEATURED_ROWS[id]
               return (
                 <a key={id} href={`/connectors/${id}`} className="flex items-center gap-2.5 opacity-80 hover:opacity-100 transition-opacity">
-                  <ConnectorLogo name={c.n} src={c.logo} size={26} />
-                  <span className="text-[14px] font-medium text-[#A9B6D3]">{c.n}</span>
+                  <ConnectorLogo name={c.n} src={c.logo} size={32} />
+                  <span className="text-[14px] font-medium text-[#3A4357]">{c.n}</span>
                 </a>
               )
             })}
@@ -56,9 +56,9 @@ export function Enterprise() {
         </Reveal>
 
         <Reveal className="mt-16 text-center">
-          <div className="glass-card inline-block p-10" style={{ background: 'linear-gradient(140deg, rgba(90,123,255,0.18), rgba(124,77,255,0.14))' }}>
-            <h3 className="text-2xl font-semibold text-white">Ready to run agents at scale?</h3>
-            <p className="mt-2 text-[14px] text-[#A9B6D3]">Talk to our team about enterprise controls, deployment models and custom agreements.</p>
+          <div className="glass-card inline-block p-10" style={{ background: 'linear-gradient(140deg, #EDF2FF, #EDF2FF)' }}>
+            <h3 className="text-2xl font-semibold text-[#0B1220]">Ready to run agents at scale?</h3>
+            <p className="mt-2 text-[14px] text-[#3A4357]">Talk to our team about enterprise controls, deployment models and custom agreements.</p>
             <a href="/signin" className="cta-primary mt-6 inline-flex">Contact sales <span>→</span></a>
           </div>
         </Reveal>

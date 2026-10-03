@@ -78,7 +78,7 @@ export const statusFor = (route: string): StatusItem[] =>
   STATUS_ITEMS.filter((i) => i.pages.includes(route))
 
 export const labelColor = (l: StatusLabel): string =>
-  l.startsWith('Complete') ? '#21C87A'
-  : l === 'In progress' ? '#F5A524'
-  : l === 'External dependency' ? '#4D8DFF'
-  : '#93A0C2'
+  l.startsWith('Complete') ? '#065F46'
+  : l === 'In progress' ? '#92400E'
+  : l === 'External dependency' ? '#1E40AF'
+  : '#475467'

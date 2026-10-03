@@ -20,16 +20,16 @@ export function SignIn() {
       <div className="relative mx-auto max-w-[1200px] px-6 grid grid-cols-1 lg:grid-cols-2 gap-14 items-center">
         <Reveal>
           <div className="eyebrow mb-4">Pre-launch</div>
-          <h1 className="text-4xl md:text-5xl font-semibold tracking-tight text-white">
+          <h1 className="text-4xl md:text-5xl font-semibold tracking-tight text-[#0B1220]">
             Sign-in opens <span className="text-gradient">at launch.</span>
           </h1>
-          <p className="mt-4 text-[15px] text-[#A9B6D3] max-w-lg">
+          <p className="mt-4 text-[15px] text-[#3A4357] max-w-lg">
             DCS Connector OS is pre-launch. There is no account system yet, so this page does not ask for credentials.
           </p>
           <ul className="mt-8 space-y-3.5">
             {FACTS.map((v) => (
-              <li key={v} className="flex items-center gap-3 text-[14px] text-[#D6E1FF]">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#5A7BFF] shrink-0" />
+              <li key={v} className="flex items-center gap-3 text-[14px] text-[#1E2638]">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#2850D8] shrink-0" />
                 {v}
               </li>
             ))}
@@ -39,12 +39,12 @@ export function SignIn() {
         <Reveal delay={120}>
           <div className="glass-card p-8 max-w-md mx-auto w-full space-y-4">
             <a href="/app" className="cta-primary w-full justify-center !py-3 block text-center">Open the console preview</a>
-            <p className="text-[12px] text-[#93A0C2] leading-relaxed">
+            <p className="text-[12px] text-[#566074] leading-relaxed">
               The preview uses a demo identity and fixture data from the hermetic build. Actions that need a live backend are shown disabled with their maturity.
             </p>
             <a href="/connectors" className="cta-secondary w-full justify-center block text-center">Browse the connector catalogue</a>
             <a href="/enterprise/contact" className="cta-secondary w-full justify-center block text-center">Talk to the team</a>
-            <a href="/developers/status" className="block text-center text-[12px] text-[#5A7BFF]">Build status →</a>
+            <a href="/developers/status" className="block text-center text-[12px] text-[#2850D8]">Build status →</a>
           </div>
         </Reveal>
       </div>

@@ -11,16 +11,17 @@ export const runtimeStatusLabel = (c: StatusFields): string =>
 
 export const RUNTIME_STATUSES = ['Not yet runtime-verified', 'Staging-verified', 'Production-verified']
 
+// Status tones for the light public site (each ≥ 4.5:1 on white).
 export function statusColor(s: string): string {
   switch (s) {
-    case 'Available': return '#21C87A'
-    case 'Read Only': return '#4D8DFF'
-    case 'Preview': return '#00C2FF'
-    case 'Limited Access': return '#F5A524'
-    case 'Provider Approval Required': return '#8B5CF6'
-    case 'Coming Soon': return '#93A0C2'
-    case 'Blocked': return '#F87171'
-    default: return '#A9B6D3'
+    case 'Available': return '#065F46'
+    case 'Read Only': return '#1E40AF'
+    case 'Preview': return '#155E75'
+    case 'Limited Access': return '#92400E'
+    case 'Provider Approval Required': return '#5B21B6'
+    case 'Coming Soon': return '#475467'
+    case 'Blocked': return '#991B1B'
+    default: return '#3A4357'
   }
 }
 

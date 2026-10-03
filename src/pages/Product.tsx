@@ -23,8 +23,8 @@ export function Product() {
       <div className="mx-auto max-w-[1400px] px-8">
         <div className="max-w-3xl">
           <div className="eyebrow mb-4">Product</div>
-          <h1 className="text-4xl md:text-5xl font-semibold tracking-tight text-white">Connector OS, end to end</h1>
-          <p className="mt-5 text-[15.5px] leading-relaxed text-[#A9B6D3]">
+          <h1 className="text-4xl md:text-5xl font-semibold tracking-tight text-[#0B1220]">Connector OS, end to end</h1>
+          <p className="mt-5 text-[15.5px] leading-relaxed text-[#3A4357]">
             Connector OS is the governed execution layer between AI agents and real business systems. Agents plan; Connector OS authorizes, executes, verifies and receipts every action across a catalogue of {PUBLISHED_COUNT} published, documented connectors.
           </p>
           <div className="mt-7 flex gap-3 flex-wrap">
@@ -37,9 +37,9 @@ export function Product() {
           {BLOCKS.map((b, i) => (
             <Reveal key={b.t} delay={i * 40}>
               <div className="glass-card glass-card-hover p-6 h-full">
-                <div className="text-[9.5px] font-bold text-[#00C2FF] mb-2">{String(i + 1).padStart(2, '0')}</div>
-                <div className="text-[15px] font-semibold text-white mb-2">{b.t}</div>
-                <p className="text-[12.5px] leading-relaxed text-[#A9B6D3]">{b.d}</p>
+                <div className="text-[9.5px] font-bold text-[#0E7490] mb-2">{String(i + 1).padStart(2, '0')}</div>
+                <div className="text-[15px] font-semibold text-[#0B1220] mb-2">{b.t}</div>
+                <p className="text-[12.5px] leading-relaxed text-[#3A4357]">{b.d}</p>
               </div>
             </Reveal>
           ))}
@@ -48,10 +48,10 @@ export function Product() {
         <div className="mt-16">
           <SectionHeader eyebrow="Explore further" title="Go deeper on each layer" />
           <div className="mt-8 grid md:grid-cols-2 lg:grid-cols-4 gap-4">
-            <TeaserCard eyebrow="Agents" title="Operations Agent Layer" desc="Reasoning and execution, strictly separated — with governance over the full lifecycle." cta="Explore agents" href="/agents" icon={<span className="text-[#A78BFA] text-lg">◈</span>} />
-            <TeaserCard eyebrow="Security" title="Security model" desc="Credential isolation, tenant boundaries, egress control and kill controls." cta="Security overview" href="/security" icon={<span className="text-[#21C87A] text-lg">⛨</span>} />
-            <TeaserCard eyebrow="Receipts" title="Verifiable outcomes" desc="Evidence records for every governed action your agents take." cta="See receipts" href="/receipts" icon={<span className="text-[#00C2FF] text-lg">✓</span>} />
-            <TeaserCard eyebrow="Developers" title="Developer hub" desc="Quickstart, API reference, SDKs, MCP, webhooks and CLI." cta="Start building" href="/developers" icon={<span className="text-[#5A7BFF] text-lg">{ }</span>} />
+            <TeaserCard eyebrow="Agents" title="Operations Agent Layer" desc="Reasoning and execution, strictly separated — with governance over the full lifecycle." cta="Explore agents" href="/agents" icon={<span className="text-[#1E40AF] text-lg">◈</span>} />
+            <TeaserCard eyebrow="Security" title="Security model" desc="Credential isolation, tenant boundaries, egress control and kill controls." cta="Security overview" href="/security" icon={<span className="text-[#047857] text-lg">⛨</span>} />
+            <TeaserCard eyebrow="Receipts" title="Verifiable outcomes" desc="Evidence records for every governed action your agents take." cta="See receipts" href="/receipts" icon={<span className="text-[#0E7490] text-lg">✓</span>} />
+            <TeaserCard eyebrow="Developers" title="Developer hub" desc="Quickstart, API reference, SDKs, MCP, webhooks and CLI." cta="Start building" href="/developers" icon={<span className="text-[#2850D8] text-lg">{ }</span>} />
           </div>
         </div>
       <AreaLinks area="Product" title="Product, in depth" />

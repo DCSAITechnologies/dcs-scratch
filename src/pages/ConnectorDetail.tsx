@@ -8,9 +8,9 @@ const TABS = ['Overview', 'Tools', 'Authentication', 'Permissions', 'Webhooks', 
 function Row({ k, v, mono }: { k: string; v: string | null; mono?: boolean }) {
   if (!v) return null
   return (
-    <div className="flex justify-between gap-4 py-2 border-b border-[rgba(120,140,255,0.1)] last:border-0">
-      <span className="text-[12px] text-[#93A0C2] shrink-0">{k}</span>
-      <span className="text-[12.5px] text-[#D6E1FF] text-right" style={mono ? { fontFamily: 'JetBrains Mono', fontSize: 11.5 } : undefined}>{v}</span>
+    <div className="flex justify-between gap-4 py-2 border-b border-[#E3E7EE] last:border-0">
+      <span className="text-[12px] text-[#566074] shrink-0">{k}</span>
+      <span className="text-[12.5px] text-[#1E2638] text-right" style={mono ? { fontFamily: 'JetBrains Mono', fontSize: 11.5 } : undefined}>{v}</span>
     </div>
   )
 }
@@ -22,8 +22,8 @@ function RedirectSurface({ from, to }: { from: string; to: string }) {
   return (
     <div className="pt-32 pb-24 text-center mx-auto max-w-xl px-6">
       <div className="eyebrow mb-3">301 — Moved</div>
-      <h1 className="text-2xl text-white font-semibold">This connector moved</h1>
-      <p className="mt-3 text-[13.5px] text-[#A9B6D3] leading-relaxed">
+      <h1 className="text-2xl text-[#0B1220] font-semibold">This connector moved</h1>
+      <p className="mt-3 text-[13.5px] text-[#3A4357] leading-relaxed">
         The identifier <span className="font-mono text-[12px]">{from}</span> now resolves to <span className="font-mono text-[12px]">{to}</span>.
       </p>
       <a href={to} className="cta-primary inline-block mt-6">Open record →</a>
@@ -39,8 +39,8 @@ export function ConnectorDetail({ id }: { id: string }) {
     return (
       <div className="pt-32 pb-24 text-center mx-auto max-w-xl px-6">
         <div className="eyebrow mb-3">Not listed</div>
-        <h1 className="text-2xl text-white font-semibold">This connector is not publicly listed</h1>
-        <p className="mt-3 text-[13.5px] text-[#A9B6D3] leading-relaxed">
+        <h1 className="text-2xl text-[#0B1220] font-semibold">This connector is not publicly listed</h1>
+        <p className="mt-3 text-[13.5px] text-[#3A4357] leading-relaxed">
           The record is held for review and is not published in the catalogue. No details are shown until the hold is resolved.
         </p>
         <a href="/connectors" className="cta-secondary inline-block mt-6">Browse the catalogue</a>
@@ -55,8 +55,8 @@ export function ConnectorDetail({ id }: { id: string }) {
     return (
       <div className="pt-32 pb-24 text-center mx-auto max-w-xl px-6">
         <div className="eyebrow mb-3">410 — Gone</div>
-        <h1 className="text-2xl text-white font-semibold">This legacy catalogue entry has been removed</h1>
-        <p className="mt-3 text-[13.5px] text-[#A9B6D3] leading-relaxed">
+        <h1 className="text-2xl text-[#0B1220] font-semibold">This legacy catalogue entry has been removed</h1>
+        <p className="mt-3 text-[13.5px] text-[#3A4357] leading-relaxed">
           Lane 6 reconciliation classified this legacy record as {legacyBehavior === 'GONE_RETIRED_NOTICE' ? 'RETIRED' : 'INVALID / UNSUPPORTED'}.
           It is not part of the canonical engineering catalogue and carries no runtime meaning.
         </p>
@@ -70,7 +70,7 @@ export function ConnectorDetail({ id }: { id: string }) {
   if (!resolved && legacy && legacyBehavior === 'UNLIST_NO_REDIRECT') {
     return (
       <div className="pt-32 pb-24 text-center">
-        <h1 className="text-2xl text-white font-semibold">Connector not found</h1>
+        <h1 className="text-2xl text-[#0B1220] font-semibold">Connector not found</h1>
         <a href="/connectors" className="cta-secondary inline-block mt-6">Back to catalogue</a>
       </div>
     )
@@ -79,7 +79,7 @@ export function ConnectorDetail({ id }: { id: string }) {
   if (!c) {
     return (
       <div className="pt-32 pb-24 text-center">
-        <div className="text-2xl text-white font-semibold">Connector not found</div>
+        <div className="text-2xl text-[#0B1220] font-semibold">Connector not found</div>
         <a href="/connectors" className="cta-secondary inline-block mt-6">Back to catalogue</a>
       </div>
     )
@@ -101,42 +101,42 @@ function ConnectorDetailView({ c, legacy, resolved }: { c: Conn; legacy?: Conn; 
     seenUrls.add(url)
     return true
   })
-  const opColor: Record<string, string> = { Read: '#4D8DFF', Write: '#F5A524', Destructive: '#EF4444', Admin: '#8B5CF6', 'Money-moving': '#EF4444' }
+  const opColor: Record<string, string> = { Read: '#2850D8', Write: '#B45309', Destructive: '#B91C1C', Admin: '#1E40AF', 'Money-moving': '#B91C1C' }
 
   return (
     <div className="pt-24 pb-16">
       <div className="mx-auto max-w-[1400px] px-8">
-        <a href="/connectors" className="text-[12.5px] text-[#93A0C2] hover:text-white transition-colors">← All connectors</a>
+        <a href="/connectors" className="text-[12.5px] text-[#566074] hover:text-[#0B1220] transition-colors">← All connectors</a>
 
         {/* Layout: left column = hero + tabs + content; right column = sticky facts card */}
         <div className="connector-layout mt-5 flex flex-col lg:grid lg:grid-cols-[minmax(0,1fr)_320px] lg:gap-10">
           {/* Hero (left, row 1) */}
           <div className="order-1 lg:col-start-1 lg:row-start-1">
             {c.unreconciled && (
-              <div className="mb-5 p-4 rounded-xl text-[12.5px] leading-relaxed" style={{ background: 'rgba(245,165,36,0.08)', border: '1px solid rgba(245,165,36,0.35)', color: '#FCD34D' }}>
+              <div className="mb-5 p-4 rounded-xl text-[12.5px] leading-relaxed" style={{ background: 'rgba(245,165,36,0.08)', border: '1px solid rgba(245,165,36,0.35)', color: '#B45309' }}>
                 This catalogue record is pending reconciliation against the frozen engineering set and is shown as Coming Soon until verified. It does not represent an engineered connector.
               </div>
             )}
             {legacy && !resolved && (
-              <div className="mb-5 p-4 rounded-xl text-[12.5px] leading-relaxed" style={{ background: 'rgba(120,140,255,0.07)', border: '1px solid rgba(120,140,255,0.3)', color: '#A9B6D3' }}>
-                <span className="font-semibold text-[#D6E1FF]">REFERENCE / LEGACY CATALOGUE SURFACE.</span>{' '}
+              <div className="mb-5 p-4 rounded-xl text-[12.5px] leading-relaxed" style={{ background: '#F5F7FB', border: '1px solid #E3E7EE', color: '#3A4357' }}>
+                <span className="font-semibold text-[#1E2638]">REFERENCE / LEGACY CATALOGUE SURFACE.</span>{' '}
                 This is a preserved record from the legacy 750-row catalogue with no mapping into the canonical engineering catalogue ({TOTAL_CATALOGUED} records). It is not an engineered connector, carries no runtime status, and is excluded from all connector counts. Lane 6 is auditing it — outcomes: KEEP AS REFERENCE · MERGE/ALIAS · PROMOTE · RETIRE · DELETE.
               </div>
             )}
             <div className="flex items-start gap-5">
-              <ConnectorLogo name={c.n} src={c.logo} size={64} />
+              <ConnectorLogo name={c.n} src={c.logo} size={72} />
               <div>
                 <div className="flex items-center gap-3 flex-wrap">
-                  <h1 className="text-3xl font-semibold tracking-tight text-white">{c.n}</h1>
+                  <h1 className="text-3xl font-semibold tracking-tight text-[#0B1220]">{c.n}</h1>
                   <span className="text-[11px] font-semibold px-2.5 py-1 rounded-full" style={{ color: statusColor(c.s), background: `${statusColor(c.s)}1f`, border: `1px solid ${statusColor(c.s)}55` }}>{c.s}</span>
-                  <span className="text-[11px] font-medium px-2.5 py-1 rounded-full" style={{ color: '#93A0C2', background: 'rgba(120,140,255,0.08)', border: '1px solid rgba(120,140,255,0.25)' }}>{runtimeStatusLabel(c)}</span>
+                  <span className="text-[11px] font-medium px-2.5 py-1 rounded-full" style={{ color: '#566074', background: '#F5F7FB', border: '1px solid #E3E7EE' }}>{runtimeStatusLabel(c)}</span>
                 </div>
-                <div className="mt-1 text-[13px] text-[#93A0C2]">{c.p} · {c.cat}</div>
+                <div className="mt-1 text-[13px] text-[#566074]">{c.p} · {c.cat}</div>
               </div>
             </div>
-            <p className="mt-5 max-w-2xl text-[14.5px] leading-relaxed text-[#A9B6D3]">{c.d}</p>
+            <p className="mt-5 max-w-2xl text-[14.5px] leading-relaxed text-[#3A4357]">{c.d}</p>
             {c.core && !isAvailableToConnect(c) && (
-              <p className="mt-3 max-w-2xl text-[12.5px] text-[#93A0C2]" data-testid="dispatch-truth">
+              <p className="mt-3 max-w-2xl text-[12.5px] text-[#566074]" data-testid="dispatch-truth">
                 Not available to connect yet — Connector OS core reports: {c.core.dispatch.reasons.map(dispatchReasonLabel).join('; ')}.
               </p>
             )}
@@ -156,14 +156,14 @@ function ConnectorDetailView({ c, legacy, resolved }: { c: Conn; legacy?: Conn; 
               <span className="chip">{c.auth}</span>
               <span className="chip">{rwLabel(c.rw)}</span>
               {c.wh && <span className="chip">Webhooks</span>}
-              {c.ops.includes('Money-moving') && <span className="chip" style={{ borderColor: '#EF444466', color: '#EF4444' }}>Money-moving</span>}
+              {c.ops.includes('Money-moving') && <span className="chip" style={{ borderColor: '#EF444466', color: '#B91C1C' }}>Money-moving</span>}
             </div>
           </div>
 
           {/* Facts card (right, sticky, independent column) */}
           <aside className="order-2 mt-8 lg:mt-0 lg:col-start-2 lg:row-start-1 lg:row-span-2">
             <div className="glass-panel p-5 lg:sticky lg:top-24">
-              <div className="text-[10.5px] font-semibold uppercase tracking-[0.16em] text-[#93A0C2] mb-2">Connection details</div>
+              <div className="text-[10.5px] font-semibold uppercase tracking-[0.16em] text-[#566074] mb-2">Connection details</div>
               <Row k="Catalogue status" v={c.s} />
               <Row k="Runtime status" v={runtimeStatusLabel(c)} />
               {c.runtime_status && c.runtime_status !== 'not_verified' && c.verified && <Row k="Runtime verified on" v={c.verified} />}
@@ -182,7 +182,7 @@ function ConnectorDetailView({ c, legacy, resolved }: { c: Conn; legacy?: Conn; 
 
           {/* Tabs (left, row 2 — immediately after hero) */}
           <div className="order-3 lg:col-start-1 lg:row-start-2 mt-10">
-            <div className="flex gap-1 border-b border-[rgba(120,140,255,0.15)] overflow-x-auto">
+            <div className="flex gap-1 border-b border-[#E3E7EE] overflow-x-auto">
               {TABS.map((t) => (
                 <button key={t} onClick={() => setTab(t)} className={`dcs-tab whitespace-nowrap ${tab === t ? 'active' : ''}`}>{t}</button>
               ))}
@@ -192,56 +192,56 @@ function ConnectorDetailView({ c, legacy, resolved }: { c: Conn; legacy?: Conn; 
           {tab === 'Overview' && (
             <div className="space-y-8">
               {isTemplated(c) && (
-                <div className="p-3.5 rounded-xl text-[11.5px] leading-relaxed" style={{ background: 'rgba(120,140,255,0.06)', border: '1px solid rgba(120,140,255,0.22)', color: '#93A0C2' }}>
+                <div className="p-3.5 rounded-xl text-[11.5px] leading-relaxed" style={{ background: '#F5F7FB', border: '1px solid #E3E7EE', color: '#566074' }}>
                   Auto-generated summary — pending editorial and provider verification.
                 </div>
               )}
-              <p className="text-[14px] leading-relaxed text-[#D6E1FF]">{c.l}</p>
+              <p className="text-[14px] leading-relaxed text-[#1E2638]">{c.l}</p>
               <div>
-                <h3 className="text-[13px] font-semibold text-white mb-3 uppercase tracking-wide">Supported resources</h3>
+                <h3 className="text-[13px] font-semibold text-[#0B1220] mb-3 uppercase tracking-wide">Supported resources</h3>
                 <div className="flex flex-wrap gap-2">{c.res.map((r) => <span key={r} className="chip" style={{ fontFamily: 'JetBrains Mono', fontSize: 11 }}>{r}</span>)}</div>
               </div>
               <div>
-                <h3 className="text-[13px] font-semibold text-white mb-3 uppercase tracking-wide">Popular use cases</h3>
-                <ul className="space-y-2">{c.uc.map((u) => <li key={u} className="flex gap-2.5 text-[13.5px] text-[#A9B6D3]"><span className="mt-2 w-1.5 h-1.5 rounded-full bg-[#5A7BFF] shrink-0" />{u}</li>)}</ul>
+                <h3 className="text-[13px] font-semibold text-[#0B1220] mb-3 uppercase tracking-wide">Popular use cases</h3>
+                <ul className="space-y-2">{c.uc.map((u) => <li key={u} className="flex gap-2.5 text-[13.5px] text-[#3A4357]"><span className="mt-2 w-1.5 h-1.5 rounded-full bg-[#2850D8] shrink-0" />{u}</li>)}</ul>
               </div>
               <div>
-                <h3 className="text-[13px] font-semibold text-white mb-3 uppercase tracking-wide">Connection requirements</h3>
-                <ul className="space-y-2">{c.reqs.map((r) => <li key={r} className="flex gap-2.5 text-[13.5px] text-[#A9B6D3]"><span className="mt-2 w-1.5 h-1.5 rounded-full bg-[#00C2FF] shrink-0" />{r}</li>)}</ul>
+                <h3 className="text-[13px] font-semibold text-[#0B1220] mb-3 uppercase tracking-wide">Connection requirements</h3>
+                <ul className="space-y-2">{c.reqs.map((r) => <li key={r} className="flex gap-2.5 text-[13.5px] text-[#3A4357]"><span className="mt-2 w-1.5 h-1.5 rounded-full bg-[#0E7490] shrink-0" />{r}</li>)}</ul>
               </div>
             </div>
           )}
 
           {tab === 'Tools' && (
             <div className="glass-panel overflow-hidden">
-              <div className="grid grid-cols-[1fr_130px_1fr] px-5 py-3 text-[10.5px] font-semibold uppercase tracking-[0.14em] text-[#93A0C2] border-b border-[rgba(120,140,255,0.15)]">
+              <div className="grid grid-cols-[1fr_130px_1fr] px-5 py-3 text-[10.5px] font-semibold uppercase tracking-[0.14em] text-[#566074] border-b border-[#E3E7EE]">
                 <span>Capability</span><span>Operation class</span><span>Required scope</span>
               </div>
               {c.caps.map((cap, i) => {
                 const op = c.ops[Math.min(i, c.ops.length - 1)]
                 return (
-                  <div key={cap} className="grid grid-cols-[1fr_130px_1fr] px-5 py-3.5 items-center border-b border-[rgba(120,140,255,0.08)] last:border-0 dcs-table-row">
-                    <span className="text-[13px] text-[#D6E1FF]">{cap}</span>
-                    <span className="text-[11px] font-semibold" style={{ color: opColor[op] ?? '#A9B6D3' }}>{op}</span>
-                    <span className="text-[11.5px] text-[#93A0C2]" style={{ fontFamily: 'JetBrains Mono' }}>{c.scopes[Math.min(i, c.scopes.length - 1)]}</span>
+                  <div key={cap} className="grid grid-cols-[1fr_130px_1fr] px-5 py-3.5 items-center border-b border-[#E3E7EE] last:border-0 dcs-table-row">
+                    <span className="text-[13px] text-[#1E2638]">{cap}</span>
+                    <span className="text-[11px] font-semibold" style={{ color: opColor[op] ?? '#3A4357' }}>{op}</span>
+                    <span className="text-[11.5px] text-[#566074]" style={{ fontFamily: 'JetBrains Mono' }}>{c.scopes[Math.min(i, c.scopes.length - 1)]}</span>
                   </div>
                 )
               })}
-              <div className="px-5 py-3 text-[11px] text-[#93A0C2]">Tool-level identifiers are published per connector as they enter public availability; capabilities above are drafted from the connector manifest and provider documentation, and are not runtime-verified.</div>
+              <div className="px-5 py-3 text-[11px] text-[#566074]">Tool-level identifiers are published per connector as they enter public availability; capabilities above are drafted from the connector manifest and provider documentation, and are not runtime-verified.</div>
             </div>
           )}
 
           {tab === 'Authentication' && (
             <div className="space-y-6">
               <div className="glass-panel p-6">
-                <div className="text-[15px] font-semibold text-white mb-1">{c.auth}</div>
-                <div className="text-[12.5px] text-[#A9B6D3]">{c.flow}</div>
+                <div className="text-[15px] font-semibold text-[#0B1220] mb-1">{c.auth}</div>
+                <div className="text-[12.5px] text-[#3A4357]">{c.flow}</div>
               </div>
               <div>
-                <h3 className="text-[13px] font-semibold text-white mb-3 uppercase tracking-wide">Connection steps</h3>
+                <h3 className="text-[13px] font-semibold text-[#0B1220] mb-3 uppercase tracking-wide">Connection steps</h3>
                 <ol className="space-y-2.5">
                   {c.reqs.concat(['Authorize through the Connector OS connection flow', 'Scopes are bound to your tenant; revocation takes effect at the next dispatch check']).map((s, i) => (
-                    <li key={i} className="flex gap-3 text-[13.5px] text-[#A9B6D3]"><span className="text-[#5A7BFF] font-bold shrink-0">{i + 1}.</span>{s}</li>
+                    <li key={i} className="flex gap-3 text-[13.5px] text-[#3A4357]"><span className="text-[#2850D8] font-bold shrink-0">{i + 1}.</span>{s}</li>
                   ))}
                 </ol>
               </div>
@@ -251,17 +251,17 @@ function ConnectorDetailView({ c, legacy, resolved }: { c: Conn; legacy?: Conn; 
 
           {tab === 'Permissions' && (
             <div className="glass-panel overflow-hidden">
-              <div className="grid grid-cols-[1fr_110px] px-5 py-3 text-[10.5px] font-semibold uppercase tracking-[0.14em] text-[#93A0C2] border-b border-[rgba(120,140,255,0.15)]"><span>Scope</span><span>Level</span></div>
+              <div className="grid grid-cols-[1fr_110px] px-5 py-3 text-[10.5px] font-semibold uppercase tracking-[0.14em] text-[#566074] border-b border-[#E3E7EE]"><span>Scope</span><span>Level</span></div>
               {c.scopes.map((s) => (
-                <div key={s} className="grid grid-cols-[1fr_110px] px-5 py-3.5 border-b border-[rgba(120,140,255,0.08)] last:border-0 dcs-table-row">
-                  <span className="text-[12.5px] text-[#D6E1FF]" style={{ fontFamily: 'JetBrains Mono' }}>{s}</span>
-                  <span className="text-[11px] font-semibold text-[#21C87A]">Required</span>
+                <div key={s} className="grid grid-cols-[1fr_110px] px-5 py-3.5 border-b border-[#E3E7EE] last:border-0 dcs-table-row">
+                  <span className="text-[12.5px] text-[#1E2638]" style={{ fontFamily: 'JetBrains Mono' }}>{s}</span>
+                  <span className="text-[11px] font-semibold text-[#047857]">Required</span>
                 </div>
               ))}
               {c.optScopes.map((s) => (
-                <div key={s} className="grid grid-cols-[1fr_110px] px-5 py-3.5 border-b border-[rgba(120,140,255,0.08)] last:border-0 dcs-table-row">
-                  <span className="text-[12.5px] text-[#D6E1FF]" style={{ fontFamily: 'JetBrains Mono' }}>{s}</span>
-                  <span className="text-[11px] font-semibold text-[#F5A524]">Elevated</span>
+                <div key={s} className="grid grid-cols-[1fr_110px] px-5 py-3.5 border-b border-[#E3E7EE] last:border-0 dcs-table-row">
+                  <span className="text-[12.5px] text-[#1E2638]" style={{ fontFamily: 'JetBrains Mono' }}>{s}</span>
+                  <span className="text-[11px] font-semibold text-[#B45309]">Elevated</span>
                 </div>
               ))}
             </div>
@@ -270,12 +270,12 @@ function ConnectorDetailView({ c, legacy, resolved }: { c: Conn; legacy?: Conn; 
           {tab === 'Webhooks' && (
             c.wh ? (
               <div className="space-y-5">
-                <p className="text-[13.5px] text-[#A9B6D3]">{c.n} exposes provider events that Connector OS can subscribe to.</p>
+                <p className="text-[13.5px] text-[#3A4357]">{c.n} exposes provider events that Connector OS can subscribe to.</p>
                 <div className="flex flex-wrap gap-2">{c.whEvents.map((e) => <span key={e} className="chip" style={{ fontFamily: 'JetBrains Mono', fontSize: 11 }}>{e}</span>)}</div>
                 {c.whDocs && <a href={c.whDocs} target="_blank" rel="noreferrer" className="cta-secondary inline-block">Webhook documentation ↗</a>}
               </div>
             ) : (
-              <p className="text-[14px] text-[#A9B6D3]">Webhooks are not currently supported for this connector.</p>
+              <p className="text-[14px] text-[#3A4357]">Webhooks are not currently supported for this connector.</p>
             )
           )}
 
@@ -283,13 +283,13 @@ function ConnectorDetailView({ c, legacy, resolved }: { c: Conn; legacy?: Conn; 
             <div className="space-y-3">
               {docs.filter(([, u]) => u).map(([label, url]) => (
                 <a key={label} href={url!} target="_blank" rel="noreferrer" className="glass-card glass-card-hover flex items-center justify-between px-5 py-4">
-                  <span className="text-[13.5px] font-medium text-[#D6E1FF]">{label}</span>
-                  <span className="text-[11.5px] text-[#5A7BFF] truncate max-w-[380px]" style={{ fontFamily: 'JetBrains Mono' }}>{url!.replace('https://', '')} ↗</span>
+                  <span className="text-[13.5px] font-medium text-[#1E2638]">{label}</span>
+                  <span className="text-[11.5px] text-[#2850D8] truncate max-w-[380px]" style={{ fontFamily: 'JetBrains Mono' }}>{url!.replace('https://', '')} ↗</span>
                 </a>
               ))}
               {c.verified
-                ? <p className="text-[11.5px] text-[#93A0C2]">Documentation links verified {c.verified}.</p>
-                : <p className="text-[11.5px] text-[#F5A524]">Developer-portal links for this connector are pending verification and are hidden until confirmed against official provider sources.</p>}
+                ? <p className="text-[11.5px] text-[#566074]">Documentation links verified {c.verified}.</p>
+                : <p className="text-[11.5px] text-[#B45309]">Developer-portal links for this connector are pending verification and are hidden until confirmed against official provider sources.</p>}
             </div>
           )}
             </div>

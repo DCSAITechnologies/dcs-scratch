@@ -1,0 +1,642 @@
+{
+ "launchdarkly": {
+  "src": "/logos/brand/launchdarkly.svg",
+  "source": "iconify logos:launchdarkly-icon"
+ },
+ "postman": {
+  "src": "/logos/brand/postman.svg",
+  "source": "iconify logos:postman-icon"
+ },
+ "jfrog": {
+  "src": "/logos/brand/jfrog.svg",
+  "source": "iconify logos:jfrog"
+ },
+ "shortcut": {
+  "src": "/logos/brand/shortcut.svg",
+  "source": "iconify logos:shortcut-icon"
+ },
+ "rollbar": {
+  "src": "/logos/brand/rollbar.svg",
+  "source": "iconify logos:rollbar-icon"
+ },
+ "harness": {
+  "src": "/logos/brand/harness.svg",
+  "source": "iconify logos:harness-icon"
+ },
+ "bitrise": {
+  "src": "/logos/brand/bitrise.svg",
+  "source": "iconify logos:bitrise-icon"
+ },
+ "buddy": {
+  "src": "/logos/brand/buddy.svg",
+  "source": "iconify logos:buddy"
+ },
+ "percy": {
+  "src": "/logos/brand/percy.svg",
+  "source": "iconify logos:percy-icon"
+ },
+ "fastly": {
+  "src": "/logos/brand/fastly.svg",
+  "source": "simple-icons:fastly (#FF282D, source fastly.com)"
+ },
+ "vultr": {
+  "src": "/logos/brand/vultr.svg",
+  "source": "iconify logos:vultr-icon"
+ },
+ "convex": {
+  "src": "/logos/brand/convex.svg",
+  "source": "simple-icons:convex (#EE342F, source convex.dev)"
+ },
+ "bunny-net": {
+  "src": "/logos/brand/bunny-net.svg",
+  "source": "iconify logos:bunny-net-icon"
+ },
+ "contentful": {
+  "src": "/logos/brand/contentful.svg",
+  "source": "iconify logos:contentful"
+ },
+ "storyblok": {
+  "src": "/logos/brand/storyblok.svg",
+  "source": "iconify logos:storyblok-icon"
+ },
+ "typesense": {
+  "src": "/logos/brand/typesense.svg",
+  "source": "iconify logos:typesense-icon"
+ },
+ "datocms": {
+  "src": "/logos/brand/datocms.svg",
+  "source": "iconify logos:datocms-icon"
+ },
+ "singlestore": {
+  "src": "/logos/brand/singlestore.svg",
+  "source": "iconify logos:singlestore-icon"
+ },
+ "surrealdb": {
+  "src": "/logos/brand/surrealdb.svg",
+  "source": "iconify logos:surrealdb-icon"
+ },
+ "dynatrace": {
+  "src": "/logos/brand/dynatrace.svg",
+  "source": "iconify logos:dynatrace-icon"
+ },
+ "instatus": {
+  "src": "/logos/brand/instatus.svg",
+  "source": "simple-icons:instatus (#4EE3C2, source instatus.com)"
+ },
+ "bigpanda": {
+  "src": "/logos/brand/bigpanda.svg",
+  "source": "iconify logos:bigpanda"
+ },
+ "workos": {
+  "src": "/logos/brand/workos.svg",
+  "source": "iconify logos:workos-icon"
+ },
+ "clerk": {
+  "src": "/logos/brand/clerk.svg",
+  "source": "iconify logos:clerk-icon"
+ },
+ "mattermost": {
+  "src": "/logos/brand/mattermost.svg",
+  "source": "iconify logos:mattermost-icon"
+ },
+ "discourse": {
+  "src": "/logos/brand/discourse.svg",
+  "source": "iconify logos:discourse-icon"
+ },
+ "rocketchat": {
+  "src": "/logos/brand/rocketchat.svg",
+  "source": "iconify logos:rocket-chat-icon"
+ },
+ "uservoice": {
+  "src": "/logos/brand/uservoice.svg",
+  "source": "iconify logos:uservoice-icon"
+ },
+ "medusa": {
+  "src": "/logos/brand/medusa.svg",
+  "source": "iconify logos:medusa-icon"
+ },
+ "fedex": {
+  "src": "/logos/brand/fedex.svg",
+  "source": "simple-icons:fedex (#4D148C, source fedex.com)"
+ },
+ "posthog": {
+  "src": "/logos/brand/posthog.svg",
+  "source": "simple-icons:posthog (#000000, source posthog.com)"
+ },
+ "resend": {
+  "src": "/logos/brand/resend.svg",
+  "source": "iconify logos:resend-icon"
+ },
+ "amplitude": {
+  "src": "/logos/brand/amplitude.svg",
+  "source": "iconify logos:amplitude-icon"
+ },
+ "spotify": {
+  "src": "/logos/brand/spotify.svg",
+  "source": "iconify logos:spotify-icon"
+ },
+ "reddit": {
+  "src": "/logos/brand/reddit.svg",
+  "source": "iconify logos:reddit-icon"
+ },
+ "mastodon": {
+  "src": "/logos/brand/mastodon.svg",
+  "source": "iconify logos:mastodon-icon"
+ },
+ "vonage": {
+  "src": "/logos/brand/vonage.svg",
+  "source": "simple-icons:vonage (#000000, source vonage.com)"
+ },
+ "fillout": {
+  "src": "/logos/brand/fillout.svg",
+  "source": "simple-icons:fillout (#FFC738, source fillout.com)"
+ },
+ "credly": {
+  "src": "/logos/brand/credly.svg",
+  "source": "simple-icons:credly (#FF6B00, source credly.com)"
+ },
+ "uber": {
+  "src": "/logos/brand/uber.svg",
+  "source": "simple-icons:uber (#000000, source uber.com)"
+ },
+ "mapbox": {
+  "src": "/logos/brand/mapbox.svg",
+  "source": "iconify logos:mapbox-icon"
+ },
+ "orcid": {
+  "src": "/logos/brand/orcid.svg",
+  "source": "simple-icons:orcid (#A6CE39, source figshare.com)"
+ },
+ "bunq": {
+  "src": "/logos/brand/bunq.svg",
+  "source": "simple-icons:bunq (#3394D7, source bunq.com)"
+ },
+ "lets-encrypt-acme": {
+  "src": "/logos/brand/lets-encrypt-acme.svg",
+  "source": "simple-icons:letsencrypt (#003A70, source letsencrypt.org)"
+ },
+ "keycdn": {
+  "src": "/logos/brand/keycdn.svg",
+  "source": "iconify logos:keycdn-icon"
+ },
+ "prismic": {
+  "src": "/logos/brand/prismic.svg",
+  "source": "iconify logos:prismic-icon"
+ },
+ "cloudsmith": {
+  "src": "/logos/brand/cloudsmith.svg",
+  "source": "simple-icons:cloudsmith (#2A6FE1, source cloudsmith.com)"
+ },
+ "mintlify": {
+  "src": "/logos/brand/mintlify.svg",
+  "source": "simple-icons:mintlify (#18E299, source mintlify.com)"
+ },
+ "bubble": {
+  "src": "/logos/brand/bubble.svg",
+  "source": "iconify logos:bubble-icon"
+ },
+ "readme": {
+  "src": "/logos/brand/readme.svg",
+  "source": "simple-icons:readme (#018EF5, source readme.com)"
+ },
+ "appdynamics": {
+  "src": "/logos/brand/appdynamics.svg",
+  "source": "iconify logos:appdynamics-icon"
+ },
+ "descript": {
+  "src": "/logos/brand/descript.svg",
+  "source": "iconify logos:descript-icon"
+ },
+ "calibre": {
+  "src": "/logos/brand/calibre.svg",
+  "source": "iconify logos:calibre-icon"
+ },
+ "mixmax": {
+  "src": "/logos/brand/mixmax.svg",
+  "source": "iconify logos:mixmax"
+ },
+ "google-classroom": {
+  "src": "/logos/brand/google-classroom.svg",
+  "source": "simple-icons:googleclassroom (#0F9D58, source google.com)"
+ },
+ "survicate": {
+  "src": "/logos/brand/survicate.svg",
+  "source": "iconify logos:survicate-icon"
+ },
+ "speedcurve": {
+  "src": "/logos/brand/speedcurve.svg",
+  "source": "iconify logos:speedcurve"
+ },
+ "strapi": {
+  "src": "/logos/brand/strapi.svg",
+  "source": "iconify logos:strapi-icon"
+ },
+ "dribbble": {
+  "src": "/logos/brand/dribbble.svg",
+  "source": "iconify logos:dribbble-icon"
+ },
+ "codecov": {
+  "src": "/logos/brand/codecov.svg",
+  "source": "iconify logos:codecov-icon"
+ },
+ "codemagic": {
+  "src": "/logos/brand/codemagic.svg",
+  "source": "simple-icons:codemagic (#F45E3F, source codemagic.io)"
+ },
+ "github": {
+  "src": "/logos/brand/github.svg",
+  "source": "iconify logos:github-icon"
+ },
+ "gmail": {
+  "src": "/logos/brand/gmail.svg",
+  "source": "iconify logos:google-gmail (reviewed alias)"
+ },
+ "notion": {
+  "src": "/logos/brand/notion.svg",
+  "source": "iconify logos:notion-icon"
+ },
+ "slack": {
+  "src": "/logos/brand/slack.svg",
+  "source": "iconify logos:slack-icon"
+ },
+ "linear": {
+  "src": "/logos/brand/linear.svg",
+  "source": "iconify logos:linear-icon"
+ },
+ "cirrus-ci": {
+  "src": "/logos/brand/cirrus-ci.svg",
+  "source": "iconify logos:cirrus-ci"
+ },
+ "delighted": {
+  "src": "/logos/brand/delighted.svg",
+  "source": "iconify logos:delighted-icon"
+ },
+ "openai": {
+  "src": "/logos/brand/openai.svg",
+  "source": "iconify logos:openai-icon"
+ },
+ "google-gemini": {
+  "src": "/logos/brand/google-gemini.svg",
+  "source": "iconify logos:google-gemini-icon"
+ },
+ "mistral-ai": {
+  "src": "/logos/brand/mistral-ai.svg",
+  "source": "iconify logos:mistral-ai-icon"
+ },
+ "hugging-face": {
+  "src": "/logos/brand/hugging-face.svg",
+  "source": "iconify logos:hugging-face-icon"
+ },
+ "stability-ai": {
+  "src": "/logos/brand/stability-ai.svg",
+  "source": "iconify logos:stability-ai-icon"
+ },
+ "perplexity": {
+  "src": "/logos/brand/perplexity.svg",
+  "source": "iconify logos:perplexity-icon"
+ },
+ "langchain": {
+  "src": "/logos/brand/langchain.svg",
+  "source": "iconify logos:langchain-icon"
+ },
+ "pinecone": {
+  "src": "/logos/brand/pinecone.svg",
+  "source": "iconify logos:pinecone-icon"
+ },
+ "qdrant": {
+  "src": "/logos/brand/qdrant.svg",
+  "source": "iconify logos:qdrant-icon"
+ },
+ "deepgram": {
+  "src": "/logos/brand/deepgram.svg",
+  "source": "iconify logos:deepgram-icon"
+ },
+ "gitlab": {
+  "src": "/logos/brand/gitlab.svg",
+  "source": "iconify logos:gitlab-icon"
+ },
+ "vercel": {
+  "src": "/logos/brand/vercel.svg",
+  "source": "iconify logos:vercel-icon"
+ },
+ "netlify": {
+  "src": "/logos/brand/netlify.svg",
+  "source": "iconify logos:netlify-icon"
+ },
+ "render": {
+  "src": "/logos/brand/render.svg",
+  "source": "simple-icons:render (#000000, source render.com)"
+ },
+ "railway": {
+  "src": "/logos/brand/railway.svg",
+  "source": "iconify logos:railway"
+ },
+ "npm": {
+  "src": "/logos/brand/npm.svg",
+  "source": "iconify logos:npm-icon"
+ },
+ "sentry": {
+  "src": "/logos/brand/sentry.svg",
+  "source": "iconify logos:sentry-icon"
+ },
+ "sonarcloud": {
+  "src": "/logos/brand/sonarcloud.svg",
+  "source": "iconify logos:sonarcloud-icon"
+ },
+ "cursor": {
+  "src": "/logos/brand/cursor.svg",
+  "source": "iconify logos:cursor-icon"
+ },
+ "replit": {
+  "src": "/logos/brand/replit.svg",
+  "source": "iconify logos:replit-icon"
+ },
+ "codesandbox": {
+  "src": "/logos/brand/codesandbox.svg",
+  "source": "iconify logos:codesandbox-icon"
+ },
+ "gitpod": {
+  "src": "/logos/brand/gitpod.svg",
+  "source": "simple-icons:gitpod (#FFAE33, source gitpod.io)"
+ },
+ "jetbrains-space": {
+  "src": "/logos/brand/jetbrains-space.svg",
+  "source": "iconify logos:jetbrains-space-icon"
+ },
+ "chromatic": {
+  "src": "/logos/brand/chromatic.svg",
+  "source": "iconify logos:chromatic-icon"
+ },
+ "cypress": {
+  "src": "/logos/brand/cypress.svg",
+  "source": "iconify logos:cypress-icon"
+ },
+ "playwright": {
+  "src": "/logos/brand/playwright.svg",
+  "source": "iconify logos:playwright"
+ },
+ "google-cloud": {
+  "src": "/logos/brand/google-cloud.svg",
+  "source": "iconify logos:google-cloud"
+ },
+ "supabase": {
+  "src": "/logos/brand/supabase.svg",
+  "source": "iconify logos:supabase-icon"
+ },
+ "firebase": {
+  "src": "/logos/brand/firebase.svg",
+  "source": "iconify logos:firebase-icon"
+ },
+ "scaleway": {
+  "src": "/logos/brand/scaleway.svg",
+  "source": "simple-icons:scaleway (#4F0599, source scaleway.com)"
+ },
+ "kubernetes": {
+  "src": "/logos/brand/kubernetes.svg",
+  "source": "iconify logos:kubernetes"
+ },
+ "mysql": {
+  "src": "/logos/brand/mysql.svg",
+  "source": "iconify logos:mysql-icon"
+ },
+ "elasticsearch": {
+  "src": "/logos/brand/elasticsearch.svg",
+  "source": "iconify logos:elasticsearch"
+ },
+ "snowflake": {
+  "src": "/logos/brand/snowflake.svg",
+  "source": "iconify logos:snowflake-icon"
+ },
+ "databricks": {
+  "src": "/logos/brand/databricks.svg",
+  "source": "iconify logos:databricks-icon"
+ },
+ "neon": {
+  "src": "/logos/brand/neon.svg",
+  "source": "iconify logos:neon-icon"
+ },
+ "influxdb": {
+  "src": "/logos/brand/influxdb.svg",
+  "source": "iconify logos:influxdb-icon"
+ },
+ "fauna": {
+  "src": "/logos/brand/fauna.svg",
+  "source": "iconify logos:fauna-icon"
+ },
+ "datadog": {
+  "src": "/logos/brand/datadog.svg",
+  "source": "iconify logos:datadog-icon"
+ },
+ "new-relic": {
+  "src": "/logos/brand/new-relic.svg",
+  "source": "iconify logos:new-relic-icon"
+ },
+ "lightstep": {
+  "src": "/logos/brand/lightstep.svg",
+  "source": "iconify logos:lightstep-icon"
+ },
+ "okta": {
+  "src": "/logos/brand/okta.svg",
+  "source": "iconify logos:okta-icon"
+ },
+ "auth0": {
+  "src": "/logos/brand/auth0.svg",
+  "source": "iconify logos:auth0-icon"
+ },
+ "aws-secrets-manager": {
+  "src": "/logos/brand/aws-secrets-manager.svg",
+  "source": "iconify logos:aws-secrets-manager"
+ },
+ "asana": {
+  "src": "/logos/brand/asana.svg",
+  "source": "iconify logos:asana-icon"
+ },
+ "clickup": {
+  "src": "/logos/brand/clickup.svg",
+  "source": "iconify logos:clickup-icon"
+ },
+ "basecamp": {
+  "src": "/logos/brand/basecamp.svg",
+  "source": "iconify logos:basecamp-icon"
+ },
+ "todoist": {
+  "src": "/logos/brand/todoist.svg",
+  "source": "iconify logos:todoist-icon"
+ },
+ "google-drive": {
+  "src": "/logos/brand/google-drive.svg",
+  "source": "iconify logos:google-drive"
+ },
+ "dropbox": {
+  "src": "/logos/brand/dropbox.svg",
+  "source": "iconify logos:dropbox"
+ },
+ "miro": {
+  "src": "/logos/brand/miro.svg",
+  "source": "iconify logos:miro-icon"
+ },
+ "figma": {
+  "src": "/logos/brand/figma.svg",
+  "source": "simple-icons:figma (#F24E1E, source figma.com)"
+ },
+ "coda": {
+  "src": "/logos/brand/coda.svg",
+  "source": "iconify logos:coda-icon"
+ },
+ "obsidian": {
+  "src": "/logos/brand/obsidian.svg",
+  "source": "iconify logos:obsidian-icon"
+ },
+ "teamwork": {
+  "src": "/logos/brand/teamwork.svg",
+  "source": "iconify logos:teamwork-icon"
+ },
+ "zapier": {
+  "src": "/logos/brand/zapier.svg",
+  "source": "iconify logos:zapier-icon"
+ },
+ "zendesk": {
+  "src": "/logos/brand/zendesk.svg",
+  "source": "iconify logos:zendesk-icon"
+ },
+ "intercom": {
+  "src": "/logos/brand/intercom.svg",
+  "source": "iconify logos:intercom-icon"
+ },
+ "personio": {
+  "src": "/logos/brand/personio.svg",
+  "source": "simple-icons:personio (#000000, source personio.com)"
+ },
+ "quickbooks": {
+  "src": "/logos/brand/quickbooks.svg",
+  "source": "simple-icons:quickbooks (#2CA01C, source intuit.com)"
+ },
+ "chargebee": {
+  "src": "/logos/brand/chargebee.svg",
+  "source": "iconify logos:chargebee-icon"
+ },
+ "payoneer": {
+  "src": "/logos/brand/payoneer.svg",
+  "source": "simple-icons:payoneer (#FF4800, source payoneer.com)"
+ },
+ "prestashop": {
+  "src": "/logos/brand/prestashop.svg",
+  "source": "iconify logos:prestashop-icon"
+ },
+ "etsy": {
+  "src": "/logos/brand/etsy.svg",
+  "source": "simple-icons:etsy (#F16521, source etsy.com)"
+ },
+ "mailchimp": {
+  "src": "/logos/brand/mailchimp.svg",
+  "source": "iconify logos:mailchimp-icon"
+ },
+ "campaign-monitor": {
+  "src": "/logos/brand/campaign-monitor.svg",
+  "source": "simple-icons:campaignmonitor (#111324, source campaignmonitor.com)"
+ },
+ "sendgrid": {
+  "src": "/logos/brand/sendgrid.svg",
+  "source": "iconify logos:sendgrid-icon"
+ },
+ "braze": {
+  "src": "/logos/brand/braze.svg",
+  "source": "iconify logos:braze-icon"
+ },
+ "google-ads": {
+  "src": "/logos/brand/google-ads.svg",
+  "source": "iconify logos:google-ads"
+ },
+ "google-analytics": {
+  "src": "/logos/brand/google-analytics.svg",
+  "source": "iconify logos:google-analytics"
+ },
+ "segment": {
+  "src": "/logos/brand/segment.svg",
+  "source": "iconify logos:segment-icon"
+ },
+ "hootsuite": {
+  "src": "/logos/brand/hootsuite.svg",
+  "source": "iconify logos:hootsuite-icon"
+ },
+ "linkedin": {
+  "src": "/logos/brand/linkedin.svg",
+  "source": "iconify logos:linkedin-icon"
+ },
+ "youtube": {
+  "src": "/logos/brand/youtube.svg",
+  "source": "simple-icons:youtube (#FF0000, source youtube.com)"
+ },
+ "tiktok": {
+  "src": "/logos/brand/tiktok.svg",
+  "source": "iconify logos:tiktok-icon"
+ },
+ "pinterest": {
+  "src": "/logos/brand/pinterest.svg",
+  "source": "iconify logos:pinterest"
+ },
+ "substack": {
+  "src": "/logos/brand/substack.svg",
+  "source": "simple-icons:substack (#FF6719, source substack.com)"
+ },
+ "wordpress": {
+  "src": "/logos/brand/wordpress.svg",
+  "source": "iconify logos:wordpress-icon"
+ },
+ "twilio": {
+  "src": "/logos/brand/twilio.svg",
+  "source": "iconify logos:twilio-icon"
+ },
+ "discord": {
+  "src": "/logos/brand/discord.svg",
+  "source": "iconify logos:discord-icon"
+ },
+ "zoom": {
+  "src": "/logos/brand/zoom.svg",
+  "source": "iconify logos:zoom-icon"
+ },
+ "google-meet": {
+  "src": "/logos/brand/google-meet.svg",
+  "source": "iconify logos:google-meet"
+ },
+ "webex": {
+  "src": "/logos/brand/webex.svg",
+  "source": "simple-icons:webex (#000000, source github.com)"
+ },
+ "mailgun": {
+  "src": "/logos/brand/mailgun.svg",
+  "source": "iconify logos:mailgun-icon"
+ },
+ "khan-academy": {
+  "src": "/logos/brand/khan-academy.svg",
+  "source": "iconify logos:khan-academy-icon"
+ },
+ "duolingo": {
+  "src": "/logos/brand/duolingo.svg",
+  "source": "simple-icons:duolingo (#58CC02, source duolingo.com)"
+ },
+ "quizlet": {
+  "src": "/logos/brand/quizlet.svg",
+  "source": "simple-icons:quizlet (#4255FF, source quizlet.com)"
+ },
+ "airbnb": {
+  "src": "/logos/brand/airbnb.svg",
+  "source": "iconify logos:airbnb-icon"
+ },
+ "getyourguide": {
+  "src": "/logos/brand/getyourguide.svg",
+  "source": "iconify logos:getyourguide"
+ },
+ "line": {
+  "src": "/logos/brand/line.svg",
+  "source": "simple-icons:line (#00C300, source line.me)"
+ },
+ "phonepe": {
+  "src": "/logos/brand/phonepe.svg",
+  "source": "simple-icons:phonepe (#5F259F, source phonepe.com)"
+ },
+ "ifood": {
+  "src": "/logos/brand/ifood.svg",
+  "source": "simple-icons:ifood (#EA1D2C, source ifood.com.br)"
+ }
+}

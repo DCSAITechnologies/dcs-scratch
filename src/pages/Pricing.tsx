@@ -34,20 +34,20 @@ export function Pricing() {
           {PLANS.map((p, i) => (
             <Reveal key={p.name} delay={i * 80} className="h-full">
               <div
-                className={`glass-card glass-card-hover p-6 h-full flex flex-col relative ${p.featured ? '!border-[rgba(124,77,255,0.6)]' : ''}`}
-                style={p.featured ? { boxShadow: '0 0 44px rgba(124,77,255,0.3), inset 0 0 0 1px rgba(255,255,255,0.06), 0 12px 40px rgba(0,0,0,.32)', background: 'linear-gradient(165deg, rgba(26,31,84,0.95), rgba(16,26,56,0.95))' } : {}}
+                className={`glass-card glass-card-hover p-6 h-full flex flex-col relative ${p.featured ? '!border-[#B9C9F6]' : ''}`}
+                style={p.featured ? { boxShadow: '0 0 44px rgba(40,80,216,0.10), inset 0 0 0 1px rgba(15,23,42,0.06), 0 12px 40px rgba(0,0,0,.32)', background: 'linear-gradient(165deg, #FFFFFF, #FFFFFF)' } : {}}
               >
-                <h3 className="text-lg font-semibold text-white">{p.name}</h3>
-                <p className="text-[12px] text-[#93A0C2] mt-1">{p.tag}</p>
+                <h3 className="text-lg font-semibold text-[#0B1220]">{p.name}</h3>
+                <p className="text-[12px] text-[#566074] mt-1">{p.tag}</p>
                 <div className="mt-5 mb-5">
-                  <span className="text-[13px] font-medium text-[#A9B6D3] px-2.5 py-1 rounded-lg" style={{ background: 'rgba(120,140,255,0.1)', border: '1px solid rgba(120,140,255,0.2)' }}>
+                  <span className="text-[13px] font-medium text-[#3A4357] px-2.5 py-1 rounded-lg" style={{ background: '#F5F7FB', border: '1px solid #E3E7EE' }}>
                     Pricing announced at launch
                   </span>
                 </div>
                 <ul className="space-y-2.5 flex-1">
                   {p.features.map((f) => (
-                    <li key={f} className="flex items-center gap-2.5 text-[12.5px] text-[#D6E1FF]">
-                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="m5 13 4 4L19 7" stroke="#21C87A" strokeWidth="2.6" strokeLinecap="round" /></svg>
+                    <li key={f} className="flex items-center gap-2.5 text-[12.5px] text-[#1E2638]">
+                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="m5 13 4 4L19 7" stroke="#047857" strokeWidth="2.6" strokeLinecap="round" /></svg>
                       {f}
                     </li>
                   ))}
@@ -58,7 +58,7 @@ export function Pricing() {
           ))}
         </div>
 
-        <Reveal delay={120} className="mt-10 text-center text-[12.5px] text-[#93A0C2]">
+        <Reveal delay={120} className="mt-10 text-center text-[12.5px] text-[#566074]">
           Plan structures are subject to change before general availability.
         </Reveal>
       </div>

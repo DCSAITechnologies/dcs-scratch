@@ -206,13 +206,30 @@ def generate():
     return out, new_legacy, promoted_cache, head
 
 
+LOGO_MAP = os.path.join(LIB, 'logo-map.json')
+
+
+def apply_logos(rows):
+    # brand marks chosen by scripts/build-logos.mjs (audit/LOGO_SOURCES.md); the website's own
+    # logo is kept in logo_editorial so regeneration stays idempotent and the fallback survives
+    brand = json.load(open(LOGO_MAP)) if os.path.isfile(LOGO_MAP) else {}
+    for r in rows:
+        editorial = r.get('logo_editorial', r.get('logo')) or ''
+        r['logo_editorial'] = editorial
+        hit = brand.get(r['id'])
+        r['logo'] = hit['src'] if hit else editorial
+        r['logo_source'] = hit['source'] if hit else ('website (official domain)' if editorial else None)
+    return rows
+
+
 def root_logo(rows):
     # logo paths must be site-absolute: a relative 'logos/x.png' resolves under nested routes
     # (/connectors/x/logos/x.png) and silently falls back to the monogram
     for r in rows:
-        logo = r.get('logo')
-        if logo and not logo.startswith(('/', 'http://', 'https://', 'data:')):
-            r['logo'] = '/' + logo
+        for k in ('logo', 'logo_editorial'):
+            logo = r.get(k)
+            if logo and not logo.startswith(('/', 'http://', 'https://', 'data:')):
+                r[k] = '/' + logo
     return rows
 
 
@@ -224,8 +241,8 @@ def main():
     if '--core' in sys.argv:
         refresh_snapshot(sys.argv[sys.argv.index('--core') + 1])
     out, legacy, cache, head = generate()
-    root_logo(out)
-    root_logo(legacy)
+    apply_logos(root_logo(out))
+    apply_logos(root_logo(legacy))
     targets = {os.path.join(LIB, 'connectors.json'): dump(out), os.path.join(LIB, 'connectors-legacy.json'): dump(legacy),
                os.path.join(SNAP, 'editorial-promoted.json'): json.dumps(cache, ensure_ascii=False, indent=1) + '\n'}
     if '--check' in sys.argv:

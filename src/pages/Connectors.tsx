@@ -51,21 +51,21 @@ function FilterSelect({ value, onChange, options, width = 150, ariaLabel }: {
         onClick={() => (open ? setOpen(false) : openList())}
         onKeyDown={(e) => { if (e.key === 'ArrowDown' || e.key === 'ArrowUp') { e.preventDefault(); openList() } }}
         className="dcs-input !py-1.5 !px-3 text-[12px] w-full flex items-center justify-between gap-2 text-left">
-        <span className={`truncate ${value ? 'text-white' : 'text-[#93A0C2]'}`}>{current.label}</span>
+        <span className={`truncate ${value ? 'text-[#0B1220]' : 'text-[#566074]'}`}>{current.label}</span>
         <svg width="10" height="6" viewBox="0 0 10 6" fill="none" aria-hidden="true" className={`shrink-0 transition-transform ${open ? 'rotate-180' : ''}`}>
-          <path d="M1 1l4 4 4-4" stroke="#93A0C2" strokeWidth="1.5" strokeLinecap="round" />
+          <path d="M1 1l4 4 4-4" stroke="#566074" strokeWidth="1.5" strokeLinecap="round" />
         </svg>
       </button>
       {open && (
         <ul ref={listRef} id={listId} role="listbox" aria-label={ariaLabel} tabIndex={-1} onKeyDown={onListKey}
           aria-activedescendant={`${listId}-${active}`}
           className="absolute z-40 mt-1.5 w-full max-h-[260px] overflow-auto rounded-xl p-1.5 outline-none"
-          style={{ background: 'rgba(13,17,34,0.97)', border: '1px solid rgba(120,140,255,0.22)', boxShadow: '0 16px 40px rgba(0,0,0,0.5)', backdropFilter: 'blur(12px)' }}>
+          style={{ background: 'rgba(13,17,34,0.97)', border: '1px solid #E3E7EE', boxShadow: '0 16px 40px rgba(16,24,40,0.10)', backdropFilter: 'blur(12px)' }}>
           {options.map((o, i) => (
             <li key={o.value} id={`${listId}-${i}`} role="option" aria-selected={o.value === value}
               onMouseDown={(e) => e.preventDefault()} onClick={() => choose(i)} onMouseEnter={() => setActive(i)}
               className="w-full text-left px-2.5 py-1.5 rounded-lg text-[12px] cursor-pointer"
-              style={{ color: o.value === value ? '#fff' : '#A9B6D3', background: i === active ? 'rgba(120,140,255,0.16)' : o.value === value ? 'rgba(108,99,255,0.18)' : 'transparent' }}>
+              style={{ color: o.value === value ? '#fff' : '#3A4357', background: i === active ? '#E3E7EE' : o.value === value ? '#EDF2FF' : 'transparent' }}>
               {o.label}
             </li>
           ))}
@@ -128,22 +128,22 @@ export function Connectors() {
     <div className="pt-24 pb-16">
       <div className="mx-auto max-w-[1400px] px-4 sm:px-8">
         <div className="eyebrow mb-3">Connector catalogue</div>
-        <h1 className="text-4xl font-semibold tracking-tight text-white">{PUBLISHED_COUNT} published connectors. One governed interface.</h1>
-        <p className="mt-2 text-[12.5px] text-[#93A0C2]" data-testid="catalogue-counts">
-          {TOTAL_CATALOGUED} records in the canonical catalogue · {PUBLISHED_COUNT} published · {UNPUBLISHED_COUNT} on hold (not listed pending policy, legal or provider review)
+        <h1 className="text-4xl font-semibold tracking-tight text-[#0B1220]">{PUBLISHED_COUNT} published connectors. One governed interface.</h1>
+        <p className="mt-2 text-[12.5px] text-[#566074]" data-testid="catalogue-counts">
+          {TOTAL_CATALOGUED.toLocaleString('en-US')} records in the canonical catalogue · {PUBLISHED_COUNT} published · {UNPUBLISHED_COUNT} on hold (not listed pending policy, legal or provider review)
         </p>
-        <p className="mt-1 text-[12px] text-[#93A0C2]" data-testid="availability-line">
+        <p className="mt-1 text-[12px] text-[#566074]" data-testid="availability-line">
           Available to connect today: {AVAILABLE_TO_CONNECT_COUNT}. A connector becomes connectable only when Connector OS core grants it dispatch eligibility after staging verification{CORE_HEAD ? ` (core ${CORE_HEAD.slice(0, 7)})` : ''}.
         </p>
-        <p className="mt-3 max-w-2xl text-[14px] text-[#A9B6D3]">
+        <p className="mt-3 max-w-2xl text-[14px] text-[#3A4357]">
           Every connector documents capabilities, authentication, permissions, webhooks and official documentation — from official provider sources, with verification status shown per connector. Catalogue status describes documentation and access model; runtime verification is published per connector as it is earned.
         </p>
 
         {/* Legend: catalogue status (6) vs runtime status (3) — two independent fields, never merged.
              This legend is static copy by design: it does NOT change with the claim level. */}
-        <div className="mt-5 glass-panel px-4 py-3 text-[11.5px] leading-snug text-[#93A0C2] max-w-3xl">
-          <div><span className="font-semibold text-[#D6E1FF]">Catalogue status</span> — Coming Soon · Provider Approval Required · Preview · Read Only · Limited Access · Available — documentation &amp; access model. HOLD records are not listed; Available is earned only after staging verification (none today).</div>
-          <div className="mt-1"><span className="font-semibold text-[#D6E1FF]">Runtime status</span> — Not yet runtime-verified · Staging-verified · Production-verified — earned runtime proof, tracked independently.</div>
+        <div className="mt-5 glass-panel px-4 py-3 text-[11.5px] leading-snug text-[#566074] max-w-3xl">
+          <div><span className="font-semibold text-[#1E2638]">Catalogue status</span> — Coming Soon · Provider Approval Required · Preview · Read Only · Limited Access · Available — documentation &amp; access model. HOLD records are not listed; Available is earned only after staging verification (none today).</div>
+          <div className="mt-1"><span className="font-semibold text-[#1E2638]">Runtime status</span> — Not yet runtime-verified · Staging-verified · Production-verified — earned runtime proof, tracked independently.</div>
         </div>
 
         <div className="mt-6 flex flex-wrap items-center gap-2.5">
@@ -160,13 +160,13 @@ export function Connectors() {
           <FilterSelect ariaLabel="Read/write filter" width={150} value={rw}
             onChange={(v) => { setRw(v); setShown(PAGE) }}
             options={[{ value: '', label: 'Read + Write' }, { value: 'Read only', label: 'Read only' }, { value: 'write', label: 'Supports write' }]} />
-          <label className="flex items-center gap-2 text-[12.5px] text-[#A9B6D3] cursor-pointer">
-            <input type="checkbox" checked={wh} onChange={(e) => { setWh(e.target.checked); setShown(PAGE) }} className="accent-[#6C63FF]" /> Webhooks
+          <label className="flex items-center gap-2 text-[12.5px] text-[#3A4357] cursor-pointer">
+            <input type="checkbox" checked={wh} onChange={(e) => { setWh(e.target.checked); setShown(PAGE) }} className="accent-[#2850D8]" /> Webhooks
           </label>
           <FilterSelect ariaLabel="Sort order" width={130} value={sort}
             onChange={(v) => setSort(v as 'rank' | 'az')}
             options={[{ value: 'rank', label: 'Sort: rank' }, { value: 'az', label: 'Sort: A–Z' }]} />
-          <span className="ml-auto text-[12px] text-[#93A0C2]" data-testid="result-count">{filtered.length} connectors</span>
+          <span className="ml-auto text-[12px] text-[#566074]" data-testid="result-count">{filtered.length} connectors</span>
         </div>
 
         <div className="mt-4 flex flex-wrap gap-2">
@@ -179,22 +179,22 @@ export function Connectors() {
           {filtered.slice(0, shown).map((c: Conn) => (
             <a key={c.id} href={`/connectors/${c.id}`} className="glass-card glass-card-hover p-5 flex flex-col">
               <div className="flex items-center gap-3 mb-3">
-                <ConnectorLogo name={c.n} src={c.logo} size={38} />
+                <ConnectorLogo name={c.n} src={c.logo} size={44} />
                 <div className="min-w-0">
-                  <div className="text-[14px] font-semibold text-white truncate">{c.n}</div>
-                  <div className="text-[11px] text-[#93A0C2] truncate">{c.p}</div>
+                  <div className="text-[14px] font-semibold text-[#0B1220] truncate">{c.n}</div>
+                  <div className="text-[11px] text-[#566074] truncate">{c.p}</div>
                 </div>
-                <span className="ml-auto text-[10px] font-bold text-[#7EA2FF]" title={c.r == null ? `Unranked in core (${c.core?.pack ?? 'no pack'})` : 'Core engineering rank'}>{c.r == null ? c.core?.pack === 'GOLDEN-FIVE' ? 'Golden Five' : 'Unranked' : `#${c.r}`}</span>
+                <span className="ml-auto text-[10px] font-bold text-[#2850D8]" title={c.r == null ? `Unranked in core (${c.core?.pack ?? 'no pack'})` : 'Core engineering rank'}>{c.r == null ? c.core?.pack === 'GOLDEN-FIVE' ? 'Golden Five' : 'Unranked' : `#${c.r}`}</span>
               </div>
-              <p className="text-[12px] leading-relaxed text-[#A9B6D3] line-clamp-2 flex-1">{c.d}</p>
+              <p className="text-[12px] leading-relaxed text-[#3A4357] line-clamp-2 flex-1">{c.d}</p>
               <div className="mt-4 flex items-center gap-2 flex-wrap">
                 <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full" style={{ color: statusColor(c.s), background: `${statusColor(c.s)}1f`, border: `1px solid ${statusColor(c.s)}44` }}>{c.s}</span>
                 {c.runtime_status && c.runtime_status !== 'not_verified' && (
-                  <span className="text-[10px] px-2 py-0.5 rounded-full text-[#93A0C2]" style={{ background: 'rgba(120,140,255,0.08)', border: '1px solid rgba(120,140,255,0.25)' }}>{runtimeStatusLabel(c)}</span>
+                  <span className="text-[10px] px-2 py-0.5 rounded-full text-[#566074]" style={{ background: '#F5F7FB', border: '1px solid #E3E7EE' }}>{runtimeStatusLabel(c)}</span>
                 )}
-                <span className="text-[10px] px-2 py-0.5 rounded-full text-[#A9B6D3]" style={{ background: 'rgba(120,140,255,0.08)', border: '1px solid rgba(120,140,255,0.18)' }}>{c.auth}</span>
-                {c.wh && <span className="text-[10px] px-2 py-0.5 rounded-full text-[#00C2FF]" style={{ background: 'rgba(0,194,255,0.08)', border: '1px solid rgba(0,194,255,0.25)' }}>Webhooks</span>}
-                <span className="ml-auto text-[11px] font-semibold text-[#5A7BFF]">Details →</span>
+                <span className="text-[10px] px-2 py-0.5 rounded-full text-[#3A4357]" style={{ background: '#F5F7FB', border: '1px solid #E3E7EE' }}>{c.auth}</span>
+                {c.wh && <span className="text-[10px] px-2 py-0.5 rounded-full text-[#0E7490]" style={{ background: 'rgba(0,194,255,0.08)', border: '1px solid rgba(0,194,255,0.25)' }}>Webhooks</span>}
+                <span className="ml-auto text-[11px] font-semibold text-[#2850D8]">Details →</span>
               </div>
             </a>
           ))}
@@ -202,8 +202,8 @@ export function Connectors() {
 
         {filtered.length === 0 && (
           <div className="glass-panel p-6 text-center" data-testid="no-canonical-match">
-            <p className="text-[13.5px] text-[#D6E1FF]">No published canonical connector matches these filters.</p>
-            <p className="mt-1.5 text-[12px] text-[#93A0C2]">
+            <p className="text-[13.5px] text-[#1E2638]">No published canonical connector matches these filters.</p>
+            <p className="mt-1.5 text-[12px] text-[#566074]">
               {filteredLegacy.length > 0
                 ? `${filteredLegacy.length} legacy reference ${filteredLegacy.length === 1 ? 'surface matches' : 'surfaces match'} below. Reference surfaces are not canonical connectors and carry no runtime status.`
                 : 'Try a different search or clear the filters.'}
@@ -220,24 +220,24 @@ export function Connectors() {
         {filteredLegacy.length > 0 && (
           <div className="mt-14">
             <div className="flex items-baseline gap-3 flex-wrap">
-              <h2 className="text-xl font-semibold tracking-tight text-white">Legacy reference surfaces</h2>
-              <span className="text-[11.5px] text-[#93A0C2]">{filteredLegacy.length} preserved from the previous catalogue — reference only, not part of the canonical catalogue or any count above</span>
+              <h2 className="text-xl font-semibold tracking-tight text-[#0B1220]">Legacy reference surfaces</h2>
+              <span className="text-[11.5px] text-[#566074]">{filteredLegacy.length} preserved from the previous catalogue — reference only, not part of the canonical catalogue or any count above</span>
             </div>
             <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
               {filteredLegacy.slice(0, legacyShown).map((c: Conn) => (
                 <a key={`legacy-${c.id}`} href={`/connectors/${c.id}`} className="glass-card glass-card-hover p-5 flex flex-col">
                   <div className="flex items-center gap-3 mb-3">
-                    <ConnectorLogo name={c.n} src={c.logo} size={38} />
+                    <ConnectorLogo name={c.n} src={c.logo} size={44} />
                     <div className="min-w-0">
-                      <div className="text-[14px] font-semibold text-white truncate">{c.n}</div>
-                      <div className="text-[11px] text-[#93A0C2] truncate">{c.p}</div>
+                      <div className="text-[14px] font-semibold text-[#0B1220] truncate">{c.n}</div>
+                      <div className="text-[11px] text-[#566074] truncate">{c.p}</div>
                     </div>
                   </div>
-                  <p className="text-[12px] leading-relaxed text-[#A9B6D3] line-clamp-2 flex-1">{c.d}</p>
+                  <p className="text-[12px] leading-relaxed text-[#3A4357] line-clamp-2 flex-1">{c.d}</p>
                   <div className="mt-4 flex items-center gap-2 flex-wrap">
-                    <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full text-[#FFB224]" style={{ background: 'rgba(255,178,36,0.08)', border: '1px solid rgba(255,178,36,0.3)' }}>Reference</span>
-                    <span className="text-[10px] px-2 py-0.5 rounded-full text-[#A9B6D3]" style={{ background: 'rgba(120,140,255,0.08)', border: '1px solid rgba(120,140,255,0.18)' }}>{c.cat}</span>
-                    <span className="ml-auto text-[11px] font-semibold text-[#5A7BFF]">Details →</span>
+                    <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full text-[#92400E]" style={{ background: 'rgba(255,178,36,0.08)', border: '1px solid rgba(255,178,36,0.3)' }}>Reference</span>
+                    <span className="text-[10px] px-2 py-0.5 rounded-full text-[#3A4357]" style={{ background: '#F5F7FB', border: '1px solid #E3E7EE' }}>{c.cat}</span>
+                    <span className="ml-auto text-[11px] font-semibold text-[#2850D8]">Details →</span>
                   </div>
                 </a>
               ))}

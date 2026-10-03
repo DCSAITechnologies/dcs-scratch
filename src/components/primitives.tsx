@@ -18,19 +18,19 @@ export function SectionHeader({
   return (
     <Reveal className={align === 'center' ? 'text-center' : 'text-left'}>
       <div className="eyebrow mb-3">{eyebrow}</div>
-      <Title className="text-3xl md:text-4xl font-semibold tracking-tight text-white">{title}</Title>
-      {sub && <p className={`mt-3 text-[15px] leading-relaxed text-[#A9B6D3] ${align === 'center' ? 'max-w-2xl mx-auto' : 'max-w-xl'}`}>{sub}</p>}
+      <Title className="text-3xl md:text-4xl font-semibold tracking-tight text-[#0B1220]">{title}</Title>
+      {sub && <p className={`mt-3 text-[15px] leading-relaxed text-[#3A4357] ${align === 'center' ? 'max-w-2xl mx-auto' : 'max-w-xl'}`}>{sub}</p>}
     </Reveal>
   )
 }
 
 export function StatusDot({ status }: { status: string }) {
   const map: Record<string, string> = {
-    Success: '#21C87A', Verified: '#21C87A', Healthy: '#21C87A',
-    Failed: '#EF4444', Refused: '#EF4444', Blocked: '#EF4444',
-    Unknown: '#A9B6D3', Degraded: '#F5A524', Pending: '#F5A524',
+    Success: '#047857', Verified: '#047857', Healthy: '#047857',
+    Failed: '#B91C1C', Refused: '#B91C1C', Blocked: '#B91C1C',
+    Unknown: '#3A4357', Degraded: '#B45309', Pending: '#B45309',
   }
-  const c = map[status] ?? '#4D8DFF'
+  const c = map[status] ?? '#2850D8'
   return (
     <span className="status-pill" style={{ background: `${c}1f`, color: c, border: `1px solid ${c}55` }}>
       <span className={`w-1.5 h-1.5 rounded-full ${status === 'Success' || status === 'Healthy' ? 'anim-breathe' : ''}`} style={{ background: c }} />
@@ -61,14 +61,14 @@ export function TeaserCard({
       <a href={`${href}`} className="glass-card glass-card-hover block p-7 h-full group">
         <div
           className="w-11 h-11 rounded-xl flex items-center justify-center mb-5 transition-all duration-300 group-hover:scale-110"
-          style={{ background: 'rgba(108,99,255,0.14)', border: '1px solid rgba(120,140,255,0.3)', boxShadow: '0 0 18px rgba(108,99,255,0.2)' }}
+          style={{ background: '#EDF2FF', border: '1px solid #E3E7EE', boxShadow: '0 0 18px rgba(40,80,216,0.10)' }}
         >
           {icon}
         </div>
         <div className="eyebrow mb-2">{eyebrow}</div>
-        <h3 className="text-xl font-semibold text-white mb-2">{title}</h3>
-        <p className="text-[13.5px] leading-relaxed text-[#A9B6D3] mb-5">{desc}</p>
-        <span className="inline-flex items-center gap-1.5 text-[13px] font-semibold text-[#5A7BFF]">
+        <h3 className="text-xl font-semibold text-[#0B1220] mb-2">{title}</h3>
+        <p className="text-[13.5px] leading-relaxed text-[#3A4357] mb-5">{desc}</p>
+        <span className="inline-flex items-center gap-1.5 text-[13px] font-semibold text-[#2850D8]">
           {cta}
           <span className="transition-transform duration-300 group-hover:translate-x-1">→</span>
         </span>

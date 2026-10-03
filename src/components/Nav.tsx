@@ -179,8 +179,8 @@ const WIDE = new Set(['Developers', 'Security'])
 const CENTER = new Set(['Connectors', 'Security'])
 const RIGHT_ALIGN = new Set(['Security', 'Enterprise', 'Developers'])
 
-// Colour tokens. Dark is the live site; light is the founder-review demo palette
-// (/preview/home). Same menus, keyboard model and mobile drawer in both.
+// Colour tokens. Light is the public website; dark is kept for dark surfaces
+// (the public site since 03 Oct 2026). Same menus, keyboard model and mobile drawer in both.
 const THEMES = {
   dark: {
     header: (solid: boolean) => solid ? 'rgba(6,10,22,0.92)' : 'rgba(6,10,22,0.5)', border: 'rgba(120,140,255,0.14)',
@@ -329,7 +329,7 @@ export function Nav({ theme = 'dark' }: { theme?: 'dark' | 'light' } = {}) {
                         {col.items.map((it, idx) => (
                           <button key={it.label} role="menuitem" onClick={() => go(it.conn ? `/connectors/${it.conn}` : it.to ?? ITEM_ROUTES[item])} className="nav-dropdown-row flex items-center gap-2.5 w-full text-left px-2 py-[7px]" style={idx < col.items.length - 1 ? { borderBottom: `1px solid ${T.rowBorder}` } : undefined}>
                             {it.conn ? (
-                              <ConnectorLogo name={it.label} src={FEATURED_ROWS[it.conn].logo} size={22} />
+                              <ConnectorLogo name={it.label} src={FEATURED_ROWS[it.conn].logo} size={28} />
                             ) : (
                               <span className={`w-1 h-1 rounded-full ${T.dot} shrink-0 ml-1`} aria-hidden="true" />
                             )}

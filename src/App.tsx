@@ -1,5 +1,5 @@
-import { lazy, Suspense, type ReactElement } from 'react'
-import { Nav } from './components/Nav'
+import { lazy, Suspense, useLayoutEffect, type ReactElement } from 'react'
+import { Nav, LightLogo } from './components/Nav'
 import { Footer } from './components/Footer'
 import { usePathRoute, navigate } from './hooks/usePathRoute'
 import { Home } from './pages/Home'
@@ -24,11 +24,10 @@ const ConnectorDetail = lazy(() => import('./pages/ConnectorDetail').then((m) =>
 const DashApp = lazy(() => import('./pages/dash').then((m) => ({ default: m.DashApp })))
 // Founder-review hero concepts (noindex; not linked from the site)
 const HeroPreview = lazy(() => import('./pages/preview/HeroConcepts').then((m) => ({ default: m.HeroPreview })))
-const HomeDemo = lazy(() => import('./pages/preview/HomeDemo').then((m) => ({ default: m.HomeDemo })))
 
 function RouteLoading({ console: inConsole = false }: { console?: boolean }) {
   return (
-    <div role="status" aria-live="polite" className={inConsole ? 'min-h-screen bg-[#070B18] pt-24 text-center text-[13px] text-[#93A0C2]' : 'pt-36 pb-28 text-center text-[13px] text-[#93A0C2]'}>
+    <div role="status" aria-live="polite" className={inConsole ? 'min-h-screen bg-[#070B18] pt-24 text-center text-[13px] text-[#93A0C2]' : 'pt-36 pb-28 text-center text-[13px] text-[#566074]'}>
       Loading…
     </div>
   )
@@ -38,15 +37,15 @@ function RouteLoading({ console: inConsole = false }: { console?: boolean }) {
 
 export default function App() {
   const route = usePathRoute()
+  // the public website is light; the console keeps its dark theme until it is redesigned
+  const theme = route.startsWith('/app') ? 'dark' : 'light'
+  useLayoutEffect(() => { document.documentElement.dataset.theme = theme }, [theme])
 
   // Dashboard console (Track C) — own shell, no public Nav/Footer.
   if (route.startsWith('/app')) {
     return <Suspense fallback={<RouteLoading console />}><DashApp path={route} /></Suspense>
   }
 
-  if (/^\/preview\/home\/?$/.test(route)) {
-    return <Suspense fallback={<RouteLoading />}><HomeDemo /></Suspense>
-  }
   if (/^\/preview\/(heroes|hero-[abc])\/?$/.test(route)) {
     return <Suspense fallback={<RouteLoading />}><HeroPreview route={route} /></Suspense>
   }
@@ -72,15 +71,16 @@ export default function App() {
       case '/docs': navigate('/developers'); page = <Developers />; break
       case '/signin': page = <SignIn />; break
       case '/': page = <Home />; break
+      case '/preview/home': navigate('/'); page = <Home />; break // the demo became the homepage
       default: page = <NotFound />
     }
   }
 
   return (
-    <div className="min-h-screen" style={{ background: '#060A16' }}>
-      <Nav />
+    <div className="min-h-screen" style={{ background: '#F5F6F8', color: '#0B1220' }}>
+      <Nav theme="light" />
       <main><Suspense fallback={<RouteLoading />}>{page}</Suspense></main>
-      <Footer />
+      <Footer theme="light" logo={<LightLogo />} />
     </div>
   )
 }

@@ -71,8 +71,7 @@ def main() -> int:
         if logo:
             if not logo.startswith('/'):
                 errors.append(f"{c['id']}: logo path {logo!r} is relative (breaks on nested routes)")
-            fn = logo.split('/')[-1]
-            if fn not in logo_files:
+            if not os.path.isfile(os.path.join(ROOT, 'public', logo.lstrip('/'))):
                 missing_logo += 1
     if missing_logo:
         errors.append(f'LOGO_FILES_MISSING={missing_logo}')

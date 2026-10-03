@@ -16,7 +16,7 @@ test('preview routes are noindex, disallowed and absent from the sitemap', async
   expect(readFileSync('dist/_headers', 'utf8')).toMatch(/\/preview\/\*\n {2}X-Robots-Tag: noindex/)
 })
 
-test('the live homepage does not use a concept hero and does not link to the previews', async ({ page }) => {
+test('the homepage does not link to the concept previews or show their review ribbon', async ({ page }) => {
   await page.goto('/')
   await expect(page.getByText('Concept preview for founder review')).toHaveCount(0)
   await expect(page.locator('a[href^="/preview"]')).toHaveCount(0)
@@ -58,10 +58,13 @@ test('with motion allowed the sequence advances; ?frame=N holds a step', async (
   await expect(canvas).toContainText('Awaiting approval')
 })
 
-test.describe('light homepage demo (/preview/home)', () => {
-  test('noindex shell; light header with working dropdowns; axe clean; no overflow', async ({ page, request }) => {
-    expect(await (await request.get('/preview/home/')).text()).toContain('<meta name="robots" content="noindex, nofollow" />')
-    await page.goto('/preview/home?still=1')
+test.describe('homepage: HERO-A/C rotator, HERO-B as How it works (light theme)', () => {
+  test('indexable homepage; /preview/home redirects; light header with working dropdowns; axe clean; no overflow', async ({ page, request }) => {
+    expect(await (await request.get('/')).text()).not.toContain('noindex')
+    expect(readFileSync('dist/_redirects', 'utf8')).toContain('/preview/home  /  301!')
+    await page.goto('/?still=1')
+    await expect(page.getByRole('heading', { name: 'How it works' })).toHaveCount(0) // eyebrow, not a heading
+    await expect(page.getByRole('heading', { name: /Connect\. Govern\./ })).toBeVisible()
     await expect(page.locator('h1')).toHaveCount(1)
     await expect(page.locator('h1')).toHaveText('Governed connections for every agent action.')
     const trigger = page.getByRole('navigation', { name: 'Primary' }).getByRole('button', { name: 'Connectors' })
@@ -80,7 +83,7 @@ test.describe('light homepage demo (/preview/home)', () => {
 
   test('hero rotates A -> C after 10 s; the slide buttons and Pause work', async ({ page }) => {
     test.setTimeout(60_000)
-    await page.goto('/preview/home')
+    await page.goto('/')
     await page.mouse.move(5, 890) // keep the pointer off the hero (hover pauses rotation)
     const slide = (n: string) => page.getByRole('group', { name: new RegExp(n) })
     await expect(slide('1 of 2')).toHaveAttribute('aria-hidden', 'false')
@@ -101,7 +104,7 @@ test.describe('light homepage demo (/preview/home)', () => {
     test.setTimeout(30_000)
     const ctx = await browser.newContext({ reducedMotion: 'reduce' })
     const page = await ctx.newPage()
-    await page.goto('/preview/home')
+    await page.goto('/')
     await expect(page.getByRole('button', { name: /hero rotation/ })).toHaveCount(0)
     await page.waitForTimeout(11_000)
     await expect(page.locator('h1')).toContainText('Governed connections')

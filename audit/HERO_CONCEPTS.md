@@ -1,6 +1,12 @@
 # Homepage hero — three concepts for founder review
 
-**Status: AWAITING FOUNDER SELECTION.** The live homepage hero (`src/pages/Home.tsx`) is **unchanged**. None of these concepts is wired into `/`.
+**Status: SELECTED and LIVE (03 Oct 2026).**
+- The founder chose **A + C**. They alternate in the homepage hero every 10 s (`src/pages/Home.tsx` → `HeroRotator`).
+- **B** is the homepage's "How it works" section.
+- The whole public site moved to this light palette.
+- Hero code lives in `src/components/hero/`.
+- `/preview/home` now 301s to `/`.
+- The concept pages below stay as noindex references.
 
 The concepts live only on preview routes:
 

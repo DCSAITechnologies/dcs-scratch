@@ -20,7 +20,10 @@
 | Identity | `src/lib/auth/session.ts`, `src/components/dash/AuthGate.tsx` | Provider-agnostic OIDC (code + PKCE). Hermetic/mock identities exist only in development, mock and core builds. |
 | Core reference server | `.core/tree/devex/api-server` (git-ignored) | Core's **real** `/v1` server, assembled from the packs (`npm run core:assemble`). Hermetic adapters; not deployed. |
 | Mock API | `scripts/mock-api.mjs` | Fast stand-in for development and the `api-mode` suite. Its catalogue is core's projection, and its behaviour was aligned to core (§5). |
-| Hero previews | `src/pages/preview/*` → `/preview/home`, `/preview/heroes`, `/preview/hero-a\|b\|c` | Founder review only. Noindex, disallowed in robots, not in the sitemap, unlinked. The live homepage is unchanged. |
+| Theme | `index.html` `data-theme="light"`; `src/index.css` light layer; `App.tsx` switches `/app` to dark | **Public site is light** (founder-approved 03 Oct). The console keeps the dark theme until the dashboard pass. `scripts/light-codemod.py` records the colour mapping. |
+| Homepage | `src/pages/Home.tsx`, `src/components/hero/*` | HERO-A ↔ HERO-C every 10 s (pause, hover/focus pause, reduced motion = no rotation); HERO-B as "How it works" |
+| Logos | `scripts/build-logos.mjs` → `public/logos/brand/*.svg`, `src/lib/logo-map.json`; report `audit/LOGO_SOURCES.md` | 160 vector brand marks (CC0 sets, strict matching, reviewed collisions excluded); 241 published connectors still use a monogram (listed in the report) |
+| Concept previews | `src/pages/preview/HeroConcepts.tsx` → `/preview/heroes`, `/preview/hero-a\|b\|c` | Noindex references. `/preview/home` → 301 `/`. |
 
 ## 2. Commands
 
@@ -28,6 +31,7 @@
 npm ci
 npm run verify              # lint → unit → build → prerender → gates → smoke → mock build → Playwright
 npm run sync:catalogue      # regenerate catalogue + inventory from core-snapshot/
+npm run logos               # re-pick brand logos, then sync
 python3 scripts/sync-catalogue.py --core <unzipped Interface Pack root>   # refresh core-snapshot/ from a newer pack
 
 # console against core's REAL /v1 reference server
@@ -66,7 +70,7 @@ Templates: `.env.example`, `.env.mock` and `.env.core`.
 | Auth | Sign-in, restore, expiry, deep link, sign-out, RBAC from `/v1/me` (verified with core's hermetic identities). OIDC seam ready; **no IdP configured**. | core-api + api-mode suites |
 | Website | All pages, catalogue search/filter/sort/paging, SEO, logo fallback (relative logo paths fixed: 387 rows) | desktop suite, route smoke |
 | A11y / responsive | axe 0 violations; 36 desktop viewport/zoom combinations + 5 devices; previews checked at 390, 768, 1024 and 1440 | `a11y`, `responsive`, `hero-preview` specs |
-| Hero | Founder picked A + C. `/preview/home` is a full light homepage demo: A ↔ C every 10 s, B as "How it works", light header with dropdowns, smaller type. | `HERO_CONCEPTS.md`, `audit/hero/*.png` |
+| Light site + hero | Whole public site light; homepage = A ↔ C rotator + B section; real colour logos at larger sizes | axe 0 violations on all pages; `audit/site/*.png` |
 
 ## 5. Findings from running against core
 
@@ -82,7 +86,8 @@ Templates: `.env.example`, `.env.mock` and `.env.core`.
 | 2 | IdP: issuer, SPA client id, test users (admin / approver / viewer) | founder / ops |
 | 3 | Hosting target + preview deploy token (confirms the `_redirects` / `_headers` syntax) | founder |
 | 4 | Reviewed dispatch grants / staging verifications (today 0) | core / founder |
-| 5 | Confirm the hero direction from `/preview/home`; then port it to `/` and restyle the rest of the site light | founder → site |
+| 5 | Logos for the 241 published connectors still on a monogram (`audit/LOGO_SOURCES.md`), or network access to fetch them from official sites | founder / ops |
+| 7 | Dashboard (console) redesign in the light system | next phase |
 | 6 | Optional: contact endpoint + Turnstile | founder |
 
 ## 7. Guard rails

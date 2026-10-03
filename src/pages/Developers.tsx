@@ -24,28 +24,28 @@ export function Developers() {
       <div className="mx-auto max-w-[1400px] px-8">
         <div className="max-w-3xl">
           <div className="eyebrow mb-4">Developers</div>
-          <h1 className="text-4xl md:text-5xl font-semibold tracking-tight text-white">Built for developers. Designed for agents.</h1>
-          <p className="mt-5 text-[15.5px] leading-relaxed text-[#A9B6D3]">
-            One governed integration model across a catalogue of {TOTAL_CATALOGUED} catalogued connectors ({PUBLISHED_COUNT} published) — with policy, approval, verification and receipts built into every call.
+          <h1 className="text-4xl md:text-5xl font-semibold tracking-tight text-[#0B1220]">Built for developers. Designed for agents.</h1>
+          <p className="mt-5 text-[15.5px] leading-relaxed text-[#3A4357]">
+            One governed integration model across a catalogue of {TOTAL_CATALOGUED.toLocaleString('en-US')} catalogued connectors ({PUBLISHED_COUNT} published) — with policy, approval, verification and receipts built into every call.
           </p>
         </div>
 
         <Reveal className="mt-10">
           <div className="glass-panel p-6 max-w-3xl">
-            <div className="text-[10px] font-semibold uppercase tracking-[0.16em] text-[#93A0C2] mb-3">The architecture in five lines</div>
-            <ol className="space-y-2 text-[13.5px] leading-relaxed text-[#A9B6D3]">
-              <li><span className="text-[#5A7BFF] font-bold mr-2">1.</span>Agents reason in the Operations Agent Layer — which holds no credentials, calls no providers and performs no writes.</li>
-              <li><span className="text-[#5A7BFF] font-bold mr-2">2.</span>Every step is policy-evaluated, and gated steps need an exact-step, single-use human approval.</li>
-              <li><span className="text-[#5A7BFF] font-bold mr-2">3.</span>The Ops Broker is the sole caller of the Execution Engine — there is no other path to a provider.</li>
-              <li><span className="text-[#5A7BFF] font-bold mr-2">4.</span>Every attempt records an EXEC-FACT with an explicit outcome — ambiguity is a state, never a guess.</li>
-              <li><span className="text-[#5A7BFF] font-bold mr-2">5.</span>Receipts (cos-ops-v1) turn the facts into evidence you can verify offline.</li>
+            <div className="text-[10px] font-semibold uppercase tracking-[0.16em] text-[#566074] mb-3">The architecture in five lines</div>
+            <ol className="space-y-2 text-[13.5px] leading-relaxed text-[#3A4357]">
+              <li><span className="text-[#2850D8] font-bold mr-2">1.</span>Agents reason in the Operations Agent Layer — which holds no credentials, calls no providers and performs no writes.</li>
+              <li><span className="text-[#2850D8] font-bold mr-2">2.</span>Every step is policy-evaluated, and gated steps need an exact-step, single-use human approval.</li>
+              <li><span className="text-[#2850D8] font-bold mr-2">3.</span>The Ops Broker is the sole caller of the Execution Engine — there is no other path to a provider.</li>
+              <li><span className="text-[#2850D8] font-bold mr-2">4.</span>Every attempt records an EXEC-FACT with an explicit outcome — ambiguity is a state, never a guess.</li>
+              <li><span className="text-[#2850D8] font-bold mr-2">5.</span>Receipts (cos-ops-v1) turn the facts into evidence you can verify offline.</li>
             </ol>
           </div>
         </Reveal>
 
         <Reveal className="mt-6">
           <div className="glass-panel p-6 max-w-3xl overflow-x-auto">
-            <div className="text-[10px] font-semibold uppercase tracking-[0.16em] text-[#93A0C2] mb-3">Conceptual — contract frozen (EXEC-FACTS v1.0.0 / Manifest 1.3.0 / Webhook 1.0.0); public API surface pending</div>
+            <div className="text-[10px] font-semibold uppercase tracking-[0.16em] text-[#566074] mb-3">Conceptual — contract frozen (EXEC-FACTS v1.0.0 / Manifest 1.3.0 / Webhook 1.0.0); public API surface pending</div>
             <pre className="dcs-code">{`import { DCS } from "@dcs-ai/connector-os" // PRE-LAUNCH — not published
 
 const dcs = new DCS({ tenant: "tnt_acme" })
@@ -62,14 +62,14 @@ console.log(exec.attempts[0].receipt_ref) // verify offline`}</pre>
           {SECTIONS.map((s, i) => (
             <Reveal key={s.t} delay={i * 35}>
               <a href={`${s.to}`} className="glass-card glass-card-hover p-6 h-full block">
-                <div className="text-[15px] font-semibold text-white mb-2">{s.t}</div>
-                <p className="text-[12.5px] leading-relaxed text-[#A9B6D3]">{s.d}</p>
+                <div className="text-[15px] font-semibold text-[#0B1220] mb-2">{s.t}</div>
+                <p className="text-[12.5px] leading-relaxed text-[#3A4357]">{s.d}</p>
                 {s.items && (
                   <ol className="mt-3 space-y-1.5">
-                    {s.items.map((it, j) => <li key={it} className="text-[12px] text-[#93A0C2] flex gap-2"><span className="text-[#5A7BFF] font-bold">{j + 1}.</span>{it}</li>)}
+                    {s.items.map((it, j) => <li key={it} className="text-[12px] text-[#566074] flex gap-2"><span className="text-[#2850D8] font-bold">{j + 1}.</span>{it}</li>)}
                   </ol>
                 )}
-                <div className="mt-3 text-[12px] font-semibold text-[#5A7BFF]">Read more →</div>
+                <div className="mt-3 text-[12px] font-semibold text-[#2850D8]">Read more →</div>
               </a>
             </Reveal>
           ))}

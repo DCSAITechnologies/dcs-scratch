@@ -73,17 +73,17 @@ export function ContactForm({ defaultTopic }: { defaultTopic?: Topic }) {
   }
 
   if (state === 'sent') {
-    return <div role="status" className="glass-panel p-6" data-testid="contact-sent"><p className="text-[14px] text-white font-semibold">Thanks — your message was sent.</p><p className="mt-1.5 text-[13px] text-[#A9B6D3]">The team replies by email. We do not publish response-time commitments.</p></div>
+    return <div role="status" className="glass-panel p-6" data-testid="contact-sent"><p className="text-[14px] text-[#0B1220] font-semibold">Thanks — your message was sent.</p><p className="mt-1.5 text-[13px] text-[#3A4357]">The team replies by email. We do not publish response-time commitments.</p></div>
   }
 
   const field = 'dcs-input w-full px-4 py-2.5 text-[13.5px]'
-  const label = 'block text-[12px] font-medium text-[#A9B6D3] mb-1.5'
-  const err = (k: keyof Values) => show(k) && <p id={`${id}-${k}-err`} className="mt-1 text-[12px] text-[#FF8A8A]">{show(k)}</p>
+  const label = 'block text-[12px] font-medium text-[#3A4357] mb-1.5'
+  const err = (k: keyof Values) => show(k) && <p id={`${id}-${k}-err`} className="mt-1 text-[12px] text-[#B91C1C]">{show(k)}</p>
   const aria = (k: keyof Values) => ({ id: `${id}-${k}`, 'aria-invalid': Boolean(show(k)), 'aria-describedby': show(k) ? `${id}-${k}-err` : undefined })
 
   return (
     <form noValidate onSubmit={submit} className="glass-panel p-6 space-y-4 max-w-2xl" data-testid="contact-form" aria-labelledby={`${id}-title`}>
-      <h3 id={`${id}-title`} className="text-[15px] font-semibold text-white">Send the team a message</h3>
+      <h3 id={`${id}-title`} className="text-[15px] font-semibold text-[#0B1220]">Send the team a message</h3>
       <div className="grid sm:grid-cols-2 gap-4">
         <div><label htmlFor={`${id}-name`} className={label}>Name *</label><input {...aria('name')} className={field} autoComplete="name" value={v.name} onChange={(e) => setV({ ...v, name: e.target.value })} />{err('name')}</div>
         <div><label htmlFor={`${id}-email`} className={label}>Work email *</label><input {...aria('email')} type="email" className={field} autoComplete="email" value={v.email} onChange={(e) => setV({ ...v, email: e.target.value })} />{err('email')}</div>
@@ -100,13 +100,13 @@ export function ContactForm({ defaultTopic }: { defaultTopic?: Topic }) {
         <label>Website<input tabIndex={-1} autoComplete="off" value={v.website} onChange={(e) => setV({ ...v, website: e.target.value })} name="website" /></label>
       </div>
       {CONTACT_ENDPOINT && TURNSTILE_SITE_KEY && <div ref={captcha} />}
-      {state === 'error' && serverError && <p role="alert" className="text-[13px] text-[#FF8A8A]" data-testid="contact-error">{serverError} Your message was not sent — you can retry, or email {topic?.email ?? 'enterprise@dcslabs.dev'}.</p>}
-      {state === 'emailed' && <p role="status" className="text-[13px] text-[#9BE7C4]" data-testid="contact-emailed">Your email app should open with the message filled in. If it did not, write to <a className="underline" href={`mailto:${topic?.email}`}>{topic?.email}</a>.</p>}
+      {state === 'error' && serverError && <p role="alert" className="text-[13px] text-[#B91C1C]" data-testid="contact-error">{serverError} Your message was not sent — you can retry, or email {topic?.email ?? 'enterprise@dcslabs.dev'}.</p>}
+      {state === 'emailed' && <p role="status" className="text-[13px] text-[#065F46]" data-testid="contact-emailed">Your email app should open with the message filled in. If it did not, write to <a className="underline" href={`mailto:${topic?.email}`}>{topic?.email}</a>.</p>}
       <div className="flex flex-wrap items-center gap-3">
         <button type="submit" disabled={state === 'sending'} className="cta-primary !py-2.5 disabled:opacity-60">{state === 'sending' ? 'Sending…' : CONTACT_ENDPOINT ? 'Send message' : 'Compose email'}</button>
-        <span className="text-[11.5px] text-[#93A0C2]">{CONTACT_ENDPOINT ? 'Sent to the team’s form service.' : 'Opens your email app — nothing is stored by this site.'}</span>
+        <span className="text-[11.5px] text-[#566074]">{CONTACT_ENDPOINT ? 'Sent to the team’s form service.' : 'Opens your email app — nothing is stored by this site.'}</span>
       </div>
-      <p className="text-[11.5px] text-[#93A0C2]">Or write directly: {TOPICS.map((t, i) => <span key={t.value}>{i > 0 && ' · '}<a className="text-[#7EA2FF] underline-offset-2 hover:underline" href={`mailto:${t.email}`}>{t.email}</a></span>)}</p>
+      <p className="text-[11.5px] text-[#566074]">Or write directly: {TOPICS.map((t, i) => <span key={t.value}>{i > 0 && ' · '}<a className="text-[#2850D8] underline-offset-2 hover:underline" href={`mailto:${t.email}`}>{t.email}</a></span>)}</p>
     </form>
   )
 }

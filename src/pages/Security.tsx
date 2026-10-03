@@ -32,18 +32,18 @@ export function Security() {
           {SECTIONS.map((s, i) => (
             <Reveal key={s.t} delay={i * 40}>
               <a href={`${s.to}`} className="glass-card glass-card-hover p-6 h-full flex flex-col group">
-                <div className="text-[9.5px] font-bold text-[#00C2FF] mb-2">{String(i + 1).padStart(2, '0')}</div>
-                <h3 className="text-[15px] font-semibold text-white mb-1.5 group-hover:text-white">{s.t}</h3>
-                <p className="text-[12.5px] leading-relaxed text-[#A9B6D3] flex-1">{s.d}</p>
-                <span className="mt-3 text-[12px] font-semibold text-[#5A7BFF]">Read more →</span>
+                <div className="text-[9.5px] font-bold text-[#0E7490] mb-2">{String(i + 1).padStart(2, '0')}</div>
+                <h3 className="text-[15px] font-semibold text-[#0B1220] mb-1.5 group-hover:text-[#0B1220]">{s.t}</h3>
+                <p className="text-[12.5px] leading-relaxed text-[#3A4357] flex-1">{s.d}</p>
+                <span className="mt-3 text-[12px] font-semibold text-[#2850D8]">Read more →</span>
               </a>
             </Reveal>
           ))}
         </div>
 
         <div className="mt-14 glass-panel p-7 max-w-3xl">
-          <div className="text-[15px] font-semibold text-white mb-2">A note on claims</div>
-          <p className="text-[13px] leading-relaxed text-[#A9B6D3]">
+          <div className="text-[15px] font-semibold text-[#0B1220] mb-2">A note on claims</div>
+          <p className="text-[13px] leading-relaxed text-[#3A4357]">
             This page describes the security model as designed and implemented — not certifications. Connector OS does not claim SOC 2, ISO, HIPAA or any other certification unless and until there is evidence-backed, approved documentation for it. Where wording matters, we choose conservative phrasing: tenant isolation controls, tamper-evident audit history, emergency kill controls.
           </p>
         </div>
