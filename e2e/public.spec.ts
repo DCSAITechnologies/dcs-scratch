@@ -13,8 +13,28 @@ test.describe('public catalogue', () => {
   test('counts are derived from the catalogue and consistent', async ({ page }) => {
     await page.goto('/connectors')
     await expect(page.locator('h1')).toContainText(`${PUBLISHED.length} published connectors`)
-    await expect(page.getByTestId('catalogue-counts')).toContainText(
-      `${CANONICAL.length.toLocaleString('en-US')} records in the canonical catalogue · ${PUBLISHED.length} published · ${HOLD.length} on hold`)
+    const counts = page.getByTestId('catalogue-counts')
+    await expect(counts).toHaveAttribute('aria-label', `${CANONICAL.length.toLocaleString('en-US')} records in the canonical catalogue · ${PUBLISHED.length} published · ${HOLD.length} on hold`)
+    await expect(counts).toContainText(`${CANONICAL.length.toLocaleString('en-US')}catalogued`)
+    await expect(counts).toContainText(`${PUBLISHED.length}published`)
+    await expect(counts).toContainText(`${HOLD.length}on hold`)
+    await expect(page.getByTestId('availability-line')).toContainText('0available to connect today')
+    await expect(page.getByTestId('result-count')).toHaveText(`${PUBLISHED.length} connectors`)
+  })
+
+  test('phone: filters fold behind a Filters button; search and categories stay visible', async ({ page }) => {
+    await page.setViewportSize({ width: 390, height: 844 })
+    await page.goto('/connectors')
+    await expect(page.getByLabel('Search connectors')).toBeVisible()
+    await expect(page.getByRole('group', { name: 'Category' })).toBeVisible()
+    const toggle = page.getByRole('button', { name: /^Filters/ })
+    await expect(page.getByRole('button', { name: 'Catalogue status filter' })).toBeHidden()
+    await toggle.click()
+    await expect(toggle).toHaveAttribute('aria-expanded', 'true')
+    await expect(page.getByRole('button', { name: 'Catalogue status filter' })).toBeVisible()
+    await page.getByRole('checkbox', { name: 'Webhooks' }).check()
+    await expect(toggle).toHaveText('Filters (1)')
+    await page.getByRole('button', { name: 'Clear filters' }).click()
     await expect(page.getByTestId('result-count')).toHaveText(`${PUBLISHED.length} connectors`)
   })
 

@@ -93,7 +93,9 @@ export function Connectors() {
   const [sort, setSort] = useState<'rank' | 'az'>('rank')
   const [shown, setShown] = useState(PAGE)
   const [legacyShown, setLegacyShown] = useState(LEGACY_PAGE)
+  const [filtersOpen, setFiltersOpen] = useState(false)
 
+  const activeFilters = [status, runtime, auth, rw].filter(Boolean).length + (wh ? 1 : 0)
   const filtered = useMemo(() => {
     let list = CONNECTORS.filter((c) =>
       (cat === 'All' || c.cat === cat) &&
@@ -128,73 +130,95 @@ export function Connectors() {
     <div className="pt-24 pb-16">
       <div className="mx-auto max-w-[1400px] px-4 sm:px-8">
         <div className="eyebrow mb-3">Connector catalogue</div>
-        <h1 className="text-4xl font-semibold tracking-tight text-[#0B1220]">{PUBLISHED_COUNT} published connectors. One governed interface.</h1>
-        <p className="mt-2 text-[12.5px] text-[#566074]" data-testid="catalogue-counts">
-          {TOTAL_CATALOGUED.toLocaleString('en-US')} records in the canonical catalogue · {PUBLISHED_COUNT} published · {UNPUBLISHED_COUNT} on hold (not listed pending policy, legal or provider review)
-        </p>
-        <p className="mt-1 text-[12px] text-[#566074]" data-testid="availability-line">
-          Available to connect today: {AVAILABLE_TO_CONNECT_COUNT}. A connector becomes connectable only when Connector OS core grants it dispatch eligibility after staging verification{CORE_HEAD ? ` (core ${CORE_HEAD.slice(0, 7)})` : ''}.
-        </p>
-        <p className="mt-3 max-w-2xl text-[14px] text-[#3A4357]">
-          Every connector documents capabilities, authentication, permissions, webhooks and official documentation — from official provider sources, with verification status shown per connector. Catalogue status describes documentation and access model; runtime verification is published per connector as it is earned.
+        <h1 className="text-[26px] leading-tight sm:text-4xl font-semibold tracking-tight text-[#0B1220]">{PUBLISHED_COUNT} published connectors. One governed interface.</h1>
+        <p className="mt-2 max-w-3xl text-[14px] sm:text-[15px] text-[#3A4357]">
+          Capabilities, authentication, permissions and webhooks for every connector — documented from official provider sources.
         </p>
 
-        {/* Legend: catalogue status (6) vs runtime status (3) — two independent fields, never merged.
-             This legend is static copy by design: it does NOT change with the claim level. */}
-        <div className="mt-5 glass-panel px-4 py-3 text-[11.5px] leading-snug text-[#566074] max-w-3xl">
-          <div><span className="font-semibold text-[#1E2638]">Catalogue status</span> — Coming Soon · Provider Approval Required · Preview · Read Only · Limited Access · Available — documentation &amp; access model. HOLD records are not listed; Available is earned only after staging verification (none today).</div>
-          <div className="mt-1"><span className="font-semibold text-[#1E2638]">Runtime status</span> — Not yet runtime-verified · Staging-verified · Production-verified — earned runtime proof, tracked independently.</div>
-        </div>
+        {/* every figure is derived from the core-generated catalogue */}
+        <dl className="mt-5 grid grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-3" data-testid="catalogue-counts"
+          aria-label={`${TOTAL_CATALOGUED.toLocaleString('en-US')} records in the canonical catalogue · ${PUBLISHED_COUNT} published · ${UNPUBLISHED_COUNT} on hold`}>
+          {[
+            { k: TOTAL_CATALOGUED.toLocaleString('en-US'), v: 'catalogued', d: 'records in the canonical catalogue' },
+            { k: String(PUBLISHED_COUNT), v: 'published', d: 'documented and listed here' },
+            { k: String(UNPUBLISHED_COUNT), v: 'on hold', d: 'pending policy, legal or provider review' },
+            { k: String(AVAILABLE_TO_CONNECT_COUNT), v: 'available to connect today', d: 'opens per connector after staging verification', testid: 'availability-line' },
+          ].map((x) => (
+            <div key={x.v} className="glass-card px-3 py-2 sm:px-4 sm:py-3" data-testid={x.testid}>
+              <dt className="sr-only">{x.v}</dt>
+              <dd className="flex items-baseline gap-2"><span className="text-[19px] sm:text-[22px] font-semibold tabular-nums text-[#0B1220]">{x.k}</span><span className="text-[12.5px] sm:text-[13px] font-medium text-[#1E2638] leading-tight">{x.v}</span></dd>
+              <dd className="mt-0.5 hidden sm:block text-[12px] text-[#566074]">{x.d}</dd>
+            </div>
+          ))}
+        </dl>
 
         <div className="mt-6 flex flex-wrap items-center gap-2.5">
-          <input value={q} onChange={(e) => { setQ(e.target.value); setShown(PAGE) }} placeholder="Search connectors or providers…" aria-label="Search connectors" className="dcs-input w-full sm:w-[260px]" />
-          <FilterSelect ariaLabel="Catalogue status filter" width={170} value={status}
+          <div className="flex w-full gap-2 sm:w-auto">
+            <input value={q} onChange={(e) => { setQ(e.target.value); setShown(PAGE) }} placeholder="Search connectors or providers…" aria-label="Search connectors" className="dcs-input min-w-0 flex-1 sm:w-[250px] sm:flex-none px-3 py-2 text-[13.5px]" />
+            <button type="button" className="chip sm:hidden !rounded-xl" aria-expanded={filtersOpen} aria-controls="catalogue-filters" onClick={() => setFiltersOpen((o) => !o)}>
+              Filters{activeFilters ? ` (${activeFilters})` : ''}
+            </button>
+          </div>
+          <div id="catalogue-filters" className={`${filtersOpen ? 'flex' : 'hidden'} sm:contents flex-wrap items-center gap-2.5`}>
+          <FilterSelect ariaLabel="Catalogue status filter" width={160} value={status}
             onChange={(v) => { setStatus(v); setShown(PAGE) }}
             options={[{ value: '', label: 'All statuses' }, ...STATUSES.map((s) => ({ value: s, label: s }))]} />
-          <FilterSelect ariaLabel="Runtime status filter" width={190} value={runtime}
+          <FilterSelect ariaLabel="Runtime status filter" width={175} value={runtime}
             onChange={(v) => { setRuntime(v); setShown(PAGE) }}
             options={[{ value: '', label: 'All runtime statuses' }, ...RUNTIME_STATUSES.map((s) => ({ value: s, label: s }))]} />
-          <FilterSelect ariaLabel="Authentication filter" width={160} value={auth}
+          <FilterSelect ariaLabel="Authentication filter" width={150} value={auth}
             onChange={(v) => { setAuth(v); setShown(PAGE) }}
             options={[{ value: '', label: 'All auth types' }, ...AUTH_TYPES.map((a) => ({ value: a, label: a }))]} />
-          <FilterSelect ariaLabel="Read/write filter" width={150} value={rw}
+          <FilterSelect ariaLabel="Read/write filter" width={140} value={rw}
             onChange={(v) => { setRw(v); setShown(PAGE) }}
             options={[{ value: '', label: 'Read + Write' }, { value: 'Read only', label: 'Read only' }, { value: 'write', label: 'Supports write' }]} />
           <label className="flex items-center gap-2 text-[12.5px] text-[#3A4357] cursor-pointer">
             <input type="checkbox" checked={wh} onChange={(e) => { setWh(e.target.checked); setShown(PAGE) }} className="accent-[#2850D8]" /> Webhooks
           </label>
-          <FilterSelect ariaLabel="Sort order" width={130} value={sort}
+          <FilterSelect ariaLabel="Sort order" width={125} value={sort}
             onChange={(v) => setSort(v as 'rank' | 'az')}
             options={[{ value: 'rank', label: 'Sort: rank' }, { value: 'az', label: 'Sort: A–Z' }]} />
-          <span className="ml-auto text-[12px] text-[#566074]" data-testid="result-count">{filtered.length} connectors</span>
+          </div>
         </div>
 
-        <div className="mt-4 flex flex-wrap gap-2">
-          {CATEGORIES.map((c) => (
-            <button key={c} onClick={() => { setCat(c); setShown(PAGE) }} className={`chip ${cat === c ? 'active' : ''}`}>{c}</button>
-          ))}
+        {/* categories: one scrollable row instead of four wrapped rows */}
+        <div className="relative mt-3">
+          <div className="flex gap-2 overflow-x-auto pb-1.5 [scrollbar-width:thin]" role="group" aria-label="Category">
+            {CATEGORIES.map((c) => (
+              <button key={c} onClick={() => { setCat(c); setShown(PAGE) }} aria-pressed={cat === c} className={`chip shrink-0 whitespace-nowrap !py-1 !px-3 ${cat === c ? 'active' : ''}`}>{c}</button>
+            ))}
+          </div>
+          <div aria-hidden className="pointer-events-none absolute right-0 top-0 bottom-1.5 w-10" style={{ background: 'linear-gradient(90deg, rgba(245,246,248,0), #F5F6F8)' }} />
         </div>
 
-        <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+        <div className="mt-5 flex items-center gap-3 text-[12.5px] text-[#566074]">
+          <span data-testid="result-count" className="font-medium text-[#1E2638]">{filtered.length} connectors</span>
+          {(q || cat !== 'All' || status || runtime || auth || rw || wh) && (
+            <button type="button" className="font-semibold text-[#2850D8] hover:underline"
+              onClick={() => { setQ(''); setCat('All'); setStatus(''); setRuntime(''); setAuth(''); setRw(''); setWh(false); setShown(PAGE) }}>Clear filters</button>
+          )}
+        </div>
+
+        <div className="mt-3 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3.5">
           {filtered.slice(0, shown).map((c: Conn) => (
-            <a key={c.id} href={`/connectors/${c.id}`} className="glass-card glass-card-hover p-5 flex flex-col">
-              <div className="flex items-center gap-3 mb-3">
-                <ConnectorLogo name={c.n} src={c.logo} size={44} />
+            <a key={c.id} href={`/connectors/${c.id}`} className="glass-card glass-card-hover p-4 flex flex-col">
+              <div className="flex items-center gap-3">
+                <ConnectorLogo name={c.n} src={c.logo} size={40} />
                 <div className="min-w-0">
                   <div className="text-[14px] font-semibold text-[#0B1220] truncate">{c.n}</div>
-                  <div className="text-[11px] text-[#566074] truncate">{c.p}</div>
+                  <div className="text-[11.5px] text-[#566074] truncate">{c.cat}</div>
                 </div>
-                <span className="ml-auto text-[10px] font-bold text-[#2850D8]" title={c.r == null ? `Unranked in core (${c.core?.pack ?? 'no pack'})` : 'Core engineering rank'}>{c.r == null ? c.core?.pack === 'GOLDEN-FIVE' ? 'Golden Five' : 'Unranked' : `#${c.r}`}</span>
               </div>
-              <p className="text-[12px] leading-relaxed text-[#3A4357] line-clamp-2 flex-1">{c.d}</p>
-              <div className="mt-4 flex items-center gap-2 flex-wrap">
-                <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full" style={{ color: statusColor(c.s), background: `${statusColor(c.s)}1f`, border: `1px solid ${statusColor(c.s)}44` }}>{c.s}</span>
+              <p className="mt-2.5 text-[12.5px] leading-snug text-[#3A4357] line-clamp-2">{c.d}</p>
+              <div className="flex-1" />
+              <div className="mt-3 flex items-center gap-1.5 flex-wrap">
+                <span className="text-[10.5px] font-semibold px-2 py-0.5 rounded-full" style={{ color: statusColor(c.s), background: `${statusColor(c.s)}1f`, border: `1px solid ${statusColor(c.s)}44` }}>{c.s}</span>
                 {c.runtime_status && c.runtime_status !== 'not_verified' && (
-                  <span className="text-[10px] px-2 py-0.5 rounded-full text-[#566074]" style={{ background: '#F5F7FB', border: '1px solid #E3E7EE' }}>{runtimeStatusLabel(c)}</span>
+                  <span className="text-[10.5px] px-2 py-0.5 rounded-full text-[#566074]" style={{ background: '#F5F7FB', border: '1px solid #E3E7EE' }}>{runtimeStatusLabel(c)}</span>
                 )}
-                <span className="text-[10px] px-2 py-0.5 rounded-full text-[#3A4357]" style={{ background: '#F5F7FB', border: '1px solid #E3E7EE' }}>{c.auth}</span>
-                {c.wh && <span className="text-[10px] px-2 py-0.5 rounded-full text-[#0E7490]" style={{ background: 'rgba(0,194,255,0.08)', border: '1px solid rgba(0,194,255,0.25)' }}>Webhooks</span>}
-                <span className="ml-auto text-[11px] font-semibold text-[#2850D8]">Details →</span>
+                <span className="text-[10.5px] px-2 py-0.5 rounded-full text-[#3A4357]" style={{ background: '#F5F7FB', border: '1px solid #E3E7EE' }}>{c.auth}</span>
+                {c.wh && <span className="text-[10.5px] px-2 py-0.5 rounded-full text-[#155E75]" style={{ background: 'rgba(14,116,144,0.06)', border: '1px solid rgba(14,116,144,0.22)' }}>Webhooks</span>}
+                <span className="ml-auto text-[11.5px] font-semibold text-[#2850D8]">Details →</span>
               </div>
             </a>
           ))}
@@ -249,6 +273,13 @@ export function Connectors() {
             )}
           </div>
         )}
+
+        {/* Legend: catalogue status vs runtime status — two independent fields, never merged.
+             Static copy by design: it does NOT change with the claim level. */}
+        <div className="mt-14 border-t border-[#E3E7EE] pt-5 text-[12px] leading-relaxed text-[#566074] max-w-4xl">
+          <p><span className="font-semibold text-[#1E2638]">Catalogue status</span> (Coming Soon · Provider Approval Required · Preview · Read Only · Limited Access · Available) describes documentation and access model; Available is earned only after staging verification — none today.</p>
+          <p className="mt-1"><span className="font-semibold text-[#1E2638]">Runtime status</span> (Not yet runtime-verified · Staging-verified · Production-verified) is earned runtime proof, tracked separately. Records on hold are not listed.{CORE_HEAD ? ` Counts and statuses come from Connector OS core ${CORE_HEAD.slice(0, 7)}.` : ''}</p>
+        </div>
       </div>
     </div>
   )
