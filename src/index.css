@@ -265,6 +265,16 @@
   .nav-dropdown-row:hover {
     background: rgba(108, 99, 255, 0.14);
   }
+  /* light header (founder-review demo) */
+  .nav-light .nav-dropdown {
+    background: #FFFFFF;
+    border: 1px solid #E3E7EE;
+    box-shadow: 0 1px 2px rgba(16, 24, 40, 0.04), 0 24px 56px -16px rgba(16, 24, 40, 0.18);
+  }
+  .nav-light .nav-dropdown-row:hover,
+  .nav-light .nav-dropdown-row:focus-visible {
+    background: #F1F4F9;
+  }
 
   /* ---- tables ---- */
   .dcs-table-row {

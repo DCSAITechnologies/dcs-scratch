@@ -10,15 +10,10 @@
 //   ?frame=N  hold the motion sequence at step N, transitions off
 //   ?still=1  the composed final state (same as reduced motion)
 import { useEffect, useRef, useState, type CSSProperties, type ReactNode } from 'react'
-import { TOTAL_CATALOGUED, PUBLISHED_COUNT, CATEGORY_COUNTS, FEATURED, FEATURED_ROWS } from 'virtual:catalogue-summary'
+import { PUBLISHED_COUNT, CATEGORY_COUNTS } from 'virtual:catalogue-summary'
 import { ConnectorLogo } from '../../components/ConnectorLogo'
-
-const C = {
-  bg: '#F5F6F8', surface: '#FFFFFF', ink: '#0B1220', ink2: '#2B3446', muted: '#566074',
-  line: '#E3E7EE', line2: '#D2D8E2', silver: '#5E6779', blue: '#2850D8', blueSoft: '#EDF2FF', blueLine: '#B9C9F6',
-}
-const SCALE = `${(Math.floor(TOTAL_CATALOGUED / 100) * 100).toLocaleString('en-US')}+`
-const NODES = FEATURED.heroNodes.map((id) => FEATURED_ROWS[id])
+import { C, SCALE, NODES } from './tokens'
+import { usePrefersReducedMotion } from './motion'
 const STAGES = ['Connect', 'Govern', 'Execute', 'Verify'] as const
 
 // ---------------------------------------------------------------- motion helpers
@@ -29,23 +24,13 @@ function readFlags() {
   return { frame: f !== null && /^\d+$/.test(f) ? Number(f) : null, still: q.has('still') }
 }
 
-function usePrefersReducedMotion() {
-  const [reduced, setReduced] = useState(() => window.matchMedia('(prefers-reduced-motion: reduce)').matches)
-  useEffect(() => {
-    const m = window.matchMedia('(prefers-reduced-motion: reduce)')
-    const on = () => setReduced(m.matches)
-    m.addEventListener('change', on)
-    return () => m.removeEventListener('change', on)
-  }, [])
-  return reduced
-}
 
 /**
  * Steps 0..last on a timer, resting on the last step before starting again.
  * Runs only while the hero is at least 35% on screen and the tab is visible.
  * Reduced motion / ?still → the final step, static. ?frame=N → step N, static.
  */
-function useSequence(last: number, stepMs: number, restMs: number) {
+function useSequence(last: number, stepMs: number, restMs: number, running = true) {
   const ref = useRef<HTMLDivElement>(null)
   const reduced = usePrefersReducedMotion()
   const [{ frame, still }] = useState(readFlags)
@@ -64,10 +49,10 @@ function useSequence(last: number, stepMs: number, restMs: number) {
   }, [fixed])
 
   useEffect(() => {
-    if (fixed !== null || !visible) return
+    if (fixed !== null || !visible || !running) return
     const t = window.setTimeout(() => setStep((s) => (s >= last ? 0 : s + 1)), step === last ? restMs : step === 0 ? 900 : stepMs)
     return () => window.clearTimeout(t)
-  }, [fixed, visible, step, last, stepMs, restMs])
+  }, [fixed, visible, running, step, last, stepMs, restMs])
 
   return { ref, step: fixed ?? step, animate: fixed === null }
 }
@@ -137,12 +122,18 @@ function Tick({ on }: { on: boolean }) {
   )
 }
 
+// running: the step sequence advances (a hidden rotator slide passes false).
+// heading: the hero's top heading element (only the visible slide gets the h1).
+export type HeroProps = { running?: boolean; heading?: 'h1' | 'h2' | 'div' }
+const H1 = 'mt-4 text-[34px] font-semibold leading-[1.08] tracking-[-0.022em] sm:text-[44px]'
+const LEAD = 'text-[16px] leading-relaxed'
+
 // ---------------------------------------------------------------- HERO-A — control plane canvas
 
 const A_LAST = 4
 
-function HeroA() {
-  const { ref, step, animate } = useSequence(A_LAST, 2100, 4200)
+export function HeroA({ running = true, heading: Heading = 'h1' }: HeroProps = {}) {
+  const { ref, step, animate } = useSequence(A_LAST, 2100, 4200, running)
   const px = useParallax(animate)
   const stage = Math.max(0, step - 1) // 0..3 once the sequence starts
   const scatter = [[-7, 5], [6, -6], [-3, 7], [8, 3], [-8, -4], [4, 8], [-6, -7], [7, -3], [3, 6]]
@@ -178,8 +169,8 @@ function HeroA() {
     <section className="mx-auto grid max-w-[1240px] items-center gap-12 px-5 pb-20 pt-14 lg:grid-cols-[0.95fr_1.05fr] lg:pt-20 lg:px-8">
       <div className="min-w-0">
         <p className="text-[12.5px] font-semibold uppercase tracking-[0.14em]" style={{ color: C.blue }}>Connector OS</p>
-        <h1 className="mt-4 text-[40px] font-semibold leading-[1.06] tracking-[-0.025em] sm:text-[52px]" style={{ color: C.ink }}>Governed connections for every agent action.</h1>
-        <p className="mt-5 max-w-[540px] text-[17px] leading-relaxed" style={{ color: C.muted }}>
+        <Heading className={H1} style={{ color: C.ink }}>Governed connections for every agent action.</Heading>
+        <p className={`mt-5 max-w-[540px] ${LEAD}`} style={{ color: C.muted }}>
           Connector OS connects agents to the systems your business runs on, applies policy and approval before anything executes, and keeps an evidence record of every action.
         </p>
         <ol className="mt-7 flex flex-wrap gap-2" aria-label="How it works">
@@ -276,8 +267,8 @@ function Row({ label, value }: { label: string; value: ReactNode }) {
 
 const B_LAST = 4
 
-function HeroB() {
-  const { ref, step, animate } = useSequence(B_LAST, 2000, 4200)
+export function HeroB({ running = true, heading: Heading = 'h1', section = false }: HeroProps & { section?: boolean } = {}) {
+  const { ref, step, animate } = useSequence(B_LAST, 2000, 4200, running)
   const px = useParallax(animate)
   const active = step - 1 // -1 before the sequence starts
   const cards: { title: string; line: string; body: ReactNode }[] = [
@@ -306,18 +297,18 @@ function HeroB() {
   ]
 
   return (
-    <section className="relative overflow-hidden px-5 pb-20 pt-16 lg:px-8 lg:pt-24">
-      <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0 h-[520px]" style={{ background: `linear-gradient(180deg, ${C.surface} 0%, ${C.bg} 100%)` }} />
+    <section className={`relative overflow-hidden px-5 lg:px-8 ${section ? 'py-20 lg:py-24' : 'pb-20 pt-16 lg:pt-24'}`} aria-labelledby={section ? 'how-it-works' : undefined}>
+      {!section && <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0 h-[520px]" style={{ background: `linear-gradient(180deg, ${C.surface} 0%, ${C.bg} 100%)` }} />}
       <div className="relative mx-auto max-w-[1180px]">
         <div className="mx-auto max-w-[820px] text-center">
-          <p className="text-[12.5px] font-semibold uppercase tracking-[0.14em]" style={{ color: C.blue }}>Connector OS</p>
-          <h1 className="mt-4 text-[40px] font-semibold leading-[1.06] tracking-[-0.025em] sm:text-[56px]" style={{ color: C.ink }}>
+          <p className="text-[12.5px] font-semibold uppercase tracking-[0.14em]" style={{ color: C.blue }}>{section ? 'How it works' : 'Connector OS'}</p>
+          <Heading id={section ? 'how-it-works' : undefined} className={section ? 'mt-3 text-[28px] font-semibold leading-[1.12] tracking-[-0.02em] sm:text-[36px]' : H1} style={{ color: C.ink }}>
             Connect. Govern.<br className="hidden sm:block" /> Execute. Verify.
-          </h1>
-          <p className="mx-auto mt-5 max-w-[640px] text-[17px] leading-relaxed" style={{ color: C.muted }}>
+          </Heading>
+          <p className={`mx-auto mt-5 max-w-[640px] ${LEAD}`} style={{ color: C.muted }}>
             One governed path from an agent’s intent to a recorded outcome — policy, approval and an evidence record on every action, across {SCALE} catalogued connectors.
           </p>
-          <div className="mt-8"><Ctas center /></div>
+          {!section && <div className="mt-8"><Ctas center /></div>}
         </div>
 
         <div ref={px} className="mt-12">
@@ -357,12 +348,12 @@ function HeroB() {
           </div>
         </div>
 
-        <div className="mt-12 flex flex-col items-center gap-4">
+        {!section && <div className="mt-12 flex flex-col items-center gap-4">
           <div className="flex flex-wrap justify-center gap-2.5" aria-hidden>
             {NODES.map((n) => <span key={n.id} style={{ filter: 'grayscale(1)', opacity: 0.75 }}><ConnectorLogo name={n.n} src={n.logo} size={30} /></span>)}
           </div>
           <ScaleLine center />
-        </div>
+        </div>}
       </div>
     </section>
   )
@@ -396,8 +387,8 @@ const GROUPED_POS = (() => {
 })()
 const ROWS = Math.ceil(Math.max(GROUPED_POS.slots, DOTS.length) / COLS)
 
-function HeroC() {
-  const { ref, step, animate } = useSequence(C_LAST, 2300, 5200)
+export function HeroC({ running = true, heading: Heading = 'h1' }: HeroProps = {}) {
+  const { ref, step, animate } = useSequence(C_LAST, 2300, 5200, running)
   const px = useParallax(animate)
   const grouped = step >= 1
   const focus = step >= 2
@@ -406,10 +397,10 @@ function HeroC() {
     <section className="mx-auto grid max-w-[1240px] items-center gap-12 px-5 pb-20 pt-14 lg:grid-cols-[0.9fr_1.1fr] lg:px-8 lg:pt-20">
       <div className="min-w-0">
         <p className="text-[12.5px] font-semibold uppercase tracking-[0.14em]" style={{ color: C.blue }}>Connector OS</p>
-        <h1 className="mt-4 text-[40px] font-semibold leading-[1.06] tracking-[-0.025em] sm:text-[52px]" style={{ color: C.ink }}>
+        <Heading className={H1} style={{ color: C.ink }}>
           One control plane for {SCALE} connectors.
-        </h1>
-        <p className="mt-5 max-w-[520px] text-[17px] leading-relaxed" style={{ color: C.muted }}>
+        </Heading>
+        <p className={`mt-5 max-w-[520px] ${LEAD}`} style={{ color: C.muted }}>
           Catalogue, connections, policy, approvals, executions and receipts — operated from one console, and enabled per connector and per environment.
         </p>
         <div className="mt-8"><Ctas /></div>
@@ -494,7 +485,7 @@ function PreviewChrome({ current, children }: { current: string; children: React
         {CONCEPTS.map((c, i) => (
           <span key={c.id}>{i > 0 && ' · '}<a href={`/preview/hero-${c.id}`} aria-current={current === c.id ? 'page' : undefined} className={current === c.id ? 'font-semibold underline' : 'underline decoration-[#6B7385] underline-offset-2'}>HERO-{c.id.toUpperCase()}</a></span>
         ))}
-        {' · '}<a href="/preview/heroes" className={current === 'all' ? 'font-semibold underline' : 'underline decoration-[#6B7385] underline-offset-2'}>All</a>
+        {' · '}<a href="/preview/home" className="underline decoration-[#6B7385] underline-offset-2">Homepage demo</a>{' · '}<a href="/preview/heroes" className={current === 'all' ? 'font-semibold underline' : 'underline decoration-[#6B7385] underline-offset-2'}>All</a>
       </div>
       <header className="border-b" style={{ borderColor: C.line, background: 'rgba(255,255,255,.86)' }}>
         <div className="mx-auto flex h-16 max-w-[1240px] items-center justify-between gap-6 px-5 lg:px-8">

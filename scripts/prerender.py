@@ -92,6 +92,7 @@ STATIC_ROUTES = [
 # Dashboard console routes (Track C) — pre-rendered shells with per-page meta,
 # but EXCLUDED from sitemap.xml (console is not public content).
 PREVIEW_ROUTES = [
+    ('/preview/home', 'Light homepage demo'),
     ('/preview/heroes', 'Hero concepts'),
     ('/preview/hero-a', 'HERO-A · Control plane canvas'),
     ('/preview/hero-b', 'HERO-B · Four-stage ledger'),

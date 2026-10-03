@@ -179,7 +179,50 @@ const WIDE = new Set(['Developers', 'Security'])
 const CENTER = new Set(['Connectors', 'Security'])
 const RIGHT_ALIGN = new Set(['Security', 'Enterprise', 'Developers'])
 
-export function Nav() {
+// Colour tokens. Dark is the live site; light is the founder-review demo palette
+// (/preview/home). Same menus, keyboard model and mobile drawer in both.
+const THEMES = {
+  dark: {
+    header: (solid: boolean) => solid ? 'rgba(6,10,22,0.92)' : 'rgba(6,10,22,0.5)', border: 'rgba(120,140,255,0.14)',
+    item: 'text-[#A9B6D3] hover:text-white', itemOpen: 'text-white', colTitle: 'text-[#93A0C2]', rowLabel: 'text-[#D6E1FF]', rowSub: 'text-[#93A0C2]',
+    rowBorder: 'rgba(120,140,255,0.09)', dot: 'bg-[#5A7BFF]',
+    featured: { background: 'linear-gradient(150deg, rgba(90,123,255,0.22), rgba(124,77,255,0.18))', border: '1px solid rgba(124,77,255,0.4)', boxShadow: '0 0 24px rgba(108,99,255,0.18)' },
+    featuredTitle: 'text-white', featuredDesc: 'text-[#A9B6D3]', featuredCta: 'text-white', featuredArrow: 'text-[#8B9BFF]',
+    signin: 'text-[#A9B6D3] hover:text-white', cta: 'cta-primary !py-2 !px-4 text-[13px]',
+    burger: { border: '1px solid rgba(120,140,255,0.3)', background: 'rgba(16,26,56,0.6)' }, burgerText: 'text-white',
+    mobileBg: 'rgba(6,10,22,0.97)', mobileItem: 'text-white', mobileToggle: 'text-[#A9B6D3]', mobileSub: 'text-[#C6D2EE] hover:bg-[rgba(108,99,255,0.1)]', mobileTitle: 'text-[#93A0C2]',
+    mobileSecondary: 'text-[#C6D2EE]', mobileSecondaryBorder: '1px solid rgba(120,140,255,0.3)', mobilePrimary: 'cta-primary !m-0',
+  },
+  light: {
+    header: (solid: boolean) => solid ? 'rgba(255,255,255,0.94)' : 'rgba(255,255,255,0.78)', border: '#E3E7EE',
+    item: 'text-[#3A4357] hover:text-[#0B1220]', itemOpen: 'text-[#0B1220]', colTitle: 'text-[#5E6779]', rowLabel: 'text-[#0B1220]', rowSub: 'text-[#566074]',
+    rowBorder: '#EEF1F5', dot: 'bg-[#2850D8]',
+    featured: { background: '#F5F7FB', border: '1px solid #E3E7EE', boxShadow: 'none' },
+    featuredTitle: 'text-[#0B1220]', featuredDesc: 'text-[#566074]', featuredCta: 'text-[#2850D8]', featuredArrow: 'text-[#2850D8]',
+    signin: 'text-[#3A4357] hover:text-[#0B1220]', cta: 'rounded-lg bg-[#0B1220] text-white font-semibold py-2 px-4 text-[13px] hover:bg-[#1C2436] transition-colors',
+    burger: { border: '1px solid #D2D8E2', background: '#FFFFFF' }, burgerText: 'text-[#0B1220]',
+    mobileBg: 'rgba(255,255,255,0.98)', mobileItem: 'text-[#0B1220]', mobileToggle: 'text-[#566074]', mobileSub: 'text-[#2B3446] hover:bg-[#F1F4F9]', mobileTitle: 'text-[#5E6779]',
+    mobileSecondary: 'text-[#0B1220]', mobileSecondaryBorder: '1px solid #D2D8E2', mobilePrimary: 'bg-[#0B1220] text-white',
+  },
+} as const
+
+export function LightLogo() {
+  return (
+    <a href="/" className="flex items-center gap-2.5">
+      <span className="flex h-8 w-8 items-center justify-center rounded-lg" style={{ background: '#0B1220' }}>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M4 12a8 8 0 0 1 16 0" stroke="#fff" strokeWidth="2.4" strokeLinecap="round" />
+          <circle cx="12" cy="14" r="3.2" fill="#fff" />
+          <circle cx="12" cy="4" r="1.6" fill="#9DB4FF" />
+        </svg>
+      </span>
+      <span className="font-display text-[15px] font-semibold tracking-tight text-[#0B1220]">DCS Connector OS</span>
+    </a>
+  )
+}
+
+export function Nav({ theme = 'dark' }: { theme?: 'dark' | 'light' } = {}) {
+  const T = THEMES[theme]
   const [open, setOpen] = useState<string | null>(null)
   const [mobileOpen, setMobileOpen] = useState(false)
   const [mobileArea, setMobileArea] = useState<string | null>(null)
@@ -250,11 +293,11 @@ export function Nav() {
 
   return (
     <header
-      className="fixed top-0 inset-x-0 z-50 transition-all duration-300"
-      style={{ background: scrolled || mobileOpen ? 'rgba(6,10,22,0.92)' : 'rgba(6,10,22,0.5)', backdropFilter: 'blur(16px)', borderBottom: '1px solid rgba(120,140,255,0.14)' }}
+      className={`fixed top-0 inset-x-0 z-50 transition-all duration-300 ${theme === 'light' ? 'nav-light' : ''}`}
+      style={{ background: T.header(scrolled || mobileOpen), backdropFilter: 'blur(16px)', borderBottom: `1px solid ${T.border}` }}
     >
       <div className={`mx-auto max-w-[1400px] px-8 flex items-center justify-between transition-all duration-300 ${scrolled ? 'h-14' : 'h-16'}`}>
-        <a href="/" className="shrink-0" onClick={() => setMobileOpen(false)}><Logo /></a>
+        <a href="/" className="shrink-0" onClick={() => setMobileOpen(false)}>{theme === 'light' ? <LightLogo /> : <Logo />}</a>
         <nav ref={navRef} className="hidden lg:flex items-center gap-0.5" aria-label="Primary" onMouseLeave={leave}>
           {NAV_ITEMS.map((item) => (
             <div key={item} className="relative" onMouseEnter={() => enter(item)}>
@@ -267,7 +310,7 @@ export function Nav() {
                 }}
                 aria-haspopup={DROPS[item] ? 'menu' : undefined}
                 aria-expanded={open === item}
-                className={`px-3 py-2 text-[13.5px] font-medium rounded-lg transition-colors duration-200 flex items-center gap-1 ${open === item ? 'text-white' : 'text-[#A9B6D3] hover:text-white'}`}
+                className={`px-3 py-2 text-[13.5px] font-medium rounded-lg transition-colors duration-200 flex items-center gap-1 ${open === item ? T.itemOpen : T.item}`}
               >
                 {item}
                 {DROPS[item] && (
@@ -282,31 +325,31 @@ export function Nav() {
                   <div className="p-4 flex gap-5" style={CENTER.has(item) ? {} : { width: WIDE.has(item) ? 720 : 460, maxWidth: 'calc(100vw - 32px)' }}>
                     {DROPS[item].cols.map((col, ci) => (
                       <div key={col.title || ci} className={col.w ? 'shrink-0 min-w-0' : 'flex-1 min-w-0'} style={col.w ? { width: col.w } : undefined}>
-                        <div className="text-[10.5px] font-semibold uppercase tracking-[0.16em] text-[#93A0C2] mb-2 px-2 min-h-[13px]">{col.title}</div>
+                        <div className={`text-[10.5px] font-semibold uppercase tracking-[0.16em] ${T.colTitle} mb-2 px-2 min-h-[13px]`}>{col.title}</div>
                         {col.items.map((it, idx) => (
-                          <button key={it.label} role="menuitem" onClick={() => go(it.conn ? `/connectors/${it.conn}` : it.to ?? ITEM_ROUTES[item])} className="nav-dropdown-row flex items-center gap-2.5 w-full text-left px-2 py-[7px]" style={idx < col.items.length - 1 ? { borderBottom: '1px solid rgba(120,140,255,0.09)' } : undefined}>
+                          <button key={it.label} role="menuitem" onClick={() => go(it.conn ? `/connectors/${it.conn}` : it.to ?? ITEM_ROUTES[item])} className="nav-dropdown-row flex items-center gap-2.5 w-full text-left px-2 py-[7px]" style={idx < col.items.length - 1 ? { borderBottom: `1px solid ${T.rowBorder}` } : undefined}>
                             {it.conn ? (
                               <ConnectorLogo name={it.label} src={FEATURED_ROWS[it.conn].logo} size={22} />
                             ) : (
-                              <span className="w-1 h-1 rounded-full bg-[#5A7BFF] shrink-0 ml-1" aria-hidden="true" />
+                              <span className={`w-1 h-1 rounded-full ${T.dot} shrink-0 ml-1`} aria-hidden="true" />
                             )}
                             <span className="min-w-0">
-                              <span className={`block text-[13px] text-[#D6E1FF] leading-tight ${it.one ? 'whitespace-nowrap' : ''}`}>{it.label}</span>
-                              {it.sub && <span className="block text-[10.5px] text-[#93A0C2] leading-tight mt-0.5 truncate">{it.sub}</span>}
+                              <span className={`block text-[13px] ${T.rowLabel} leading-tight ${it.one ? 'whitespace-nowrap' : ''}`}>{it.label}</span>
+                              {it.sub && <span className={`block text-[10.5px] ${T.rowSub} leading-tight mt-0.5 truncate`}>{it.sub}</span>}
                             </span>
                           </button>
                         ))}
                       </div>
                     ))}
                     {DROPS[item].featured && (
-                      <div className="w-[200px] shrink-0 rounded-xl p-4 flex flex-col justify-between" style={{ background: 'linear-gradient(150deg, rgba(90,123,255,0.22), rgba(124,77,255,0.18))', border: '1px solid rgba(124,77,255,0.4)', boxShadow: '0 0 24px rgba(108,99,255,0.18)' }}>
+                      <div className="w-[200px] shrink-0 rounded-xl p-4 flex flex-col justify-between" style={T.featured}>
                         <div>
-                          <div className="text-[13px] font-semibold text-white">{DROPS[item].featured!.title}</div>
-                          <p className="mt-1.5 text-[11px] leading-relaxed text-[#A9B6D3]">{DROPS[item].featured!.desc}</p>
+                          <div className={`text-[13px] font-semibold ${T.featuredTitle}`}>{DROPS[item].featured!.title}</div>
+                          <p className={`mt-1.5 text-[11px] leading-relaxed ${T.featuredDesc}`}>{DROPS[item].featured!.desc}</p>
                         </div>
-                        <button onClick={() => go(ITEM_ROUTES[item])} className="group mt-4 inline-flex items-center gap-1.5 text-[12px] font-semibold text-white">
+                        <button onClick={() => go(ITEM_ROUTES[item])} className={`group mt-4 inline-flex items-center gap-1.5 text-[12px] font-semibold ${T.featuredCta}`}>
                           {DROPS[item].featured!.cta}
-                          <span className="transition-transform duration-200 group-hover:translate-x-1 text-[#8B9BFF]">→</span>
+                          <span className={`transition-transform duration-200 group-hover:translate-x-1 ${T.featuredArrow}`}>→</span>
                         </button>
                       </div>
                     )}
@@ -317,11 +360,11 @@ export function Nav() {
           ))}
         </nav>
         <div className="flex items-center gap-3">
-          <a href="/signin" className="hidden sm:block text-[13.5px] font-medium text-[#A9B6D3] hover:text-white transition-colors">Sign in</a>
-          <a href="/signin" className="cta-primary !py-2 !px-4 text-[13px] hidden sm:inline-flex">Start building</a>
+          <a href="/signin" className={`hidden sm:block text-[13.5px] font-medium ${T.signin} transition-colors`}>Sign in</a>
+          <a href="/signin" className={`${T.cta} hidden sm:inline-flex`}>Start building</a>
           <button
-            className="lg:hidden w-10 h-10 flex items-center justify-center rounded-lg text-white"
-            style={{ border: '1px solid rgba(120,140,255,0.3)', background: 'rgba(16,26,56,0.6)' }}
+            className={`lg:hidden w-10 h-10 flex items-center justify-center rounded-lg ${T.burgerText}`}
+            style={T.burger}
             aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
             aria-expanded={mobileOpen}
             onClick={() => { setMobileOpen((v) => !v); setMobileArea(null) }}
@@ -336,12 +379,12 @@ export function Nav() {
       </div>
 
       {mobileOpen && (
-        <nav aria-label="Mobile" className="lg:hidden overflow-y-auto" style={{ maxHeight: 'calc(100vh - 64px)', background: 'rgba(6,10,22,0.97)', borderTop: '1px solid rgba(120,140,255,0.14)' }}>
+        <nav aria-label="Mobile" className="lg:hidden overflow-y-auto" style={{ maxHeight: 'calc(100vh - 64px)', background: T.mobileBg, borderTop: `1px solid ${T.border}` }}>
           <div className="px-6 py-4">
             {NAV_ITEMS.map((item) => (
-              <div key={item} style={{ borderBottom: '1px solid rgba(120,140,255,0.1)' }}>
+              <div key={item} style={{ borderBottom: `1px solid ${theme === 'light' ? T.rowBorder : 'rgba(120,140,255,0.1)'}` }}>
                 <div className="flex items-center">
-                  <button onClick={() => go(ITEM_ROUTES[item])} className="flex-1 text-left py-3.5 text-[15px] font-semibold text-white">
+                  <button onClick={() => go(ITEM_ROUTES[item])} className={`flex-1 text-left py-3.5 text-[15px] font-semibold ${T.mobileItem}`}>
                     {item}
                   </button>
                   {DROPS[item] && (
@@ -349,7 +392,7 @@ export function Nav() {
                       onClick={() => setMobileArea((cur) => (cur === item ? null : item))}
                       aria-expanded={mobileArea === item}
                       aria-label={`Toggle ${item} submenu`}
-                      className="w-10 h-10 flex items-center justify-center text-[#A9B6D3]"
+                      className={`w-10 h-10 flex items-center justify-center ${T.mobileToggle}`}
                     >
                       <svg width="12" height="12" viewBox="0 0 24 24" fill="none" className={`transition-transform duration-200 ${mobileArea === item ? 'rotate-180' : ''}`} aria-hidden="true">
                         <path d="m6 9 6 6 6-6" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" />
@@ -361,9 +404,9 @@ export function Nav() {
                   <div className="pb-3 pl-3">
                     {DROPS[item].cols.map((col, ci) => (
                       <div key={col.title || ci} className="mb-2">
-                        <div className="text-[10px] font-semibold uppercase tracking-[0.16em] text-[#93A0C2] py-1.5">{col.title}</div>
+                        <div className={`text-[10px] font-semibold uppercase tracking-[0.16em] ${T.mobileTitle} py-1.5`}>{col.title}</div>
                         {col.items.map((it) => (
-                          <button key={it.label} onClick={() => go(it.conn ? `/connectors/${it.conn}` : it.to ?? ITEM_ROUTES[item])} className="block w-full text-left py-2 px-2 text-[13.5px] text-[#C6D2EE] rounded-lg hover:bg-[rgba(108,99,255,0.1)]">
+                          <button key={it.label} onClick={() => go(it.conn ? `/connectors/${it.conn}` : it.to ?? ITEM_ROUTES[item])} className={`block w-full text-left py-2 px-2 text-[13.5px] ${T.mobileSub} rounded-lg`}>
                             {it.label}
                           </button>
                         ))}
@@ -374,8 +417,8 @@ export function Nav() {
               </div>
             ))}
             <div className="py-4 flex gap-3">
-              <a href="/receipts" onClick={() => setMobileOpen(false)} className="flex-1 text-center py-3 rounded-xl text-[14px] font-semibold text-[#C6D2EE]" style={{ border: '1px solid rgba(120,140,255,0.3)' }}>Receipts</a>
-              <a href="/signin" onClick={() => setMobileOpen(false)} className="flex-1 text-center py-3 rounded-xl text-[14px] font-semibold cta-primary !m-0">Sign in</a>
+              <a href="/receipts" onClick={() => setMobileOpen(false)} className={`flex-1 text-center py-3 rounded-xl text-[14px] font-semibold ${T.mobileSecondary}`} style={{ border: T.mobileSecondaryBorder }}>Receipts</a>
+              <a href="/signin" onClick={() => setMobileOpen(false)} className={`flex-1 text-center py-3 rounded-xl text-[14px] font-semibold ${T.mobilePrimary}`}>Sign in</a>
             </div>
           </div>
         </nav>

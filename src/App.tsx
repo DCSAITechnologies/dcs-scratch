@@ -24,6 +24,7 @@ const ConnectorDetail = lazy(() => import('./pages/ConnectorDetail').then((m) =>
 const DashApp = lazy(() => import('./pages/dash').then((m) => ({ default: m.DashApp })))
 // Founder-review hero concepts (noindex; not linked from the site)
 const HeroPreview = lazy(() => import('./pages/preview/HeroConcepts').then((m) => ({ default: m.HeroPreview })))
+const HomeDemo = lazy(() => import('./pages/preview/HomeDemo').then((m) => ({ default: m.HomeDemo })))
 
 function RouteLoading({ console: inConsole = false }: { console?: boolean }) {
   return (
@@ -43,6 +44,9 @@ export default function App() {
     return <Suspense fallback={<RouteLoading console />}><DashApp path={route} /></Suspense>
   }
 
+  if (/^\/preview\/home\/?$/.test(route)) {
+    return <Suspense fallback={<RouteLoading />}><HomeDemo /></Suspense>
+  }
   if (/^\/preview\/(heroes|hero-[abc])\/?$/.test(route)) {
     return <Suspense fallback={<RouteLoading />}><HeroPreview route={route} /></Suspense>
   }
