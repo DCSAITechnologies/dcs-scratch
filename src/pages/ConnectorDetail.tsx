@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { TOTAL_CATALOGUED, resolvePublic, LEGACY_REFERENCE_MAP, statusColor, ctaLabel, runtimeStatusLabel, isTemplated, type Conn } from '../lib/data'
+import { TOTAL_CATALOGUED, resolvePublic, LEGACY_REFERENCE_MAP, rwLabel, dispatchReasonLabel, isAvailableToConnect, statusColor, ctaLabel, runtimeStatusLabel, isTemplated, type Conn } from '../lib/data'
 import { ConnectorLogo } from '../components/ConnectorLogo'
 import { navigate } from '../hooks/usePathRoute'
 
@@ -135,6 +135,11 @@ function ConnectorDetailView({ c, legacy, resolved }: { c: Conn; legacy?: Conn; 
               </div>
             </div>
             <p className="mt-5 max-w-2xl text-[14.5px] leading-relaxed text-[#A9B6D3]">{c.d}</p>
+            {c.core && !isAvailableToConnect(c) && (
+              <p className="mt-3 max-w-2xl text-[12.5px] text-[#93A0C2]" data-testid="dispatch-truth">
+                Not available to connect yet — Connector OS core reports: {c.core.dispatch.reasons.map(dispatchReasonLabel).join('; ')}.
+              </p>
+            )}
             <div className="mt-6 flex flex-wrap gap-3">
               {c.cta === 'coming_soon'
                 ? <span className="cta-secondary opacity-60 cursor-not-allowed">Coming Soon</span>
@@ -149,7 +154,7 @@ function ConnectorDetailView({ c, legacy, resolved }: { c: Conn; legacy?: Conn; 
             </div>
             <div className="mt-5 flex flex-wrap gap-2">
               <span className="chip">{c.auth}</span>
-              <span className="chip">{c.rw === 'read' ? 'Read only' : 'Read + write'}</span>
+              <span className="chip">{rwLabel(c.rw)}</span>
               {c.wh && <span className="chip">Webhooks</span>}
               {c.ops.includes('Money-moving') && <span className="chip" style={{ borderColor: '#EF444466', color: '#EF4444' }}>Money-moving</span>}
             </div>
@@ -165,11 +170,13 @@ function ConnectorDetailView({ c, legacy, resolved }: { c: Conn; legacy?: Conn; 
               <Row k="Provider" v={c.p} />
               <Row k="Category" v={c.cat} />
               <Row k="Authentication" v={c.auth} />
-              <Row k="Read/write" v={c.rw === 'read' ? 'Read only' : 'Read + write'} />
+              <Row k="Read/write" v={rwLabel(c.rw)} />
               <Row k="Webhooks" v={c.wh ? 'Supported' : 'Not currently supported'} />
               <Row k="Access model" v={c.cta === 'notify' ? 'Opens at launch' : c.cta === 'request_access' ? 'Approval required' : c.cta === 'contact' ? 'Enterprise onboarding' : 'Not yet available'} />
                             <Row k="Docs verified" v={c.verified} />
-              <Row k="Catalogue rank" v={`#${c.r} of ${TOTAL_CATALOGUED} (documentation priority)`} />
+              <Row k="Catalogue rank" v={c.r == null ? (c.core ? `Unranked (${c.core.pack === 'GOLDEN-FIVE' ? 'Golden Five' : c.core.pack.toLowerCase()} pack)` : null) : `#${c.r} of ${TOTAL_CATALOGUED} (engineering rank)`} />
+              {c.core && <Row k="Engineering status" v={c.core.disposition.replaceAll('_', ' ').toLowerCase()} />}
+              {c.core && <Row k="Available to connect" v={isAvailableToConnect(c) ? 'Yes' : 'Not yet'} />}
             </div>
           </aside>
 

@@ -9,7 +9,7 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "prerender": "python3 scripts/prerender.py",
-    "gates": "python3 scripts/validate-catalogue.py && python3 scripts/check-stale-counts.py && python3 scripts/dashboard-snapshot.py && python3 scripts/status-snapshot.py && python3 scripts/test-legacy-routes.py",
+    "gates": "python3 scripts/sync-catalogue.py --check && python3 scripts/validate-catalogue.py && python3 scripts/check-stale-counts.py && python3 scripts/dashboard-snapshot.py && python3 scripts/status-snapshot.py && python3 scripts/test-legacy-routes.py",
     "smoke": "python3 scripts/route-smoke.py",
     "test:e2e": "playwright test",
     "reconcile": "python3 scripts/reconcile-catalogue.py",
@@ -18,7 +18,8 @@
     "dev:mock": "vite --mode mock",
     "build:mock": "vite build --mode mock --outDir dist-mock",
     "api:types": "openapi-typescript public/devportal/01_openapi/connector-os-v1.yaml -o src/lib/api/schema.gen.ts",
-    "test:unit": "vitest run"
+    "test:unit": "vitest run",
+    "sync:catalogue": "python3 scripts/sync-catalogue.py"
   },
   "dependencies": {
     "oidc-client-ts": "^3.5.0",

@@ -234,5 +234,7 @@ export const CATALOGUE_RUNTIME = CONNECTORS.map((c) => ({
   runtime_status: c.runtime_status ?? 'not_verified', auth: c.auth, rw: c.rw, webhooks: c.wh,
   published: c.unpublished !== true, hold_category: c.hold_category ?? null,
   engineering_status: c.engineering_status ?? null, dispatch_eligibility: c.dispatch_eligibility ?? null,
-  alias_of: c.alias_of ?? null, rank: c.r,
+  alias_of: c.alias_of ?? null, rank: c.r, pack: c.core?.pack ?? null,
+  available: Boolean(c.core?.dispatch.staging || c.core?.dispatch.production),
+  dispatch_reasons: c.core?.dispatch.reasons ?? [], founder_holds: c.core?.founder_holds ?? [],
 }))

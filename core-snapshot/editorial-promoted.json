@@ -1,0 +1,317 @@
+{
+ "github": {
+  "id": "github",
+  "r": 29,
+  "n": "GitHub",
+  "p": "GitHub",
+  "cat": "Developer Tools",
+  "s": "Preview",
+  "auth": "OAuth 2.0",
+  "rw": "read + write",
+  "wh": true,
+  "whEvents": [
+   "repositories.created",
+   "repositories.updated",
+   "issues.created"
+  ],
+  "d": "GitHub by GitHub — developer tools connector for repository access, issue management and workflow triggers through Connector OS.",
+  "l": "The GitHub connector gives agents governed access to GitHub's GitHub platform. Supported capabilities include repository access, issue management and workflow triggers, across resources such as repositories, issues, pull requests. All actions run through the Connector OS execution layer with policy checks, approval gating and verifiable receipts.",
+  "caps": [
+   "repository access",
+   "issue management",
+   "workflow triggers"
+  ],
+  "res": [
+   "repositories",
+   "issues",
+   "pull requests"
+  ],
+  "uc": [
+   "Automate repositories workflows",
+   "Sync issues with internal systems",
+   "Agent-driven pull requests operations"
+  ],
+  "ops": [
+   "Read",
+   "Write"
+  ],
+  "scopes": [
+   "read:repositories",
+   "write:issues"
+  ],
+  "optScopes": [],
+  "flow": "OAuth 2.0 authorization-code",
+  "reqs": [
+   "Active GitHub account",
+   "API access enabled",
+   "Provider app registration"
+  ],
+  "logo": "logos/github.png",
+  "site": "https://github.com",
+  "portal": "https://docs.github.com",
+  "api": "https://docs.github.com/rest",
+  "authDocs": "https://docs.github.com/authentication",
+  "whDocs": "https://docs.github.com",
+  "statusUrl": "https://status.github.com",
+  "verified": "2026-09-26",
+  "cta": "notify",
+  "runtime_status": "not_verified",
+  "description_source": "auto-pending",
+  "lane6_classification": "KEEP_REFERENCE",
+  "lane6_behavior": "PRESERVE_REFERENCE_SURFACE",
+  "lane6_redirect_to": "/connectors/github",
+  "legacy_surface": true
+ },
+ "notion": {
+  "id": "notion",
+  "r": 179,
+  "n": "Notion",
+  "p": "Notion",
+  "cat": "Productivity",
+  "s": "Preview",
+  "auth": "OAuth 2.0",
+  "rw": "read + write",
+  "wh": true,
+  "whEvents": [
+   "documents.created",
+   "documents.updated",
+   "tasks.created"
+  ],
+  "d": "Notion by Notion — productivity connector for document sync, task management and file search through Connector OS.",
+  "l": "The Notion connector gives agents governed access to Notion's Notion platform. Supported capabilities include document sync, task management and file search, across resources such as documents, tasks, files. All actions run through the Connector OS execution layer with policy checks, approval gating and verifiable receipts.",
+  "caps": [
+   "document sync",
+   "task management",
+   "file search"
+  ],
+  "res": [
+   "documents",
+   "tasks",
+   "files"
+  ],
+  "uc": [
+   "Automate documents workflows",
+   "Sync tasks with internal systems",
+   "Agent-driven files operations"
+  ],
+  "ops": [
+   "Read",
+   "Write"
+  ],
+  "scopes": [
+   "read:documents",
+   "write:tasks"
+  ],
+  "optScopes": [],
+  "flow": "OAuth 2.0 authorization-code",
+  "reqs": [
+   "Active Notion account",
+   "API access enabled",
+   "Provider app registration"
+  ],
+  "logo": "logos/notion.png",
+  "site": "https://notion.so",
+  "portal": "https://developers.notion.com",
+  "api": "https://developers.notion.com/reference/intro",
+  "authDocs": "https://developers.notion.com/docs/authorization",
+  "whDocs": "https://developers.notion.com",
+  "statusUrl": "https://status.notion.so",
+  "verified": "2026-09-26",
+  "cta": "notify",
+  "runtime_status": "not_verified",
+  "description_source": "auto-pending",
+  "lane6_classification": "KEEP_REFERENCE",
+  "lane6_behavior": "PRESERVE_REFERENCE_SURFACE",
+  "lane6_redirect_to": "/connectors/notion",
+  "legacy_surface": true
+ },
+ "slack": {
+  "id": "slack",
+  "r": 182,
+  "n": "Slack",
+  "p": "Slack",
+  "cat": "Productivity",
+  "s": "Preview",
+  "auth": "OAuth 2.0",
+  "rw": "read + write",
+  "wh": true,
+  "whEvents": [
+   "documents.created",
+   "documents.updated",
+   "tasks.created"
+  ],
+  "d": "Slack by Slack — productivity connector for document sync, task management and file search through Connector OS.",
+  "l": "The Slack connector gives agents governed access to Slack's Slack platform. Supported capabilities include document sync, task management and file search, across resources such as documents, tasks, files. All actions run through the Connector OS execution layer with policy checks, approval gating and verifiable receipts.",
+  "caps": [
+   "document sync",
+   "task management",
+   "file search"
+  ],
+  "res": [
+   "documents",
+   "tasks",
+   "files"
+  ],
+  "uc": [
+   "Automate documents workflows",
+   "Sync tasks with internal systems",
+   "Agent-driven files operations"
+  ],
+  "ops": [
+   "Read",
+   "Write"
+  ],
+  "scopes": [
+   "read:documents",
+   "write:tasks"
+  ],
+  "optScopes": [],
+  "flow": "OAuth 2.0 authorization-code",
+  "reqs": [
+   "Active Slack account",
+   "API access enabled",
+   "Provider app registration"
+  ],
+  "logo": "logos/slack.png",
+  "site": "https://slack.com",
+  "portal": "https://api.slack.com",
+  "api": "https://api.slack.com/methods",
+  "authDocs": "https://api.slack.com/authentication",
+  "whDocs": "https://api.slack.com",
+  "statusUrl": "https://status.slack.com",
+  "verified": "2026-09-26",
+  "cta": "notify",
+  "runtime_status": "not_verified",
+  "description_source": "auto-pending",
+  "lane6_classification": "KEEP_REFERENCE",
+  "lane6_behavior": "PRESERVE_REFERENCE_SURFACE",
+  "lane6_redirect_to": "/connectors/slack",
+  "legacy_surface": true
+ },
+ "stripe": {
+  "id": "stripe",
+  "r": 325,
+  "n": "Stripe",
+  "p": "Stripe",
+  "cat": "Payments & Fintech",
+  "s": "Limited Access",
+  "auth": "API Key",
+  "rw": "read + write",
+  "wh": true,
+  "whEvents": [
+   "payments.created",
+   "payments.updated",
+   "refunds.created"
+  ],
+  "d": "Stripe by Stripe — payments & fintech connector for payment creation, refund processing and balance lookup through Connector OS.",
+  "l": "The Stripe connector gives agents governed access to Stripe's Stripe platform. Supported capabilities include payment creation, refund processing and balance lookup, across resources such as payments, refunds, customers. All actions run through the Connector OS execution layer with policy checks, approval gating and verifiable receipts.",
+  "caps": [
+   "payment creation",
+   "refund processing",
+   "balance lookup"
+  ],
+  "res": [
+   "payments",
+   "refunds",
+   "customers"
+  ],
+  "uc": [
+   "Automate payments workflows",
+   "Sync refunds with internal systems",
+   "Agent-driven customers operations"
+  ],
+  "ops": [
+   "Read",
+   "Write",
+   "Money-moving"
+  ],
+  "scopes": [
+   "read:payments",
+   "write:refunds"
+  ],
+  "optScopes": [],
+  "flow": "API key header",
+  "reqs": [
+   "Active Stripe account",
+   "API access enabled"
+  ],
+  "logo": "logos/stripe.png",
+  "site": "https://stripe.com",
+  "portal": "https://stripe.com/docs",
+  "api": "https://stripe.com/docs/api",
+  "authDocs": "https://stripe.com/docs/keys",
+  "whDocs": "https://stripe.com/docs",
+  "statusUrl": "https://status.stripe.com",
+  "verified": "2026-09-26",
+  "cta": "request_access",
+  "runtime_status": "not_verified",
+  "description_source": "auto-pending",
+  "lane6_classification": "KEEP_REFERENCE",
+  "lane6_behavior": "PRESERVE_REFERENCE_SURFACE",
+  "lane6_redirect_to": "/connectors/stripe",
+  "legacy_surface": true
+ },
+ "linear": {
+  "id": "linear",
+  "r": 34,
+  "n": "Linear",
+  "p": "Linear",
+  "cat": "Developer Tools",
+  "s": "Preview",
+  "auth": "OAuth 2.0",
+  "rw": "read + write",
+  "wh": true,
+  "whEvents": [
+   "repositories.created",
+   "repositories.updated",
+   "issues.created"
+  ],
+  "d": "Linear by Linear — developer tools connector for repository access, issue management and workflow triggers through Connector OS.",
+  "l": "The Linear connector gives agents governed access to Linear's Linear platform. Supported capabilities include repository access, issue management and workflow triggers, across resources such as repositories, issues, pull requests. All actions run through the Connector OS execution layer with policy checks, approval gating and verifiable receipts.",
+  "caps": [
+   "repository access",
+   "issue management",
+   "workflow triggers"
+  ],
+  "res": [
+   "repositories",
+   "issues",
+   "pull requests"
+  ],
+  "uc": [
+   "Automate repositories workflows",
+   "Sync issues with internal systems",
+   "Agent-driven pull requests operations"
+  ],
+  "ops": [
+   "Read",
+   "Write"
+  ],
+  "scopes": [
+   "read:repositories",
+   "write:issues"
+  ],
+  "optScopes": [],
+  "flow": "OAuth 2.0 authorization-code",
+  "reqs": [
+   "Active Linear account",
+   "API access enabled",
+   "Provider app registration"
+  ],
+  "logo": "logos/linear.png",
+  "site": "https://linear.app",
+  "portal": "https://developers.linear.app",
+  "api": "https://developers.linear.app/docs/graphql/working-with-the-graphql-api",
+  "authDocs": "https://developers.linear.app/docs/oauth/authentication",
+  "whDocs": "https://developers.linear.app",
+  "statusUrl": "https://status.linear.app",
+  "verified": "2026-09-26",
+  "cta": "notify",
+  "runtime_status": "not_verified",
+  "description_source": "auto-pending",
+  "lane6_classification": "KEEP_REFERENCE",
+  "lane6_behavior": "PRESERVE_REFERENCE_SURFACE",
+  "lane6_redirect_to": "/connectors/linear",
+  "legacy_surface": true
+ }
+}

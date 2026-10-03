@@ -1,0 +1,5 @@
+{
+ "schema": "dcs.staging-verified/v1",
+ "$comment": "Recorded staging verifications (D-9 (g), CR-39). Production eligibility requires an entry; only the listed tools become production-eligible. Empty: nothing has been staging-verified. Entries are added only by a reviewed commit carrying the staging run's evidence.",
+ "verified": []
+}

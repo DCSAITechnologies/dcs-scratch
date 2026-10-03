@@ -19,7 +19,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA = os.path.join(ROOT, 'src', 'lib', 'connectors.json')
 LOGOS = os.path.join(ROOT, 'public', 'logos')
 
-ALLOWED_STATUS = {'Preview', 'Read Only', 'Limited Access', 'Coming Soon', 'Provider Approval Required', 'HOLD'}
+ALLOWED_STATUS = {'Preview', 'Read Only', 'Limited Access', 'Coming Soon', 'Provider Approval Required', 'HOLD', 'Blocked', 'Available'}
 ALLOWED_RUNTIME = {'not_verified', 'staging_verified', 'production_verified'}
 
 def main() -> int:
@@ -39,7 +39,10 @@ def main() -> int:
     if dupes:
         errors.append(f'DUPLICATES={dupes[:10]}')
 
-    ranks = sorted(c['r'] for c in records)
+    # ranks: the core engineering rank. Ranked rows are contiguous 1..N; unranked
+    # rows (Golden Five, reference connectors, blocked-unranked) carry r = null.
+    unranked = [c['id'] for c in records if c['r'] is None]
+    ranks = sorted(c['r'] for c in records if c['r'] is not None)
     gaps = [r for r in range(1, (ranks[-1] if ranks else 0) + 1) if r not in set(ranks)]
     rank_dupes = sorted({r for r in ranks if ranks.count(r) > 1})
     if gaps:
@@ -59,6 +62,11 @@ def main() -> int:
             errors.append(f"{c['id']}: bad runtime_status {rs!r}")
         if c.get('s') == 'Available' and rs == 'not_verified':
             errors.append(f"{c['id']}: Available without runtime evidence — forbidden")
+        core = c.get('core') or {}
+        if c.get('s') in ('Available', 'Preview') and not (core.get('dispatch') or {}).get('production' if c['s'] == 'Available' else 'staging'):
+            errors.append(f"{c['id']}: catalogue status {c['s']} without core dispatch eligibility — forbidden")
+        if (core.get('founder_holds') or core.get('disposition') == 'BLOCKED') and not c.get('unpublished'):
+            errors.append(f"{c['id']}: core hold/BLOCKED but published")
         logo = c.get('logo')
         if logo:
             fn = logo.split('/')[-1]
@@ -66,6 +74,25 @@ def main() -> int:
                 missing_logo += 1
     if missing_logo:
         errors.append(f'LOGO_FILES_MISSING={missing_logo}')
+
+    # membership and ranks must equal the committed core snapshot exactly
+    snap = os.path.join(ROOT, 'core-snapshot', 'catalogue.json')
+    if os.path.isfile(snap):
+        core_rows = json.load(open(snap))['rows']
+        core_ids = [r['connector_id'] for r in core_rows]
+        if sorted(core_ids) != sorted(ids):
+            errors.append(f'MEMBERSHIP differs from core snapshot (core {len(core_ids)}, site {len(ids)})')
+        core_rank = {r['connector_id']: r['engineering_rank'] for r in core_rows}
+        drift = [c['id'] for c in records if core_rank.get(c['id'], 'x') != c['r']]
+        if drift:
+            errors.append(f'RANK_DRIFT_FROM_CORE={drift[:10]}')
+    else:
+        errors.append('core-snapshot/catalogue.json missing')
+    if errors:
+        print('CATALOGUE VALIDATION: FAIL')
+        for e in errors[:40]:
+            print(' -', e)
+        return 1
 
     published = sum(1 for c in records if not c.get('unpublished'))
     runtime_verified = sum(1 for c in records if c.get('runtime_status') not in (None, 'not_verified'))
@@ -76,7 +103,7 @@ def main() -> int:
             print(' -', e)
         return 1
     print(f'CATALOGUE VALIDATION: green — TOTAL={total} PUBLISHED={published} UNIQUE_IDS={len(set(ids))} '
-          f'RANKS=1-{ranks[-1] if ranks else 0} GAPS=0 DUPES=0 RUNTIME_VERIFIED={runtime_verified}')
+          f'RANKS=1-{ranks[-1] if ranks else 0} UNRANKED={len(unranked)} GAPS=0 DUPES=0 RUNTIME_VERIFIED={runtime_verified} (= core snapshot)')
     return 0
 
 if __name__ == '__main__':

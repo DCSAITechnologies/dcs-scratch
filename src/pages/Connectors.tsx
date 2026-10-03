@@ -1,5 +1,5 @@
 import { useEffect, useId, useMemo, useRef, useState } from 'react'
-import { PUBLISHED_CONNECTORS as CONNECTORS, LEGACY_REFERENCE_SURFACES, TOTAL_CATALOGUED, PUBLISHED_COUNT, UNPUBLISHED_COUNT, CATEGORIES, STATUSES, AUTH_TYPES, RUNTIME_STATUSES, statusColor, runtimeStatusLabel, type Conn } from '../lib/data'
+import { PUBLISHED_CONNECTORS as CONNECTORS, LEGACY_REFERENCE_SURFACES, TOTAL_CATALOGUED, PUBLISHED_COUNT, UNPUBLISHED_COUNT, AVAILABLE_TO_CONNECT_COUNT, CORE_HEAD, byRank, CATEGORIES, STATUSES, AUTH_TYPES, RUNTIME_STATUSES, statusColor, runtimeStatusLabel, type Conn } from '../lib/data'
 import { ConnectorLogo } from '../components/ConnectorLogo'
 
 const PAGE = 60
@@ -104,7 +104,7 @@ export function Connectors() {
       (!wh || c.wh) &&
       matchesQuery(c, q)
     )
-    list = sort === 'rank' ? list.sort((a, b) => a.r - b.r) : list.sort((a, b) => a.n.localeCompare(b.n))
+    list = sort === 'rank' ? list.sort(byRank) : list.sort((a, b) => a.n.localeCompare(b.n))
     return list
   }, [q, cat, status, runtime, auth, rw, wh, sort])
 
@@ -120,7 +120,7 @@ export function Connectors() {
       (!wh || c.wh) &&
       matchesQuery(c, q)
     )
-    list = sort === 'rank' ? list.sort((a, b) => a.r - b.r) : list.sort((a, b) => a.n.localeCompare(b.n))
+    list = sort === 'rank' ? list.sort((a, b) => (a.r ?? 0) - (b.r ?? 0)) : list.sort((a, b) => a.n.localeCompare(b.n))
     return list
   }, [q, cat, status, runtime, auth, rw, wh, sort])
 
@@ -131,6 +131,9 @@ export function Connectors() {
         <h1 className="text-4xl font-semibold tracking-tight text-white">{PUBLISHED_COUNT} published connectors. One governed interface.</h1>
         <p className="mt-2 text-[12.5px] text-[#93A0C2]" data-testid="catalogue-counts">
           {TOTAL_CATALOGUED} records in the canonical catalogue · {PUBLISHED_COUNT} published · {UNPUBLISHED_COUNT} on hold (not listed pending policy, legal or provider review)
+        </p>
+        <p className="mt-1 text-[12px] text-[#93A0C2]" data-testid="availability-line">
+          Available to connect today: {AVAILABLE_TO_CONNECT_COUNT}. A connector becomes connectable only when Connector OS core grants it dispatch eligibility after staging verification{CORE_HEAD ? ` (core ${CORE_HEAD.slice(0, 7)})` : ''}.
         </p>
         <p className="mt-3 max-w-2xl text-[14px] text-[#A9B6D3]">
           Every connector documents capabilities, authentication, permissions, webhooks and official documentation — from official provider sources, with verification status shown per connector. Catalogue status describes documentation and access model; runtime verification is published per connector as it is earned.
@@ -181,7 +184,7 @@ export function Connectors() {
                   <div className="text-[14px] font-semibold text-white truncate">{c.n}</div>
                   <div className="text-[11px] text-[#93A0C2] truncate">{c.p}</div>
                 </div>
-                <span className="ml-auto text-[10px] font-bold text-[#5A7BFF]">#{c.r}</span>
+                <span className="ml-auto text-[10px] font-bold text-[#7EA2FF]" title={c.r == null ? `Unranked in core (${c.core?.pack ?? 'no pack'})` : 'Core engineering rank'}>{c.r == null ? c.core?.pack === 'GOLDEN-FIVE' ? 'Golden Five' : 'Unranked' : `#${c.r}`}</span>
               </div>
               <p className="text-[12px] leading-relaxed text-[#A9B6D3] line-clamp-2 flex-1">{c.d}</p>
               <div className="mt-4 flex items-center gap-2 flex-wrap">

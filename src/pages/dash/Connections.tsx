@@ -143,14 +143,23 @@ export function DashConnectors() {
   const [cat, setCat] = useState('')
   const [runtime, setRuntime] = useState('')
   const [pub, setPub] = useState('')
+  const [auth, setAuth] = useState('')
+  const [rw, setRw] = useState('')
+  const [webhooks, setWebhooks] = useState('')
+  const [avail, setAvail] = useState('')
+  const [eng, setEng] = useState('')
+  const [sort, setSort] = useState('rank')
   const [q, setQ] = useState(params.get('q') ?? '')
   const [page, setPage] = useState(Math.max(1, Number(params.get('page')) || 1))
   const needle = q.trim().toLowerCase()
   const matching = CATALOGUE_RUNTIME.filter((c) =>
     (!cat || c.category === cat) && (!runtime || c.runtime_status === runtime) &&
     (!pub || (pub === 'published' ? c.published : !c.published)) &&
+    (!auth || c.auth === auth) && (!rw || (rw === 'read only' ? c.rw === 'read' : rw === 'read + write' ? c.rw.includes('write') : !c.rw.startsWith('read'))) &&
+    (!webhooks || (webhooks === 'yes') === c.webhooks) && (!avail || (avail === 'available to connect') === c.available) &&
+    (!eng || c.engineering_status === eng) &&
     (!needle || c.name.toLowerCase().includes(needle) || c.id.includes(needle) || c.provider.toLowerCase().includes(needle))
-  )
+  ).sort(sort === 'name' ? (a, b) => a.name.localeCompare(b.name) : (a, b) => (a.rank ?? 1e9) - (b.rank ?? 1e9) || a.name.localeCompare(b.name))
   const pages = Math.max(1, Math.ceil(matching.length / CONSOLE_PAGE))
   const current = Math.min(page, pages)
   const from = (current - 1) * CONSOLE_PAGE
@@ -171,6 +180,12 @@ export function DashConnectors() {
           <Filter label="Category" value={cat} options={[...new Set(CATALOGUE_RUNTIME.map((c) => c.category))].sort()} onChange={(v) => setFilter(() => setCat(v))} />
           <Filter label="Publication" value={pub} options={['published', 'on hold']} onChange={(v) => setFilter(() => setPub(v))} />
           <Filter label="Runtime" value={runtime} options={['not_verified', 'staging_verified', 'production_verified']} onChange={(v) => setFilter(() => setRuntime(v))} />
+          <Filter label="Availability" value={avail} options={['available to connect', 'not available']} onChange={(v) => setFilter(() => setAvail(v))} />
+          <Filter label="Engineering" value={eng} options={[...new Set(CATALOGUE_RUNTIME.map((c) => c.engineering_status ?? ''))].filter(Boolean).sort()} onChange={(v) => setFilter(() => setEng(v))} />
+          <Filter label="Auth" value={auth} options={[...new Set(CATALOGUE_RUNTIME.map((c) => c.auth))].sort()} onChange={(v) => setFilter(() => setAuth(v))} />
+          <Filter label="Read/write" value={rw} options={['read only', 'read + write', 'not documented']} onChange={(v) => setFilter(() => setRw(v))} />
+          <Filter label="Webhooks" value={webhooks} options={['yes', 'no']} onChange={(v) => setFilter(() => setWebhooks(v))} />
+          <Filter label="Sort" value={sort === 'rank' ? '' : sort} options={['name']} onChange={(v) => setFilter(() => setSort(v || 'rank'))} />
         </FilterBar>
         {legacyHits.length > 0 && (
           <div className="mb-4 px-4 py-3 rounded-xl border border-[#FFB224]/30 bg-[#FFB224]/[0.06] text-[12.5px] text-[#E8C98A]" data-testid="legacy-hint">
@@ -184,13 +199,15 @@ export function DashConnectors() {
         <div className="glass-card p-5">
           {rows.length === 0 ? <EmptyState text="No canonical connector matches these filters." /> : (
             <Table
-              head={['#', 'Connector', 'Provider', 'Category', 'Catalogue status', 'Publication', 'Runtime status', 'Auth', 'R/W', 'Webhooks', 'Actions']}
+              head={['#', 'Connector', 'Provider', 'Category', 'Catalogue status', 'Publication', 'Availability', 'Runtime status', 'Engineering', 'Auth', 'R/W', 'Webhooks', 'Actions']}
               rows={rows.map((c) => [
-                <span key="r" className="text-[#8592AE]">{c.rank}</span>,
+                <span key="r" className="text-[#8592AE]">{c.rank ?? (c.pack === 'GOLDEN-FIVE' ? 'G5' : '—')}</span>,
                 <IdLink key="id" to={`/app/connectors/${c.id}`}>{c.name}</IdLink>,
                 c.provider, c.category, <Pill key="cs" v={c.catalogue_status} />,
                 c.published ? <span key="p" className="text-[12px] text-[#A9B6D3]">published</span> : <span key="p" className="text-[12px] text-[#F5A524]" title={c.hold_category ?? undefined}>on hold</span>,
+                <span key="av" className="text-[12px] text-[#A9B6D3]" title={c.dispatch_reasons.join(', ')}>{c.available ? 'available' : 'not available'}</span>,
                 <span key="rs" className="text-[12px] text-[#A9B6D3]">{c.runtime_status.replaceAll('_', ' ')}</span>,
+                <span key="es" className="text-[12px] text-[#A9B6D3]">{(c.engineering_status ?? '—').replaceAll('_', ' ').toLowerCase()}</span>,
                 c.auth, c.rw, c.webhooks ? 'yes' : '—',
                 <Action key="a" label="Connect" maturity="STAGING ONLY" title="Enabled when runtime status ≥ staging-verified and claim_level ≥ STAGING" />,
               ])}
@@ -241,6 +258,9 @@ export function DashConnectorDetail({ id }: { id: string }) {
             ['Runtime status', c.runtime_status.replaceAll('_', ' ')],
             ['Engineering status', c.engineering_status ?? '—'],
             ['Dispatch eligibility', c.dispatch_eligibility ?? '—'],
+            ['Available to connect', c.available ? 'yes' : `no — ${c.dispatch_reasons.join(', ') || 'no record'}`],
+            ['Core pack / rank', `${c.pack ?? '—'} · ${c.rank ?? 'unranked'}`],
+            ['Founder holds', c.founder_holds.join('; ') || 'none'],
             ['Alias', c.alias_of ? `also known as ${c.alias_of}` : '—'],
             ['Auth scheme', c.auth], ['Read/write', c.rw], ['Webhooks', c.webhooks ? 'yes' : 'no'],
             ['Runtime verification date', '—'],

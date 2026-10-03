@@ -21,7 +21,7 @@ SRC = os.path.join(ROOT, 'src')
 
 PRESERVE_BEHAVIORS = {'PRESERVE_REFERENCE_SURFACE', 'REDIRECT'}
 REMOVED_BEHAVIORS = {'GONE', 'GONE_RETIRED_NOTICE', 'UNLIST_NO_REDIRECT'}
-MAJOR = ['openai', 'anthropic', 'github', 'slack', 'notion', 'google-gemini']
+MAJOR = ['openai', 'anthropic', 'azure-openai', 'google-gemini', 'github', 'gmail', 'slack', 'notion', 'stripe', 'linear']
 
 def main():
     legacy = json.load(open(os.path.join(SRC, 'lib', 'connectors-legacy.json')))
@@ -48,15 +48,24 @@ def main():
         if os.path.isfile(p):
             failures.append(f"shell must NOT exist for removed legacy ({c.get('lane6_behavior')}): {c['id']}")
 
-    # 3. major connectors trace
+    # 3. major connectors trace — each must resolve either as a published canonical
+    # row (core lists it) or as a preserved legacy reference surface; never both, never neither
     major = {}
+    canonical_rows = {c['id']: c for c in canonical}
     for mid in MAJOR:
         row = next((c for c in legacy if c['id'] == mid), None)
+        crow = canonical_rows.get(mid)
         p = os.path.join(DIST, 'connectors', mid, 'index.html')
-        ok = row is not None and row.get('lane6_behavior') in PRESERVE_BEHAVIORS and os.path.isfile(p)
-        major[mid] = ok
+        if crow is not None and row is not None:
+            failures.append(f"MAJOR {mid} is both canonical and legacy"); major[mid] = 'CONFLICT'; continue
+        if crow is not None:
+            ok = not crow.get('unpublished') and os.path.isfile(p)
+            major[mid] = 'canonical' if ok else 'canonical-NO-SHELL'
+        else:
+            ok = row is not None and row.get('lane6_behavior') in PRESERVE_BEHAVIORS and os.path.isfile(p)
+            major[mid] = 'legacy-reference' if ok else 'MISSING'
         if not ok:
-            failures.append(f"MAJOR legacy connector route missing: {mid}")
+            failures.append(f"MAJOR connector route missing: {mid} ({major[mid]})")
 
     # 4. sitemap coverage — reference surfaces are listed; REDIRECT shells are
     # not (a sitemap lists final 200 URLs, never URLs that redirect elsewhere)
@@ -84,7 +93,7 @@ def main():
 
     total = len(preserved) + len(removed)
     print(f"legacy rows checked: {total} (preserved={len(preserved)} removed={len(removed)})")
-    print(f"major connectors: " + ", ".join(f"{k}={'OK' if v else 'MISSING'}" for k, v in major.items()))
+    print("major connectors: " + ", ".join(f"{k}={v}" for k, v in major.items()))
     if failures:
         print(f"LEGACY ROUTE REGRESSION: FAIL — {len(failures)} issues")
         for f in failures[:25]:

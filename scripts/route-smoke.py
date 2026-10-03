@@ -15,7 +15,8 @@ DIST = os.path.join(ROOT, 'dist')
 SRC = os.path.join(ROOT, 'src')
 PORT = 43197
 
-MAJOR_LEGACY = ['openai', 'anthropic', 'github', 'slack', 'notion', 'google-gemini']
+# canonical (core) or legacy reference — either way the route must serve 200
+MAJOR_LEGACY = ['openai', 'anthropic', 'azure-openai', 'google-gemini', 'github', 'gmail', 'slack', 'notion', 'stripe', 'linear']
 
 def serve():
     handler = functools.partial(http.server.SimpleHTTPRequestHandler, directory=DIST)
@@ -65,7 +66,7 @@ def main():
         for mid in MAJOR_LEGACY:
             code = probe(f"/connectors/{mid}/")
             if code != 200:
-                failures.append(f"MAJOR legacy route {mid} -> {code}")
+                failures.append(f"MAJOR route {mid} -> {code}")
 
         # core static routes
         for path in ('/', '/connectors', '/developers', '/app'):

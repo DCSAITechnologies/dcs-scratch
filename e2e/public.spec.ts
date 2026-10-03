@@ -59,7 +59,7 @@ test.describe('public catalogue', () => {
   test('nav category link applies the category', async ({ page }) => {
     await page.goto('/connectors')
     await page.getByRole('button', { name: 'Connectors' }).first().hover()
-    const link = page.getByRole('menuitem', { name: /Developer Tools/ }).first()
+    const link = page.getByRole('menuitem', { name: /^Developer Tools/ }).first()
     if (await link.isVisible()) {
       await link.click()
       await expect(page).toHaveURL(/cat=Developer%20Tools/)

@@ -1,9 +1,9 @@
 import connectorsJson from './connectors.json'
 import connectorsLegacyJson from './connectors-legacy.json'
-export { runtimeStatusLabel, RUNTIME_STATUSES, statusColor, ctaLabel } from './connector-format'
+export { runtimeStatusLabel, RUNTIME_STATUSES, statusColor, ctaLabel, rwLabel, dispatchReasonLabel } from './connector-format'
 
 export type Conn = {
-  id: string; r: number; n: string; p: string; cat: string; s: string; auth: string
+  id: string; r: number | null; n: string; p: string; cat: string; s: string; auth: string
   rw: string; wh: boolean; whEvents: string[]; d: string; l: string
   caps: string[]; res: string[]; uc: string[]; ops: string[]
   scopes: string[]; optScopes: string[]; flow: string; reqs: string[]
@@ -30,6 +30,18 @@ export type Conn = {
   lane6_classification?: string
   lane6_behavior?: string
   lane6_redirect_to?: string | null
+  // core-derived (scripts/sync-catalogue.py from core-snapshot/) — never edited by hand
+  editorial_hold?: string | null
+  editorial_source?: string
+  core?: CoreFacts
+}
+
+export type CoreFacts = {
+  pack: string; generation: string; disposition: string; source_ref: string
+  founder_holds: string[]; notes?: string | null; replaced_by?: string | null; blocked_from_rank?: number | null
+  website_public_status?: string | null
+  dispatch: { staging: boolean; production: boolean; reasons: string[]; production_reasons: string[] }
+  staging_verified: boolean; core_head: string | null
 }
 
 export const CONNECTORS: Conn[] = connectorsJson as unknown as Conn[]
@@ -86,6 +98,12 @@ export const TOTAL_CATALOGUED = CONNECTORS.length
 export const PUBLISHED_COUNT = PUBLISHED_CONNECTORS.length
 export const UNPUBLISHED_COUNT = TOTAL_CATALOGUED - PUBLISHED_COUNT
 
+// "Available to connect" is core's dispatch eligibility (staging or production), nothing else.
+export const isAvailableToConnect = (c: Conn): boolean => Boolean(c.core?.dispatch.staging || c.core?.dispatch.production)
+export const AVAILABLE_TO_CONNECT_COUNT = CONNECTORS.filter(isAvailableToConnect).length
+export const CORE_HEAD = CONNECTORS.find((c) => c.core?.core_head)?.core?.core_head ?? null
+// rank order with unranked core rows (Golden Five, reference, blocked) after the ranked ones
+export const byRank = (a: Conn, b: Conn) => (a.r ?? Number.MAX_SAFE_INTEGER) - (b.r ?? Number.MAX_SAFE_INTEGER) || a.n.localeCompare(b.n)
 export const RUNTIME_VERIFIED_COUNT = CONNECTORS.filter((c) => c.runtime_status && c.runtime_status !== 'not_verified').length
 
 // Public filters are built from what the public grid can show (published rows),

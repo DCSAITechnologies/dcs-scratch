@@ -8,9 +8,9 @@
 //
 //   node scripts/mock-api.mjs [--port 4010]
 //
-// Auth: Bearer mock-operator (human; all capabilities) · mock-approver (human;
-// view+approve) · mock-viewer (human; view) · mock-apikey (api_key; read scopes).
-// Anything else → 401. Capabilities are enforced on operator actions.
+// Auth: core's hermetic test credentials (devex/api-server README) — they
+// authenticate nothing outside a hermetic server. coso_* = human operator,
+// cosk_* = API key. Anything else → 401. Capabilities are enforced.
 
 import http from 'node:http'
 import { readFileSync } from 'node:fs'
@@ -27,22 +27,29 @@ const iso = (s) => new Date(s).toISOString()
 const ALL_CAPS = ['configure', 'approve', 'execute', 'kill', 'restore', 'view']
 const READ_SCOPES = ['connectors:read', 'connections:read', 'runs:read', 'approvals:read', 'executions:read', 'receipts:read', 'receipts:verify', 'policies:read', 'events:read', 'environments:read', 'usage:read']
 const PRINCIPALS = {
-  'mock-operator': { kind: 'human', principal_id: 'usr_mock_operator', capabilities: ALL_CAPS, scopes: [] },
-  'mock-approver': { kind: 'human', principal_id: 'usr_mock_approver', capabilities: ['view', 'approve'], scopes: [] },
-  'mock-viewer': { kind: 'human', principal_id: 'usr_mock_viewer', capabilities: ['view'], scopes: [] },
-  'mock-apikey': { kind: 'api_key', principal_id: 'key_mock_ci', capabilities: [], scopes: READ_SCOPES, key_prefix: 'cosk_hermetic_' },
+  coso_hermetic_operator_0000000001: { kind: 'human', principal_id: 'usr_mock_operator', capabilities: ALL_CAPS, scopes: [] },
+  coso_hermetic_approver_0000000001: { kind: 'human', principal_id: 'usr_mock_approver', capabilities: ['approve', 'view', 'execute'], scopes: [] },
+  coso_hermetic_viewer_00000000001: { kind: 'human', principal_id: 'usr_mock_viewer', capabilities: ['view'], scopes: [] },
+  cosk_hermetic_readonly_0000000001: { kind: 'api_key', principal_id: 'key_mock_ci', capabilities: [], scopes: READ_SCOPES, key_prefix: 'cosk_hermetic_' },
 }
 
-// ── seed data (API shapes) ───────────────────────────────────────────────
-const catalogue = JSON.parse(readFileSync(join(ROOT, 'src/lib/connectors.json'), 'utf8'))
-const connectors = catalogue.map((c) => ({
-  object: 'connector', connector_id: c.id, name: c.n, pack: null,
-  engineering_rank: c.engineering_rank ?? c.r, generation: null,
-  disposition: c.engineering_status ?? 'NOT_STARTED',
-  availability: 'not_dispatchable',
-  dispatch: { staging: false, production: false, reasons: ['not_integrated'], production_reasons: ['not_staging_verified'] },
-  founder_holds: c.founder_hold || c.legal_hold ? [c.hold_category ?? 'hold'] : [],
-}))
+// ── catalogue: core's registry, projected exactly like core's WIRED adapter ──
+// (devex/api-server/src/adapters/registry-catalog.mjs `project()`), read from the
+// committed core snapshot so the mock's catalogue IS core's catalogue.
+const snap = (f) => JSON.parse(readFileSync(join(ROOT, 'core-snapshot', f), 'utf8'))
+const coreCatalogue = snap('catalogue.json')
+const eligibilityRecord = snap('dispatch-eligibility.json')
+const connectors = coreCatalogue.rows.map((row) => {
+  const e = Object.hasOwn(eligibilityRecord.connectors, row.connector_id) ? eligibilityRecord.connectors[row.connector_id] : null
+  const staging = e?.staging === true, production = e?.production === true
+  return {
+    object: 'connector', connector_id: row.connector_id, name: row.name, pack: row.pack ?? null,
+    engineering_rank: row.engineering_rank ?? null, generation: row.generation ?? null, disposition: row.disposition,
+    availability: production ? 'dispatchable_production' : staging ? 'dispatchable_staging' : 'not_dispatchable',
+    dispatch: { staging, production, reasons: e ? [...(e.reasons ?? [])] : ['no_eligibility_record'], production_reasons: e ? [...(e.production_reasons ?? [])] : [] },
+    founder_holds: [...(row.founder_holds ?? [])],
+  }
+})
 const C = (i) => connectors[i].connector_id
 const t0 = Date.parse('2026-09-27T09:00:00Z')
 const at = (min) => iso(t0 + min * 60_000)
@@ -178,11 +185,14 @@ const server = http.createServer(async (req, res) => {
     }
     const singles = [[/^\/v1\/connections\/([^/]+)$/, 'connections', 'connection_id'], [/^\/v1\/runs\/([^/]+)$/, 'runs', 'run_id'], [/^\/v1\/approvals\/([^/]+)$/, 'approvals', 'approval_id'], [/^\/v1\/executions\/([^/]+)$/, 'executions', 'execution_id'], [/^\/v1\/receipts\/([^/]+)$/, 'receipts', 'receipt_id'], [/^\/v1\/policies\/([^/]+)$/, 'policies', 'policy_id'], [/^\/v1\/events\/([^/]+)$/, 'events', 'event_id']]
     for (const [re, k, key] of singles) if ((m = p.match(re))) { const x = find(db[k], key, m[1]); return x ? send(res, 200, x) : fail(res, 404, 'not_found', 'Not found in this tenant.') }
-    if (p === '/v1/environments') return page(res, ['staging', 'production'].map((name) => ({ object: 'environment', name, dispatchable_connectors: 0, dispatchable_tools: 0, catalogued_connectors: connectors.length, mode_ceiling: 'mode_1', notes: ['No connector is dispatchable (mock).'] })), q)
+    if (p === '/v1/environments') {
+      const sum = eligibilityRecord.summary
+      return page(res, ['staging', 'production'].map((name) => ({ object: 'environment', name, dispatchable_connectors: name === 'staging' ? sum.dispatchable_staging : sum.dispatchable_production, dispatchable_tools: name === 'staging' ? sum.tools_dispatchable_staging : 0, catalogued_connectors: connectors.length, mode_ceiling: 'mode_1', notes: [`From core dispatch-eligibility (${eligibilityRecord.schema}).`] })), q)
+    }
     if (p === '/v1/usage') return send(res, 200, { object: 'usage', window: q.get('window') ?? '24h', executions: { total: db.executions.length, by_outcome: db.executions.reduce((a, e) => ({ ...a, [e.outcome]: (a[e.outcome] ?? 0) + 1 }), {}) }, receipts: { ISSUED: db.receipts.filter((r) => r.status === 'ISSUED').length, PENDING: db.executions.filter((e) => e.receipt.status === 'PENDING').length, FAILED: 0 }, by_connector: [], cost_note: 'Mock server: no cost data.' })
     if (p === '/v1/operator/kill-orders') return needCap('view') && page(res, db.killOrders, q)
     if (p === '/v1/operator/reconciliations') return needCap('view') && page(res, db.executions.filter((e) => e.outcome === 'OUTCOME_UNKNOWN'), q)
-    if (p === '/v1/operator/eligibility') return needCap('view') && send(res, 200, { object: 'eligibility_report', schema: 'dispatch-eligibility/1', summary: { catalogued: connectors.length, dispatchable_staging: 0, dispatchable_production: 0 }, check: q.get('connector_id') ? { connector_id: q.get('connector_id'), environment: q.get('environment') ?? 'staging', dispatchable: false, reasons: ['not_integrated'] } : null })
+    if (p === '/v1/operator/eligibility') return needCap('view') && send(res, 200, { object: 'eligibility_report', schema: eligibilityRecord.schema, summary: { ...eligibilityRecord.summary }, check: q.get('connector_id') ? (() => { const c = find(connectors, 'connector_id', q.get('connector_id')); const env = q.get('environment') ?? 'staging'; return { connector_id: q.get('connector_id'), environment: env, dispatchable: Boolean(c?.dispatch[env]), reasons: c ? c.dispatch.reasons : ['no_eligibility_record'] } })() : null })
     if (p === '/v1/operator/provider-health') return needCap('view') && page(res, [...new Set(db.connections.map((c) => c.connector_id))].map((id) => ({ connector_id: id, connections: db.connections.filter((c) => c.connector_id === id).length, health: db.connections.filter((c) => c.connector_id === id).reduce((a, c) => ({ ...a, [c.health]: (a[c.health] ?? 0) + 1 }), {}), probe: 'hermetic_rollup' })), q)
     if (p.startsWith('/v1/webhooks') || p.startsWith('/v1/operator/audit-exports')) return fail(res, 501, 'not_implemented', 'CONTRACT_ONLY operation.')
     return fail(res, 404, 'not_found', 'No such route.')

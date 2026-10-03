@@ -89,7 +89,7 @@ for f in API_FILES:
 DIST = os.path.join(os.path.dirname(SRC), 'dist', 'assets')
 if os.path.isdir(DIST):
     for fn in os.listdir(DIST):
-        if fn.endswith('.js') and re.search(r'mock-(operator|approver|viewer|apikey)', open(os.path.join(DIST, fn), errors='ignore').read()):
+        if fn.endswith('.js') and re.search(r'mock-(operator|approver|viewer|apikey)|co[sk]o?_hermetic_|cosk_hermetic_', open(os.path.join(DIST, fn), errors='ignore').read()):
             fails.append(f'C9 dist/assets/{fn} contains a mock bearer token')
 
 # C4 — four states on list routes

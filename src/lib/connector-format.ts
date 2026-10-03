@@ -19,8 +19,22 @@ export function statusColor(s: string): string {
     case 'Limited Access': return '#F5A524'
     case 'Provider Approval Required': return '#8B5CF6'
     case 'Coming Soon': return '#93A0C2'
+    case 'Blocked': return '#F87171'
     default: return '#A9B6D3'
   }
+}
+
+// Read/write as documented by the editorial record; rows with no record say so.
+export const rwLabel = (rw: string) => (rw === 'read' ? 'Read only' : rw.includes('write') ? 'Read + write' : 'Not yet documented')
+
+// Core dispatch-eligibility reasons in plain words (codes from packages/registry eligibility).
+export function dispatchReasonLabel(r: string): string {
+  if (r === 'no_explicit_grant') return 'no dispatch grant recorded in core'
+  if (r === 'no_eligibility_record') return 'no eligibility record in core'
+  if (r.startsWith('disposition:')) return `engineering status ${r.slice(12).replaceAll('_', ' ').toLowerCase()}`
+  if (r.startsWith('founder_hold:')) return `founder hold (${r.slice(13).replace(/^gate:/, '')})`
+  if (r.startsWith('open_finding:')) return `open audit finding ${r.slice(13)}`
+  return r.replaceAll('_', ' ')
 }
 
 export function ctaLabel(c: { cta: string }): string {
