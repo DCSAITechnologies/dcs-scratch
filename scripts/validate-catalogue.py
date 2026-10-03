@@ -69,6 +69,8 @@ def main() -> int:
             errors.append(f"{c['id']}: core hold/BLOCKED but published")
         logo = c.get('logo')
         if logo:
+            if not logo.startswith('/'):
+                errors.append(f"{c['id']}: logo path {logo!r} is relative (breaks on nested routes)")
             fn = logo.split('/')[-1]
             if fn not in logo_files:
                 missing_logo += 1

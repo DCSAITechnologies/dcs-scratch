@@ -206,6 +206,16 @@ def generate():
     return out, new_legacy, promoted_cache, head
 
 
+def root_logo(rows):
+    # logo paths must be site-absolute: a relative 'logos/x.png' resolves under nested routes
+    # (/connectors/x/logos/x.png) and silently falls back to the monogram
+    for r in rows:
+        logo = r.get('logo')
+        if logo and not logo.startswith(('/', 'http://', 'https://', 'data:')):
+            r['logo'] = '/' + logo
+    return rows
+
+
 def dump(obj):
     return json.dumps(obj, ensure_ascii=False, indent=None, separators=(',', ':')) + '\n'
 
@@ -214,6 +224,8 @@ def main():
     if '--core' in sys.argv:
         refresh_snapshot(sys.argv[sys.argv.index('--core') + 1])
     out, legacy, cache, head = generate()
+    root_logo(out)
+    root_logo(legacy)
     targets = {os.path.join(LIB, 'connectors.json'): dump(out), os.path.join(LIB, 'connectors-legacy.json'): dump(legacy),
                os.path.join(SNAP, 'editorial-promoted.json'): json.dumps(cache, ensure_ascii=False, indent=1) + '\n'}
     if '--check' in sys.argv:
