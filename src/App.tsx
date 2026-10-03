@@ -1,5 +1,5 @@
 import { lazy, Suspense, useLayoutEffect, type ReactElement } from 'react'
-import { Nav, LightLogo } from './components/Nav'
+import { Nav } from './components/Nav'
 import { Footer } from './components/Footer'
 import { usePathRoute, navigate } from './hooks/usePathRoute'
 import { Home } from './pages/Home'
@@ -80,7 +80,7 @@ export default function App() {
     <div className="min-h-screen" style={{ background: '#F5F6F8', color: '#0B1220' }}>
       <Nav theme="light" />
       <main><Suspense fallback={<RouteLoading />}>{page}</Suspense></main>
-      <Footer theme="light" logo={<LightLogo />} />
+      <Footer />
     </div>
   )
 }

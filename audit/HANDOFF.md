@@ -23,6 +23,8 @@
 | Theme | `index.html` `data-theme="light"`; `src/index.css` light layer; `App.tsx` switches `/app` to dark | **Public site is light** (founder-approved 03 Oct). The console keeps the dark theme until the dashboard pass. `scripts/light-codemod.py` records the colour mapping. |
 | Homepage | `src/pages/Home.tsx`, `src/components/hero/*` | HERO-A ↔ HERO-C every 10 s (pause, hover/focus pause, reduced motion = no rotation); HERO-B as "How it works" |
 | Logos | `scripts/build-logos.mjs` → `public/logos/brand/*.svg`, `src/lib/logo-map.json`; report `audit/LOGO_SOURCES.md` | 160 vector brand marks (CC0 sets, strict matching, reviewed collisions excluded); 241 published connectors still use a monogram (listed in the report) |
+| Footer | `src/components/Footer.tsx` | Seven columns mirroring the header menus (every link a real route, crawled by e2e), CTA row, legal bar |
+| Connector pages | `src/pages/Connectors.tsx`, `src/pages/ConnectorDetail.tsx`, `src/lib/editorial-overrides.json` | Catalogue: stat tiles, one-row categories, 4-per-row cards, phone filters toggle. Detail: one status chip, links panel, similar connectors. Curated editorial records (Gmail) applied by sync. |
 | Concept previews | `src/pages/preview/HeroConcepts.tsx` → `/preview/heroes`, `/preview/hero-a\|b\|c` | Noindex references. `/preview/home` → 301 `/`. |
 
 ## 2. Commands

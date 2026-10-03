@@ -1,5 +1,10 @@
 # Final return: Connector OS website + dashboard completion
 
+> **Website final (03 Oct, latest):**
+> - The public website is complete in the light design: homepage (A ↔ C hero, B "How it works"), reorganised catalogue, compact connector pages (clickable provider links, similar connectors, Gmail editorial record), sub-page dedupe, and a full footer mirroring the header.
+> - Verified: 101/101 e2e (desktop, api-mode, core-api), axe 0 violations, all gates green.
+> - Launch inputs still needed: 241 logos (or network access), hosting target + deploy token, IdP, and a staging `/v1` (core).
+>
 > **Addendum, 03 Oct (later):**
 > - The whole public site is now the light theme, and the homepage uses the founder-selected HERO-A ↔ HERO-C rotation with HERO-B as "How it works".
 > - Connector logos are real brand marks in colour and rendered larger: 160 vector marks; 241 published connectors still on a monogram, listed in `audit/LOGO_SOURCES.md`.
