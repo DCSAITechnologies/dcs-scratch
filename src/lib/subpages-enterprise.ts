@@ -170,7 +170,7 @@ export const ENTERPRISE_PAGES: Record<string, SubPage> = {
       },
       {
         h: 'Separation of duties',
-        p: ['The approver is not the executor: the person who approves a step cannot be the system that performs it — execution is the engine\u2019s job alone. And restore after a kill needs a second identity, so the path back from a stop is deliberately two-handed.'],
+        p: ['The approver is not the executor: the person who approves a step cannot be the system that performs it — execution is the engine\u2019s job alone. And restore after a kill names a second identity as reviewer, so the path back from a stop is deliberately two-handed (enforced once the identity provider lands, status item 19).'],
       },
       {
         h: 'What no role can do',
@@ -207,7 +207,7 @@ export const ENTERPRISE_PAGES: Record<string, SubPage> = {
       {
         h: 'Reading the matrix with your counsel',
         p: [
-          'For regulated teams, the separation-of-duties rows are the ones to walk through with counsel: approver ≠ executor, restore needs a second identity, no role sees credential material. The matrix is small enough to review in one sitting — that is deliberate, because a permission model nobody can hold in their head gets held by nobody.',
+          'For regulated teams, the separation-of-duties rows are the ones to walk through with counsel: approver ≠ executor, restore names a second identity (enforced with the identity provider), no role sees credential material. The matrix is small enough to review in one sitting — that is deliberate, because a permission model nobody can hold in their head gets held by nobody.',
         ],
       },
     ],

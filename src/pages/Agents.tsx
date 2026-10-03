@@ -68,7 +68,7 @@ export function Agents() {
             {MODES.map((m) => (
               <div key={m.m} className="glass-card p-6 h-full">
                 <div className="flex items-center justify-between mb-2 gap-2 flex-wrap">
-                  <span className="text-[12px] font-bold text-[#1E40AF]" style={{ fontFamily: 'JetBrains Mono' }}>{m.m}</span>
+                  <span className="text-[12px] font-bold text-[#1E40AF]" style={{ fontFamily: "'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace" }}>{m.m}</span>
                   <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full" style={{ color: m.status.startsWith('Complete') ? '#047857' : m.status === 'Later' ? '#566074' : '#B45309', background: m.status.startsWith('Complete') ? 'rgba(33,200,122,0.12)' : m.status === 'Later' ? '#F5F7FB' : 'rgba(245,165,36,0.12)', border: `1px solid ${m.status.startsWith('Complete') ? '#21C87A55' : m.status === 'Later' ? '#E3E7EE' : '#F5A52455'}` }}>{m.status}</span>
                 </div>
                 <div className="text-[15px] font-semibold text-[#0B1220] mb-2">{m.t}</div>

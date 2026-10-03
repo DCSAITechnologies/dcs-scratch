@@ -85,7 +85,7 @@ export function StateMachine({ title, start, states, accent = '#2850D8' }: { tit
       <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5">
         {states.map((s) => (
           <div key={s.name} className="px-3 py-2.5 rounded-lg text-center" style={{ background: '#FFFFFF', border: `1px solid ${s.color ?? accent}44` }}>
-            <div className="text-[11.5px] font-semibold" style={{ fontFamily: 'JetBrains Mono', color: s.color ?? '#1E2638' }}>{s.name}</div>
+            <div className="text-[11.5px] font-semibold" style={{ fontFamily: "'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace", color: s.color ?? '#1E2638' }}>{s.name}</div>
             {s.note && <div className="text-[10px] text-[#566074] mt-1 leading-snug">{s.note}</div>}
           </div>
         ))}

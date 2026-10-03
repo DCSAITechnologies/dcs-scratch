@@ -414,7 +414,7 @@ export const SECURITY_PAGES: Record<string, SubPage> = {
           'Kill object with scope — kills are scoped: one connection, one agent, one environment, or the whole tenant. The scope is explicit, never implied.',
           'Precedence — kill outranks approvals, policies, schedules and retries. A valid approval does not survive a kill.',
           'Checked at every dispatch — kill state is evaluated at each dispatch check, the same gate that enforces everything else.',
-          'Dual-control restore — restoring after a kill requires a second identity. The person who fired the kill cannot alone un-fire it.',
+          'Dual-control restore (design) — restoring after a kill names a second identity as reviewer, so the person who fired the kill does not alone un-fire it. Today the API records the named reviewer with every restore; enforcing that the reviewer is a different, authenticated person arrives with the identity provider (status item 19).',
         ],
       },
       {
@@ -446,7 +446,7 @@ export const SECURITY_PAGES: Record<string, SubPage> = {
       {
         h: 'Restore is deliberately hard',
         p: [
-          'Kill is one-handed because emergencies are; restore is dual-control because quiet re-opening is the dangerous direction. Two authorised identities must both act, and both acts are receipted with actor, scope and time.',
+          'Kill is one-handed because emergencies are; restore is dual-control because quiet re-opening is the dangerous direction. By design two authorised identities act, and both acts are receipted with actor, scope and time. Today the API records the named reviewer with every restore; enforcing that the reviewer is a different, authenticated person arrives with the identity provider (status item 19).',
         ],
       },
       {

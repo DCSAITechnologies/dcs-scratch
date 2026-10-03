@@ -163,6 +163,9 @@ def generate():
                 }
                 editorial_source = 'minimal record generated from core (category assigned, editorial pending)'
         row = dict(ed)
+        if cid in OVERRIDES:  # curated editorial facts for rows core delivered without website copy
+            row.update(OVERRIDES[cid])
+            editorial_source = 'editorial record (src/lib/editorial-overrides.json)'
         core_hold = list(r.get('founder_holds') or [])
         site_hold = bool(editorial_hold)
         hold = bool(core_hold) or r['disposition'] == 'BLOCKED' or site_hold
@@ -207,6 +210,8 @@ def generate():
 
 
 LOGO_MAP = os.path.join(LIB, 'logo-map.json')
+_ov_path = os.path.join(LIB, 'editorial-overrides.json')
+OVERRIDES = {k: v for k, v in (json.load(open(_ov_path)).items() if os.path.isfile(_ov_path) else []) if not k.startswith('_')}
 
 
 def apply_logos(rows):

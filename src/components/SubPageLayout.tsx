@@ -127,6 +127,15 @@ function SectionBlock({ s }: { s: Section }) {
   )
 }
 
+// Several pages carry a templated "Limitations / claim boundary" section and a later
+// "Claim boundary" section; show them once, as one section with both paragraphs.
+function mergeClaimSections<T extends { h: string; p?: string[] }>(sections: T[]): T[] {
+  const lim = sections.find((x) => x.h === 'Limitations / claim boundary')
+  const cb = sections.find((x) => x.h === 'Claim boundary')
+  if (!lim || !cb) return sections
+  return sections.filter((x) => x !== cb).map((x) => (x === lim ? { ...x, h: 'Limitations and claim boundary', p: [...(lim.p ?? []), ...(cb.p ?? [])] } : x))
+}
+
 export function SubPageLayout({ page, current }: { page: SubPage; current: string }) {
   const links = AREA_LINKS[page.area] ?? []
   const home = AREA_ROUTES[page.area] ?? '/'
@@ -147,7 +156,7 @@ export function SubPageLayout({ page, current }: { page: SubPage; current: strin
               <span className="inline-block mt-3 text-[10.5px] font-bold px-2.5 py-1 rounded-full tracking-wide" style={page.badge === 'PRE-LAUNCH' ? { color: '#92400E', background: 'rgba(251,191,36,0.1)', border: '1px solid rgba(251,191,36,0.4)' } : page.badge === 'PLANNED' ? { color: '#566074', background: '#F5F7FB', border: '1px solid #E3E7EE' } : { color: '#065F46', background: 'rgba(52,211,153,0.1)', border: '1px solid rgba(52,211,153,0.4)' }}>{page.badge}</span>
             )}
             <p className="mt-4 text-[15px] leading-relaxed text-[#3A4357] max-w-2xl">{page.tagline}</p>
-            {page.sections.map((s) => <SectionBlock key={s.h} s={s} />)}
+            {mergeClaimSections(page.sections).map((s) => <SectionBlock key={s.h} s={s} />)}
             {page.form?.kind === 'contact' && <div className="mt-12"><ContactForm defaultTopic={page.form.topic} /></div>}
             {!page.noStatus && <StatusCallout route={current} />}
             {next.length > 0 ? (

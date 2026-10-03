@@ -1,0 +1,26 @@
+{
+ "_comment": "Curated editorial records for canonical connectors whose core row arrived without website copy. Facts only: each is checkable against the provider's public documentation; scopes/tools are corroborated by core where noted. Applied by scripts/sync-catalogue.py.",
+ "gmail": {
+  "p": "Google",
+  "auth": "OAuth 2.0",
+  "rw": "read + write",
+  "wh": true,
+  "whEvents": ["Mailbox change notification (Google Cloud Pub/Sub push)"],
+  "caps": ["List messages", "Read a message", "Read a draft", "Create a draft"],
+  "ops": ["Read", "Read", "Read", "Write"],
+  "scopes": ["https://www.googleapis.com/auth/gmail.readonly", "https://www.googleapis.com/auth/gmail.readonly", "https://www.googleapis.com/auth/gmail.readonly", "https://www.googleapis.com/auth/gmail.compose"],
+  "optScopes": [],
+  "res": ["messages", "drafts"],
+  "uc": ["Triage and summarise inbound mail", "Draft replies for a person to review and send", "Find the messages an agent task needs"],
+  "reqs": ["A Gmail or Google Workspace account", "A Google Cloud OAuth client (client ID and secret)", "The Gmail API enabled in that Google Cloud project"],
+  "flow": "OAuth 2.0 authorization code with refresh tokens. Tokens are held in the credential vault; the agent never sees them.",
+  "site": "https://www.google.com/gmail/about/",
+  "portal": "https://developers.google.com/gmail/api",
+  "api": "https://developers.google.com/gmail/api/reference/rest",
+  "authDocs": "https://developers.google.com/gmail/api/auth/scopes",
+  "whDocs": "https://developers.google.com/gmail/api/guides/push",
+  "d": "Gmail is Google's email service. The connector lists and reads messages and creates drafts through the Gmail API — it drafts; a person sends.",
+  "l": "The Gmail connector (Golden Five set, Manifest 1.3) reads messages and drafts and creates drafts through the Gmail API under the account owner's OAuth grant. Every write is policy-checked and approval-gated. Gmail push notifications arrive through Google Cloud Pub/Sub; they are treated as untrusted triggers and confirmed by reading back from the API.",
+  "description_source": "editorial record 2026-10-03 from the Gmail API public documentation (developers.google.com/gmail/api); auth, scopes, tools and the Pub/Sub webhook profile corroborated by core's Gmail Manifest 1.3 simulator manifest (packages/runtime/simulators/manifests/gmail.v13.json @ f6a3161) — the Golden Five pack manifest itself was not in the supplied packs"
+ }
+}
