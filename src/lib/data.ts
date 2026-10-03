@@ -12,6 +12,11 @@ export type Conn = {
   verified: string | null; cta: string
   runtime_status?: 'not_verified' | 'staging_verified' | 'production_verified'
   unreconciled?: boolean
+  // facts from official provider pages (data-sourcing/README.md); they describe the provider's API, not core's connector tools
+  scopeModel?: 'oauth_scopes' | 'api_key_permissions' | 'account_roles' | 'none'
+  providerScopes?: { scope: string; access: 'read' | 'write' | 'admin'; purpose: string }[]
+  providerCaps?: { name: string; access: 'read' | 'write'; endpoint: string }[]
+  sourced?: { part: string; checked: string; fields: string[]; evidence: Record<string, string> }
   unpublished?: boolean
   description_source?: 'editorial' | 'provider' | 'auto-pending'
   engineering_rank?: number | null

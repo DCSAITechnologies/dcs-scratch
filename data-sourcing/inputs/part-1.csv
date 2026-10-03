@@ -1,0 +1,203 @@
+id,name,provider,category,auth_now,webhooks,site,portal,api,authDocs,whDocs,statusUrl,core_read_tools,core_write_tools,needs
+2c2p,2C2P,2C2P,Payments / Banking / Fintech,See documentation,no,https://2c2p.com/,https://developer.2c2p.com/docs/general,,,,,0,0,api;authDocs;statusUrl;auth;scopes;caps;reqs
+7shifts,7shifts,7shifts,HR / Recruiting / Payroll,API Key,no,https://www.7shifts.com/,https://developers.7shifts.com/docs/getting-started,,,,,6,1,logo;api;authDocs;statusUrl;scopes;caps;reqs
+abbyy-vantage,ABBYY Vantage,ABBYY,Documents / E-sign / Forms,OAuth 2.0 + PKCE,no,https://www.abbyy.com/,,,,,,15,4,portal;api;authDocs;statusUrl;scopes;caps;reqs
+ada,Ada,Ada,Support & Success,API Key,no,,,,,,,10,0,logo;site;portal;api;authDocs;statusUrl;scopes;caps;reqs
+affirm,Affirm,Affirm,Payments / Banking / Fintech,See documentation,no,https://www.affirm.com/,https://docs.affirm.com/,https://docs.affirm.com/,,,,0,0,authDocs;statusUrl;auth;scopes;caps;reqs
+anrok,Anrok,Anrok,Finance / Accounting / Tax,API Key,no,https://www.anrok.com/,,,,,,6,4,portal;api;authDocs;statusUrl;scopes;caps;reqs
+apideck,Apideck,Apideck,Finance / Accounting / Tax,API Key (multiple headers),no,https://www.apideck.com/,https://developers.apideck.com/,https://specs.apideck.com/accounting.yml,,,,7,1,authDocs;statusUrl;scopes;caps;reqs
+appwrite,Appwrite Cloud,Appwrite,Cloud & Hosting,API Key,no,https://appwrite.io/home,https://appwrite.io/docs,https://appwrite.io/docs,,,,5,0,authDocs;statusUrl;scopes;caps;reqs
+arlo-training,Arlo,Arlo,Education,OAuth 2.0,no,https://www.arlo.co/,https://developer.arlo.co/,https://developer.arlo.co/doc/api/2012-02-01/auth/,https://developer.arlo.co/doc/api/2012-02-01/auth/,,,7,1,statusUrl;scopes;caps;reqs
+attio,Attio,Attio,CRM & Sales,OAuth 2.0,yes,https://attio.com/,https://docs.attio.com/docs/overview,https://docs.attio.com/docs/overview,,,,5,3,authDocs;whDocs;statusUrl;scopes;caps;reqs
+element14-farnell,element14 / Farnell Product Search API,Avnet,Manufacturing / ERP / Supply Chain,See documentation,no,https://www.farnell.com/,,,,,,0,0,logo;portal;api;authDocs;statusUrl;auth;scopes;caps;reqs
+baserow,Baserow,Baserow,Databases & Search,API Key,no,https://baserow.io/,https://baserow.io/api-docs,https://baserow.io/api-docs,,,,4,1,authDocs;statusUrl;scopes;caps;reqs
+beyondtrust-password-safe,BeyondTrust Password Safe,BeyondTrust,Security & Identity,API Key,no,,https://docs.beyondtrust.com/,https://docs.beyondtrust.com/,,,,5,0,logo;site;authDocs;statusUrl;scopes;caps;reqs
+bigpanda,BigPanda,BigPanda,Observability,API Key,no,https://www.bigpanda.io/,https://docs.bigpanda.io/,https://docs.bigpanda.io/,,,,5,1,authDocs;statusUrl;scopes;caps;reqs
+bloomfire,Bloomfire,Bloomfire,Productivity,App password session,no,https://bloomfire.com/,https://help.bloomfire.com/api/v2/swagger.json,https://help.bloomfire.com/api/v2/swagger.json,,,,12,1,logo;authDocs;statusUrl;scopes;caps;reqs
+bloomreach-engagement,Bloomreach Engagement,Bloomreach,Marketing / Advertising,HTTP Basic,no,https://www.bloomreach.com/en,https://documentation.bloomreach.com/engagement/docs/documentation-overview,https://documentation.bloomreach.com/engagement/docs/documentation-overview,,,,4,2,logo;authDocs;statusUrl;scopes;caps;reqs
+blues-notehub,Blues Notehub,Blues,Manufacturing / ERP / Supply Chain,API Key,no,https://blues.com/,https://dev.blues.io/,,,,,9,0,api;authDocs;statusUrl;scopes;caps;reqs
+clockify,Clockify,CAKE.com,Productivity,API Key,no,https://clockify.me/,https://docs.clockify.me/,https://docs.clockify.me/,,,,6,1,authDocs;statusUrl;scopes;caps;reqs
+cal-com,Cal.com,Cal.com,Productivity,OAuth 2.0,no,https://cal.com/,https://cal.com/docs/api-reference/v2/introduction,https://cal.com/docs/api-reference/v2/introduction,,,,4,1,authDocs;statusUrl;scopes;caps;reqs
+make,Make,Celonis,Developer Tools,See documentation,no,,https://developers.make.com/,,,,,0,0,site;api;authDocs;statusUrl;auth;scopes;caps;reqs
+nppes-npi-registry,NPPES NPI Registry,Centers for Medicare & Medicaid Services,Healthcare,None (public API),no,https://npiregistry.cms.hhs.gov/,https://npiregistry.cms.hhs.gov/api-page,https://npiregistry.cms.hhs.gov/api-page,,,,2,0,logo;authDocs;statusUrl;scopes;caps;reqs
+chameleon,Chameleon,Chameleon,Support & Success,API Key,yes,https://www.chameleon.io/,https://developers.chameleon.io/introduction,,,,,14,0,api;authDocs;whDocs;statusUrl;scopes;caps;reqs
+chapa,Chapa,Chapa,Payments / Banking / Fintech,API Key,no,https://chapa.co/,https://developer.chapa.co/,,,,,7,0,logo;api;authDocs;statusUrl;scopes;caps;reqs
+checkmk,Checkmk,Checkmk,Observability,API Key,no,https://checkmk.com/,https://docs.checkmk.com/latest/en/,https://docs.checkmk.com/latest/en/rest_api.html,,,,0,0,authDocs;statusUrl;scopes;caps;reqs
+brandwatch,Brandwatch,Cision,Social / Creator / Publishing,Bearer Token,no,https://www.brandwatch.com/,https://developers.brandwatch.com/,https://developers.brandwatch.com/docs/authenticate,,,,6,0,authDocs;statusUrl;scopes;caps;reqs
+ex-libris-alma,Ex Libris Alma,Clarivate,Education,API Key,yes,https://exlibrisgroup.com/,https://developers.exlibrisgroup.com/,,,,,4,1,api;authDocs;whDocs;statusUrl;scopes;caps;reqs
+clip-mx,Clip,Clip,Payments / Banking / Fintech,HTTP Basic,no,https://www.clip.mx/,,,,,,8,0,portal;api;authDocs;statusUrl;scopes;caps;reqs
+argo-cd,Argo CD,Cloud Native Computing Foundation,Developer Tools,Bearer Token,no,https://argoproj.github.io/cd/,https://argo-cd.readthedocs.io/en/stable/developer-guide/api-docs/,https://argo-cd.readthedocs.io/en/stable/developer-guide/api-docs/,,,,5,0,authDocs;statusUrl;scopes;caps;reqs
+keycloak,Keycloak (self-hosted),Cloud Native Computing Foundation,Security & Identity,OAuth 2.0 Client Credentials,no,https://www.keycloak.org/,https://www.keycloak.org/documentation,https://www.keycloak.org/docs-api/latest/rest-api/index.html,,,,7,0,authDocs;statusUrl;scopes;caps;reqs
+prometheus,Prometheus (HTTP API),Cloud Native Computing Foundation,Observability,HTTP Basic,no,https://prometheus.io/,https://prometheus.io/docs/introduction/overview/,https://prometheus.io/docs/prometheus/latest/querying/api/,,,,0,0,authDocs;statusUrl;scopes;caps;reqs
+cloudinary,Cloudinary,Cloudinary,Cloud & Hosting,HTTP Basic,no,https://cloudinary.com/,https://cloudinary.com/documentation,https://cloudinary.com/documentation,,,https://status.cloudinary.com/,5,0,authDocs;scopes;caps;reqs
+cognism,Cognism,Cognism,CRM & Sales,Bearer Token,no,https://www.cognism.com/,https://developers.cognism.com/api/collections/14862827/UVJhBu4C,https://developers.cognism.com/api/collections/14862827/UVJhBu4C,,,,5,0,authDocs;statusUrl;scopes;caps;reqs
+coindcx,CoinDCX,CoinDCX,Payments / Banking / Fintech,See documentation,no,,https://docs.coindcx.com/,https://docs.coindcx.com/,,,,0,0,logo;site;authDocs;statusUrl;auth;scopes;caps;reqs
+deadmanssnitch,Dead Man's Snitch,Collective Idea,Observability,Provider-specific,no,https://deadmanssnitch.com/,https://deadmanssnitch.com/docs/api/v1,https://deadmanssnitch.com/docs/api/v1,,,,2,4,authDocs;statusUrl;auth;scopes;caps;reqs
+cometchat,CometChat,CometChat,Communications / Voice / Video,API Key,no,https://www.cometchat.com/,https://www.cometchat.com/docs/rest-api/chat-apis,https://www.cometchat.com/docs/rest-api/chat-apis,,,,5,2,authDocs;statusUrl;scopes;caps;reqs
+uk-companies-house,UK Companies House,Companies House,Legal / Compliance,HTTP Basic,no,https://www.gov.uk/government/organisations/companies-house,https://developer.company-information.service.gov.uk/,,,,,5,0,logo;api;authDocs;statusUrl;scopes;caps;reqs
+configcat,ConfigCat,ConfigCat,Developer Tools,HTTP Basic,no,https://configcat.com/,https://configcat.com/docs/,https://configcat.com/docs/api/reference/configcat-public-management-api/,,,,6,1,authDocs;statusUrl;scopes;caps;reqs
+coralogix,Coralogix,Coralogix,Observability,API Key,no,https://coralogix.com/,https://coralogix.com/docs/,https://coralogix.com/docs/,,,,4,1,authDocs;statusUrl;scopes;caps;reqs
+zotero-web-api,Zotero Web API,Corporation for Digital Scholarship,Government / Public Data,API Key,no,https://www.zotero.org/,https://www.zotero.org/support/dev/web_api/v3/,https://www.zotero.org/support/dev/web_api/v3/,,,,11,3,authDocs;statusUrl;scopes;caps;reqs
+coupa,Coupa,Coupa,Finance / Accounting / Tax,OAuth 2.0,no,,,,,,,6,4,logo;site;portal;api;authDocs;statusUrl;scopes;caps;reqs
+credgenics,Credgenics,Credgenics,Payments / Banking / Fintech,See documentation,no,https://www.credgenics.com/,,,,,,0,0,portal;api;authDocs;statusUrl;auth;scopes;caps;reqs
+cribl,Cribl,Cribl,Observability,OAuth 2.0,no,https://cribl.io/,https://docs.cribl.io/,https://docs.cribl.io/,,,,8,0,authDocs;statusUrl;scopes;caps;reqs
+cyberark-privilege-cloud,CyberArk Privilege Cloud,CyberArk,Security & Identity,OAuth 2.0 Client Credentials,no,https://www.paloaltonetworks.com/idira,https://docs.cyberark.com/portal/latest/en/docs.htm,https://docs.cyberark.com/manage/latest/en/content/privilege-cloud/webservices/implementing%20privileged%20account%20security%20web%20services%20.htm,,,,4,0,logo;authDocs;statusUrl;scopes;caps;reqs
+datacake,Datacake,Datacake,Manufacturing / ERP / Supply Chain,API Key,no,https://datacake.co/,https://docs.datacake.de/,https://docs.datacake.de/api/graphql-api.md,,,,6,1,authDocs;statusUrl;scopes;caps;reqs
+deno-deploy,Deno Deploy,Deno,Cloud & Hosting,API Key,no,https://deno.com/,https://docs.deno.com/deploy/,https://docs.deno.com/deploy/,,,,6,0,authDocs;statusUrl;scopes;caps;reqs
+dlocal,dLocal,dLocal,Payments / Banking / Fintech,See documentation,no,https://www.dlocal.com/,https://docs.dlocal.com/,https://docs.dlocal.com/,,,,0,0,authDocs;statusUrl;auth;scopes;caps;reqs
+twist,Twist,Doist,Productivity,OAuth 2.0,no,https://twist.com/,https://developer.twist.com/v3/,https://developer.twist.com/v3/,,,,13,1,authDocs;statusUrl;scopes;caps;reqs
+dojah,Dojah,Dojah,Security & Identity,See documentation,no,https://dojah.io/,https://docs.dojah.io/,https://docs.dojah.io/,,,,0,0,authDocs;statusUrl;auth;scopes;caps;reqs
+dribbble,Dribbble,Dribbble,Social / Creator / Publishing,OAuth 2.0,no,https://dribbble.com/,https://developer.dribbble.com/,https://developer.dribbble.com/v2/,,,,4,0,authDocs;statusUrl;scopes;caps;reqs
+drip,Drip,Drip,Marketing / Advertising,HTTP Basic,no,,https://developer.drip.com/,,,,,3,1,logo;site;api;authDocs;statusUrl;scopes;caps;reqs
+dynatrace,Dynatrace,Dynatrace,Observability,API Key,no,https://www.dynatrace.com/,https://developer.dynatrace.com/,https://docs.dynatrace.com/docs/dynatrace-api,,,,5,1,authDocs;statusUrl;scopes;caps;reqs
+easyship,Easyship,Easyship,Logistics / Shipping / Inventory,See documentation,no,https://www.easyship.com/,https://developers.easyship.com/reference/introduction,,,,,0,0,api;authDocs;statusUrl;auth;scopes;caps;reqs
+enable-banking,Enable Banking,Enable Banking,Payments / Banking / Fintech,See documentation,no,https://enablebanking.com/,,,,,,0,0,portal;api;authDocs;statusUrl;auth;scopes;caps;reqs
+enkash,EnKash,EnKash,Payments / Banking / Fintech,See documentation,no,https://www.enkash.com/,,,,,,0,0,logo;portal;api;authDocs;statusUrl;auth;scopes;caps;reqs
+talentlms,TalentLMS,Epignosis,HR / Recruiting / Payroll,API Key,no,https://www.talentlms.com/,,,,,,4,1,portal;api;authDocs;statusUrl;scopes;caps;reqs
+vonage,Vonage,Ericsson,Communications / Voice / Video,HTTP Basic,no,https://www.vonage.com/,https://developer.vonage.com/en/home,,,,,4,0,api;authDocs;statusUrl;scopes;caps;reqs
+exact-online,Exact Online,Exact,Finance / Accounting / Tax,OAuth 2.0,no,https://www.exact.com/,,https://start.exactonline.nl/docs/HlpRestAPIResources.aspx,,,,7,2,portal;authDocs;statusUrl;scopes;caps;reqs
+exotel,Exotel,Exotel,Communications / Voice / Video,HTTP Basic,no,https://exotel.com/,https://developer.exotel.com/,,,,,8,1,logo;api;authDocs;statusUrl;scopes;caps;reqs
+facturapi,Facturapi,Facturapi,Finance / Accounting / Tax,API Key,no,https://www.facturapi.io/,https://docs.facturapi.io/,https://docs.facturapi.io/,,,,5,1,logo;authDocs;statusUrl;scopes;caps;reqs
+spark-platform,Spark Platform,FBS,Real Estate / Construction,API Key,no,https://www.sparkapi.io/,,,,,,6,0,logo;portal;api;authDocs;statusUrl;scopes;caps;reqs
+finbox-bankconnect,FinBox BankConnect,FinBox,Payments / Banking / Fintech,See documentation,no,https://www.finbox.in/,https://docs.finbox.in/,https://docs.finbox.in/,,,,0,0,authDocs;statusUrl;auth;scopes;caps;reqs
+fincra,Fincra,Fincra,Payments / Banking / Fintech,API Key,no,https://fincra.com/,https://docs.fincra.com/docs/getting-started,https://docs.fincra.com/docs/getting-started,,,,4,0,authDocs;statusUrl;scopes;caps;reqs
+foursquare-places,Foursquare Places,Foursquare,Travel / Hospitality / Events,API Key,no,https://foursquare.com/,https://docs.foursquare.com/,https://docs.foursquare.com/,,,,5,0,authDocs;statusUrl;scopes;caps;reqs
+framer,Framer,Framer,Developer Tools,Provider-specific,no,https://www.framer.com/,https://www.framer.com/developers/server-api-quick-start,https://www.framer.com/developers/server-api-quick-start,,,,6,1,authDocs;statusUrl;auth;scopes;caps;reqs
+geotab,Geotab,Geotab,Logistics / Shipping / Inventory,See documentation,no,https://www.geotab.com/,https://developers.geotab.com/,,,,,0,0,logo;api;authDocs;statusUrl;auth;scopes;caps;reqs
+getaccept,GetAccept,GetAccept,CRM & Sales,OAuth 2.0,no,https://www.getaccept.com/,https://raw.githubusercontent.com/getaccept/openapi/master/swagger.yaml,https://raw.githubusercontent.com/getaccept/openapi/master/swagger.yaml,,,,6,0,authDocs;statusUrl;scopes;caps;reqs
+gong,Gong,Gong,CRM & Sales,HTTP Basic,no,https://www.gong.io/,,,,,,8,1,portal;api;authDocs;statusUrl;scopes;caps;reqs
+grist,Grist,Grist Labs,Databases & Search,OAuth 2.0 + PKCE,no,https://www.getgrist.com/,https://support.getgrist.com/api/,https://support.getgrist.com/api/,,,,3,1,authDocs;statusUrl;scopes;caps;reqs
+happyfox,HappyFox,HappyFox,Support & Success,HTTP Basic,no,https://www.happyfox.com/,,,,,,6,2,logo;portal;api;authDocs;statusUrl;scopes;caps;reqs
+zerossl,ZeroSSL,HID Global,Cloud & Hosting,API Key,no,https://zerossl.com/,https://zerossl.com/documentation/api,https://zerossl.com/documentation/api,,,,6,2,authDocs;statusUrl;scopes;caps;reqs
+fieldwire,Fieldwire,Hilti,Real Estate / Construction,See documentation,no,https://www.fieldwire.com/,,,,,,0,0,portal;api;authDocs;statusUrl;auth;scopes;caps;reqs
+hunter-io,Hunter.io,Hunter,CRM & Sales,API Key,no,https://hunter.io/,https://hunter.io/api-documentation,https://hunter.io/api-documentation,,,,4,1,authDocs;statusUrl;scopes;caps;reqs
+hyperproof,Hyperproof,Hyperproof,Security & Identity,OAuth 2.0 Client Credentials,no,https://hyperproof.io/,https://developer.hyperproof.app/,https://developer.hyperproof.app/,,,,6,1,authDocs;statusUrl;scopes;caps;reqs
+hyperscience,Hyperscience,Hyperscience,Documents / E-sign / Forms,See documentation,no,https://www.hyperscience.ai/,,,,,,0,0,logo;portal;api;authDocs;statusUrl;auth;scopes;caps;reqs
+imgix,imgix,imgix,Cloud & Hosting,Bearer Token,no,https://www.imgix.com/,https://docs.imgix.com/en-US,https://docs.imgix.com/en-US/apis/management/overview,,,,6,1,authDocs;statusUrl;scopes;caps;reqs
+infobip,Infobip,Infobip,Communications / Voice / Video,See documentation,no,https://www.infobip.com/,https://www.infobip.com/docs,https://www.infobip.com/docs/api,,,,0,0,authDocs;statusUrl;auth;scopes;caps;reqs
+iru,Iru (formerly Kandji),Iru,Security & Identity,API Key,no,,,,,,,7,1,logo;site;portal;api;authDocs;statusUrl;scopes;caps;reqs
+jamf-pro,Jamf Pro,Jamf,Security & Identity,OAuth 2.0,no,https://www.jamf.com/,https://developer.jamf.com/,,,,,6,0,api;authDocs;statusUrl;scopes;caps;reqs
+jumpcloud,JumpCloud,JumpCloud,Security & Identity,API Key,no,https://jumpcloud.com/,https://docs.jumpcloud.com/,https://docs.jumpcloud.com/,,,,6,0,authDocs;statusUrl;scopes;caps;reqs
+juspay,Juspay,Juspay,Payments / Banking / Fintech,See documentation,no,https://juspay.io/in,,,,,,0,0,portal;api;authDocs;statusUrl;auth;scopes;caps;reqs
+kajabi,Kajabi,Kajabi,Education,OAuth 2.0,no,https://www.kajabi.com/,,,,,,5,0,portal;api;authDocs;statusUrl;scopes;caps;reqs
+keka,Keka,Keka,HR / Recruiting / Payroll,OAuth 2.0,no,https://www.keka.com/,https://developers.keka.com/,,,,,8,0,api;authDocs;statusUrl;scopes;caps;reqs
+korapay,Korapay,Kora,Payments / Banking / Fintech,API Key,no,,https://developers.korapay.com/,,,,,4,0,logo;site;api;authDocs;statusUrl;scopes;caps;reqs
+koyeb,Koyeb,Koyeb,Cloud & Hosting,Bearer Token,no,https://www.koyeb.com/,https://www.koyeb.com/docs,https://www.koyeb.com/docs/reference/api,,,,7,0,authDocs;statusUrl;scopes;caps;reqs
+lalamove,Lalamove,Lalamove,Logistics / Shipping / Inventory,See documentation,no,,https://developers.lalamove.com/,,,,,0,0,logo;site;api;authDocs;statusUrl;auth;scopes;caps;reqs
+laserfiche,Laserfiche,Laserfiche,Documents / E-sign / Forms,OAuth 2.0,no,https://www.laserfiche.com/,https://developer.laserfiche.com/,,,,,5,2,api;authDocs;statusUrl;scopes;caps;reqs
+last9,Last9,Last9,Observability,Provider-specific,no,https://last9.io/,https://last9.io/docs/getting-started-with-api/,https://last9.io/docs/getting-started-with-api/,,,,7,0,authDocs;statusUrl;auth;scopes;caps;reqs
+leadiq,LeadIQ,LeadIQ,CRM & Sales,API Key,no,https://leadiq.com/,https://developer.leadiq.com/,https://developer.leadiq.com/,,,,5,2,authDocs;statusUrl;scopes;caps;reqs
+leadsquared,LeadSquared,LeadSquared,CRM & Sales,API Key,no,,https://apidocs.leadsquared.com/,https://apidocs.leadsquared.com/,,,,7,3,logo;site;authDocs;statusUrl;scopes;caps;reqs
+lendsqr-adjutor,Lendsqr Adjútor,Lendsqr,Payments / Banking / Fintech,Bearer Token,no,https://lendsqr.com/?redirect=false,https://docs.lendsqr.com/developers/authentication/,https://docs.lendsqr.com/developers/authentication/,,,,6,0,authDocs;statusUrl;scopes;caps;reqs
+less-annoying-crm,Less Annoying CRM,Less Annoying CRM,CRM & Sales,See documentation,no,https://lessannoyingcrm.com/,,,,,,0,0,portal;api;authDocs;statusUrl;auth;scopes;caps;reqs
+linkedin-learning,LinkedIn Learning,LinkedIn,Education,OAuth 2.0,no,https://business.linkedin.com/learn,https://learn.microsoft.com/en-us/linkedin/learning/,https://learn.microsoft.com/en-us/linkedin/learning/,,,,7,0,authDocs;statusUrl;scopes;caps;reqs
+logicmonitor,LogicMonitor,LogicMonitor,Observability,API Key,no,https://www.logicmonitor.com/,,,,,,4,0,portal;api;authDocs;statusUrl;scopes;caps;reqs
+lokalise,Lokalise,Lokalise,Developer Tools,OAuth 2.0,no,https://lokalise.com/,https://developers.lokalise.com/,,,,,7,2,logo;api;authDocs;statusUrl;scopes;caps;reqs
+loyaltylion,LoyaltyLion,LoyaltyLion,Commerce / Marketplaces,API Key,no,https://loyaltylion.com/,https://developers.loyaltylion.com/docs/introduction,,,,,10,1,api;authDocs;statusUrl;scopes;caps;reqs
+mabl,mabl,mabl,Developer Tools,HTTP Basic,no,https://www.mabl.com/,,,,,,5,0,portal;api;authDocs;statusUrl;scopes;caps;reqs
+mailerlite,MailerLite,MailerLite,Marketing / Advertising,API Key,no,https://www.mailerlite.com/,https://developers.mailerlite.com/,,,,,3,1,api;authDocs;statusUrl;scopes;caps;reqs
+merge,Merge,Merge,Finance / Accounting / Tax,API Key,no,https://www.merge.dev/,https://docs.merge.dev/home,https://docs.merge.dev/home,,,,5,2,authDocs;statusUrl;scopes;caps;reqs
+moyasar,Moyasar,Moyasar,Payments / Banking / Fintech,HTTP Basic,no,https://moyasar.com/,https://docs.moyasar.com/,https://docs.moyasar.com/,,,,6,0,authDocs;statusUrl;scopes;caps;reqs
+muck-rack,Muck Rack,Muck Rack,Social / Creator / Publishing,See documentation,no,,https://muckrack.com/pr-software/api,https://muckrack.com/pr-software/api,,,,0,0,logo;site;authDocs;statusUrl;auth;scopes;caps;reqs
+ncbi-eutilities,NCBI E-utilities (PubMed),National Center for Biotechnology Information,Healthcare,API Key,no,https://www.ncbi.nlm.nih.gov/,https://www.ncbi.nlm.nih.gov/home/about/policies/,https://www.ncbi.nlm.nih.gov/books/NBK25499/,,,,4,0,authDocs;statusUrl;scopes;caps;reqs
+clinicaltrials-gov-api,ClinicalTrials.gov API,National Library of Medicine,Healthcare,None (public API),no,https://clinicaltrials.gov/,https://clinicaltrials.gov/api/oas/v2,https://clinicaltrials.gov/api/oas/v2,,,,4,0,authDocs;statusUrl;scopes;caps;reqs
+rxnav-rxnorm-api,RxNav / RxNorm API (NLM),National Library of Medicine,Healthcare,None (public API),no,https://www.nlm.nih.gov/,https://lhncbc.nlm.nih.gov/RxNav/APIs/RxNormAPIs.html,https://lhncbc.nlm.nih.gov/RxNav/APIs/RxNormAPIs.html,,,,6,0,logo;authDocs;statusUrl;scopes;caps;reqs
+naver-clova-studio,Naver CLOVA Studio,NAVER Cloud,AI & Models,API Key,no,https://www.ncloud.com/,,,,,,2,3,logo;portal;api;authDocs;statusUrl;scopes;caps;reqs
+netskope,Netskope,Netskope,Security & Identity,API Key,no,https://www.netskope.com/,https://docs.netskope.com/en,https://docs.netskope.com/en,,,,4,0,logo;authDocs;statusUrl;scopes;caps;reqs
+ngrok,ngrok,ngrok,Developer Tools,API Key,no,https://ngrok.com/,https://ngrok.com/docs/start,https://ngrok.com/docs/api,,,https://status.ngrok.com/,5,0,authDocs;scopes;caps;reqs
+noaa-ncei-cdo,NOAA NCEI Climate Data Online,NOAA National Centers for Environmental Information,Government / Public Data,API Key,no,https://www.ncei.noaa.gov/,https://www.ncdc.noaa.gov/cdo-web/webservices/v2,https://www.ncdc.noaa.gov/cdo-web/webservices/v2,,,,13,0,logo;authDocs;statusUrl;scopes;caps;reqs
+nuvei,Nuvei,Nuvei,Payments / Banking / Fintech,API Key,no,https://www.nuvei.com/,https://docs.nuvei.com/documentation/home/,https://docs.nuvei.com/documentation/home/,,,,6,0,authDocs;statusUrl;scopes;caps;reqs
+onepagecrm,OnePageCRM,OnePageCRM,CRM & Sales,HTTP Basic,no,https://www.onepagecrm.com/,https://developer.onepagecrm.com/,,,,,6,4,api;authDocs;statusUrl;scopes;caps;reqs
+onfleet,Onfleet,Onfleet,Logistics / Shipping / Inventory,HTTP Basic,no,https://onfleet.com/,https://docs.onfleet.com/,,,,,3,1,api;authDocs;statusUrl;scopes;caps;reqs
+opslevel,OpsLevel,OpsLevel,Developer Tools,API Key,no,https://www.opslevel.com/,https://docs.opslevel.com/,https://docs.opslevel.com/,,,,5,0,authDocs;statusUrl;scopes;caps;reqs
+ottu,Ottu,Ottu,Payments / Banking / Fintech,API Key,no,https://ottu.com/en/,,,,,,5,0,logo;portal;api;authDocs;statusUrl;scopes;caps;reqs
+panther,Panther,Panther,Security & Identity,API Key,no,https://panther.com/,https://docs.panther.com/panther-developer-workflows/api,https://docs.panther.com/panther-developer-workflows/api,,,,4,1,authDocs;statusUrl;scopes;caps;reqs
+papaya-global,Papaya Global,Papaya Global,HR / Recruiting / Payroll,API Key,no,https://www.papayaglobal.com/,,,,,,1,0,portal;api;authDocs;statusUrl;scopes;caps;reqs
+payfit,PayFit,PayFit,HR / Recruiting / Payroll,OAuth 2.0,no,https://payfit.com/,,,,,,3,0,portal;api;authDocs;statusUrl;scopes;caps;reqs
+paylocity,Paylocity,Paylocity,HR / Recruiting / Payroll,OAuth 2.0,no,https://www.paylocity.com/,https://developer.paylocity.com/integrations/docs/getting-started,,,,,2,0,api;authDocs;statusUrl;scopes;caps;reqs
+pendo,Pendo (Engage API),Pendo,Support & Success,API Key,no,https://www.pendo.io/,https://engageapi.pendo.io/,https://engageapi.pendo.io/,,,,13,1,authDocs;statusUrl;scopes;caps;reqs
+tidb-cloud,TiDB Cloud,PingCAP,Databases & Search,API Key,no,https://www.pingcap.com/,https://docs.pingcap.com/tidbcloud/,https://docs.pingcap.com/tidbcloud/,,,,6,0,authDocs;statusUrl;scopes;caps;reqs
+plane,Plane,Plane,Developer Tools,API Key,no,https://plane.so/,https://developers.plane.so/,https://docs.plane.so/,,,,5,0,authDocs;statusUrl;scopes;caps;reqs
+pleo,Pleo,Pleo,Finance / Accounting / Tax,See documentation,no,https://www.pleo.io/en,,,,,,0,0,portal;api;authDocs;statusUrl;auth;scopes;caps;reqs
+posthog,PostHog,PostHog,Marketing / Advertising,API Key,no,https://posthog.com/,https://posthog.com/docs/api,https://posthog.com/docs/api,,,,3,1,authDocs;statusUrl;scopes;caps;reqs
+postman,Postman API,Postman,Developer Tools,API Key,no,https://www.postman.com/,https://learning.postman.com/docs/getting-started/overview,https://learning.postman.com/docs/getting-started/overview,,,https://status.postman.com/,4,1,authDocs;scopes;caps;reqs
+printify,Printify,Printify,Commerce / Marketplaces,See documentation,no,https://printify.com/,https://developers.printify.com/,,,,,0,0,api;authDocs;statusUrl;auth;scopes;caps;reqs
+procountor,Procountor,Procountor,Finance / Accounting / Tax,OAuth 2.0 Client Credentials,no,,https://dev.procountor.com/,https://dev.procountor.com/,,,,6,0,logo;site;authDocs;statusUrl;scopes;caps;reqs
+project44,project44,project44,Logistics / Shipping / Inventory,See documentation,no,https://www.project44.com/,https://developers.project44.com/,,,,,0,0,api;authDocs;statusUrl;auth;scopes;caps;reqs
+propertyradar,PropertyRadar,PropertyRadar,Real Estate / Construction,API Key,no,https://www.propertyradar.com/,,,,,,6,0,portal;api;authDocs;statusUrl;scopes;caps;reqs
+qlty,Qlty,Qlty Software,Developer Tools,API Key,no,https://qlty.sh/,https://docs.qlty.sh/what-is-qlty,https://docs.qlty.sh/what-is-qlty,,,,4,1,authDocs;statusUrl;scopes;caps;reqs
+qovery,Qovery,Qovery,Cloud & Hosting,API Key,no,https://www.qovery.com/,,,,,,4,1,portal;api;authDocs;statusUrl;scopes;caps;reqs
+qualys,Qualys,Qualys,Security & Identity,HTTP Basic,no,https://www.qualys.com/,https://docs.qualys.com/,https://docs.qualys.com/,,,,5,0,authDocs;statusUrl;scopes;caps;reqs
+rapid7-insight,Rapid7 Insight Platform (InsightVM Cloud / InsightIDR),Rapid7,Security & Identity,API Key,no,https://www.rapid7.com/,https://documentation.rapid7.com/home/home.htm,https://documentation.rapid7.com/home/home.htm,,,,9,2,authDocs;statusUrl;scopes;caps;reqs
+raygun,Raygun,Raygun,Developer Tools,API Key,no,https://raygun.com/,https://raygun.com/documentation/,https://raygun.com/documentation/,,,,5,0,authDocs;statusUrl;scopes;caps;reqs
+read-ai,Read AI,Read AI,Productivity,OAuth 2.0 + PKCE,no,https://www.read.ai/,https://support.read.ai/hc/en-us/articles/49381161088659-API-Reference,https://support.read.ai/hc/en-us/articles/49381161088659-API-Reference,,,,3,0,authDocs;statusUrl;scopes;caps;reqs
+recharge,Recharge,Recharge,Commerce / Marketplaces,API Key,no,https://getrecharge.com/,https://developer.rechargepayments.com/2021-11,,,,,10,2,api;authDocs;statusUrl;scopes;caps;reqs
+resend,Resend,Resend,Marketing / Advertising,API Key,no,https://resend.com/,https://resend.com/docs/introduction,https://resend.com/docs/api-reference/introduction,,,,2,1,authDocs;statusUrl;scopes;caps;reqs
+resource-guru,Resource Guru,Resource Guru,Productivity,OAuth 2.0,yes,https://resourceguruapp.com/,https://app.resourceguruapp.com:443/developers,,,,,6,1,api;authDocs;whDocs;statusUrl;scopes;caps;reqs
+reviewsio,Reviews.io,Reviews.io,Support & Success,API Key,no,,https://developer.reviews.io/,https://developer.reviews.io/,,,,4,0,logo;site;authDocs;statusUrl;scopes;caps;reqs
+rocketreach,RocketReach,RocketReach,CRM & Sales,API Key,no,https://rocketreach.co/,,,,,,1,1,logo;portal;api;authDocs;statusUrl;scopes;caps;reqs
+runn,Runn,Runn,Productivity,Bearer Token,no,https://www.runn.io/,https://developer.runn.io/,https://developer.runn.io/,,,,6,0,authDocs;statusUrl;scopes;caps;reqs
+rutter,Rutter,Rutter,Finance / Accounting / Tax,HTTP Basic,yes,https://www.rutter.com/,https://docs.rutter.com/,https://docs.rutter.com/,,,,5,2,authDocs;whDocs;statusUrl;scopes;caps;reqs
+sambanova,SambaNova Cloud,SambaNova Systems,AI & Models,API Key,no,https://sambanova.ai/,https://docs.sambanova.ai/docs/en/get-started/overview,https://docs.sambanova.ai/docs/en/get-started/overview,,,,2,3,authDocs;statusUrl;scopes;caps;reqs
+sellsy,Sellsy,Sellsy,CRM & Sales,OAuth 2.0 Client Credentials,no,https://go.sellsy.com,https://docs.sellsy.com/api/v2/dist/sellsy.v2.latest.yaml,https://docs.sellsy.com/api/v2/dist/sellsy.v2.latest.yaml,,,,12,1,authDocs;statusUrl;scopes;caps;reqs
+semgrep,Semgrep AppSec Platform,Semgrep,Developer Tools,API Key,no,https://semgrep.dev/,https://docs.semgrep.dev/,https://docs.semgrep.dev/,,,,5,0,authDocs;statusUrl;scopes;caps;reqs
+shipbob,ShipBob,ShipBob,Logistics / Shipping / Inventory,OAuth 2.0 + PKCE,no,https://www.shipbob.com/,https://developer.shipbob.com/introduction,,,,,16,0,logo;api;authDocs;statusUrl;scopes;caps;reqs
+shipwell,Shipwell,Shipwell,Logistics / Shipping / Inventory,API Key,no,https://www.shipwell.com/,,,,,,2,1,portal;api;authDocs;statusUrl;scopes;caps;reqs
+shortcut,Shortcut,Shortcut,Developer Tools,API Key,yes,https://www.shortcut.com/,https://developer.shortcut.com/api/rest/v3,,,,,3,2,api;authDocs;whDocs;statusUrl;scopes;caps;reqs
+signoz,SigNoz,SigNoz,Observability,API Key,no,https://signoz.io/,https://signoz.io/docs/introduction/,https://signoz.io/docs/logs-management/logs-api/overview/,,,,5,0,authDocs;statusUrl;scopes;caps;reqs
+skyscanner,Skyscanner,Skyscanner,Travel / Hospitality / Events,See documentation,no,https://www.skyscanner.net/sttc/px/captcha-v2/index.html?url=Lz8=&uuid=deb242ec-bb4d-11f1-8418-5ee3384ba296&vid=,,,,,,0,0,portal;api;authDocs;statusUrl;auth;scopes;caps;reqs
+smarty-us-street,Smarty US Street Address API,Smarty,Government / Public Data,HTTP Basic,no,https://www.smarty.com/,https://www.smarty.com/docs/apis/us-street-api/reference,https://www.smarty.com/docs/apis/us-street-api/reference,,,,2,0,authDocs;statusUrl;scopes;caps;reqs
+strapi,Strapi Cloud,Strapi,Databases & Search,Bearer Token,no,https://strapi.io/,https://docs.strapi.io/,https://docs.strapi.io/cms/api/rest,,,,3,2,authDocs;statusUrl;scopes;caps;reqs
+stream-getstream,Stream,Stream,Communications / Voice / Video,See documentation,no,https://getstream.io/,,,,,,0,0,portal;api;authDocs;statusUrl;auth;scopes;caps;reqs
+sumsub,Sumsub,Sumsub,Legal / Compliance,See documentation,no,https://sumsub.com/,https://docs.sumsub.com/,https://docs.sumsub.com/,,,,0,0,authDocs;statusUrl;auth;scopes;caps;reqs
+swapcard,Swapcard,Swapcard,Travel / Hospitality / Events,API Key,no,https://www.swapcard.com/,https://swapcard.dev/organizer/authentication,https://swapcard.dev/organizer/authentication,https://swapcard.dev/organizer/authentication,,,4,0,statusUrl;scopes;caps;reqs
+talkjs,TalkJS,TalkJS,Communications / Voice / Video,Bearer Token,no,https://talkjs.com/,https://talkjs.com/docs/REST_API/,https://talkjs.com/docs/REST_API/,,,,4,1,authDocs;statusUrl;scopes;caps;reqs
+tarabut,Tarabut,Tarabut,Payments / Banking / Fintech,See documentation,no,,,,,,,0,0,logo;site;portal;api;authDocs;statusUrl;auth;scopes;caps;reqs
+telegram-bot-api,Telegram Bot API,Telegram,Communications / Voice / Video,See documentation,no,https://telegram.org/,https://core.telegram.org/bots,https://core.telegram.org/bots/api,https://core.telegram.org/bots/features,https://core.telegram.org/bots,,0,0,statusUrl;auth;scopes;caps;reqs
+telr,Telr,Telr,Payments / Banking / Fintech,HTTP Basic,no,https://telr.com/,,,,,,5,0,portal;api;authDocs;statusUrl;scopes;caps;reqs
+termii,Termii,Termii,Communications / Voice / Video,API Key,no,https://termii.com/,https://developer.termii.com/,https://developer.termii.com/,,,,6,0,logo;authDocs;statusUrl;scopes;caps;reqs
+testlify,Testlify,Testlify,HR / Recruiting / Payroll,Bearer Token,no,,https://docs.testlify.com/docs/how-to-generate-and-use-an-access-token-in-testlify,https://docs.testlify.com/docs/how-to-generate-and-use-an-access-token-in-testlify,,,,6,1,logo;site;authDocs;statusUrl;scopes;caps;reqs
+matrix,"Matrix (Client-Server API; Element/EMS, matrix.org homeservers)",The Matrix.org Foundation C.I.C.,Productivity,Bearer Token,no,https://matrix.org/,https://spec.matrix.org/latest/client-server-api/,https://spec.matrix.org/latest/client-server-api/,,,,5,1,authDocs;statusUrl;scopes;caps;reqs
+the-things-stack,The Things Stack,The Things Industries,Manufacturing / ERP / Supply Chain,API Key,no,https://www.thethingsindustries.com/,https://www.thethingsindustries.com/docs/,https://www.thethingsindustries.com/docs/,,,,10,0,authDocs;statusUrl;scopes;caps;reqs
+ticktick,TickTick,TickTick,Productivity,OAuth 2.0,no,https://ticktick.com/,https://developer.ticktick.com/,,,,,9,3,api;authDocs;statusUrl;scopes;caps;reqs
+tidio,Tidio,Tidio,Support & Success,API Key,no,https://www.tidio.com/,,,,,,11,4,portal;api;authDocs;statusUrl;scopes;caps;reqs
+timecamp,TimeCamp,TimeCamp,Productivity,Bearer Token,no,https://www.timecamp.com/,https://developer.timecamp.com/reference/dist/api-prod.yaml,https://developer.timecamp.com/reference/dist/api-prod.yaml,,,,6,1,authDocs;statusUrl;scopes;caps;reqs
+tinybird,Tinybird,Tinybird,Databases & Search,API Key,no,https://www.tinybird.co/,https://www.tinybird.co/docs/forward/quickstarts,https://www.tinybird.co/docs/forward/quickstarts,,,,3,1,logo;authDocs;statusUrl;scopes;caps;reqs
+toast,Toast,Toast,Commerce / Marketplaces,See documentation,no,,https://doc.toasttab.com/,https://doc.toasttab.com/,,,,0,0,logo;site;authDocs;statusUrl;auth;scopes;caps;reqs
+toradex-torizon,Torizon Cloud,Toradex,Manufacturing / ERP / Supply Chain,OAuth 2.0 Client Credentials,no,https://www.toradex.com/,https://developer.toradex.com/,https://developer.toradex.com/torizon/torizon-platform/torizon-api/,,,,6,2,authDocs;statusUrl;scopes;caps;reqs
+transistor-fm,Transistor.fm,Transistor,Social / Creator / Publishing,API Key,no,https://transistor.fm/,https://developers.transistor.fm/,https://developers.transistor.fm/,,,,6,0,logo;authDocs;statusUrl;scopes;caps;reqs
+trengo,Trengo,Trengo,Support & Success,API Key,no,https://trengo.com/,https://developers.trengo.com/docs/welcome,,,,,8,0,api;authDocs;statusUrl;scopes;caps;reqs
+congress-gov,Congress.gov API,U.S. Library of Congress,Government / Public Data,API Key,no,,https://api.congress.gov/,https://api.congress.gov/,,,,13,0,logo;site;authDocs;statusUrl;scopes;caps;reqs
+uber,Uber,Uber,Travel / Hospitality / Events,See documentation,no,https://www.uber.com/in/en/,https://developer.uber.com/,,,,,0,0,api;authDocs;statusUrl;auth;scopes;caps;reqs
+uber-direct,Uber Direct,Uber,Logistics / Shipping / Inventory,See documentation,no,https://www.uber.com/in/en/,https://developer.uber.com/,,,,,0,0,logo;api;authDocs;statusUrl;auth;scopes;caps;reqs
+upstage,Upstage,Upstage,AI & Models,API Key,no,https://www.upstage.ai/,,,,,,3,2,portal;api;authDocs;statusUrl;scopes;caps;reqs
+upstash-qstash,Upstash QStash,Upstash,Databases & Search,API Key,no,https://upstash.com/,https://upstash.com/docs/introduction,https://upstash.com/docs/introduction,,,,4,1,authDocs;statusUrl;scopes;caps;reqs
+upstash-redis,Upstash Redis (REST API),Upstash,Databases & Search,API Key,no,https://upstash.com/,https://upstash.com/docs/introduction,https://upstash.com/docs/introduction,,,,4,1,authDocs;statusUrl;scopes;caps;reqs
+upsun-platformsh,Upsun / Platform.sh,Upsun,Cloud & Hosting,Provider-specific,no,https://upsun.com/,https://developer.upsun.com/api/rest/authentication.md,https://developer.upsun.com/api/rest/authentication.md,,,,7,3,authDocs;statusUrl;auth;scopes;caps;reqs
+uptime-com,Uptime.com,Uptime.com,Observability,API Key,no,https://uptime.com/,https://uptime.com/api/v1/docs/,https://uptime.com/api/v1/docs/,,,,7,1,logo;authDocs;statusUrl;scopes;caps;reqs
+vainu,Vainu,Vainu,CRM & Sales,OAuth 2.0 Client Credentials,no,https://www.vainu.com/,https://developers.vainu.com/,https://developers.vainu.com/,,,,5,1,logo;authDocs;statusUrl;scopes;caps;reqs
+veriff,Veriff,Veriff,Legal / Compliance,See documentation,no,https://www.veriff.com/,https://devdocs.veriff.com/,,,,,0,0,api;authDocs;statusUrl;auth;scopes;caps;reqs
+vitally,Vitally,Vitally,Support & Success,HTTP Basic,no,https://www.vitally.io/,https://docs.vitally.io/en/,https://docs.vitally.io/en/,,,,9,5,authDocs;statusUrl;scopes;caps;reqs
+vultr,Vultr,Vultr,Cloud & Hosting,API Key,no,,,,,,,5,0,site;portal;api;authDocs;statusUrl;scopes;caps;reqs
+whereby,Whereby,Whereby,Communications / Voice / Video,Bearer Token,yes,https://whereby.com/,https://docs.whereby.com/,https://docs.whereby.com/reference/whereby-rest-api-reference,,,,6,2,authDocs;whDocs;statusUrl;scopes;caps;reqs
+windmill,Windmill,Windmill Labs,Developer Tools,Bearer Token,no,https://www.windmill.dev/,https://www.windmill.dev/docs/,https://www.windmill.dev/docs/core_concepts/user_tokens,,,,6,0,logo;authDocs;statusUrl;scopes;caps;reqs
+wistia,Wistia,Wistia,Social / Creator / Publishing,API Key,no,https://wistia.com/,,,,,,7,1,portal;api;authDocs;statusUrl;scopes;caps;reqs
+woodpecker,Woodpecker,Woodpecker,CRM & Sales,API Key,no,https://woodpecker.co/,https://developers.woodpecker.co/llms.txt,https://developers.woodpecker.co/,,,,5,1,authDocs;statusUrl;scopes;caps;reqs
+workiva-platform,Workiva Platform,Workiva,Legal / Compliance,OAuth 2.0 Client Credentials,no,https://www.workiva.com/,https://developers.workiva.com/,https://developers.workiva.com/2022-01-01/authentication.html,,,,5,0,authDocs;statusUrl;scopes;caps;reqs
+workos,WorkOS,WorkOS,Security & Identity,API Key,yes,https://workos.com/,https://workos.com/docs,https://workos.com/docs/reference,,,,5,0,authDocs;whDocs;statusUrl;scopes;caps;reqs
+x-api,X (Twitter) API,X Corp.,Social / Creator / Publishing,OAuth 2.0 + PKCE,no,https://x.com/,https://developer.x.com/,https://docs.x.com/overview,,,,3,2,authDocs;statusUrl;scopes;caps;reqs
+xometry,Xometry,Xometry,Manufacturing / ERP / Supply Chain,API Key,no,https://www.xometry.com/,,,,,,2,0,portal;api;authDocs;statusUrl;scopes;caps;reqs
+yousign,Yousign,Youtrust,Documents / E-sign / Forms,API Key,yes,https://youtrust.com/,https://developers.youtrust.com/,,,,,6,1,logo;api;authDocs;whDocs;statusUrl;scopes;caps;reqs
+zid,Zid,Zid,Commerce / Marketplaces,See documentation,no,https://zid.sa/ar/,,,,,,0,0,logo;portal;api;authDocs;statusUrl;auth;scopes;caps;reqs
+site24x7,Site24x7,Zoho,Observability,OAuth 2.0,no,https://www.site24x7.com/,https://www.site24x7.com/help/api/,https://www.site24x7.com/help/api/,,,,5,1,logo;authDocs;statusUrl;scopes;caps;reqs
+zoho-catalyst,Zoho Catalyst,Zoho,Cloud & Hosting,OAuth 2.0,no,https://catalyst.zoho.com/,https://docs.catalyst.zoho.com/en/api/introduction/overview-and-prerequisites/,https://docs.catalyst.zoho.com/en/api/introduction/overview-and-prerequisites/,,,,4,1,logo;authDocs;statusUrl;scopes;caps;reqs
+zoho-cliq,Zoho Cliq,Zoho,Productivity,OAuth 2.0,no,https://www.zoho.com/cliq/,https://www.zoho.com/cliq/help/restapi/v2/,https://www.zoho.com/cliq/help/restapi/v2/,,,,5,1,logo;authDocs;statusUrl;scopes;caps;reqs
+zoho-expense,Zoho Expense,Zoho,Finance / Accounting / Tax,OAuth 2.0,no,https://www.zoho.com/in/expense/,,,,,,3,3,logo;portal;api;authDocs;statusUrl;scopes;caps;reqs
+zoho-inventory,Zoho Inventory,Zoho,Logistics / Shipping / Inventory,OAuth 2.0,no,https://www.zoho.com/in/inventory/,https://www.zoho.com/inventory/api/v1/introduction/,https://www.zoho.com/inventory/api/v1/introduction/,,,,6,1,authDocs;statusUrl;scopes;caps;reqs
+zoho-invoice,Zoho Invoice,Zoho,Finance / Accounting / Tax,OAuth 2.0,no,https://www.zoho.com/in/invoice/,,,,,,4,1,logo;portal;api;authDocs;statusUrl;scopes;caps;reqs
+zoho-mail,Zoho Mail,Zoho,Productivity,OAuth 2.0,no,https://www.zoho.com/mail/,https://www.zoho.com/mail/help/api/,https://www.zoho.com/mail/help/api/,,,,5,1,logo;authDocs;statusUrl;scopes;caps;reqs
+zoho-payroll,Zoho Payroll,Zoho,Finance / Accounting / Tax,OAuth 2.0,no,https://www.zoho.com/in/payroll/,https://www.zoho.com/payroll/api/v1/introduction/,https://www.zoho.com/payroll/api/v1/introduction/,,,,6,1,logo;authDocs;statusUrl;scopes;caps;reqs
+zoho-people,Zoho People,Zoho,HR / Recruiting / Payroll,OAuth 2.0,no,https://www.zoho.com/people/,https://www.zoho.com/people/api/v3/scopes.html,https://www.zoho.com/people/api/v3/scopes.html,,,,6,1,logo;authDocs;statusUrl;scopes;caps;reqs
+zoho-recruit,Zoho Recruit,Zoho,HR / Recruiting / Payroll,OAuth 2.0,no,https://www.zoho.com/recruit/,,,,,,7,1,logo;portal;api;authDocs;statusUrl;scopes;caps;reqs
+zoho-sign,Zoho Sign,Zoho,Documents / E-sign / Forms,OAuth 2.0,no,https://www.zoho.com/en-in/sign/,https://www.zoho.com/sign/api/oauth.html,https://www.zoho.com/sign/api/oauth.html,https://www.zoho.com/sign/api/oauth.html,,,6,2,statusUrl;scopes;caps;reqs
+zohosalesiq,Zoho SalesIQ,Zoho,Support & Success,OAuth 2.0,no,https://www.zoho.com/salesiq/,https://www.zoho.com/salesiq/help/developer-section/rest-api-v2.html,https://www.zoho.com/salesiq/help/developer-section/rest-api-v2.html,,,,7,1,logo;authDocs;statusUrl;scopes;caps;reqs

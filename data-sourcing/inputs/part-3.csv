@@ -1,0 +1,202 @@
+id,name,provider,category,auth_now,webhooks,site,portal,api,authDocs,whDocs,statusUrl,core_read_tools,core_write_tools,needs
+agile-crm,Agile CRM,Agile CRM,CRM & Sales,HTTP Basic,no,,https://github.com/agilecrm/rest-api,https://github.com/agilecrm/rest-api,,,,9,4,logo;site;authDocs;statusUrl;scopes;caps;reqs
+aikido-security,Aikido Security,Aikido Security,Security & Identity,OAuth 2.0 Client Credentials,no,https://www.aikido.dev/,https://apidocs.aikido.dev/,https://apidocs.aikido.dev/,,,,5,1,authDocs;statusUrl;scopes;caps;reqs
+airship,Airship,Airship,Marketing / Advertising,HTTP Basic,no,https://www.airship.com/,https://www.airship.com/docs/,https://www.airship.com/docs/,,,,2,1,authDocs;statusUrl;scopes;caps;reqs
+akamai-edgegrid,Akamai (EdgeGrid APIs),Akamai,Cloud & Hosting,See documentation,no,,https://techdocs.akamai.com/home,https://techdocs.akamai.com/home,,,,0,0,logo;site;authDocs;statusUrl;auth;scopes;caps;reqs
+linode,Akamai Cloud (Linode API v4),Akamai,Cloud & Hosting,API Key,no,,,https://techdocs.akamai.com/linode-api/reference/api,,,https://status.linode.com/,5,0,site;portal;authDocs;scopes;caps;reqs
+akeyless,Akeyless,Akeyless,Security & Identity,API Key,no,https://www.akeyless.io/,https://docs.akeyless.io/,https://docs.akeyless.io/,,,,4,0,authDocs;statusUrl;scopes;caps;reqs
+algolia,Algolia,Algolia,Databases & Search,API Key,no,https://www.algolia.com/,https://www.algolia.com/doc,https://www.algolia.com/doc/rest-api/search,https://www.algolia.com/doc/guides/security/api-keys,,https://status.algolia.com/,4,1,scopes;caps;reqs
+alibaba-cloud-ecs,Alibaba Cloud ECS,Alibaba Cloud,Cloud & Hosting,See documentation,no,https://www.alibabacloud.com/en?_p_lc=10,https://www.alibabacloud.com/help/en/ecs/,https://www.alibabacloud.com/help/en/ecs/,,,,0,0,logo;authDocs;statusUrl;auth;scopes;caps;reqs
+apaleo,apaleo,apaleo,Travel / Hospitality / Events,OAuth 2.0,no,https://apaleo.com/,,,,,,5,0,portal;api;authDocs;statusUrl;scopes;caps;reqs
+attom,ATTOM Data Solutions,ATTOM,Real Estate / Construction,API Key,no,https://www.attomdata.com/,,,,,,5,0,portal;api;authDocs;statusUrl;scopes;caps;reqs
+authentica,Authentica,Authentica,Security & Identity,See documentation,no,,,,,,,0,0,logo;site;portal;api;authDocs;statusUrl;auth;scopes;caps;reqs
+auvik,Auvik,Auvik,Observability,HTTP Basic,no,https://www.auvik.com/,https://support.auvik.com/hc/en-us/articles/360031007111-Auvik-API-Integration-Guide,https://support.auvik.com/hc/en-us/articles/360031007111-Auvik-API-Integration-Guide,,,,7,1,authDocs;statusUrl;scopes;caps;reqs
+aweber,AWeber,AWeber,Marketing / Advertising,OAuth 2.0,no,https://www.aweber.com/,,,,,,4,1,portal;api;authDocs;statusUrl;scopes;caps;reqs
+open-edx,Open edX,Axim Collaborative,Education,See documentation,no,https://openedx.org/,https://docs.openedx.org/en/latest/,https://docs.openedx.org/en/latest/,,,,0,0,logo;authDocs;statusUrl;auth;scopes;caps;reqs
+axiom,Axiom,Axiom,Observability,API Key,no,https://axiom.co/,https://axiom.co/docs,https://axiom.co/docs,,,,4,1,authDocs;statusUrl;scopes;caps;reqs
+backblaze-b2,Backblaze B2,Backblaze,Cloud & Hosting,See documentation,no,https://www.backblaze.com/,,,,,https://status.backblaze.com/,0,0,portal;api;authDocs;auth;scopes;caps;reqs
+beehiiv,beehiiv,beehiiv,Social / Creator / Publishing,API Key,no,https://www.beehiiv.com/,https://developers.beehiiv.com/welcome/getting-started,,,,,6,2,api;authDocs;statusUrl;scopes;caps;reqs
+brightcove,Brightcove,Bending Spoons,Social / Creator / Publishing,OAuth 2.0,no,https://www.brightcove.com/,https://apis.support.brightcove.com/,https://apis.support.brightcove.com/,,,,5,3,authDocs;statusUrl;scopes;caps;reqs
+big-cartel,Big Cartel,Big Cartel,Commerce / Marketplaces,See documentation,no,https://www.bigcartel.com/,,,,,,0,0,portal;api;authDocs;statusUrl;auth;scopes;caps;reqs
+bird,Bird,Bird,Communications / Voice / Video,API Key,no,https://bird.com/,https://bird.com/docs,https://bird.com/docs,,,,7,2,authDocs;statusUrl;scopes;caps;reqs
+pusher-channels,Pusher Channels,Bird,Communications / Voice / Video,See documentation,no,https://pusher.com/,https://pusher.com/docs/channels/,https://pusher.com/docs/channels/,,,,0,0,authDocs;statusUrl;auth;scopes;caps;reqs
+sparkpost,SparkPost,Bird,Marketing / Advertising,API Key,no,https://bird.com/email-api?sp=true,https://developers.sparkpost.com/,,,,,2,1,logo;api;authDocs;statusUrl;scopes;caps;reqs
+bitrise,Bitrise,Bitrise,Developer Tools,API Key,no,https://bitrise.io/,https://docs.bitrise.io/en/,https://api-docs.bitrise.io/,,,https://status.bitrise.io/,5,0,authDocs;scopes;caps;reqs
+bubble,Bubble,Bubble,Developer Tools,Bearer Token,no,https://bubble.io/,https://manual.bubble.io/core-resources/api/the-bubble-api/the-data-api,https://manual.bubble.io/core-resources/api/the-bubble-api/the-data-api,,,,2,1,authDocs;statusUrl;scopes;caps;reqs
+bunny-net,bunny.net,bunny.net,Cloud & Hosting,API Key,no,https://bunny.net/,https://bunny.net/docs,https://bunny.net/docs,,,,4,1,authDocs;statusUrl;scopes;caps;reqs
+buzzsprout,Buzzsprout,Buzzsprout,Social / Creator / Publishing,API Key,no,https://www.buzzsprout.com/,https://github.com/buzzsprout/buzzsprout-api/blob/master/README.md,https://github.com/buzzsprout/buzzsprout-api/blob/master/README.md,,,,6,0,logo;authDocs;statusUrl;scopes;caps;reqs
+canva,Canva Connect API,Canva,Productivity,OAuth 2.0 + PKCE,no,,https://www.canva.dev/docs/,https://www.canva.dev/docs/apps/rest-apis/,,,,6,2,logo;site;authDocs;statusUrl;scopes;caps;reqs
+leonardo,Leonardo.Ai,Canva,AI & Models,API Key,no,,https://docs.leonardo.ai/docs/getting-started,https://docs.leonardo.ai/docs/getting-started,,,,3,2,logo;site;authDocs;statusUrl;scopes;caps;reqs
+pexels,Pexels,Canva,Social / Creator / Publishing,API Key,no,,https://www.pexels.com/api/documentation/,https://www.pexels.com/api/documentation/,,,,6,0,logo;site;authDocs;statusUrl;scopes;caps;reqs
+pixabay,Pixabay,Canva,Social / Creator / Publishing,API Key,no,,https://pixabay.com/api/docs/,https://pixabay.com/api/docs/,,,,4,0,logo;site;authDocs;statusUrl;scopes;caps;reqs
+catchpoint,Catchpoint,Catchpoint,Observability,Bearer Token,no,https://www.catchpoint.com/,https://docs.catchpoint.com/docs/rest-api-v2-guide,https://docs.catchpoint.com/docs/rest-api-v2-guide,,,,7,1,authDocs;statusUrl;scopes;caps;reqs
+chatwoot,Chatwoot,Chatwoot,Support & Success,API Key,no,https://www.chatwoot.com/,https://developers.chatwoot.com/introduction,https://developers.chatwoot.com/introduction,,,,8,2,authDocs;statusUrl;scopes;caps;reqs
+checkly,Checkly,Checkly,Developer Tools,API Key,no,https://www.checklyhq.com/,https://www.checklyhq.com/docs/,https://www.checklyhq.com/docs/,,,,5,0,authDocs;statusUrl;scopes;caps;reqs
+clari,Clari,Clari,CRM & Sales,API Key,no,https://www.salesloft.com/,,,,,,5,2,logo;portal;api;authDocs;statusUrl;scopes;caps;reqs
+clay,Clay,Clay,CRM & Sales,API Key,no,https://www.clay.com/,,,,,,5,3,portal;api;authDocs;statusUrl;scopes;caps;reqs
+clerk,Clerk,Clerk,Security & Identity,API Key,no,https://clerk.com/,https://clerk.com/docs,https://clerk.com/docs,,,,3,0,authDocs;statusUrl;scopes;caps;reqs
+clickpost,ClickPost,ClickPost,Logistics / Shipping / Inventory,API Key,no,https://www.clickpost.ai/,,,,,,9,0,portal;api;authDocs;statusUrl;scopes;caps;reqs
+cliniko,Cliniko,Cliniko,Healthcare,HTTP Basic,no,https://www.cliniko.com/,https://docs.api.cliniko.com/,https://docs.api.cliniko.com/,,,,10,1,authDocs;statusUrl;scopes;caps;reqs
+cloudsmith,Cloudsmith,Cloudsmith,Developer Tools,API Key,yes,https://cloudsmith.com/,https://docs.cloudsmith.com/,https://docs.cloudsmith.com/api/rate-limits,,,,9,1,authDocs;whDocs;statusUrl;scopes;caps;reqs
+codacy,Codacy,Codacy,Developer Tools,API Key,no,https://www.codacy.com/,https://docs.codacy.com/,https://docs.codacy.com/,,,,5,0,authDocs;statusUrl;scopes;caps;reqs
+cornerstone-ondemand,Cornerstone OnDemand,Cornerstone,HR / Recruiting / Payroll,OAuth 2.0,no,https://www.cornerstoneondemand.com/,,,,,,3,0,portal;api;authDocs;statusUrl;scopes;caps;reqs
+couchbase-capella,Couchbase Capella,Couchbase,Databases & Search,API Key,no,https://www.couchbase.com/,https://docs.couchbase.com/home/index.html,https://docs.couchbase.com/home/index.html,,,,6,0,logo;authDocs;statusUrl;scopes;caps;reqs
+datocms,DatoCMS,DatoCMS,Databases & Search,API Key,no,https://www.datocms.com/,https://www.datocms.com/docs,https://www.datocms.com/docs,,,,4,1,authDocs;statusUrl;scopes;caps;reqs
+deepinfra,DeepInfra,DeepInfra,AI & Models,API Key,no,https://deepinfra.com/,https://docs.deepinfra.com,https://docs.deepinfra.com,,,,2,3,authDocs;statusUrl;scopes;caps;reqs
+deepsource,DeepSource,DeepSource,Developer Tools,Bearer Token,no,https://deepsource.com/,https://docs.deepsource.com/docs/developers/api,https://docs.deepsource.com/docs/developers/api,,,,6,2,authDocs;statusUrl;scopes;caps;reqs
+deliverect,Deliverect,Deliverect,Commerce / Marketplaces,See documentation,no,https://www.deliverect.com/en,https://developers.deliverect.com/,,,,,0,0,api;authDocs;statusUrl;auth;scopes;caps;reqs
+dhanhq,DhanHQ,Dhan,Payments / Banking / Fintech,See documentation,no,https://dhan.co/,https://dhanhq.co/,https://dhanhq.co/docs/v2/,,,,0,0,logo;authDocs;statusUrl;auth;scopes;caps;reqs
+dixa,Dixa,Dixa,Support & Success,API Key,no,https://www.dixa.com/,https://docs.dixa.io/,https://docs.dixa.io/,,,,8,2,authDocs;statusUrl;scopes;caps;reqs
+drata,Drata,Drata,Security & Identity,API Key,no,,https://developers.drata.com/,,,,,8,0,logo;site;api;authDocs;statusUrl;scopes;caps;reqs
+eu-vies-vat,EU VIES VAT Number Validation,European Commission,Government / Public Data,None (public API),no,https://ec.europa.eu/taxation_customs/vies/,https://ec.europa.eu/assets/taxud/vow-information/swagger_publicVAT.yaml,https://ec.europa.eu/assets/taxud/vow-information/swagger_publicVAT.yaml,,,,3,0,logo;authDocs;statusUrl;scopes;caps;reqs
+exoscale,Exoscale,Exoscale,Cloud & Hosting,See documentation,no,https://www.exoscale.com/,,,,,,0,0,portal;api;authDocs;statusUrl;auth;scopes;caps;reqs
+fathom,Fathom,Fathom,Productivity,OAuth 2.0,no,,,,,,,6,0,logo;site;portal;api;authDocs;statusUrl;scopes;caps;reqs
+fathom-analytics,Fathom Analytics,Fathom Analytics,Marketing / Advertising,Bearer Token,no,https://usefathom.com/,https://usefathom.com/api/v1/authentication,https://usefathom.com/api/v1/authentication,,,,7,1,authDocs;statusUrl;scopes;caps;reqs
+featurebase,Featurebase,Featurebase,Support & Success,API Key,yes,https://www.featurebase.app/,,,,,,11,2,portal;api;authDocs;whDocs;statusUrl;scopes;caps;reqs
+fred-stlouisfed,FRED (Federal Reserve Bank of St. Louis),Federal Reserve Bank of St. Louis,Government / Public Data,API Key,no,,,,,,,5,0,logo;site;portal;api;authDocs;statusUrl;scopes;caps;reqs
+fillout,Fillout,Fillout,Documents / E-sign / Forms,API Key,no,https://www.fillout.com/,,,,,,4,2,portal;api;authDocs;statusUrl;scopes;caps;reqs
+fireflies,Fireflies.ai,Fireflies.ai,Productivity,API Key,no,https://fireflies.ai/,https://docs.fireflies.ai/getting-started/introduction,https://docs.fireflies.ai/getting-started/introduction,,,,3,1,authDocs;statusUrl;scopes;caps;reqs
+clover,Clover,Fiserv,Payments / Banking / Fintech,See documentation,no,https://www.clover.com/,https://docs.clover.com/dev/docs/home,https://docs.clover.com/dev/docs/home,,,,0,0,authDocs;statusUrl;auth;scopes;caps;reqs
+fleetdm,Fleet (Fleet Device Management),Fleet Device Management,Security & Identity,API Key,no,https://fleetdm.com/,https://fleetdm.com/docs/get-started/why-fleet,https://fleetdm.com/docs/rest-api/rest-api,,,,7,0,logo;authDocs;statusUrl;scopes;caps;reqs
+flexport,Flexport,Flexport,Logistics / Shipping / Inventory,OAuth 2.0,no,https://www.flexport.com/,,,,,,8,1,portal;api;authDocs;statusUrl;scopes;caps;reqs
+flightaware-aeroapi,FlightAware AeroAPI,FlightAware,Travel / Hospitality / Events,API Key,no,https://www.flightaware.com/,https://www.flightaware.com/commercial/aeroapi/,,,,,6,0,logo;api;authDocs;statusUrl;scopes;caps;reqs
+invoiced,Invoiced,Flywire,Finance / Accounting / Tax,HTTP Basic,no,https://www.invoiced.com/,https://docs.invoiced.com/dev,,,,,5,3,api;authDocs;statusUrl;scopes;caps;reqs
+fullstory,Fullstory,Fullstory,Observability,API Key,no,https://www.fullstory.com/,https://developer.fullstory.com/,https://developer.fullstory.com/server/getting-started/,,,,4,2,authDocs;statusUrl;scopes;caps;reqs
+fusionauth,FusionAuth,FusionAuth,Security & Identity,API Key,no,https://fusionauth.io/,https://fusionauth.io/docs/,https://fusionauth.io/docs/,,,,6,0,authDocs;statusUrl;scopes;caps;reqs
+getty-images,Getty Images,Getty Images,Social / Creator / Publishing,OAuth 2.0,no,https://www.gettyimages.in/,https://developer.gettyimages.com/,,,,,4,0,logo;api;authDocs;statusUrl;scopes;caps;reqs
+gitbook,GitBook,GitBook,Developer Tools,API Key,no,https://www.gitbook.com/,,,,,,5,0,portal;api;authDocs;statusUrl;scopes;caps;reqs
+gladia,Gladia,Gladia,AI & Models,API Key,no,https://www.gladia.io/,https://docs.gladia.io/chapters/introduction,https://docs.gladia.io/chapters/introduction,,,,2,2,authDocs;statusUrl;scopes;caps;reqs
+golioth,Golioth,Golioth,Manufacturing / ERP / Supply Chain,API Key,no,https://golioth.io/,https://docs.golioth.io/,https://docs.golioth.io/,,,,9,0,authDocs;statusUrl;scopes;caps;reqs
+grain,Grain,Grain,Productivity,OAuth 2.0,no,https://grain.com/,,,,,,4,2,portal;api;authDocs;statusUrl;scopes;caps;reqs
+groove,Groove,Groove,Support & Success,Bearer Token,no,https://helply.com/,https://developer.groovehq.com/,https://developer.groovehq.com/graphql/overview/start/,,,,6,1,logo;authDocs;statusUrl;scopes;caps;reqs
+hotelbeds,Hotelbeds (HBX Group),HBX Group,Travel / Hospitality / Events,See documentation,no,https://discover.hotelbeds.com,https://developer.hotelbeds.com/,,,,,0,0,logo;api;authDocs;statusUrl;auth;scopes;caps;reqs
+here-geocoding-search,HERE Geocoding and Search,HERE Technologies,Government / Public Data,API Key,no,https://www.here.com/,https://docs.here.com/geocoding-and-search/reference/get_autocomplete,https://docs.here.com/geocoding-and-search/reference/get_autocomplete,,,,5,0,authDocs;statusUrl;scopes;caps;reqs
+hetzner-cloud,Hetzner Cloud,Hetzner,Cloud & Hosting,API Key,no,https://www.hetzner.com/cloud/,,https://docs.hetzner.cloud/,,,https://status.hetzner.com/,5,0,portal;authDocs;scopes;caps;reqs
+heygen,HeyGen,HeyGen,AI & Models,API Key,yes,https://www.heygen.com/,https://developers.heygen.com/,https://developers.heygen.com/,,,,4,1,logo;authDocs;whDocs;statusUrl;scopes;caps;reqs
+hibob,HiBob,HiBob,HR / Recruiting / Payroll,HTTP Basic,no,https://www.hibob.com/,https://apidocs.hibob.com/,https://apidocs.hibob.com/,,,,7,1,authDocs;statusUrl;scopes;caps;reqs
+hookdeck,Hookdeck,Hookdeck,Developer Tools,API Key,no,https://hookdeck.com/,https://hookdeck.com/docs,https://hookdeck.com/docs,,,,5,0,authDocs;statusUrl;scopes;caps;reqs
+hyperping,Hyperping,Hyperping,Observability,Bearer Token,no,https://hyperping.com/,https://hyperping.com/docs/api/overview,https://hyperping.com/docs/api/overview,,,,8,2,authDocs;statusUrl;scopes;caps;reqs
+astra-db,DataStax Astra DB,IBM,Databases & Search,API Key,no,https://www.ibm.com/products/datastax,https://docs.datastax.com/en/home/index.html,https://docs.datastax.com/en/home/index.html,,,,4,0,logo;authDocs;statusUrl;scopes;caps;reqs
+ibm-cloud-vpc,IBM Cloud VPC,IBM,Cloud & Hosting,Provider-specific,no,https://www.ibm.com/products/cloud,https://cloud.ibm.com/docs,https://cloud.ibm.com/docs/apis/vpc/latest,,,https://cloud.ibm.com/status,6,0,authDocs;auth;scopes;caps;reqs
+instana,IBM Instana,IBM,Observability,API Key,no,https://www.ibm.com/products/instana,,,,,,7,0,logo;portal;api;authDocs;statusUrl;scopes;caps;reqs
+icici-breeze,ICICI Direct Breeze,ICICI Securities,Payments / Banking / Fintech,See documentation,no,https://www.icicidirect.com/,,,,,,0,0,logo;portal;api;authDocs;statusUrl;auth;scopes;caps;reqs
+icinga2,Icinga 2,Icinga,Observability,HTTP Basic,no,https://icinga.com/,https://icinga.com/docs/,https://icinga.com/docs/icinga-2/latest/doc/12-icinga2-api/,,,,0,0,authDocs;statusUrl;scopes;caps;reqs
+ideogram,Ideogram,Ideogram,AI & Models,API Key,no,,https://developer.ideogram.ai/ideogram-api/api-overview,,,,,3,1,logo;site;api;authDocs;statusUrl;scopes;caps;reqs
+infinite-campus,Infinite Campus,Infinite Campus,Education,See documentation,no,https://www.infinitecampus.com/,,,,,,0,0,portal;api;authDocs;statusUrl;auth;scopes;caps;reqs
+instructure-catalog,Instructure Catalog,Instructure,Education,See documentation,no,https://www.instructure.com/,https://developerdocs.instructure.com/,https://developerdocs.instructure.com/services/catalog.md,,,,0,0,authDocs;statusUrl;auth;scopes;caps;reqs
+lets-encrypt-acme,Let's Encrypt (ACME),Internet Security Research Group,Cloud & Hosting,Provider-specific,no,https://letsencrypt.org/,https://letsencrypt.org/docs/rate-limits/,https://letsencrypt.org/docs/rate-limits/,,,https://letsencrypt.status.io/,3,1,authDocs;auth;scopes;caps;reqs
+interswitch,Interswitch,Interswitch,Payments / Banking / Fintech,See documentation,no,https://interswitchgroup.com,,,,,,0,0,logo;portal;api;authDocs;statusUrl;auth;scopes;caps;reqs
+ironclad,Ironclad,Ironclad,Legal / Compliance,OAuth 2.0,no,https://ironcladapp.com/,,,,,,6,0,logo;portal;api;authDocs;statusUrl;scopes;caps;reqs
+jw-player,JW Player,JWP,Social / Creator / Publishing,API Key,no,https://jwx.com/,https://docs.jwplayer.com/platform/docs/platform-welcome,https://docs.jwplayer.com/platform/docs/platform-welcome,,,,2,2,logo;authDocs;statusUrl;scopes;caps;reqs
+keycdn,KeyCDN,KeyCDN,Cloud & Hosting,HTTP Basic,no,https://www.keycdn.com/,https://www.keycdn.com/api,https://www.keycdn.com/api,,,,6,0,authDocs;statusUrl;scopes;caps;reqs
+khipu,Khipu,Khipu,Payments / Banking / Fintech,API Key,no,https://www.khipu.com/,,,,,,4,0,logo;portal;api;authDocs;statusUrl;scopes;caps;reqs
+khoros,Khoros,Khoros,Support & Success,HTTP Basic,no,https://khoros.ai:443/,https://developer.khoros.com/,,,,,14,0,logo;api;authDocs;statusUrl;scopes;caps;reqs
+kit,Kit,Kit,Marketing / Advertising,OAuth 2.0,yes,,https://developers.kit.com/welcome,,,,,3,2,logo;site;api;authDocs;whDocs;statusUrl;scopes;caps;reqs
+kong-konnect,Kong Konnect,Kong,Developer Tools,API Key,no,https://konghq.com/,https://developer.konghq.com/,https://developer.konghq.com/,,,,5,0,authDocs;statusUrl;scopes;caps;reqs
+lean-technologies,Lean Technologies,Lean Technologies,Payments / Banking / Fintech,See documentation,no,https://www.leantech.me/uae/en,https://docs.leantech.me/docs/authentication,https://docs.leantech.me/docs/authentication,,,,0,0,authDocs;statusUrl;auth;scopes;caps;reqs
+lexware-office,Lexware Office (formerly lexoffice),Lexware,Finance / Accounting / Tax,API Key,no,https://www.lexware.de/,,,,,,6,1,portal;api;authDocs;statusUrl;scopes;caps;reqs
+tray-commerce,Tray Commerce,Locaweb,Commerce / Marketplaces,See documentation,no,https://tray.com.br/,,,,,,0,0,portal;api;authDocs;statusUrl;auth;scopes;caps;reqs
+logzio,Logz.io,Logz.io,Observability,API Key,no,https://logz.io/,https://docs.logz.io/,https://docs.logz.io/,,,,4,1,authDocs;statusUrl;scopes;caps;reqs
+loop-returns,Loop Returns,Loop Returns,Commerce / Marketplaces,API Key,no,https://www.loopreturns.com/,https://docs.loopreturns.com/welcome,,,,,4,2,api;authDocs;statusUrl;scopes;caps;reqs
+losant,Losant,Losant,Manufacturing / ERP / Supply Chain,API Key,no,https://www.losant.com/,https://docs.losant.com/,https://docs.losant.com/,,,,8,2,authDocs;statusUrl;scopes;caps;reqs
+line-messaging,LINE Messaging API,LY Corporation,Communications / Voice / Video,API Key,no,https://www.line.me/en/,https://developers.line.biz/,https://developers.line.biz/en/reference/messaging-api/,,,,5,1,authDocs;statusUrl;scopes;caps;reqs
+meilisearch,Meilisearch Cloud,Meilisearch,Databases & Search,API Key,no,https://www.meilisearch.com/,https://www.meilisearch.com/docs/getting_started/overview,https://www.meilisearch.com/docs/getting_started/overview,,,,5,1,authDocs;statusUrl;scopes;caps;reqs
+mews,Mews,Mews,Travel / Hospitality / Events,See documentation,no,https://www.mews.com/en,,,,,,0,0,portal;api;authDocs;statusUrl;auth;scopes;caps;reqs
+middleware-io,Middleware.io,Middleware,Observability,API Key,no,https://middleware.io/,https://app.middleware.io/swagger.json,https://app.middleware.io/swagger.json,,,,5,1,authDocs;statusUrl;scopes;caps;reqs
+mixpanel,Mixpanel,Mixpanel,Marketing / Advertising,HTTP Basic,no,https://mixpanel.com/home/,https://docs.mixpanel.com/docs/what-is-mixpanel,https://docs.mixpanel.com/docs/what-is-mixpanel,,,,4,1,authDocs;statusUrl;scopes;caps;reqs
+moengage,MoEngage,MoEngage,Marketing / Advertising,HTTP Basic,no,https://www.moengage.com/,https://www.moengage.com/docs/developer-guide/introduction,,,,,1,2,api;authDocs;statusUrl;scopes;caps;reqs
+moodle,Moodle,Moodle,Education,See documentation,no,,https://moodledev.io/,,,,,0,0,logo;site;api;authDocs;statusUrl;auth;scopes;caps;reqs
+mural,Mural,Mural,Productivity,OAuth 2.0,no,https://www.mural.co/,https://www.mural.co/api,,,,,6,1,api;authDocs;statusUrl;scopes;caps;reqs
+nebius-token-factory,Nebius Token Factory,Nebius,AI & Models,API Key,no,https://nebius.com/,,,,,,2,3,portal;api;authDocs;statusUrl;scopes;caps;reqs
+netdata-cloud,Netdata Cloud,Netdata,Observability,Bearer Token,no,https://www.netdata.cloud/,https://learn.netdata.cloud/docs/ask-nedi,https://learn.netdata.cloud/docs/netdata-cloud/authentication-&-authorization/api-tokens,,,,5,1,logo;authDocs;statusUrl;scopes;caps;reqs
+nifty,Nifty,Nifty,Productivity,Bearer Token,yes,https://niftypm.com/,https://developers.niftypm.com/docs/getting-started,https://developers.niftypm.com/docs/getting-started,,,,6,2,logo;authDocs;whDocs;statusUrl;scopes;caps;reqs
+nutshell,Nutshell,Nutshell,CRM & Sales,HTTP Basic,no,https://www.nutshell.com/,https://developers.nutshell.com/,,,,,4,1,api;authDocs;statusUrl;scopes;caps;reqs
+nymcard,NymCard,NymCard,Payments / Banking / Fintech,See documentation,no,https://www.nymcard.com/,,,,,,0,0,portal;api;authDocs;statusUrl;auth;scopes;caps;reqs
+codefresh,Codefresh,Octopus Deploy,Developer Tools,API Key,no,https://octopus.com/codefresh,https://codefresh.io/docs/,https://codefresh.io/docs/,,,,5,0,logo;authDocs;statusUrl;scopes;caps;reqs
+octopus-deploy,Octopus Deploy,Octopus Deploy,Developer Tools,See documentation,no,https://octopus.com/,https://octopus.com/docs,https://octopus.com/docs,,,,0,0,authDocs;statusUrl;auth;scopes;caps;reqs
+omie,Omie,Omie,Manufacturing / ERP / Supply Chain,API Key,no,https://www.omie.com.br/,https://developer.omie.com.br/,https://developer.omie.com.br/service-list/,,,,7,1,logo;authDocs;statusUrl;scopes;caps;reqs
+omnisend,Omnisend,Omnisend,Marketing / Advertising,OAuth 2.0,no,https://www.omnisend.com/,,,,,,3,2,logo;portal;api;authDocs;statusUrl;scopes;caps;reqs
+onespan-sign,OneSpan Sign,OneSpan,Documents / E-sign / Forms,OAuth 2.0,no,https://www.onespan.com/,https://community.onespan.com/,,,,,4,4,api;authDocs;statusUrl;scopes;caps;reqs
+opencage-geocoding,OpenCage Geocoding API,OpenCage,Government / Public Data,API Key,no,https://opencagedata.com/,https://opencagedata.com/api,https://opencagedata.com/api,,,,2,0,authDocs;statusUrl;scopes;caps;reqs
+opencorporates,OpenCorporates,OpenCorporates,Legal / Compliance,API Key,no,https://opencorporates.com/,https://api.opencorporates.com/,https://api.opencorporates.com/,,,,5,0,authDocs;statusUrl;scopes;caps;reqs
+optimizely-feature-experimentation,Optimizely Feature Experimentation,Optimizely,Developer Tools,Bearer Token,no,https://www.optimizely.com/,https://docs.developers.optimizely.com/,https://docs.developers.optimizely.com/feature-experimentation/reference/generate-tokens-and-use-the-rest-apis,,,,6,0,authDocs;statusUrl;scopes;caps;reqs
+ordoro,Ordoro,Ordoro,Logistics / Shipping / Inventory,HTTP Basic,no,https://www.ordoro.com/,,,,,,4,1,logo;portal;api;authDocs;statusUrl;scopes;caps;reqs
+ory-network,Ory Network,Ory,Security & Identity,Bearer Token,no,https://www.ory.com/,https://www.ory.com/docs/welcome,https://www.ory.com/docs/concepts/personal-access-token,,,,6,2,authDocs;statusUrl;scopes;caps;reqs
+ovhcloud,OVHcloud API,OVHcloud,Cloud & Hosting,OAuth 2.0,no,https://www.ovhcloud.com/en-in/,,,,,,6,0,portal;api;authDocs;statusUrl;scopes;caps;reqs
+ovhcloud-ai-endpoints,OVHcloud AI Endpoints,OVHcloud,AI & Models,Bearer Token,no,https://www.ovhcloud.com/en-in/,https://docs.ovhcloud.com/en/guides/public-cloud/ai-machine-learning/ai-endpoints-getting-started,https://docs.ovhcloud.com/en/guides/public-cloud/ai-machine-learning/ai-endpoints-getting-started,,,,4,0,authDocs;statusUrl;scopes;caps;reqs
+paga,Paga,Paga,Payments / Banking / Fintech,Provider-specific,no,https://www.mypaga.com/,https://developer-docs.paga.com/docs/operations-1.md,https://developer-docs.paga.com/docs/operations-1.md,,,,4,0,authDocs;statusUrl;auth;scopes;caps;reqs
+payhawk,Payhawk,Payhawk,Finance / Accounting / Tax,API Key,no,https://payhawk.com/,https://developers.payhawk.com/,,,,,6,2,api;authDocs;statusUrl;scopes;caps;reqs
+peach-payments,Peach Payments,Peach Payments,Payments / Banking / Fintech,See documentation,no,https://www.peachpayments.com/,https://developer.peachpayments.com/,,,,,0,0,api;authDocs;statusUrl;auth;scopes;caps;reqs
+credly,Credly,Pearson,Education,HTTP Basic,no,https://info.credly.com/,,,,,,5,0,portal;api;authDocs;statusUrl;scopes;caps;reqs
+pennylane,Pennylane,Pennylane,Finance / Accounting / Tax,See documentation,no,https://www.pennylane.com/fr,,,,,,0,0,logo;portal;api;authDocs;statusUrl;auth;scopes;caps;reqs
+pluggy,Pluggy,Pluggy,Payments / Banking / Fintech,API Key,no,https://www.pluggy.ai/,https://docs.pluggy.ai/en,https://docs.pluggy.ai/en,,,,8,0,authDocs;statusUrl;scopes;caps;reqs
+podium,Podium,Podium,Support & Success,OAuth 2.0,no,https://www.podium.com/,,,,,,12,0,portal;api;authDocs;statusUrl;scopes;caps;reqs
+porkbun,Porkbun,Porkbun,Cloud & Hosting,API Key (multiple headers),yes,https://porkbun.com/,https://porkbun.com/api/json/v3/documentation,https://porkbun.com/api/json/v3/documentation,,,,8,2,authDocs;whDocs;statusUrl;scopes;caps;reqs
+portone,PortOne,PortOne,Payments / Banking / Fintech,OAuth 2.0,no,https://www.portone.io/,https://developers.portone.io/opi/ko/readme,,,,,5,0,api;authDocs;statusUrl;scopes;caps;reqs
+powerschool-sis,PowerSchool SIS,PowerSchool,Education,See documentation,no,https://www.powerschool.com/,,,,,,0,0,portal;api;authDocs;statusUrl;auth;scopes;caps;reqs
+schoology,Schoology (PowerSchool),PowerSchool,Education,See documentation,no,https://www.powerschool.com/,,,,,,0,0,logo;portal;api;authDocs;statusUrl;auth;scopes;caps;reqs
+procurify,Procurify,Procurify,Finance / Accounting / Tax,OAuth 2.0,no,https://www.procurify.com/,,,,,,6,2,portal;api;authDocs;statusUrl;scopes;caps;reqs
+proofpoint-tap,Proofpoint TAP,Proofpoint,Security & Identity,HTTP Basic,no,https://www.proofpoint.com/us,https://help.proofpoint.com/Threat_Insight_Dashboard/API_Documentation/SIEM_API,https://help.proofpoint.com/Threat_Insight_Dashboard/API_Documentation/SIEM_API,,,,13,0,authDocs;statusUrl;scopes;caps;reqs
+rainforest-qa,Rainforest QA,Rainforest QA,Developer Tools,API Key,no,https://www.rainforestqa.com/home,https://help.rainforestqa.com/reference/using-the-rainforest-api,https://help.rainforestqa.com/reference/using-the-rainforest-api,,,,6,0,logo;authDocs;statusUrl;scopes;caps;reqs
+refiner,Refiner,Refiner,Support & Success,Bearer Token,no,https://refiner.io/,https://refiner.io/docs/api/,https://refiner.io/docs/api/,,,,6,2,authDocs;statusUrl;scopes;caps;reqs
+runpod,RunPod,RunPod,Cloud & Hosting,API Key,no,https://www.runpod.io/,https://docs.runpod.io/overview,https://docs.runpod.io/overview,,,,6,0,authDocs;statusUrl;scopes;caps;reqs
+safetyculture-mitti,SafetyCulture (Mitti),SafetyCulture,Productivity,API Key,no,https://mitti.com/,https://developer.mitti.com/,,,,,4,1,logo;api;authDocs;statusUrl;scopes;caps;reqs
+sailpoint-isc,SailPoint Identity Security Cloud,SailPoint,Security & Identity,OAuth 2.0,no,https://www.sailpoint.com/,https://developer.sailpoint.com/,,,,,7,0,api;authDocs;statusUrl;scopes;caps;reqs
+saleor,Saleor,Saleor,Commerce / Marketplaces,API Key,no,https://saleor.io/,https://docs.saleor.io/,https://docs.saleor.io/,,,,5,2,authDocs;statusUrl;scopes;caps;reqs
+salesloft,Salesloft,Salesloft,CRM & Sales,OAuth 2.0,no,https://www.salesloft.com/,https://developers.salesloft.com/,,,,,7,0,api;authDocs;statusUrl;scopes;caps;reqs
+samsara,Samsara,Samsara,Logistics / Shipping / Inventory,OAuth 2.0,no,https://www.samsara.com/,https://developers.samsara.com/reference/overview,,,,,7,1,api;authDocs;statusUrl;scopes;caps;reqs
+satispay,Satispay Business,Satispay,Payments / Banking / Fintech,See documentation,no,https://www.satispay.com/it-it/privati/,https://developers.satispay.com/docs/welcome,,,,,0,0,logo;api;authDocs;statusUrl;auth;scopes;caps;reqs
+seatable,SeaTable,SeaTable,Databases & Search,API Key,no,https://seatable.com/,,,,,,4,1,portal;api;authDocs;statusUrl;scopes;caps;reqs
+secureframe,Secureframe,Secureframe,Security & Identity,API Key,no,https://secureframe.com/,https://api.secureframe.com/docs,https://api.secureframe.com/docs,,,,6,1,authDocs;statusUrl;scopes;caps;reqs
+sematext,Sematext Cloud,Sematext,Observability,API Key,no,https://sematext.com/,https://sematext.com/docs/,https://sematext.com/docs/api/,,,,6,1,authDocs;statusUrl;scopes;caps;reqs
+sendcloud,Sendcloud,Sendcloud,Logistics / Shipping / Inventory,HTTP Basic,no,https://www.sendcloud.com/,,,,,,17,0,portal;api;authDocs;statusUrl;scopes;caps;reqs
+servicem8,ServiceM8,ServiceM8,Real Estate / Construction,API Key,no,https://www.servicem8.com/,https://developer.servicem8.com/,,,,,6,0,api;authDocs;statusUrl;scopes;caps;reqs
+shippit,Shippit,Shippit,Logistics / Shipping / Inventory,Bearer Token,no,https://www.shippit.com/,https://developer.shippit.com/,https://developer.shippit.com/,,,,6,1,logo;authDocs;statusUrl;scopes;caps;reqs
+shoplazza,Shoplazza,Shoplazza,Commerce / Marketplaces,API Key,no,https://www.shoplazza.com/,,,,,,7,1,logo;portal;api;authDocs;statusUrl;scopes;caps;reqs
+signaturit,Signaturit,Signaturit,Documents / E-sign / Forms,API Key,no,https://www.signaturit.com/,,,,,,7,4,portal;api;authDocs;statusUrl;scopes;caps;reqs
+sinch,Sinch,Sinch,Communications / Voice / Video,API Key,no,https://sinch.com/,https://developers.sinch.com/,,,,,11,1,api;authDocs;statusUrl;scopes;caps;reqs
+smallcase-gateway,smallcase Gateway,smallcase,Payments / Banking / Fintech,See documentation,no,https://www.smallcase.com/,,,,,,0,0,portal;api;authDocs;statusUrl;auth;scopes;caps;reqs
+smartrecruiters,SmartRecruiters,SmartRecruiters,HR / Recruiting / Payroll,OAuth 2.0,no,https://www.smartrecruiters.com/,https://developers.smartrecruiters.com/docs/the-smartrecruiters-platform,,,,,7,1,api;authDocs;statusUrl;scopes;caps;reqs
+smartsupp,Smartsupp,Smartsupp,Support & Success,API Key,no,https://www.smartsupp.com/,,,,,,6,1,logo;portal;api;authDocs;statusUrl;scopes;caps;reqs
+smile-id,Smile ID,Smile ID,Security & Identity,None (public API),no,https://smile.id/,https://docs.usesmileid.com/,https://docs.usesmileid.com/,,,,3,0,logo;authDocs;statusUrl;scopes;caps;reqs
+smokeball,Smokeball,Smokeball,Legal / Compliance,OAuth 2.0,no,https://www.smokeball.com/,,,,,,6,0,portal;api;authDocs;statusUrl;scopes;caps;reqs
+flickr,Flickr,SmugMug,Social / Creator / Publishing,API Key,no,https://www.flickr.com/,https://www.flickr.com/services/api/,https://www.flickr.com/services/api/,https://www.flickr.com/services/api/auth.oauth.html,,,6,0,statusUrl;scopes;caps;reqs
+soldo,Soldo,Soldo,Finance / Accounting / Tax,OAuth 2.0,no,https://www.soldo.com/en-gb/,,,,,,8,0,portal;api;authDocs;statusUrl;scopes;caps;reqs
+spotdraft,SpotDraft,SpotDraft,Legal / Compliance,API Key (multiple headers),no,https://www.spotdraft.com/,https://developer.spotdraft.com/,https://developer.spotdraft.com/,,,,7,2,authDocs;statusUrl;scopes;caps;reqs
+statuscake,StatusCake,StatusCake,Observability,API Key,no,https://www.statuscake.com/,https://developers.statuscake.com/,https://developers.statuscake.com/,,,,5,0,authDocs;statusUrl;scopes;caps;reqs
+stripe,Stripe,Stripe,Payments / Banking / Fintech,API Key,yes,https://stripe.com,https://stripe.com/docs,https://stripe.com/docs/api,https://stripe.com/docs/keys,https://stripe.com/docs,https://status.stripe.com,0,0,
+taxjar,TaxJar,Stripe,Finance / Accounting / Tax,API Key,no,https://www.taxjar.com/,https://developers.taxjar.com/,https://developers.taxjar.com/api/reference/,,,,7,4,authDocs;statusUrl;scopes;caps;reqs
+sudo-africa,Sudo Africa,Sudo Africa,Payments / Banking / Fintech,API Key,no,https://sudo.africa/,,,,,,7,0,portal;api;authDocs;statusUrl;scopes;caps;reqs
+superops,SuperOps,SuperOps,Support & Success,API Key,no,https://superops.com/,,,,,,7,0,logo;portal;api;authDocs;statusUrl;scopes;caps;reqs
+surrealdb,SurrealDB Cloud (Surreal Cloud),SurrealDB,Databases & Search,API Key,no,https://surrealdb.com/,https://surrealdb.com/docs,https://surrealdb.com/docs,,,,3,5,authDocs;statusUrl;scopes;caps;reqs
+tailscale,Tailscale,Tailscale,Security & Identity,OAuth 2.0,no,https://tailscale.com/,https://tailscale.com/docs,https://tailscale.com/api,,,https://status.tailscale.com/,6,0,authDocs;scopes;caps;reqs
+tap-payments,Tap Payments,Tap Payments,Payments / Banking / Fintech,API Key,no,https://www.tap.company/en-in,https://developers.tap.company/,https://developers.tap.company/reference/api-endpoint,,,,7,0,authDocs;statusUrl;scopes;caps;reqs
+telnyx,Telnyx,Telnyx,Communications / Voice / Video,API Key,no,https://telnyx.com/,https://developers.telnyx.com/docs/overview,,,,,3,0,api;authDocs;statusUrl;scopes;caps;reqs
+tenable-vm,Tenable Vulnerability Management,Tenable,Security & Identity,API Key,no,https://www.tenable.com/,https://developer.tenable.com/,https://docs.tenable.com/,,,,7,1,authDocs;statusUrl;scopes;caps;reqs
+unleashed-software,Unleashed Software,The Access Group,Logistics / Shipping / Inventory,Provider-specific,no,https://www.unleashedsoftware.com/,https://apidocs.unleashedsoftware.com/,https://apidocs.unleashedsoftware.com/,,,,4,0,authDocs;statusUrl;auth;scopes;caps;reqs
+tipalti,Tipalti,Tipalti,Finance / Accounting / Tax,OAuth 2.0,yes,https://tipalti.com/,,,,,,10,0,logo;portal;api;authDocs;whDocs;statusUrl;scopes;caps;reqs
+tito,Tito,Tito,Travel / Hospitality / Events,API Key,yes,https://ti.to/home,https://ti.to/docs/api/admin/3.0,https://ti.to/docs/api/admin/3.0,,,,11,1,logo;authDocs;whDocs;statusUrl;scopes;caps;reqs
+toggl-track,Toggl Track,Toggl,Productivity,HTTP Basic,no,https://toggl.com/,https://engineering.toggl.com/docs/,https://engineering.toggl.com/docs/,,,,6,1,authDocs;statusUrl;scopes;caps;reqs
+transak,Transak,Transak,Payments / Banking / Fintech,See documentation,no,https://transak.com/,https://docs.transak.com/getting-started/what-is-transak,https://docs.transak.com/getting-started/what-is-transak,,,,0,0,authDocs;statusUrl;auth;scopes;caps;reqs
+transloadit,Transloadit,Transloadit,Documents / E-sign / Forms,OAuth 2.0 Client Credentials,no,https://transloadit.com/,https://transloadit.com/docs/api/,https://transloadit.com/docs/api/,,,,5,0,authDocs;statusUrl;scopes;caps;reqs
+treasury-prime,Treasury Prime,Treasury Prime,Payments / Banking / Fintech,See documentation,no,https://www.treasuryprime.com/,,,,,,0,0,portal;api;authDocs;statusUrl;auth;scopes;caps;reqs
+trend-vision-one,Trend Vision One,Trend Micro,Security & Identity,API Key,no,https://www.trendmicro.com/en_gb/business.html,https://automation.trendmicro.com/,,,,,6,0,logo;api;authDocs;statusUrl;scopes;caps;reqs
+trunk,Trunk,Trunk,Developer Tools,API Key,no,https://trunk.io/,https://docs.trunk.io/,https://login.trunk.io/?client_id=client_01H50ZWVHX8SVCZ6801WPAA5H6&redirect_uri=https%3A%2F%2Fapp.trunk.io%2Fauth%2Fcallback&state=Fe26.2*1*60f1e285a88130b9e4e5f584cbf7f6d0746eab0eae498113668f7333ebb458fd*y2BhBMvnIp9K18Gd8puWTw*N6C1mzpcxfJ1RIsX1kjh5o7gMv8WoO6p1oUOO_48ykVPbdkx07rGV9VxhP0MLf8RjZvpNUXZ6TRsHWzuU-dNM3ezdeO_BDIJ7Q69i0WV6BmJoA5QTRplKi3zms19Ur1lys5_C0Iw0vLVxxJvdt9TPn3sG04w6QTKtIFS2BDhQ99PL3a9bBJm3n03qnM03cJJum8BJOqkkdKynOkqvKu0zceCegV_U-y39JEutq39efE*1790608415950*cbe43c885e4527e5aaf0ae340e26d2319bd42e82c9ebac8a6d3ff1dc396f4ebf*Wti9XZBKsD4mvPaFhb6NhHgnHWI_nUyVPh92lsyAFpA~2&authorization_session_id=01M3M8NXYD6KVBJ61D744A7XA7,,,,4,0,authDocs;statusUrl;scopes;caps;reqs
+sec-edgar,SEC EDGAR APIs,U.S. Securities and Exchange Commission,Government / Public Data,None (public API),no,,,,,,,5,0,site;portal;api;authDocs;statusUrl;scopes;caps;reqs
+ons-api,UK Office for National Statistics API,UK Office for National Statistics,Government / Public Data,None (public API),no,https://www.ons.gov.uk/,https://developer.ons.gov.uk/,https://developer.ons.gov.uk/,,,,6,0,logo;authDocs;statusUrl;scopes;caps;reqs
+ukg-pro,UKG Pro,UKG,HR / Recruiting / Payroll,API Key (multiple headers),no,,https://developer.ukg.com/,https://developer.ukg.com/hcm/reference/welcome-to-the-ukg-pro-api,,,,4,0,logo;site;authDocs;statusUrl;scopes;caps;reqs
+upstox-developer-api,Upstox Developer API,Upstox,Payments / Banking / Fintech,See documentation,no,https://upstox.com/,https://upstox.com/developer/api-documentation/,https://upstox.com/developer/api-documentation/,,,,0,0,authDocs;statusUrl;auth;scopes;caps;reqs
+userpilot,Userpilot,Userpilot,Support & Success,API Key,no,https://userpilot.com/,https://docs.userpilot.com/api-references/authentication.md,https://docs.userpilot.com/api-references/authentication.md,,,,4,0,authDocs;statusUrl;scopes;caps;reqs
+uservoice,UserVoice,UserVoice,Support & Success,OAuth 2.0,no,https://uservoice.com/,https://developer.uservoice.com/,,,,,6,3,api;authDocs;statusUrl;scopes;caps;reqs
+vanta,Vanta,Vanta,Security & Identity,OAuth 2.0,no,https://www.vanta.com/,https://developer.vanta.com/,,,,,7,0,api;authDocs;statusUrl;scopes;caps;reqs
+veremark,Veremark,Veremark,HR / Recruiting / Payroll,API Key,no,https://www.veremark.com/,https://api.veremark.com/external/v1/docs/,https://api.veremark.com/external/v1/docs/,,,,6,0,authDocs;statusUrl;scopes;caps;reqs
+wati,WATI,WATI,Support & Success,Bearer Token,no,https://www.wati.io/,https://docs.wati.io/reference/authentication,https://docs.wati.io/reference/authentication,,,,3,0,authDocs;statusUrl;scopes;caps;reqs
+weatherapi-com,WeatherAPI.com,WeatherAPI.com,Government / Public Data,API Key,no,https://www.weatherapi.com/,https://www.weatherapi.com/docs/,https://www.weatherapi.com/docs/,,,,6,0,authDocs;statusUrl;scopes;caps;reqs
+workable,Workable,Workable,HR / Recruiting / Payroll,API Key,no,https://www.workable.com/,,,,,,6,1,portal;api;authDocs;statusUrl;scopes;caps;reqs
+writer,Writer,Writer,AI & Models,API Key,no,https://writer.com/,https://dev.writer.com/home/introduction,,,,,3,2,api;authDocs;statusUrl;scopes;caps;reqs
+xray-cloud,Xray Cloud,Xblend,Developer Tools,See documentation,no,https://www.getxray.app/,https://docs.getxray.app/,https://docs.getxray.app/,,,,0,0,authDocs;statusUrl;auth;scopes;caps;reqs
+xendit,Xendit,Xendit,Payments / Banking / Fintech,HTTP Basic,no,,https://docs.xendit.co/,https://docs.xendit.co/,,,,6,0,logo;site;authDocs;statusUrl;scopes;caps;reqs
+yampi,Yampi,Yampi,Commerce / Marketplaces,API Key (multiple headers),no,https://www.yampi.com.br/,https://docs.yampi.com.br/introduction,https://docs.yampi.com.br/api-reference/rate-limit/limites.md,,,,6,1,authDocs;statusUrl;scopes;caps;reqs
+yellowai,Yellow.ai,Yellow.ai,Support & Success,API Key,no,https://yellow.ai/,https://docs.yellow.ai/,https://docs.yellow.ai/api,,,,6,2,authDocs;statusUrl;scopes;caps;reqs
+yotpo,Yotpo (Core API),Yotpo,Support & Success,API Key,no,https://www.yotpo.com/,,,,,,9,0,portal;api;authDocs;statusUrl;scopes;caps;reqs
+youcanbookme,YouCanBookMe,YouCanBookMe,Productivity,HTTP Basic,no,https://youcanbook.me/,https://ycbm.stoplight.io/docs/youcanbookme-api/2a78a4ca016d7-create-booking,https://ycbm.stoplight.io/docs/youcanbookme-api/2a78a4ca016d7-create-booking,,,,4,0,authDocs;statusUrl;scopes;caps;reqs

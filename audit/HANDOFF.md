@@ -25,6 +25,7 @@
 | Logos | `scripts/build-logos.mjs` → `public/logos/brand/*.svg`, `src/lib/logo-map.json`; report `audit/LOGO_SOURCES.md` | 160 vector brand marks (CC0 sets, strict matching, reviewed collisions excluded); 241 published connectors still use a monogram (listed in the report) |
 | Footer | `src/components/Footer.tsx` | Seven columns mirroring the header menus (every link a real route, crawled by e2e), CTA row, legal bar |
 | Connector pages | `src/pages/Connectors.tsx`, `src/pages/ConnectorDetail.tsx`, `src/lib/editorial-overrides.json` | Catalogue: stat tiles, one-row categories, 4-per-row cards, phone filters toggle. Detail: one status chip, links panel, similar connectors. Curated editorial records (Gmail) applied by sync. |
+| Data sourcing | `data-sourcing/README.md`, `scripts/data-sourcing-inputs.py`, `scripts/ingest-sourced-data.py` → `src/lib/sourced-data.json` | The missing connector facts are gathered by 4 parallel terminals from official sources (one part each). Ingest validates them (evidence URL, provider domain, enums, logo safety). Sync fills **only empty** fields, labels them as provider facts and stays reversible. |
 | Concept previews | `src/pages/preview/HeroConcepts.tsx` → `/preview/heroes`, `/preview/hero-a\|b\|c` | Noindex references. `/preview/home` → 301 `/`. |
 
 ## 2. Commands
@@ -88,7 +89,7 @@ Templates: `.env.example`, `.env.mock` and `.env.core`.
 | 2 | IdP: issuer, SPA client id, test users (admin / approver / viewer) | founder / ops |
 | 3 | Hosting target + preview deploy token (confirms the `_redirects` / `_headers` syntax) | founder |
 | 4 | Reviewed dispatch grants / staging verifications (today 0) | core / founder |
-| 5 | Logos for the 241 published connectors still on a monogram (`audit/LOGO_SOURCES.md`), or network access to fetch them from official sites | founder / ops |
+| 5 | Run the 4 data-sourcing terminals (`data-sourcing/README.md`) and return `data-sourcing/returns/`, or export core's `packages/connectors/*/manifest.json` | founder / ops |
 | 7 | Dashboard (console) redesign in the light system | next phase |
 | 6 | Optional: contact endpoint + Turnstile | founder |
 

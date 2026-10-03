@@ -163,6 +163,10 @@ def generate():
                 }
                 editorial_source = 'minimal record generated from core (category assigned, editorial pending)'
         row = dict(ed)
+        # undo the previous run's sourced fill so regeneration is idempotent (apply_sourced re-applies it)
+        row.update((row.pop('sourced', None) or {}).get('prior', {}))
+        for k in ('scopeModel', 'providerScopes', 'providerCaps'):
+            row.pop(k, None)
         if cid in OVERRIDES:  # curated editorial facts for rows core delivered without website copy
             row.update(OVERRIDES[cid])
             editorial_source = 'editorial record (src/lib/editorial-overrides.json)'
@@ -212,6 +216,42 @@ def generate():
 LOGO_MAP = os.path.join(LIB, 'logo-map.json')
 _ov_path = os.path.join(LIB, 'editorial-overrides.json')
 OVERRIDES = {k: v for k, v in (json.load(open(_ov_path)).items() if os.path.isfile(_ov_path) else []) if not k.startswith('_')}
+_sd_path = os.path.join(LIB, 'sourced-data.json')
+SOURCED = {k: v for k, v in (json.load(open(_sd_path)).items() if os.path.isfile(_sd_path) else []) if not k.startswith('_')}
+UNKNOWN_AUTH = ('See documentation', '', None)
+
+
+def apply_sourced(rows):
+    # facts from official provider pages (data-sourcing/README.md, validated by scripts/ingest-sourced-data.py);
+    # they fill only empty fields, so core and curated editorial records always win
+    for r in rows:
+        sd = SOURCED.get(r['id'])
+        if not sd or r.get('unpublished'):
+            continue
+        used, prior = {}, {}
+
+        def fill(k, v):
+            prior.setdefault(k, r.get(k))
+            r[k] = used[k] = v
+        for k in ('site', 'portal', 'api', 'authDocs', 'whDocs', 'statusUrl'):
+            if sd.get(k) and not r.get(k):
+                fill(k, sd[k])
+        if sd.get('auth') and r.get('auth') in UNKNOWN_AUTH:
+            if r.get('flow') in ('Not yet documented.', 'See documentation', '', None):
+                fill('flow', sd['auth'])
+            fill('auth', sd['auth'])
+        if sd.get('reqs') and not r.get('reqs'):
+            fill('reqs', sd['reqs'])
+        for k in ('scopeModel', 'providerScopes', 'providerCaps'):
+            if sd.get(k):
+                r[k] = used[k] = sd[k]
+        if any(k in used for k in ('site', 'portal', 'api', 'authDocs')) and not r.get('verified') and sd.get('_checked'):
+            fill('verified', sd['_checked'])
+        if used or sd.get('logo'):
+            r['sourced'] = {'part': sd.get('_part'), 'checked': sd.get('_checked'), 'prior': prior,
+                            'fields': sorted(set(used) | ({'logo'} if sd.get('logo') else set())),
+                            'evidence': {k: v for k, v in sd.get('_src', {}).items() if k in used or k == 'logo'}}
+    return rows
 
 
 def apply_logos(rows):
@@ -222,8 +262,10 @@ def apply_logos(rows):
         editorial = r.get('logo_editorial', r.get('logo')) or ''
         r['logo_editorial'] = editorial
         hit = brand.get(r['id'])
-        r['logo'] = hit['src'] if hit else editorial
-        r['logo_source'] = hit['source'] if hit else ('website (official domain)' if editorial else None)
+        sourced = (SOURCED.get(r['id']) or {}).get('logo')
+        editorial_ok = editorial and os.path.isfile(os.path.join(ROOT, 'public', editorial.lstrip('/')))
+        r['logo'] = hit['src'] if hit else editorial if editorial_ok or not sourced else sourced
+        r['logo_source'] = hit['source'] if hit else ('website (official domain)' if editorial_ok or (editorial and not sourced) else 'data-sourcing (official provider page)' if sourced else None)
     return rows
 
 
@@ -247,6 +289,7 @@ def main():
         refresh_snapshot(sys.argv[sys.argv.index('--core') + 1])
     out, legacy, cache, head = generate()
     apply_logos(root_logo(out))
+    apply_sourced(out)
     apply_logos(root_logo(legacy))
     targets = {os.path.join(LIB, 'connectors.json'): dump(out), os.path.join(LIB, 'connectors-legacy.json'): dump(legacy),
                os.path.join(SNAP, 'editorial-promoted.json'): json.dumps(cache, ensure_ascii=False, indent=1) + '\n'}

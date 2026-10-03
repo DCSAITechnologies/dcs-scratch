@@ -261,6 +261,10 @@ function ConnectorDetailView({ c, legacy, resolved }: { c: Conn; legacy?: Conn; 
               <div className="px-5 py-3 text-[11px] text-[#566074]">Tool-level identifiers are published per connector as they enter public availability; capabilities above are drafted from the connector manifest and provider documentation, and are not runtime-verified.</div>
             </div>
           )}
+          {tab === 'Tools' && c.providerCaps && c.providerCaps.length > 0 && (
+            <ProviderTable testid="provider-caps" title={`What the ${c.p || c.n} API supports`} source={c.sourced?.evidence.providerCaps} checked={c.sourced?.checked}
+              head={['Operation', 'Access', 'Endpoint']} rows={c.providerCaps.map((x) => [x.name, x.access, x.endpoint])} />
+          )}
 
           {tab === 'Authentication' && (
             <div className="space-y-6">
@@ -298,6 +302,11 @@ function ConnectorDetailView({ c, legacy, resolved }: { c: Conn; legacy?: Conn; 
             </div>
           )}
 
+          {tab === 'Permissions' && c.providerScopes && c.providerScopes.length > 0 && (
+            <ProviderTable testid="provider-scopes" title={`Permission scopes documented by ${c.p || c.n}`} source={c.sourced?.evidence.providerScopes} checked={c.sourced?.checked}
+              head={['Scope', 'Access', 'Purpose']} rows={c.providerScopes.map((x) => [x.scope, x.access, x.purpose])} />
+          )}
+
           {tab === 'Webhooks' && (
             c.wh ? (
               <div className="space-y-5">
@@ -326,6 +335,29 @@ function ConnectorDetailView({ c, legacy, resolved }: { c: Conn; legacy?: Conn; 
             </div>
           </div>
         </div>
+      </div>
+    </div>
+  )
+}
+
+// Provider-documented facts (data-sourcing/README.md). Labelled as the provider's API surface, kept apart
+// from core's connector tools/scopes so nothing reads as a runtime claim.
+function ProviderTable({ testid, title, head, rows, source, checked }: { testid: string; title: string; head: [string, string, string]; rows: string[][]; source?: string; checked?: string }) {
+  return (
+    <div className="glass-panel overflow-hidden mt-5" data-testid={testid}>
+      <div className="px-5 pt-4 pb-2 text-[13px] font-semibold text-[#0B1220]">{title}</div>
+      <div className="grid grid-cols-[1fr_70px_1fr] px-5 py-2.5 text-[10.5px] font-semibold uppercase tracking-[0.14em] text-[#566074] border-y border-[#E3E7EE]">
+        {head.map((h) => <span key={h}>{h}</span>)}
+      </div>
+      {rows.map(([a, b, d], i) => (
+        <div key={i} className="grid grid-cols-[1fr_70px_1fr] gap-2 px-5 py-3 items-center border-b border-[#E3E7EE] last:border-0 dcs-table-row">
+          <span className="text-[12.5px] text-[#1E2638] break-words" style={{ fontFamily: "'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace" }}>{a}</span>
+          <span className="text-[11px] font-semibold" style={{ color: b === 'read' ? '#1E40AF' : '#92400E' }}>{b}</span>
+          <span className="text-[12px] text-[#566074] break-words">{d}</span>
+        </div>
+      ))}
+      <div className="px-5 py-3 text-[11px] text-[#566074]">
+        From the provider's public documentation{checked ? `, checked ${checked}` : ''}{source && <> · <a href={source} target="_blank" rel="noreferrer" className="text-[#1E40AF] underline">source ↗</a></>}. This describes the provider's API; the connector's own tools and scopes are set by its Connector OS manifest.
       </div>
     </div>
   )
