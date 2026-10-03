@@ -24,6 +24,9 @@ export default defineConfig({
   server: {
     port: 3000,
   },
+  // `npm run preview:core`: serve the console same-origin and reverse-proxy /v1 to
+  // core's hermetic reference server (which sends no CORS headers by design).
+  preview: process.env.COS_CORE_PROXY ? { proxy: { '/v1': { target: process.env.COS_CORE_PROXY, changeOrigin: true } } } : undefined,
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),

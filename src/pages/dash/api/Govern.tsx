@@ -84,7 +84,7 @@ export function ApiSecurity() {
   return (
     <div>
       {notice && <Notice text={notice} onClose={() => setNotice(null)} />}
-      <PageHeader title="Security / Kill" maturity="WIRED" sub="Emergency stops at system, tenant, connector, connection or tool scope. Restoring needs a second identity as reviewer."
+      <PageHeader title="Security / Kill" maturity="WIRED" sub="Emergency stops at system, tenant, connector, connection or tool scope. Restoring records a reviewer and a reason; contract 1.0.0 does not enforce that the reviewer differs from you."
         actions={<MutationButton label="Kill a scope…" danger capability="kill" testId="kill-create" confirmTitle="Activate a kill order?"
           confirmBody="Takes effect at the next dispatch check. Name the exact scope and target; the action and reason are audited."
           fields={[{ name: 'scope', label: 'Scope', required: true, type: 'select', options: ['connection', 'connector', 'tool', 'tenant', 'system'] }, { name: 'target', label: 'Target id', required: true },
@@ -95,7 +95,7 @@ export function ApiSecurity() {
         {(rows) => <Table head={['Kill order', 'Scope', 'Target', 'State', 'Reason', 'Initiated by', 'Activated', 'Restored', '']} rows={rows.map((k) => [
           <span key="i" className="font-mono text-[12px]">{k.kill_order_id}</span>, k.scope, k.target, <Pill key="s" v={k.state} />, k.reason, k.initiated_by, when(k.activated_at), when(k.restored_at),
           k.state === 'active' ? <MutationButton key="r" label="Restore" capability="restore" testId={`kill-restore-${k.kill_order_id}`} confirmTitle={`Restore ${k.kill_order_id}?`}
-            confirmBody="Restoring needs a reviewer other than you." fields={[{ name: 'reason', label: 'Reason', required: true, type: 'textarea' }, { name: 'reviewer', label: 'Reviewer (second identity)', required: true }]}
+            confirmBody="Name a reviewer for the record. Core records it with the reason; it does not check the reviewer is a different person." fields={[{ name: 'reason', label: 'Reason', required: true, type: 'textarea' }, { name: 'reviewer', label: 'Reviewer', required: true }]}
             run={(v, key) => api.restoreKillOrder(k.kill_order_id, { reason: v.reason, reviewer: v.reviewer }, key)} onDone={() => { setNotice(`${k.kill_order_id} restored.`); kills.reload() }} /> : '—',
         ])} />}
       </PagedView>

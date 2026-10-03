@@ -19,7 +19,11 @@
     "build:mock": "vite build --mode mock --outDir dist-mock",
     "api:types": "openapi-typescript public/devportal/01_openapi/connector-os-v1.yaml -o src/lib/api/schema.gen.ts",
     "test:unit": "vitest run",
-    "sync:catalogue": "python3 scripts/sync-catalogue.py && python3 scripts/build-inventory.py"
+    "sync:catalogue": "python3 scripts/sync-catalogue.py && python3 scripts/build-inventory.py",
+    "build:core": "vite build --mode core --outDir dist-core",
+    "core:assemble": "bash scripts/assemble-core.sh",
+    "core:api": "node \"${COS_CORE_TREE:-.core/tree}/devex/api-server/bin/serve.mjs\" --port 4020",
+    "preview:core": "COS_CORE_PROXY=http://127.0.0.1:4020 vite preview --outDir dist-core --port 4330 --strictPort --host 127.0.0.1"
   },
   "dependencies": {
     "oidc-client-ts": "^3.5.0",

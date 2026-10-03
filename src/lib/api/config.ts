@@ -27,10 +27,10 @@ export const OIDC = {
 }
 export const OIDC_CONFIGURED = Boolean(OIDC.issuer && OIDC.clientId)
 
-// Development-only bearer tokens for the local mock / hermetic reference server.
-// Honoured only in `development` and `mock` builds — a production build ignores
+// Development-only bearer tokens for the local mock / core's hermetic reference server.
+// Honoured only in `development`, `mock` and `core` builds — a production build ignores
 // them even if set, so a test token can never ship as a credential.
-export const DEV_AUTH_ALLOWED = env.MODE === 'development' || env.MODE === 'mock'
+export const DEV_AUTH_ALLOWED = env.MODE === 'development' || env.MODE === 'mock' || env.MODE === 'core'
 export const DEV_TOKENS: Record<string, string> = DEV_AUTH_ALLOWED && env.VITE_COS_DEV_TOKENS
   ? Object.fromEntries(String(env.VITE_COS_DEV_TOKENS).split(',').map((pair) => pair.split('=').map((s) => s.trim()) as [string, string]))
   : {}

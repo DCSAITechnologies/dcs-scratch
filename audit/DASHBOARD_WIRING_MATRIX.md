@@ -1,135 +1,105 @@
-# Dashboard wiring matrix — `/app`
+# Dashboard wiring matrix: `/app`
 
-**Date:** 02 Oct 2026
+**Updated:** 03 Oct 2026
+**Core:** `f6a3161e04e2f37da266e74adc54e8ecd974686a` (`coord/step2b-r4`)
+**Verified against:** Connector OS core's **real** `/v1` reference server (`devex/api-server`), assembled from the four core packs by `scripts/assemble-core.sh`. Core was not modified.
 
-## Update — later pass (02 Oct): API mode implemented
+## How it was verified
 
-Everything below "Ground truth about the console today" describes the **demo** build, which is still the default when no API URL is configured.
+- **Assemble core:** `npm run core:assemble -- <4 pack zips>` builds `.core/tree`. The packs' checksums verify, all four report the same HEAD, and no pack file conflicts with another. The import check reports `MISSING 0`.
+- **Start core's server:** `node .core/tree/devex/api-server/bin/serve.mjs --port 4020 --unlock-mode2`. Core's own contract tests pass on this tree: `node --test test/api-contract.test.mjs test/ag-f1-revoke-await.test.mjs`, **36/36**.
+- **Build the console against core:** `npm run build:core`. The console runs in API mode against `http://127.0.0.1:4330`. `npm run preview:core` serves it and reverse-proxies `/v1` to core, same-origin, because core sends no CORS headers.
+- **Test:** `npx playwright test --project=core-api` runs `e2e/core-api.spec.ts`, **11/11 passing**.
+  - The agent-side steps (create a run, plan it, request an approval, submit the approved step) go over core's own HTTP contract, with core's hermetic developer key and human attestation. This is exactly what core's contract tests do.
+  - The console performs every human/operator step itself.
 
-A second mode now exists. With `VITE_COS_API_URL` set, every one of the 25 route patterns renders an API-backed page from `src/pages/dash/api/*`:
-- reads use the typed client, with loading, empty, 401, 403, 404, 501 and unreachable states
-- the contract mutations are wired through a confirmation dialog: connection create/test/activate/revoke, approval grant/deny/revoke, reconcile, receipt verify, policy evaluate, kill-order create/restore
-- surfaces with no contract operation say "Not yet available"
-- auth is provider-agnostic OIDC, with mock identities only in mock/dev builds
+**What "REAL_API_WIRED" means here.** The page calls core's real `/v1` contract (1.0.0) through the typed client, and has been exercised against core's real server code.
 
-All of this is verified end-to-end against `scripts/mock-api.mjs` (`e2e/api-mode.spec.ts`). It has **not** been run against a real deployed `/v1` server, because none exists yet (core's only HTTP server is the founder-gated read-api). Demo-mode labels were corrected to the contract (PLANNED where no operation exists). See `HANDOFF.md` §3–5.
+Core's adapters behind that server are mostly **HERMETIC** (in-memory mirrors of OAL, the ops-broker, EXEC-FACTS and the R-Series boundary). The exceptions are the catalogue, environments and eligibility, which are **WIRED** to core's registry data. Production composition is `BLOCKED_BY_LANE3` in core (`createProductionAdapters()` throws).
 
-## Sources and caveats
-
-- **Endpoint source:** `public/devportal/02_api/API_ROUTE_MAP.md`, shipped in the ZIP. It is generated from `openapi/connector-os-v1.yaml` (contract 1.0.0, frozen) and lists 46 operations: WIRED 4 · HERMETIC 36 · PLANNED 6.
-- **Caveat:** this is the snapshot's copy of the contract. The current core OpenAPI and rc.1 staging server were not reachable (see `CATALOGUE_RECONCILIATION.md` §0), so re-check every target endpoint against current core before wiring.
-
-## Ground truth about the console today
-
-- **No API client exists.** There is no `fetch`, no base URL, no `VITE_*` config and no auth header anywhere in `src/`. Every page reads either `src/lib/fixtures.ts` (hermetic fixture stores) or the bundled catalogue JSON.
-- **No authentication.** `/app` is publicly reachable. The user chip ("A. Sharma, Org admin") is a hard-coded demo identity, now labelled "demo identity, no sign-in". The workspace and environment selectors change local state only; no data is filtered by them.
-- **Four data states are preview-only.** `?state=empty|loading|error|permission` drives a demo `StateGate`. Real loading, error, stale and 401/403 handling does not exist because nothing is fetched.
-- **Actions.** All 45 `<Action>` instances carry a literal maturity (gate C1). Only WIRED actions are enabled, and all three WIRED actions are navigation:
-  - "View run chain"
-  - "View kill audit"
-  - "Request access", which was a dead button and now opens `/enterprise/contact`
-
-  No action performs a backend mutation.
+So "REAL_API_WIRED" means the console is ready for core's API. It does **not** mean the data is production data.
 
 ## Classification key
 
 | Class | Meaning |
 |---|---|
-| REAL_API_WIRED | reads/writes a live core API |
-| CORE_API_EXISTS_BUT_UI_NOT_WIRED | contract operation exists (any maturity), UI reads fixtures |
-| HERMETIC_FIXTURE | UI reads `fixtures.ts` |
-| SNAPSHOT | UI reads the bundled catalogue JSON |
-| STAGING_ONLY | only meaningful against staging |
-| PLANNED | contract-only (answers 501) or not in the contract |
-| EXTERNAL_DEPENDENCY | blocked on IdP, vault, KMS or provider OAuth |
-| NO_ENDPOINT | no operation in the 46-op contract |
+| REAL_API_WIRED | Uses core's `/v1` contract and is verified against core's real reference server |
+| REAL_API_WIRED (mock-verified) | Wired to a contract operation, but core's HTTP surface cannot produce the precondition; verified against the mock only |
+| API_EXISTS_NOT_WIRED | A contract operation exists; the console does not call it |
+| PLANNED | No contract operation, or the operation is `CONTRACT_ONLY` (answers 501). The page says "Not yet available". |
+| FIXTURE_ONLY | Renders fixtures in API mode. **None remain.** |
 
-## Pages (25 route patterns, counted mechanically by gate C6)
+## Pages: API mode (25 route patterns, counted by gate C6)
 
-Receipt/audit requirement: every mutating action below must, once wired, produce an audit event and a receipt reference (per the product's own receipts model). None does today.
+Every page also has the shared states: loading, empty, 401 (session expiry screen), 403 (scope named), 404, 400, 501, backend unreachable with Retry, and refresh. Every write carries a capability gate, a confirmation dialog (destructive ones name the target and environment), one Idempotency-Key per dialog, the server's result, and a re-read.
 
-| # | Route | Data today | Class | Target endpoint(s) (contract maturity) | Auth / RBAC needed | Env scoping | Loading / error / empty | Completion |
-|---|---|---|---|---|---|---|---|---|
-| 1 | `/app` | fixtures (approvals, runs, connections, usage) — figures now derived from the stores | HERMETIC_FIXTURE | aggregate of `listApprovals`, `listRuns`, `listConnections`, `getUsage` (all HERMETIC) | any member | must follow env selector | demo only | 25% |
-| 2 | `/app/connectors` | bundled `connectors.json` (all rows; paginated 50/page) | SNAPSHOT → CORE_API_EXISTS_BUT_UI_NOT_WIRED | `GET /v1/connectors` (**WIRED**) | `connectors:read` | env-independent | needs real states | 60% |
-| 3 | `/app/connectors/:id` | bundled JSON + fixtures | SNAPSHOT | `GET /v1/connectors/{id}` (**WIRED**) | `connectors:read` | — | not-found ✓ | 55% |
-| 4 | `/app/connections` | fixtures (5 simulator connections) | HERMETIC_FIXTURE | `GET /v1/connections` (HERMETIC; blocked by Lane 3 connection store) | `connections:read` | yes | demo only | 20% |
-| 5 | `/app/connections/new` | static simulator list | HERMETIC_FIXTURE + EXTERNAL_DEPENDENCY | `POST /v1/connections` (HERMETIC; vault + provider OAuth apps) | `connections:write` | yes | none | 10% |
-| 6 | `/app/connections/:id` | fixtures | HERMETIC_FIXTURE | `GET /v1/connections/{id}`, `POST …/test`, `POST …/activate` (HERMETIC) | read / write | yes | not-found ✓ | 20% |
-| 7 | `/app/tools` | fixtures (7 tools) | HERMETIC_FIXTURE, NO_ENDPOINT | none — no tools/registry operation in the contract; `POST /v1/policies/evaluate` for decision preview | `connections:read` | yes | demo only | 10% |
-| 8 | `/app/agents` | fixtures (5 runs) | HERMETIC_FIXTURE | `GET /v1/runs` (HERMETIC) | `runs:read` | yes | demo only | 20% |
-| 9 | `/app/agents/runs/:id` | fixtures | HERMETIC_FIXTURE | `GET /v1/runs/{id}`, `GET …/plans/{plan_id}` (HERMETIC) | `runs:read` | yes | not-found ✓ | 20% |
-| 10 | `/app/policies` | fixtures (6 policies) | HERMETIC_FIXTURE | `GET /v1/policies` (HERMETIC; authoring PLANNED) | `policies:read` | yes | demo only | 20% |
-| 11 | `/app/policies/:id` | fixtures | HERMETIC_FIXTURE | `GET /v1/policies/{id}`, `POST /v1/policies/evaluate` | `policies:read` | yes | not-found ✓ | 20% |
-| 12 | `/app/approvals` | fixtures (6) | HERMETIC_FIXTURE | `GET /v1/approvals` (HERMETIC) | `approvals:read` | yes | demo only | 20% |
-| 13 | `/app/approvals/:id` | fixtures | HERMETIC_FIXTURE + EXTERNAL_DEPENDENCY | `GET …/{id}`, `POST …/grant`, `…/deny`, `…/revoke` (HERMETIC; IdP + operator attestation) | human `approve` | yes | not-found ✓ | 15% |
-| 14 | `/app/executions` | fixtures (6) | HERMETIC_FIXTURE | `GET /v1/executions` (HERMETIC) | `executions:read` | yes | demo only | 20% |
-| 15 | `/app/executions/:id` | fixtures | HERMETIC_FIXTURE | `GET …/{id}`, `POST /v1/operator/executions/{id}/reconcile` (HERMETIC) | read / operator `execute` | yes | not-found ✓ | 20% |
-| 16 | `/app/receipts` | fixtures (4) | HERMETIC_FIXTURE | `GET /v1/receipts` (HERMETIC; authenticated R-Series route) | `receipts:read` | yes | demo only | 20% |
-| 17 | `/app/receipts/:id` | fixtures | HERMETIC_FIXTURE + EXTERNAL_DEPENDENCY | `GET …/{id}`, `POST …/{id}/verify` (HERMETIC; R-Series verifier) | `receipts:read`, `receipts:verify` | yes | not-found ✓ | 15% |
-| 18 | `/app/events` | fixtures (inbound 4, outbound 3) | HERMETIC_FIXTURE + PLANNED | `GET /v1/events` (HERMETIC); outbound subscriptions `/v1/webhooks` (PLANNED, FD-L5-1) | `events:read` | yes | demo only | 15% |
-| 19 | `/app/security` | fixtures (kills, leases, drill) | HERMETIC_FIXTURE + EXTERNAL_DEPENDENCY | `GET/POST /v1/operator/kill-orders`, `…/restore`, `POST /v1/operator/connections/{id}/revoke` (HERMETIC; kill store + IdP); leases: NO_ENDPOINT | operator `view`/`kill`/`restore` | yes | demo only | 15% |
-| 20 | `/app/environments` | fixtures (roll-up) | HERMETIC_FIXTURE → CORE_API_EXISTS_BUT_UI_NOT_WIRED | `GET /v1/environments` (**WIRED**); create: NO_ENDPOINT | `environments:read` | — | demo only | 30% |
-| 21 | `/app/developer` | fixtures (2 API keys) | PLANNED + EXTERNAL_DEPENDENCY | `GET /v1/me` (HERMETIC); key issuance: NO_ENDPOINT (Lane 3 API-key issuance) | org admin | — | demo only | 10% |
-| 22 | `/app/usage` | fixtures (`USAGE`) | HERMETIC_FIXTURE | `GET /v1/usage` (HERMETIC) | `usage:read` | yes | demo only | 20% |
-| 23 | `/app/team` | fixtures (6 members) | PLANNED + EXTERNAL_DEPENDENCY | NO_ENDPOINT — members/roles need IdP (status item 19) | org admin | — | demo only | 5% |
-| 24 | `/app/audit` | fixtures (8 events) | HERMETIC_FIXTURE + PLANNED | no list endpoint; `POST /v1/operator/audit-exports` (PLANNED) | operator `view` | yes | demo only | 10% |
-| 25 | `/app/settings` | static | NO_ENDPOINT | none in the contract | org admin | — | demo only | 5% |
-
-Also wireable today: `GET /v1/operator/eligibility` (**WIRED**) has no console surface. It belongs on `/app/connectors` beside each row's "Connect" gate.
-
-## Actions (all 45 `<Action>` instances, plus the rail quick actions)
-
-| Page | Action | Maturity label | Enabled? | Target endpoint | Confirmation / guard needed when wired |
+| # | Route | Reads (core) | Actions | Class | Verified against core |
 |---|---|---|---|---|---|
-| Connections | New connection | HERMETIC ONLY | no | `POST /v1/connections` | env named in dialog; Idempotency-Key |
-| Connection detail | Test (governed read) | HERMETIC ONLY | no | `POST /v1/connections/{id}/test` | receipt id shown on result |
-| Connection detail | Suspend / Resume | HERMETIC ONLY | no | `POST /v1/operator/kill-orders` (scope=connection) / `…/restore` | confirm + reason; second identity for restore |
-| Connection detail | Revoke | HERMETIC ONLY | no | `POST /v1/operator/connections/{id}/revoke` | irreversible; type-to-confirm env + id |
-| Connection detail | Rotate credential | PLANNED | no | NO_ENDPOINT (vault, item 20) | — |
-| Connection detail | Authorize (OAuth) | STAGING ONLY | no | part of `createConnection` flow; provider OAuth apps (external) | redirect + state check |
-| Connect flow | Select / Create connection (simulator) | HERMETIC ONLY | no | `POST /v1/connections` | — |
-| Connectors / detail | Connect | STAGING ONLY | no | `POST /v1/connections` gated by `GET /v1/operator/eligibility` | only when runtime ≥ staging-verified and claim_level ≥ STAGING |
-| Connector detail | Request access | WIRED (navigation) | **yes** | `/enterprise/contact`; no backend capture exists | — |
-| Connector detail | Test | HERMETIC ONLY | no | `POST /v1/connections/{id}/test` | needs a connection |
-| Run detail | Submit plan for approval | HERMETIC ONLY | no | `POST /v1/runs/{id}/plans` → `POST /v1/approvals` | Idempotency-Key |
-| Run detail | Escalate to human / Cancel run | HERMETIC ONLY | no | NO_ENDPOINT | — |
-| Policies | Create policy / Clone / Activate / Disable / Compare versions | HERMETIC ONLY | no | NO_ENDPOINT (authoring PLANNED) | versioned, audited |
-| Policy detail | Test against sample plan | HERMETIC ONLY | no | `POST /v1/policies/evaluate` | read-only, safe to wire first |
-| Approval detail | Approve / Reject (reason required) / Revoke | HERMETIC ONLY | no | `POST /v1/approvals/{id}/grant`, `…/deny`, `…/revoke` | human identity (IdP), single-use, dual where `dual` set |
-| Execution detail | Reconcile now | HERMETIC ONLY | no | `POST /v1/operator/executions/{id}/reconcile` | operator `execute` |
-| Execution detail | Retry / Escalate | HERMETIC ONLY | no | NO_ENDPOINT (retry is broker-owned) | retry only when retry_safety = safe |
-| Receipt detail | Verify receipt | HERMETIC ONLY | no | `POST /v1/receipts/{id}/verify` | show verifier + key id; test signer stated |
-| Receipt detail | Export receipt + proof | PLANNED | no | `POST /v1/operator/audit-exports` (PLANNED) | — |
-| Receipt detail | View run chain | WIRED (navigation) | yes | — | — |
-| Security | Kill a scope… | HERMETIC ONLY | no | `POST /v1/operator/kill-orders` | type-to-confirm; env shown |
-| Security | Restore | PLANNED | no | `POST /v1/operator/kill-orders/{id}/restore` | second identity |
-| Security | View kill audit | WIRED (navigation) | yes | — | — |
-| Events | Replay | HERMETIC ONLY | no | NO_ENDPOINT | — |
-| Events | Create outbound subscription | PLANNED | no | `POST /v1/webhooks` (PLANNED, FD-L5-1) | — |
-| Environments | Create environment | PLANNED | no | NO_ENDPOINT | — |
-| Environments | Set MODE ceiling | HERMETIC ONLY | no | NO_ENDPOINT | — |
-| Developer | Create key / Rotate / Revoke | PLANNED | no | NO_ENDPOINT (Lane 3 key issuance) | secret shown once |
-| Team | Invite | PLANNED | no | NO_ENDPOINT (IdP) | — |
-| Team | Change role / Remove | HERMETIC ONLY | no | NO_ENDPOINT (IdP) | — |
-| Audit | Export (CSV + receipt bundle) | PLANNED | no | `POST /v1/operator/audit-exports` (PLANNED) | — |
-| Settings | Rename | HERMETIC ONLY | no | NO_ENDPOINT | — |
-| Rail | Run a connector / Create policy / Invite | HERMETIC ONLY / PLANNED | no (plain text) | as above | — |
-| Rail | View audit log | WIRED (navigation) | yes | — | — |
+| 1 | `/app` | `listApprovals`, `listExecutions`, `getUsage`, `listConnections` | — | REAL_API_WIRED | ✓ all reads 200 |
+| 2 | `/app/connectors` | `listConnectors` (core adapter **WIRED**, 1010 rows) | search, cursor paging | REAL_API_WIRED | ✓ 50 → 100 rows loaded |
+| 3 | `/app/connectors/:id` | `getConnector`, `listConnections` | connect (links to #5) | REAL_API_WIRED | ✓ Gmail: GOLDEN-FIVE, not dispatchable, `no_explicit_grant` |
+| 4 | `/app/connections` | `listConnections` | — | REAL_API_WIRED | ✓ core's seeded github/slack connections |
+| 5 | `/app/connections/new` | — | create (vault reference only; a raw secret is refused client-side), then test, then activate | REAL_API_WIRED | ✓ CREATED → test passed → ACTIVE |
+| 6 | `/app/connections/:id` | `getConnection` | test, activate, revoke (operator; irreversible) | REAL_API_WIRED | ✓ revoke recorded; "no further actions" |
+| 7 | `/app/tools` | — | — | PLANNED | No tool-listing operation in contract 1.0.0 |
+| 8 | `/app/agents` | `listRuns` | — | REAL_API_WIRED | ✓ |
+| 9 | `/app/agents/runs/:id` | `getRun`, `getPlan`, approvals, executions | — | REAL_API_WIRED | ✓ run shows its approval |
+| 10 | `/app/policies` | `listPolicies` | — | REAL_API_WIRED | ✓ `oal-default-v1` |
+| 11 | `/app/policies/:id` | `getPolicy` | evaluate (dry run) | REAL_API_WIRED | ✓ decision matches core's direct answer |
+| 12 | `/app/approvals` | `listApprovals` | — | REAL_API_WIRED | ✓ |
+| 13 | `/app/approvals/:id` | `getApproval` | grant / deny (approve capability), revoke | REAL_API_WIRED | ✓ viewer disabled; approver GRANTED; DENIED with a reason; operator REVOKED; CONSUMED after execution |
+| 14 | `/app/executions` | `listExecutions`, `listReconciliations` | — | REAL_API_WIRED | ✓ |
+| 15 | `/app/executions/:id` | `getExecution` | reconcile `OUTCOME_UNKNOWN` | REAL_API_WIRED; reconcile is mock-verified | ✓ SUCCEEDED execution shown. Reconcile needs core's non-HTTP scenario control. |
+| 16 | `/app/receipts` | `listReceipts` | — | REAL_API_WIRED | ✓ |
+| 17 | `/app/receipts/:id` | `getReceipt` | verify | REAL_API_WIRED | ✓ `unverified_test_double`, "this is not evidence" |
+| 18 | `/app/events` | `listEvents` | — | REAL_API_WIRED | ✓ (outbound webhooks: PLANNED) |
+| 19 | `/app/security` | `listKillOrders`, `getProviderHealth` | kill order create / restore | REAL_API_WIRED | ✓ active → restored, with reviewer and reason recorded |
+| 20 | `/app/environments` | `listEnvironments`, `getEligibility` (WIRED) | — | REAL_API_WIRED | ✓ |
+| 21 | `/app/developer` | `getMe` | API key issuance / rotation | REAL_API_WIRED (keys: PLANNED) | ✓ `usr_hermetic_viewer` |
+| 22 | `/app/usage` | `getUsage` | — | REAL_API_WIRED | ✓ |
+| 23 | `/app/team` | — | — | PLANNED | No membership operation |
+| 24 | `/app/audit` | `listEvents` | export | REAL_API_WIRED (export: PLANNED, `CONTRACT_ONLY` → 501) | ✓ |
+| 25 | `/app/settings` | — | — | PLANNED | No settings operation |
 
-**Label inconsistency to resolve with core.** Several actions are labelled HERMETIC ONLY although the contract has no operation for them (Cancel run, Escalate, Replay, Set MODE ceiling, Change role, Rename, policy authoring). They should read PLANNED unless core has added operations since contract 1.0.0. They were not relabelled in this pass because the current core contract could not be checked; either label renders the button disabled.
+**Totals:**
+- 21 route patterns REAL_API_WIRED. All 21 are verified against core's real server; on one of them (#15), the reconcile action is mock-verified only.
+- 4 route patterns PLANNED: tools, team, settings, and the not-in-contract parts of developer and audit.
+- FIXTURE_ONLY in API mode: **0** (gate C8: API pages never import fixtures).
 
-## Wiring order (smallest safe steps first)
+## Contract operations the console does not call
 
-1. **API client seam.** `src/lib/api.ts` with base URL from `VITE_COS_API_URL`, typed errors from the closed error taxonomy (`public/devportal/02_api/ERROR_MODEL.md`), and real loading/error/stale states replacing the `?state=` demo. Without a URL configured, the console keeps fixtures and says so.
-2. **Read-only WIRED endpoints first.** `GET /v1/connectors`, `/v1/connectors/{id}`, `/v1/environments`, `/v1/operator/eligibility`. These replace the bundled catalogue snapshot in the console and resolve the SNAPSHOT label.
-3. **HERMETIC reads against the reference server** (staging only): runs, approvals, executions, receipts, events, usage, policies.
-4. **Auth (blocks everything mutating).** IdP session, `/v1/me` for identity/role, auth guard on `/app` with deep-link return, 401 → sign-in and 403 → `PermissionNote` driven by the real role.
-5. **Mutations in risk order.**
-   - `policies/evaluate`
-   - connection test
-   - approvals grant/deny
-   - reconcile
-   - kill/revoke
+| Operation | Why |
+|---|---|
+| `createRun`, `createPlan`, `requestApproval`, `submitExecution` | Agent / broker side by design. The console is the human control surface; agents run and plan, and humans decide. The e2e drives these over HTTP as the agent would. |
+| `getEvent` | API_EXISTS_NOT_WIRED. The list view shows each event in full, so there is no per-event page yet. |
+| `listWebhookEndpoints`, `createWebhookEndpoint`, `getWebhookEndpoint`, `deleteWebhookEndpoint` | `CONTRACT_ONLY` (501). Labelled PLANNED. |
+| `createAuditExport`, `getAuditExport` | `CONTRACT_ONLY` (501). Labelled PLANNED on `/app/audit`. |
 
-   Each needs an Idempotency-Key, a confirmation naming the environment, and an audit event plus receipt reference displayed on success.
+That makes 35 of 46 contract operations called by the console. The other 11 are 4 agent-side, 6 `CONTRACT_ONLY` and 1 not wired (`getEvent`).
+
+## Findings from running against core (fixed)
+
+1. **Kill-order restore: an invented rule removed.**
+   - The mock refused a restore whose reviewer equalled the caller, and the console labelled the field "Reviewer (second identity)".
+   - Core does not enforce this. It records `restore_reason: "<reason> (reviewer: <id>)"`, and the contract does not require a second identity.
+   - Fixed: the mock now matches core; the console says "Name a reviewer for the record… it does not check the reviewer is a different person". Both test suites were updated.
+   - Marketing pages (`/security/kill-controls`, enterprise roles copy) still describe dual-control restore as product design. This is flagged in `STAGING_READINESS.md` to confirm against the staging server before launch.
+2. **Malformed ids:** core validates id shape before lookup, so `exe_does_not_exist` gets `400 invalid_request` rather than 404. The console shows core's code verbatim, and the test now covers both cases.
+3. **CORS:** core's reference server answers `OPTIONS` with 404 and sends no CORS headers. The console must be served **same-origin** with `/v1` reverse-proxied, which `preview:core` does; or the staging server must allow the console origin. See `STAGING_READINESS.md`.
+
+## Demo mode (no `VITE_COS_API_URL`)
+
+This is the default public build. Every console page renders hermetic fixtures under a **DEMO / NON-PRODUCTION** banner, and no request is made.
+- Actions carry literal maturity labels (gate C1).
+- No liveness claims (gate C7).
+- Demo and API code paths never mix: `pick(demo, api)`, with gate C8.
+
+## Auth / RBAC (API mode)
+
+| Item | Status |
+|---|---|
+| Sign-in | OIDC (code + PKCE) when `VITE_OIDC_*` is set. In development, mock and core builds only: core's hermetic identities (operator, approver, viewer). Gate C9 fails if any hermetic token reaches `dist/`. |
+| Capabilities | Read from `/v1/me`. Buttons are gated on core's capabilities: configure, approve, execute, kill, restore, view. A viewer sees disabled actions. |
+| 401 | Session-expired screen, then sign in again to the same deep link |
+| 403 | Required scope named, plus request id |
+| Restore / logout / deep link | Verified (core-api and api-mode suites) |

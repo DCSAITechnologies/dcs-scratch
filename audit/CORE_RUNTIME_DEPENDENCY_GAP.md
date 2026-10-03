@@ -9,7 +9,16 @@
 
 All three checksum lists verify and all three report the same HEAD. Merged, they share one file, `apps/staging-server/README.md`, and its copies are identical. No pack overwrote another.
 
-**Status: STOPPED at server boot.** As instructed, no mock or substitute file was used. The console's API mode has not been pointed at core.
+**Status: RESOLVED (03 Oct, after the Data Files Pack).**
+- A fourth pack, `CONNECTOR_OS_CORE_DATA_FILES_20261003_202936.zip`, supplied the 9 files in section 2. Its checksums verify and its HEAD matches.
+- Core's `openapi/connector-os-v1.yaml` is byte-identical to the website's bundled copy.
+- `scripts/assemble-core.sh` merges all four packs: add-only, conflict-checked.
+- The import check reports `MISSING 0`. `devex/api-server/bin/serve.mjs` boots (contract 1.0.0, hermetic adapters, MODE 2 locked by default).
+- Core's own contract tests pass 36/36.
+- The console is verified against this server: `e2e/core-api.spec.ts`, 11/11. See `DASHBOARD_WIRING_MATRIX.md` and `STAGING_READINESS.md`.
+- The history of the gap is kept below.
+
+**Earlier status: STOPPED at server boot.** As instructed, no mock or substitute file was used at the time.
 
 ## 1. Code imports: closed
 

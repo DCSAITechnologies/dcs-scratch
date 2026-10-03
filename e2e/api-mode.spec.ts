@@ -139,7 +139,7 @@ test('connection flow: refuse a non-reference credential, create, test, activate
   await expect(page.getByText('connected', { exact: false }).first()).toBeVisible()
 })
 
-test('kill order: restore by the same identity is refused, by a second identity succeeds', async ({ page }) => {
+test('kill order: create, then restore with a recorded reviewer and reason (as core: no second-identity enforcement)', async ({ page }) => {
   await signInAs(page, 'operator', '/app/security')
   await page.getByTestId('kill-create').click()
   const d = page.getByRole('dialog')
@@ -152,10 +152,7 @@ test('kill order: restore by the same identity is refused, by a second identity 
   await page.locator('[data-testid^="kill-restore-"]').first().click()
   const r = page.getByRole('dialog')
   await r.getByLabel('Reason').fill('drill over')
-  await r.getByLabel('Reviewer (second identity)').fill('usr_mock_operator')
-  await page.getByTestId('confirm-submit').click()
-  await expect(r.getByTestId('api-error')).toContainText('Restore needs a second identity')
-  await r.getByLabel('Reviewer (second identity)').fill('usr_mock_approver')
+  await r.getByLabel('Reviewer').fill('usr_mock_approver')
   await page.getByTestId('confirm-submit').click()
   await expect(page.getByRole('status')).toContainText('restored')
 })

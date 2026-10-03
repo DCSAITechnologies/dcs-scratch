@@ -258,7 +258,6 @@ const server = http.createServer(async (req, res) => {
       if (!needCap('restore')) return
       const k = find(db.killOrders, 'kill_order_id', m[1]); if (!k) return fail(res, 404, 'not_found', 'Not found in this tenant.')
       if (k.state !== 'active') return fail(res, 409, 'illegal_transition', 'Kill order is not active.')
-      if (body.reviewer === me.principal_id) return fail(res, 409, 'conflict', 'Restore needs a second identity as reviewer.')
       Object.assign(k, { state: 'restored', restored_at: now(), restore_reason: body.reason }); return ok(200, k)
     }
     if ((m = p.match(/^\/v1\/operator\/connections\/([^/]+)\/revoke$/))) {

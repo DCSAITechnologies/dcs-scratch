@@ -1,5 +1,21 @@
 # Website route matrix — public, static and dynamic routes
 
+## 0. Update: 03 Oct 2026 (core-derived catalogue + previews)
+
+Measured from `dist/` after `npm run build && npm run prerender`:
+
+| Item | Now | Was (02 Oct) | Why |
+|---|---|---|---|
+| Prerendered shells | **1419** (`dist/**/index.html`) | 1482 | Catalogue regenerated from core: 809 published canonical pages (was 868), because core founder holds and BLOCKED rows are now held. Plus 5 noindex preview shells. |
+| Sitemap URLs | **1303** = 63 static + 809 published canonical + 431 preserved legacy | 1367 | Same reason. Five legacy surfaces (github, slack, notion, stripe, linear) became canonical rows. Previews are excluded. |
+| Host rules | 157 lines in `_redirects`; `/preview/*` and `/app/*` carry `X-Robots-Tag: noindex` in `_headers` | 156 | — |
+| Preview routes | `/preview/home`, `/preview/heroes`, `/preview/hero-a\|b\|c`: noindex meta + header, `Disallow: /preview`, unlinked | — | Founder hero review (`HERO_CONCEPTS.md`) |
+| Major providers | github, gmail, slack, notion, stripe and linear are published canonical pages. openai, anthropic, azure-openai and google-gemini are preserved legacy reference pages. Each resolves as exactly one of the two. | — | legacy-route gate + `public.spec.ts` |
+| Logos | Every logo path is site-absolute (387 rows fixed); `validate-catalogue` fails on a relative path | — | Nested routes were resolving `connectors/logos/…` and falling back to monograms |
+| Route smoke | canonical + 474 legacy preserved routes return 200 | 479 | — |
+
+Section 2 below was generated on 02 Oct. Its per-route structure is unchanged; the counts above supersede its totals.
+
 **Date:** 02 Oct 2026. The per-route rows in §2 are generated from `dist/` after `npm run build && npm run prerender`.
 
 ## 1. Evidence behind each column

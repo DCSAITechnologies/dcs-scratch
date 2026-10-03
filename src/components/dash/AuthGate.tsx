@@ -38,10 +38,12 @@ export function SignInPanel({ returnTo }: { returnTo: string }) {
       {AUTH_PROVIDER === 'dev' && (
         <>
           <p className="rounded-lg border border-[#F5A524]/30 bg-[#F5A524]/[0.06] px-3 py-2 text-[12px] text-[#E8C98A]">
-            Development build: mock identities for the local mock API. A production build never offers this.
+            {import.meta.env.MODE === 'core'
+              ? "Development build: Connector OS core's hermetic test identities for its local reference server. A production build never offers this."
+              : 'Development build: mock identities for the local mock API. A production build never offers this.'}
           </p>
           {Object.keys(DEV_TOKENS).map((role) => (
-            <button key={role} type="button" className={btn} onClick={() => signIn({ returnTo, devRole: role })}>Sign in as {role} (mock)</button>
+            <button key={role} type="button" className={btn} onClick={() => signIn({ returnTo, devRole: role })}>Sign in as {role} ({import.meta.env.MODE === 'core' ? 'core hermetic' : 'mock'})</button>
           ))}
         </>
       )}

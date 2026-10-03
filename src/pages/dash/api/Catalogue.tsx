@@ -148,7 +148,7 @@ export function ApiConnectionDetail({ id }: { id: string }) {
                 confirmBody="Only a tested connection can be activated." run={(_, key) => api.activateConnection(c.connection_id, key)} onDone={() => done('Connection is ACTIVE.')} />}
               <MutationButton label="Revoke" danger capability="kill" testId="conn-revoke" confirmTitle={`Revoke ${c.connection_id}?`}
                 confirmBody={<>Irreversible. Environment: <b>{c.routing?.environment ?? 'unspecified'}</b>. The vault credential is revoked and the connection can never be used again.</>}
-                fields={[{ name: 'reason', label: 'Reason', required: true, type: 'textarea' }, { name: 'reviewer', label: 'Reviewer (second identity)', required: true }]}
+                fields={[{ name: 'reason', label: 'Reason', required: true, type: 'textarea' }, { name: 'reviewer', label: 'Reviewer', required: true }]}
                 run={(v, key) => api.revokeConnection(c.connection_id, { reason: v.reason, reviewer: v.reviewer }, key)} onDone={() => done('Connection revoked.')} />
             </>} />
           <Panel title="Connection">
