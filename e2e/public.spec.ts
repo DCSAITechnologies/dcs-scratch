@@ -89,6 +89,18 @@ test.describe('public catalogue', () => {
 })
 
 test.describe('connector detail routing', () => {
+  test('facts card carries clickable provider links and similar connectors', async ({ page }) => {
+    await page.goto('/connectors/github')
+    const links = page.getByTestId('connector-links')
+    await expect(links.getByRole('link', { name: /Official website/ })).toHaveAttribute('href', /github\.com/)
+    await expect(links.getByRole('link', { name: /API documentation/ })).toHaveAttribute('target', '_blank')
+    const similar = page.getByTestId('similar-connectors')
+    await expect(similar.getByRole('link')).toHaveCount(5) // 4 connectors + "All … connectors"
+    await similar.getByRole('link').first().click()
+    await expect(page).toHaveURL(/\/connectors\/[a-z0-9-]+$/)
+    await expect(page).not.toHaveURL(/\/connectors\/github$/)
+  })
+
   test('canonical rows render', async ({ page }) => {
     for (const c of PUBLISHED.filter((x) => !x.alias_of).slice(0, 5)) {
       await expectRenders(page, `/connectors/${c.id}`)

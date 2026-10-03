@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react'
-import { TOTAL_CATALOGUED, resolvePublic, LEGACY_REFERENCE_MAP, rwLabel, dispatchReasonLabel, isAvailableToConnect, statusColor, runtimeStatusLabel, isTemplated, type Conn } from '../lib/data'
+import { TOTAL_CATALOGUED, PUBLISHED_CONNECTORS, byRank, resolvePublic, LEGACY_REFERENCE_MAP, rwLabel, dispatchReasonLabel, isAvailableToConnect, statusColor, runtimeStatusLabel, isTemplated, type Conn } from '../lib/data'
 import { ConnectorLogo } from '../components/ConnectorLogo'
 import { navigate } from '../hooks/usePathRoute'
 
 const TABS = ['Overview', 'Tools', 'Authentication', 'Permissions', 'Webhooks', 'Documentation'] as const
+
+const plural = (n: number, w: string) => (n ? `${n} ${w}${n === 1 ? '' : 's'}` : '')
 
 function Row({ k, v, mono, title }: { k: string; v: string | null; mono?: boolean; title?: string }) {
   if (!v) return null
@@ -101,6 +103,9 @@ function ConnectorDetailView({ c, legacy, resolved }: { c: Conn; legacy?: Conn; 
     seenUrls.add(url)
     return true
   })
+  const links = docs.filter((d): d is [string, string] => Boolean(d[1]))
+  const host = (u: string) => { try { return new URL(u).hostname.replace(/^www\./, '') } catch { return u } }
+  const similar = PUBLISHED_CONNECTORS.filter((x) => x.cat === c.cat && x.id !== c.id).sort(byRank).slice(0, 4)
   const opColor: Record<string, string> = { Read: '#2850D8', Write: '#B45309', Destructive: '#B91C1C', Admin: '#1E40AF', 'Money-moving': '#B91C1C' }
 
   return (
@@ -109,7 +114,7 @@ function ConnectorDetailView({ c, legacy, resolved }: { c: Conn; legacy?: Conn; 
         <a href="/connectors" className="text-[12.5px] text-[#566074] hover:text-[#0B1220] transition-colors">← All connectors</a>
 
         {/* Layout: left column = hero + tabs + content; right column = sticky facts card */}
-        <div className="connector-layout mt-5 flex flex-col lg:grid lg:grid-cols-[minmax(0,1fr)_320px] lg:gap-10">
+        <div className="connector-layout mt-5 flex flex-col lg:grid lg:grid-cols-[minmax(0,1fr)_320px] lg:grid-rows-[auto_1fr] lg:gap-x-10">
           {/* Hero (left, row 1) */}
           <div className="order-1 lg:col-start-1 lg:row-start-1">
             {c.unreconciled && (
@@ -148,7 +153,7 @@ function ConnectorDetailView({ c, legacy, resolved }: { c: Conn; legacy?: Conn; 
 
           {/* Facts card (right, sticky, independent column) — each fact once */}
           <aside className="order-3 mt-10 lg:mt-0 lg:col-start-2 lg:row-start-1 lg:row-span-2">
-            <div className="glass-panel p-5 lg:sticky lg:top-24">
+            <div className="glass-panel p-5">
               <div className="text-[10.5px] font-semibold uppercase tracking-[0.16em] text-[#566074] mb-2">Connection details</div>
               {c.core && <Row k="Available to connect" v={isAvailableToConnect(c) ? 'Yes' : 'Not yet'} title={isAvailableToConnect(c) ? undefined : `Connector OS core: ${c.core.dispatch.reasons.map(dispatchReasonLabel).join('; ')}`} />}
               <Row k="Runtime" v={runtimeStatusLabel(c)} />
@@ -161,7 +166,49 @@ function ConnectorDetailView({ c, legacy, resolved }: { c: Conn; legacy?: Conn; 
               {c.core && <Row k="Engineering" v={c.core.disposition.replaceAll('_', ' ').toLowerCase().replace(/^./, (x) => x.toUpperCase())} />}
               <Row k="Core rank" v={c.r == null ? (c.core ? (c.core.pack === 'GOLDEN-FIVE' ? 'Golden Five (core reference set)' : c.core.pack === 'REFERENCE' ? 'Reference connector' : `${c.core.pack} pack`) : null) : `#${c.r} of ${TOTAL_CATALOGUED.toLocaleString('en-US')}`} />
               <Row k="Docs verified" v={c.verified} />
+              {(c.caps.length > 0 || c.scopes.length > 0) && (
+                <Row k="At a glance" v={[plural(c.caps.length, 'tool'), plural(new Set(c.scopes).size, 'permission'), c.wh ? plural(c.whEvents.length, 'webhook event') : ''].filter(Boolean).join(' · ')} />
+              )}
+
+              {links.length > 0 && (
+                <div className="mt-5" data-testid="connector-links">
+                  <div className="text-[10.5px] font-semibold uppercase tracking-[0.16em] text-[#566074] mb-2">Links</div>
+                  <ul className="space-y-1">
+                    {links.map(([label, url]) => (
+                      <li key={url}>
+                        <a href={url} target="_blank" rel="noreferrer" className="group flex items-center justify-between gap-3 rounded-lg px-2 py-1.5 -mx-2 hover:bg-[#F5F7FB]">
+                          <span className="min-w-0">
+                            <span className="block text-[12.5px] font-medium text-[#1E2638] group-hover:text-[#2850D8]">{label}</span>
+                            <span className="block truncate text-[11px] text-[#566074]">{host(url)}</span>
+                          </span>
+                          <span aria-hidden className="text-[#2850D8]">↗</span>
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
             </div>
+
+            {similar.length > 0 && (
+              <div className="glass-panel p-5 mt-4" data-testid="similar-connectors">
+                <div className="text-[10.5px] font-semibold uppercase tracking-[0.16em] text-[#566074] mb-2">More in {c.cat}</div>
+                <ul className="space-y-1">
+                  {similar.map((x) => (
+                    <li key={x.id}>
+                      <a href={`/connectors/${x.id}`} className="flex items-center gap-3 rounded-lg px-2 py-1.5 -mx-2 hover:bg-[#F5F7FB]">
+                        <ConnectorLogo name={x.n} src={x.logo} size={30} />
+                        <span className="min-w-0">
+                          <span className="block truncate text-[12.5px] font-medium text-[#1E2638]">{x.n}</span>
+                          <span className="block truncate text-[11px] text-[#566074]">{x.auth === 'See documentation' ? x.p : `${x.p} · ${x.auth}`}</span>
+                        </span>
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+                <a href={`/connectors?cat=${encodeURIComponent(c.cat)}`} className="mt-3 inline-block text-[12.5px] font-semibold text-[#2850D8] hover:underline">All {c.cat} connectors →</a>
+              </div>
+            )}
           </aside>
 
           {/* Tabs (left, row 2 — immediately after hero) */}
