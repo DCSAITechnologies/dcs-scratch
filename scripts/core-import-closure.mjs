@@ -35,5 +35,6 @@ function walk(f, from) {
 }
 for (const e of entries) walk(resolve(ROOT, e))
 console.log('files reached', seen.size)
+if (process.env.LIST_REACHED) for (const f of seen) console.log('  REACHED', f.replace(ROOT + '/', ''))
 console.log('EXTERNAL', [...external].map(([k, v]) => `${k} (first ${v.replace(ROOT + '/', '')})`).join('\n  '))
 console.log('MISSING', missing.size); for (const [k, v] of missing) console.log('  ', k.replace(ROOT + '/', ''), '<=', v.replace(ROOT + '/', ''))

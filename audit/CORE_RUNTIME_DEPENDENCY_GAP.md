@@ -1,53 +1,70 @@
 # Core runtime dependency gap — reference server cannot start
 
-**Date:** 03 Oct 2026 · **Core:** `f6a3161e04e2f37da266e74adc54e8ecd974686a` (`coord/step2b-r4`)
-**Inputs:** `CONNECTOR_OS_CORE_INTERFACE_PACK_20261003_182824.zip` + `CONNECTOR_OS_CORE_RUNTIME_SUPPLEMENT_20261003_191954.zip`. Both checksum lists verify and both report the same HEAD. The packs share no files, so nothing conflicts.
+**Updated:** 03 Oct 2026 · **Core:** `f6a3161e04e2f37da266e74adc54e8ecd974686a` (`coord/step2b-r4`)
 
-**Status: STOPPED.** As instructed, no mock was substituted for the missing modules. The console's API mode has not been re-pointed at core.
+**Inputs:**
+1. `CONNECTOR_OS_CORE_INTERFACE_PACK_20261003_182824.zip`
+2. `CONNECTOR_OS_CORE_RUNTIME_SUPPLEMENT_20261003_191954.zip`
+3. `CONNECTOR_OS_CORE_RUNTIME_CLOSURE_20261003_193644.zip`
 
-## Method
+All three checksum lists verify and all three report the same HEAD. Merged, they share one file, `apps/staging-server/README.md`, and its copies are identical. No pack overwrote another.
 
-1. Merged both packs' `core/` into one tree. Supplement files were added only and never overwrote Interface Pack files; the packs have 0 overlapping paths.
-2. Ran `npm ci` in `devex/`. This uses the core's own lockfile and fetches the third-party packages `ajv`, `ajv-formats` and `yaml` from the public npm registry. 0 vulnerabilities.
-3. Ran `node devex/api-server/bin/serve.mjs`, core's hermetic `/v1` reference server.
-4. Ran `node scripts/core-import-closure.mjs <tree> <entries>`, which walks every static and dynamic import.
+**Status: STOPPED at server boot.** As instructed, no mock or substitute file was used. The console's API mode has not been pointed at core.
 
-## Result
-
-`serve.mjs` fails at load:
+## 1. Code imports: closed
 
 ```
-Error [ERR_MODULE_NOT_FOUND]: Cannot find module '<tree>/packages/inbound-firewall/src/index.mjs'
-imported from <tree>/packages/webhooks/src/inbound-trust.mjs
+node scripts/core-import-closure.mjs <tree> devex/api-server/bin/serve.mjs
+files reached 46 · EXTERNAL ajv, ajv-formats, yaml (installed by npm ci in devex/) · MISSING 0
 ```
 
-### Missing for the `/v1` reference server (blocking)
+The Closure Pack supplied `packages/inbound-firewall`, `proxy`, `persistence`, `blast-radius` and `oal-runtime`, plus `tools/testing`. The reference server's static import graph is now complete.
+
+## 2. Server boot: fails on data files
+
+`node devex/api-server/bin/serve.mjs --port 4020`:
+
+```
+Error: ENOENT: no such file or directory, open '<tree>/contracts/v1/tool-call.v1.json'
+    at load (packages/contracts/src/schemas.mjs:10)
+```
+
+These files are read **at module load or at server start** by the reached modules, and are absent from all three packs:
+
+| Missing path | Read by |
+|---|---|
+| `contracts/v1/tool-call.v1.json` | `packages/contracts/src/schemas.mjs:28` |
+| `contracts/v1/tool-result.v1.json` | `packages/contracts/src/schemas.mjs:29` |
+| `contracts/v1/manifest.v1.json` | `packages/contracts/src/schemas.mjs:30` |
+| `contracts/v1/errors.v1.json` | `packages/contracts/src/schemas.mjs:31` |
+| `contracts/v1.1/manifest.v1.1.json` | `packages/contracts/src/schemas.mjs:38` |
+| `contracts/v1.2/manifest.v1.2.json` | `packages/contracts/src/schemas.mjs:54` |
+| `contracts/v1.2/tool-result.v1.2.json` | `packages/contracts/src/schemas.mjs:55` |
+| `contracts/v1.4/manifest.v1.4.json` | `packages/contracts/src/schemas.mjs:73` |
+| `openapi/connector-os-v1.yaml` | `devex/tools/openapi-lib.mjs:5` (routes, scopes and schemas are compiled from it at start-up) |
+
+Present and read: `contracts/v1.3/{manifest.v1.3,exec-facts.v1,webhook-contract.v1}.json`, `packages/registry/data/catalogue.json` and `dispatch-eligibility.json`.
+
+The website repo has a copy of the contract at `public/devportal/01_openapi/connector-os-v1.yaml` (contract 1.0.0, the same 39 paths as the pack's SDK `openapi.ts`). It was **not** used as a stand-in. It is the website's bundled copy, and the instruction is to use only supplied core files. If core confirms the two are identical, that would close the last row.
+
+Read only on paths the reference server does not call at boot: `config/staging/grants/index.json` (`DispatchGrants.loadCommitted`) and `packages/connectors/<id>/manifest.json` (`loadGoldenFiveManifests`).
+
+## 3. Other packages (not on the reference-server path)
 
 | Missing path | Imported by |
 |---|---|
-| `packages/inbound-firewall/src/index.mjs` | `packages/webhooks/src/inbound-trust.mjs:11`, `packages/execution/src/engine.mjs:24` |
-
-The whole `packages/inbound-firewall/` workspace is absent. Its `package.json` and any sibling modules are missing too; `engine.mjs` refers to `inbound-firewall/src/vault.mjs` in a comment. Nothing else in the server's import closure (40 files) is missing.
-
-### Missing for the other supplied packages (not on the reference-server path)
-
-| Missing path | Imported by |
-|---|---|
-| `packages/proxy/src/index.mjs` | `packages/execution/src/engine.mjs` |
-| `packages/persistence/src/session.mjs` | `packages/identity/src/audit.mjs` |
-| `packages/blast-radius/src/index.mjs` | `packages/product/src/deps.mjs` |
-| `packages/oal-runtime/src/index.mjs` | `packages/runtime/bin/console-fixtures.mjs` |
-| `packages/oal-runtime/guards/oal-boundary.mjs` | `packages/ops-broker/guards/write-path.mjs` |
 | `packages/runtime/simulators/connection-service.mjs` | `packages/runtime/simulators/harness-prep.mjs` |
-| `tools/testing/rseries-boundary-double.mjs` | `packages/runtime/bin/console-fixtures.mjs` |
+| `packages/conformance/src/ports/reference/receipt-index.mjs` | `packages/persistence/src/receipt-index.mjs` |
+| `packages/vault/src/index.mjs` | `apps/staging-server/src/composition.mjs` |
+| `infra/deploy/lib/gate.mjs`, `infra/deploy/run.mjs`, `infra/validate/validate-staging.mjs` | `apps/staging-server/sandbox/deploy-gate-sandbox.mjs` |
 
-Workspaces listed in core `package-lock.json` but absent from both packs: `blast-radius`, `cli`, `conformance`, `connector-kit`, `eventbus`, `inbound-firewall`, `metering`, `oal-runtime`, `persistence`, `privacy-ops`, `proxy`, `scheduler`, `sdk`, `signer`, `tenancy`, `vault`.
+## Next
 
-`apps/staging-server/` contains only `README.md`, so the real staging service cannot be run from the packs.
+Add the 9 files in section 2, re-run the import check, then start the server:
 
-## Minimum needed to proceed
+```bash
+node scripts/core-import-closure.mjs <tree> devex/api-server/bin/serve.mjs   # MISSING 0
+node <tree>/devex/api-server/bin/serve.mjs --port 4020
+```
 
-- **To start the reference server and wire the console against core:** the full `packages/inbound-firewall/` directory at `f6a3161` (its `package.json`, `src/` and any `guards/`).
-- **To also run the execution, identity and product paths end to end:** `packages/proxy/`, `packages/persistence/`, `packages/blast-radius/`, `packages/oal-runtime/`, `packages/runtime/simulators/connection-service.mjs` and `tools/testing/rseries-boundary-double.mjs`.
-
-Once supplied: unzip the new pack over the merged tree, re-run the closure check (it should report `MISSING 0` for `devex/api-server/bin/serve.mjs`), then start the server and run the api-mode suite against it.
+Once it is listening, point the console's API mode at it (`VITE_COS_API_URL`) and run the api-mode suite.
