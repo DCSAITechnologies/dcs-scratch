@@ -46,6 +46,13 @@ export function catalogueSummary(root: string): Plugin {
         UNPUBLISHED_COUNT: canonical.length - published,
         RUNTIME_VERIFIED_COUNT: canonical.filter((c) => c.runtime_status && c.runtime_status !== 'not_verified').length,
         LEGACY_REFERENCE_COUNT: legacy.length,
+        // per-category published/held counts (largest first) for scale visuals
+        CATEGORY_COUNTS: Object.entries(canonical.reduce<Record<string, { published: number; held: number }>>((acc, c) => {
+          const e = (acc[c.cat] ??= { published: 0, held: 0 })
+          if (c.unpublished) e.held++
+          else e.published++
+          return acc
+        }, {})).map(([cat, v]) => ({ cat, ...v })).sort((a, b) => b.published + b.held - (a.published + a.held) || a.cat.localeCompare(b.cat)),
       }
       return [
         ...Object.entries(summary).map(([k, v]) => `export const ${k} = ${JSON.stringify(v)}`),

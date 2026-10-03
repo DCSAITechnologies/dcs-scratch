@@ -5,6 +5,7 @@ declare module 'virtual:catalogue-summary' {
   export const UNPUBLISHED_COUNT: number
   export const RUNTIME_VERIFIED_COUNT: number
   export const LEGACY_REFERENCE_COUNT: number
+  export const CATEGORY_COUNTS: { cat: string; published: number; held: number }[]
   export const FEATURED_ROWS: Record<string, FeaturedRow>
   export const FEATURED: { homeStrip: string[]; homePreview: string[]; navPopular: string[]; enterpriseLogos: string[]; heroNodes: string[] }
 }
