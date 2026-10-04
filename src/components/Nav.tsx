@@ -296,7 +296,7 @@ export function Nav({ theme = 'dark' }: { theme?: 'dark' | 'light' } = {}) {
       className={`fixed top-0 inset-x-0 z-50 transition-all duration-300 ${theme === 'light' ? 'nav-light' : ''}`}
       style={{ background: T.header(scrolled || mobileOpen), backdropFilter: 'blur(16px)', borderBottom: `1px solid ${T.border}` }}
     >
-      <div className={`mx-auto max-w-[1400px] px-8 flex items-center justify-between transition-all duration-300 ${scrolled ? 'h-14' : 'h-16'}`}>
+      <div className={`mx-auto max-w-[1760px] px-4 sm:px-8 xl:px-12 2xl:px-16 flex items-center justify-between transition-all duration-300 ${scrolled ? 'h-14' : 'h-16'}`}>
         <a href="/" className="shrink-0" onClick={() => setMobileOpen(false)}>{theme === 'light' ? <LightLogo /> : <Logo />}</a>
         <nav ref={navRef} className="hidden lg:flex items-center gap-0.5" aria-label="Primary" onMouseLeave={leave}>
           {NAV_ITEMS.map((item) => (
@@ -310,7 +310,7 @@ export function Nav({ theme = 'dark' }: { theme?: 'dark' | 'light' } = {}) {
                 }}
                 aria-haspopup={DROPS[item] ? 'menu' : undefined}
                 aria-expanded={open === item}
-                className={`px-3 py-2 text-[13.5px] font-medium rounded-lg transition-colors duration-200 flex items-center gap-1 ${open === item ? T.itemOpen : T.item}`}
+                className={`px-2 xl:px-3 py-2 text-[13px] xl:text-[13.5px] font-medium whitespace-nowrap rounded-lg transition-colors duration-200 flex items-center gap-1 ${open === item ? T.itemOpen : T.item}`}
               >
                 {item}
                 {DROPS[item] && (
@@ -360,8 +360,8 @@ export function Nav({ theme = 'dark' }: { theme?: 'dark' | 'light' } = {}) {
           ))}
         </nav>
         <div className="flex items-center gap-3">
-          <a href="/signin" className={`hidden sm:block text-[13.5px] font-medium ${T.signin} transition-colors`}>Sign in</a>
-          <a href="/signin" className={`${T.cta} hidden sm:inline-flex`}>Start building</a>
+          <a href="/signin" className={`hidden sm:block lg:hidden xl:block whitespace-nowrap text-[13.5px] font-medium ${T.signin} transition-colors`}>Sign in</a>
+          <a href="/signin" className={`${T.cta} hidden sm:inline-flex whitespace-nowrap`}>Start building</a>
           <button
             className={`lg:hidden w-10 h-10 flex items-center justify-center rounded-lg ${T.burgerText}`}
             style={T.burger}

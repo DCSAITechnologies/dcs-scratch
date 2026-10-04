@@ -71,7 +71,7 @@ export function Receipts() {
 
   return (
     <div className="pt-24 pb-14">
-      <div className="mx-auto max-w-[1400px] px-8">
+      <div className="mx-auto px-4 sm:px-8 xl:px-12 2xl:px-16 max-w-[1760px] ">
         <SectionHeader
           titleAs="h1"          align="left"
           eyebrow="Receipts"

@@ -17,7 +17,7 @@ export function SignIn() {
     <div className="pt-24 pb-14 relative overflow-hidden min-h-[80vh]">
       <div className="absolute inset-0 hero-backdrop opacity-70" />
       <div className="absolute inset-0 grid-texture" />
-      <div className="relative mx-auto max-w-[1200px] px-6 grid grid-cols-1 lg:grid-cols-2 gap-14 items-center">
+      <div className="relative mx-auto px-4 sm:px-8 xl:px-12 2xl:px-16 max-w-[1760px] grid grid-cols-1 lg:grid-cols-2 gap-14 items-center">
         <Reveal>
           <div className="eyebrow mb-4">Pre-launch</div>
           <h1 className="text-4xl md:text-5xl font-semibold tracking-tight text-[#0B1220]">

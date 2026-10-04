@@ -110,7 +110,7 @@ function ConnectorDetailView({ c, legacy, resolved }: { c: Conn; legacy?: Conn; 
 
   return (
     <div className="pt-24 pb-16">
-      <div className="mx-auto max-w-[1400px] px-8">
+      <div className="mx-auto px-4 sm:px-8 xl:px-12 2xl:px-16 max-w-[1760px] ">
         <a href="/connectors" className="text-[12.5px] text-[#566074] hover:text-[#0B1220] transition-colors">← All connectors</a>
 
         {/* Layout: left column = hero + tabs + content; right column = sticky facts card */}

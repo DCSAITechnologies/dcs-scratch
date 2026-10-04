@@ -142,7 +142,7 @@ export function SubPageLayout({ page, current }: { page: SubPage; current: strin
   const next = page.next ?? []
   return (
     <div className="pt-24 pb-16">
-      <div className="mx-auto max-w-[1400px] px-8">
+      <div className="mx-auto px-4 sm:px-8 xl:px-12 2xl:px-16 max-w-[1760px] ">
         <div className="text-[12px] text-[#566074]">
           <a href={`${home}`} className="hover:text-[#0B1220] transition-colors">{page.area}</a>
           <span className="mx-2">/</span>

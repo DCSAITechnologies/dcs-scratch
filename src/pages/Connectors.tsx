@@ -129,7 +129,7 @@ export function Connectors() {
 
   return (
     <div className="pt-24 pb-16">
-      <div className="mx-auto max-w-[1400px] px-4 sm:px-8">
+      <div className="mx-auto px-4 sm:px-8 xl:px-12 2xl:px-16 max-w-[1760px] ">
         <div className="eyebrow mb-3">Connector catalogue</div>
         <h1 className="text-[26px] leading-tight sm:text-4xl font-semibold tracking-tight text-[#0B1220]">{PUBLISHED_COUNT} published connectors. One governed interface.</h1>
         <p className="mt-2 max-w-3xl text-[14px] sm:text-[15px] text-[#3A4357]">
@@ -200,7 +200,7 @@ export function Connectors() {
           )}
         </div>
 
-        <div className="mt-3 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3.5">
+        <div className="mt-3 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-3.5">
           {filtered.slice(0, shown).map((c: Conn) => (
             <a key={c.id} href={`/connectors/${c.id}`} className="glass-card glass-card-hover p-4 flex flex-col">
               <div className="flex items-center gap-3">
@@ -248,7 +248,7 @@ export function Connectors() {
               <h2 className="text-xl font-semibold tracking-tight text-[#0B1220]">Legacy reference surfaces</h2>
               <span className="text-[11.5px] text-[#566074]">{filteredLegacy.length} preserved from the previous catalogue — reference only, not part of the canonical catalogue or any count above</span>
             </div>
-            <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+            <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4">
               {filteredLegacy.slice(0, legacyShown).map((c: Conn) => (
                 <a key={`legacy-${c.id}`} href={`/connectors/${c.id}`} className="glass-card glass-card-hover p-5 flex flex-col">
                   <div className="flex items-center gap-3 mb-3">

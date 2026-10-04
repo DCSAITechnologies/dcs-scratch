@@ -20,7 +20,7 @@ const SECTIONS: { t: string; d: string; to: string }[] = [
 export function Security() {
   return (
     <div className="pt-24 pb-14">
-      <div className="mx-auto max-w-[1400px] px-8">
+      <div className="mx-auto px-4 sm:px-8 xl:px-12 2xl:px-16 max-w-[1760px] ">
         <SectionHeader
           titleAs="h1"          align="left"
           eyebrow="Security"
@@ -28,7 +28,7 @@ export function Security() {
           sub="How Connector OS keeps credentials, tenants, execution and evidence separated — twelve areas of the security model, each documented in depth."
         />
 
-        <div className="mt-12 grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        <div className="mt-12 grid sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-5">
           {SECTIONS.map((s, i) => (
             <Reveal key={s.t} delay={i * 40}>
               <a href={`${s.to}`} className="glass-card glass-card-hover p-6 h-full flex flex-col group">

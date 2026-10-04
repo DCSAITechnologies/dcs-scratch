@@ -21,7 +21,7 @@ const SECTIONS: { t: string; d: string; to: string; items?: string[] }[] = [
 export function Developers() {
   return (
     <div className="pt-24 pb-16">
-      <div className="mx-auto max-w-[1400px] px-8">
+      <div className="mx-auto px-4 sm:px-8 xl:px-12 2xl:px-16 max-w-[1760px] ">
         <div className="max-w-3xl">
           <div className="eyebrow mb-4">Developers</div>
           <h1 className="text-4xl md:text-5xl font-semibold tracking-tight text-[#0B1220]">Built for developers. Designed for agents.</h1>

@@ -17,7 +17,7 @@ const COLS: { title: string; links: [string, string][] }[] = [
 export function Footer({ logo }: { logo?: ReactNode } = {}) {
   return (
     <footer style={{ borderTop: '1px solid #E3E7EE', background: '#FFFFFF' }}>
-      <div className="mx-auto max-w-[1400px] px-6 sm:px-8 pt-12 pb-10">
+      <div className="mx-auto px-4 sm:px-8 xl:px-12 2xl:px-16 max-w-[1760px] pt-12 pb-10">
         <div className="flex flex-col gap-6 border-b border-[#EEF1F5] pb-10 lg:flex-row lg:items-center lg:justify-between">
           <div className="max-w-md">
             {logo ?? <LightLogo />}
@@ -45,7 +45,7 @@ export function Footer({ logo }: { logo?: ReactNode } = {}) {
         </nav>
       </div>
       <div className="border-t border-[#EEF1F5]">
-        <div className="mx-auto flex max-w-[1400px] flex-wrap items-center justify-between gap-3 px-6 py-5 text-[12px] text-[#566074] sm:px-8">
+        <div className="mx-auto px-4 sm:px-8 xl:px-12 2xl:px-16 flex max-w-[1760px] flex-wrap items-center justify-between gap-3 py-5 text-[12px] text-[#566074] ">
           <span>© {new Date().getFullYear()} DCS Connector OS · <a href="/privacy" className="hover:text-[#0B1220]">Privacy</a> · <a href="/terms" className="hover:text-[#0B1220]">Terms</a> · <a href="/security" className="hover:text-[#0B1220]">Security</a></span>
           <span>Reasoning ≠ execution · Evidence over narration</span>
         </div>
