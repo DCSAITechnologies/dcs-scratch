@@ -1,0 +1,21 @@
+id,name,provider,category,known_site,known_portal,known_api,needs
+dribbble,Dribbble,Dribbble,Social / Creator / Publishing,https://dribbble.com/,https://developer.dribbble.com/,https://developer.dribbble.com/v2/,statusUrl
+dvla-vehicle-enquiry-service,DVLA Vehicle Enquiry Service,Driver and Vehicle Licensing Agency,Government / Public Data,https://www.gov.uk/government/organisations/driver-and-vehicle-licensing-agency,https://developer-portal.driver-vehicle-licensing.api.gov.uk/,https://developer-portal.driver-vehicle-licensing.api.gov.uk/apis/vehicle-enquiry-service/vehicle-enquiry-service-description.html,statusUrl;scopes
+enable-banking,Enable Banking,Enable Banking,Payments / Banking / Fintech,https://enablebanking.com/,https://enablebanking.com/docs/,https://enablebanking.com/docs/api/reference/,statusUrl
+enkash,EnKash,EnKash,Payments / Banking / Fintech,https://www.enkash.com/,https://docs.enkash.com/docs,https://docs.enkash.com/folder-3851169,statusUrl
+eu-vies-vat,EU VIES VAT Number Validation,European Commission,Government / Public Data,https://ec.europa.eu/taxation_customs/vies/,https://ec.europa.eu/assets/taxud/vow-information/swagger_publicVAT.yaml,https://ec.europa.eu/assets/taxud/vow-information/swagger_publicVAT.yaml,authDocs;statusUrl
+eurostat,Eurostat,Eurostat,Government / Public Data,https://ec.europa.eu/eurostat,https://ec.europa.eu/eurostat/web/user-guides/data-browser/api-data-access/api-getting-started,https://ec.europa.eu/eurostat/web/user-guides/data-browser/api-data-access/api-getting-started,authDocs;statusUrl
+fabric,fabric,fabric,Commerce / Marketplaces,https://fabric.inc/,https://developer.fabric.inc/home,https://developer.fabric.inc/llms.txt,statusUrl
+facturapi,Facturapi,Facturapi,Finance / Accounting / Tax,https://www.facturapi.io/,https://docs.facturapi.io/,https://docs.facturapi.io/,statusUrl
+fastmail,Fastmail,Fastmail,Productivity,https://www.fastmail.com/,https://www.fastmail.com/dev/,https://www.fastmail.com/dev/,statusUrl
+fathom,Fathom,Fathom,Productivity,https://www.fathom.ai/,https://developers.fathom.ai/,https://developers.fathom.ai/api-overview,statusUrl
+spark-platform,Spark Platform,FBS,Real Estate / Construction,https://www.sparkapi.io/,https://www.sparkapi.io/developers/,https://sparkplatform.com/docs/overview/api,statusUrl
+fedex,FedEx,FedEx,Logistics / Shipping / Inventory,https://www.fedex.com/,https://developer.fedex.com/api/global/choose-location.html,https://developer.fedex.com/api/en-us/catalog.html,statusUrl;caps
+fibery,Fibery,Fibery,Productivity,https://fibery.com/,https://developers.fibery.com/,https://developers.fibery.com/guides/http-api/overview,statusUrl
+finbox-bankconnect,FinBox BankConnect,FinBox,Payments / Banking / Fintech,https://www.finbox.in/,https://docs.finbox.in/,https://docs.finbox.in/,statusUrl
+flexport,Flexport,Flexport,Logistics / Shipping / Inventory,https://www.flexport.com/,https://developers.flexport.com/,https://apidocs.flexport.com/,statusUrl;scopes
+flightaware-aeroapi,FlightAware AeroAPI,FlightAware,Travel / Hospitality / Events,https://www.flightaware.com/,https://www.flightaware.com/commercial/aeroapi/,https://www.flightaware.com/aeroapi/portal/documentation,scopes
+flipkart-seller-api,Flipkart Seller API,Flipkart,Commerce / Marketplaces,https://seller.flipkart.com/,https://seller.flipkart.com/api-docs/,https://seller.flipkart.com/api-docs/FMSAPI.html,statusUrl
+invoiced,Invoiced,Flywire,Finance / Accounting / Tax,https://www.invoiced.com/,https://docs.invoiced.com/dev,https://developer.invoiced.com/api,statusUrl
+fonoa,Fonoa,Fonoa,Finance / Accounting / Tax,https://www.fonoa.com/,https://docs.fonoa.com/reference/authentication.md,https://docs.fonoa.com/reference/authentication.md,scopes
+erpnext-frappe,ERPNext (Frappe Framework REST API),Frappe Technologies,Manufacturing / ERP / Supply Chain,https://frappe.io/erpnext,https://docs.frappe.io/framework/user/en/api,https://docs.frappe.io/framework/user/en/api/rest,statusUrl

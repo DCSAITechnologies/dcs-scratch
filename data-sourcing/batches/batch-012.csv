@@ -1,0 +1,21 @@
+id,name,provider,category,known_site,known_portal,known_api,needs
+logrocket,LogRocket,LogRocket,Observability,https://logrocket.com/,https://docs.logrocket.com/docs/introduction,https://docs.logrocket.com/docs/audit-log-api.md,caps;scopes
+logzio,Logz.io,Logz.io,Observability,https://logz.io/,https://docs.logz.io/,https://docs.logz.io/,scopes
+loops,Loops,Loops,Marketing / Advertising,https://loops.so/,https://loops.so/docs,https://loops.so/docs,scopes
+line-messaging,LINE Messaging API,LY Corporation,Communications / Voice / Video,https://www.line.me/en/,https://developers.line.biz/,https://developers.line.biz/en/reference/messaging-api/,statusUrl;scopes
+mailtrap,Mailtrap,Mailtrap,Communications / Voice / Video,https://mailtrap.io/,https://docs.mailtrap.io/,https://docs.mailtrap.io/developers,statusUrl
+manatal,Manatal,Manatal,HR / Recruiting / Payroll,https://www.manatal.com/,https://developers.manatal.com/reference/getting-started,https://developers.manatal.com/reference/candidates_list,scopes
+medallia,Medallia Experience Cloud,Medallia,Support & Success,https://www.medallia.com/,https://developer.medallia.com/,https://developer.medallia.com/medallia-apis,scopes
+medusa,Medusa,Medusa,Commerce / Marketplaces,https://medusajs.com/,https://docs.medusajs.com/,https://docs.medusajs.com/,scopes
+mem-ai,Mem,Mem,Productivity,https://mem.ai/,https://docs.mem.ai/,https://docs.mem.ai/,scopes
+mend,Mend,Mend.io,Developer Tools,https://www.mend.io/,https://docs.mend.io/,https://docs.mend.io/,scopes
+mentimeter,Mentimeter,Mentimeter,Productivity,https://www.mentimeter.com/,https://developer.mentimeter.com/openapi.json,https://developer.mentimeter.com/openapi.json,statusUrl
+merge,Merge,Merge,Finance / Accounting / Tax,https://www.merge.dev/,https://docs.merge.dev/home,https://docs.merge.dev/home,statusUrl
+mews,Mews,Mews,Travel / Hospitality / Events,https://www.mews.com/en,https://docs.mews.com/,https://docs.mews.com/connector-api/operations,scopes
+microsoft-advertising,Microsoft Advertising,Microsoft,Marketing / Advertising,https://ads.microsoft.com/,https://learn.microsoft.com/en-us/advertising/guides/?view=bingads-13,https://learn.microsoft.com/en-us/advertising/guides/?view=bingads-13,statusUrl
+middleware-io,Middleware.io,Middleware,Observability,https://middleware.io/,https://app.middleware.io/swagger.json,https://app.middleware.io/swagger.json,statusUrl;scopes
+mixedbread,Mixedbread,Mixedbread,AI & Models,https://www.mixedbread.com/,https://www.mixedbread.com/api-reference,https://www.mixedbread.com/api-reference,statusUrl
+moengage,MoEngage,MoEngage,Marketing / Advertising,https://www.moengage.com/,https://www.moengage.com/docs/developer-guide/introduction,https://www.moengage.com/docs/api/introduction,scopes
+momento,Momento,Momento,Databases & Search,https://www.gomomento.com/,https://docs.momentohq.com/,https://docs.momentohq.com/cache/develop/api-reference/http-api,statusUrl
+moneybird,Moneybird,Moneybird,Finance / Accounting / Tax,https://www.moneybird.com/,https://developer.moneybird.com/,https://developer.moneybird.com/api/sales-invoices,statusUrl
+moyasar,Moyasar,Moyasar,Payments / Banking / Fintech,https://moyasar.com/,https://docs.moyasar.com/,https://docs.moyasar.com/,statusUrl

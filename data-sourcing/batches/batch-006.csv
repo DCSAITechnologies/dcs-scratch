@@ -1,0 +1,21 @@
+id,name,provider,category,known_site,known_portal,known_api,needs
+blynk,Blynk,Blynk,Manufacturing / ERP / Supply Chain,https://www.blynk.io/,https://docs.blynk.io/en/blynk.cloud/device-https-api,https://docs.blynk.io/en/blynk.cloud/device-https-api,statusUrl
+booking-com-connectivity,Booking.com Connectivity APIs,Booking.com,Travel / Hospitality / Events,https://www.booking.com/,https://developers.booking.com/,https://developers.booking.com/connectivity/docs/api-reference,statusUrl
+brankas,Brankas,Brankas,Payments / Banking / Fintech,https://www.brankas.com/,https://api-reference.brankas.com/,https://api-reference.brankas.com/,statusUrl
+bunny-net,bunny.net,bunny.net,Cloud & Hosting,https://bunny.net/,https://bunny.net/docs,https://bunny.net/docs,scopes
+buzzsprout,Buzzsprout,Buzzsprout,Social / Creator / Publishing,https://www.buzzsprout.com/,https://github.com/buzzsprout/buzzsprout-api/blob/master/README.md,https://github.com/buzzsprout/buzzsprout-api/blob/master/README.md,statusUrl
+canopy,Canopy,Canopy,Finance / Accounting / Tax,https://www.getcanopy.com/,https://www.getcanopy.com/api/,https://www.getcanopy.com/api/,caps;scopes
+pixabay,Pixabay,Canva,Social / Creator / Publishing,https://pixabay.com/,https://pixabay.com/api/docs/,https://pixabay.com/api/docs/,statusUrl
+catchpoint,Catchpoint,Catchpoint,Observability,https://www.catchpoint.com/,https://docs.catchpoint.com/docs/rest-api-v2-guide,https://docs.catchpoint.com/docs/rest-api-v2-guide,scopes
+nppes-npi-registry,NPPES NPI Registry,Centers for Medicare & Medicaid Services,Healthcare,https://npiregistry.cms.hhs.gov/,https://npiregistry.cms.hhs.gov/api-page,https://npiregistry.cms.hhs.gov/api-page,statusUrl
+checkmk,Checkmk,Checkmk,Observability,https://checkmk.com/,https://docs.checkmk.com/latest/en/,https://docs.checkmk.com/latest/en/rest_api.html,statusUrl
+churnzero,ChurnZero,ChurnZero,Support & Success,https://churnzero.com/,https://support.churnzero.com/hc/en-us/articles/360003183171-Integrate-ChurnZero-using-HTTP-API,https://support.churnzero.com/hc/en-us/articles/360003183171-Integrate-ChurnZero-using-HTTP-API,authDocs
+cielo-ecommerce,Cielo E-commerce API,Cielo,Payments / Banking / Fintech,https://www.cielo.com.br/,https://developercielo.github.io/manual/cielo-ecommerce,https://developercielo.github.io/manual/cielo-ecommerce,scopes
+cisco-umbrella,Cisco Umbrella,Cisco,Security & Identity,https://umbrella.cisco.com/,https://developer.cisco.com/docs/cloud-security/,https://developer.cisco.com/docs/cloud-security/umbrella-api-authentication/,statusUrl
+clay,Clay,Clay,CRM & Sales,https://www.clay.com/,https://developers.clay.com/,https://developers.clay.com/api-reference/me/get-the-authenticated-user,statusUrl;scopes
+clerk,Clerk,Clerk,Security & Identity,https://clerk.com/,https://clerk.com/docs,https://clerk.com/docs,scopes
+clickpost,ClickPost,ClickPost,Logistics / Shipping / Inventory,https://www.clickpost.ai/,https://docs.clickpost.ai/docs/getting-started,https://docs.clickpost.ai/reference,scopes
+clip-mx,Clip,Clip,Payments / Banking / Fintech,https://www.clip.mx/,https://developer.clip.mx/,https://developer.clip.mx/reference,statusUrl
+argo-cd,Argo CD,Cloud Native Computing Foundation,Developer Tools,https://argoproj.github.io/cd/,https://argo-cd.readthedocs.io/en/stable/developer-guide/api-docs/,https://argo-cd.readthedocs.io/en/stable/developer-guide/api-docs/,statusUrl
+keycloak,Keycloak (self-hosted),Cloud Native Computing Foundation,Security & Identity,https://www.keycloak.org/,https://www.keycloak.org/documentation,https://www.keycloak.org/docs-api/latest/rest-api/index.html,statusUrl
+prometheus,Prometheus (HTTP API),Cloud Native Computing Foundation,Observability,https://prometheus.io/,https://prometheus.io/docs/introduction/overview/,https://prometheus.io/docs/prometheus/latest/querying/api/,statusUrl

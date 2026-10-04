@@ -1,0 +1,21 @@
+id,name,provider,category,known_site,known_portal,known_api,needs
+huawei-cloud-ecs,Huawei Cloud ECS,Huawei,Cloud & Hosting,https://www.huaweicloud.com/intl/en-us/,https://support.huaweicloud.com/intl/en-us/api-ecs/en-us_topic_0020212668.html,https://support.huaweicloud.com/intl/en-us/api-ecs/en-us_topic_0020212668.html,statusUrl
+humaans,Humaans,Humaans,HR / Recruiting / Payroll,https://humaans.io/,https://docs.humaans.io/api/,https://docs.humaans.io/api/,statusUrl
+hyperping,Hyperping,Hyperping,Observability,https://hyperping.com/,https://hyperping.com/docs/api/overview,https://hyperping.com/docs/api/overview,statusUrl
+hyperscience,Hyperscience,Hyperscience,Documents / E-sign / Forms,https://www.hyperscience.ai/,https://docs.hyperscience.ai/,https://docs.hyperscience.ai/,statusUrl
+hyperverge,HyperVerge,HyperVerge,Security & Identity,https://hyperverge.co/,https://documentation.hyperverge.co/,https://documentation.hyperverge.co/,statusUrl
+astra-db,DataStax Astra DB,IBM,Databases & Search,https://www.ibm.com/products/datastax,https://docs.datastax.com/en/home/index.html,https://docs.datastax.com/en/home/index.html,statusUrl
+instana,IBM Instana,IBM,Observability,https://www.ibm.com/products/instana,https://developer.ibm.com/apis/catalog/instana--instana-rest-api/Introduction,https://github.com/instana/openapi/blob/master/spec/openapi.yaml,statusUrl
+icici-breeze,ICICI Direct Breeze,ICICI Securities,Payments / Banking / Fintech,https://www.icicidirect.com/,https://api.icicidirect.com/apiuser/home,https://api.icicidirect.com/breezeapi/documents/index.html,statusUrl
+icinga2,Icinga 2,Icinga,Observability,https://icinga.com/,https://icinga.com/docs/,https://icinga.com/docs/icinga-2/latest/doc/12-icinga2-api/,statusUrl
+testrail,TestRail,Idera,Developer Tools,https://www.testrail.com/,https://support.testrail.com/hc/en-us/categories/7076541806228-API-Manual,https://support.testrail.com/hc/en-us/articles/7077083596436-Introduction-to-the-TestRail-API,scopes
+ilovepdf,iLovePDF (iLoveAPI),iLovePDF,Documents / E-sign / Forms,https://www.ilovepdf.com/,https://www.iloveapi.com/,https://www.iloveapi.com/docs/api-reference,statusUrl;scopes
+imagekit,ImageKit,ImageKit,Cloud & Hosting,https://imagekit.io/,https://imagekit.io/docs,https://imagekit.io/docs,statusUrl
+indiamart-lead-manager,IndiaMART Lead Manager API,IndiaMART,CRM & Sales,https://www.indiamart.com/,https://help.indiamart.com/knowledge-base/lms-crm-integration-v2/,https://help.indiamart.com/knowledge-base/lms-crm-integration-v2/,statusUrl;scopes
+infinite-campus,Infinite Campus,Infinite Campus,Education,https://www.infinitecampus.com/,https://kb.infinitecampus.com/help/oneroster-api,https://kb.infinitecampus.com/help/oneroster-api-documentation-oauth-2,statusUrl;caps;scopes
+instantly,Instantly,Instantly.ai,CRM & Sales,https://instantly.ai/,https://developer.instantly.ai/,https://developer.instantly.ai/api-reference/introduction,statusUrl
+instatus,Instatus,Instatus,Observability,https://instatus.com/,https://instatus.com/help,https://instatus.com/help/api,statusUrl;scopes
+interswitch,Interswitch,Interswitch,Payments / Banking / Fintech,https://interswitchgroup.com,https://docs.interswitchgroup.com/docs/home,https://docs.interswitchgroup.com/reference/how-to-use-the-reference,statusUrl;scopes
+intruder,Intruder,Intruder,Security & Identity,https://www.intruder.io/,https://developers.intruder.io/docs/welcome,https://developers.intruder.io/docs/welcome,scopes
+invoice-ninja,Invoice Ninja,Invoice Ninja,Finance / Accounting / Tax,https://invoiceninja.com/,https://invoiceninja.github.io/docs/developer-guide/api/authentication,https://invoiceninja.github.io/docs/developer-guide/api/authentication,scopes
+ionos-cloud,IONOS Cloud,IONOS,Cloud & Hosting,https://cloud.ionos.com/,https://docs.ionos.com/cloud,https://docs.ionos.com/cloud,statusUrl

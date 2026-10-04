@@ -1,0 +1,21 @@
+id,name,provider,category,known_site,known_portal,known_api,needs
+temporal-cloud,Temporal Cloud,Temporal Technologies,Developer Tools,https://temporal.io/,https://docs.temporal.io/cloud,https://docs.temporal.io/cloud,caps
+termii,Termii,Termii,Communications / Voice / Video,https://termii.com/,https://developer.termii.com/,https://developer.termii.com/,statusUrl
+testingbot,TestingBot,TestingBot,Developer Tools,https://testingbot.com/,https://testingbot.com/support/api,https://testingbot.com/support/api,scopes
+unleashed-software,Unleashed Software,The Access Group,Logistics / Shipping / Inventory,https://www.unleashedsoftware.com/,https://apidocs.unleashedsoftware.com/,https://apidocs.unleashedsoftware.com/,statusUrl;scopes
+the-things-stack,The Things Stack,The Things Industries,Manufacturing / ERP / Supply Chain,https://www.thethingsindustries.com/,https://www.thethingsindustries.com/docs/,https://www.thethingsindustries.com/docs/,statusUrl
+thingsboard,ThingsBoard Cloud,ThingsBoard,Manufacturing / ERP / Supply Chain,https://thingsboard.io/,https://thingsboard.io/docs/,https://thingsboard.io/docs/,statusUrl
+ticket-tailor,Ticket Tailor,Ticket Tailor,Travel / Hospitality / Events,https://www.tickettailor.com/,https://developers.tickettailor.com/,https://developers.tickettailor.com/docs/api/ticket-tailor-api/,scopes
+universe,Universe,Ticketmaster,Travel / Hospitality / Events,https://www.universe.com/,https://developers.universe.com/,https://developers.universe.com/docs/basic-usage-1,caps;scopes
+ticktick,TickTick,TickTick,Productivity,https://ticktick.com/,https://developer.ticktick.com/,https://developer.ticktick.com/docs/index.html#/openapi,statusUrl
+timecamp,TimeCamp,TimeCamp,Productivity,https://www.timecamp.com/,https://developer.timecamp.com/reference/dist/api-prod.yaml,https://developer.timecamp.com/reference/dist/api-prod.yaml,statusUrl
+tipalti,Tipalti,Tipalti,Finance / Accounting / Tax,https://tipalti.com/,https://documentation.tipalti.com/docs/getting-started,https://documentation.tipalti.com/reference/introduction,statusUrl
+tito,Tito,Tito,Travel / Hospitality / Events,https://ti.to/home,https://ti.to/docs/api/admin/3.0,https://ti.to/docs/api/admin/3.0,statusUrl
+tldv,tl;dv,tl;dv,Productivity,https://tldv.io/,https://doc.tldv.io/index.html,https://doc.tldv.io/index.html,statusUrl
+toggl-track,Toggl Track,Toggl,Productivity,https://toggl.com/,https://engineering.toggl.com/docs/,https://engineering.toggl.com/docs/,scopes
+toradex-torizon,Torizon Cloud,Toradex,Manufacturing / ERP / Supply Chain,https://www.toradex.com/,https://developer.toradex.com/,https://developer.toradex.com/torizon/torizon-platform/torizon-api/,statusUrl
+transak,Transak,Transak,Payments / Banking / Fintech,https://transak.com/,https://docs.transak.com/getting-started/what-is-transak,https://docs.transak.com/getting-started/what-is-transak,statusUrl;scopes
+transloadit,Transloadit,Transloadit,Documents / E-sign / Forms,https://transloadit.com/,https://transloadit.com/docs/api/,https://transloadit.com/docs/api/,statusUrl
+treasury-prime,Treasury Prime,Treasury Prime,Payments / Banking / Fintech,https://www.treasuryprime.com/,https://docs.treasuryprime.com/docs/getting-started,https://docs.treasuryprime.com/reference/introduction,scopes
+tripadvisor-terra,Tripadvisor Terra,Tripadvisor,Travel / Hospitality / Events,https://www.tripadvisor.com/,https://docs.terra.tripadvisor.com/docs/overview,https://docs.terra.tripadvisor.com/docs/endpoints-overview,statusUrl
+trunk,Trunk,Trunk,Developer Tools,https://trunk.io/,https://docs.trunk.io/,https://login.trunk.io/?client_id=client_01H50ZWVHX8SVCZ6801WPAA5H6&redirect_uri=https%3A%2F%2Fapp.trunk.io%2Fauth%2Fcallback&state=Fe26.2*1*60f1e285a88130b9e4e5f584cbf7f6d0746eab0eae498113668f7333ebb458fd*y2BhBMvnIp9K18Gd8puWTw*N6C1mzpcxfJ1RIsX1kjh5o7gMv8WoO6p1oUOO_48ykVPbdkx07rGV9VxhP0MLf8RjZvpNUXZ6TRsHWzuU-dNM3ezdeO_BDIJ7Q69i0WV6BmJoA5QTRplKi3zms19Ur1lys5_C0Iw0vLVxxJvdt9TPn3sG04w6QTKtIFS2BDhQ99PL3a9bBJm3n03qnM03cJJum8BJOqkkdKynOkqvKu0zceCegV_U-y39JEutq39efE*1790608415950*cbe43c885e4527e5aaf0ae340e26d2319bd42e82c9ebac8a6d3ff1dc396f4ebf*Wti9XZBKsD4mvPaFhb6NhHgnHWI_nUyVPh92lsyAFpA~2&authorization_session_id=01M3M8NXYD6KVBJ61D744A7XA7,scopes

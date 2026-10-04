@@ -1,0 +1,21 @@
+id,name,provider,category,known_site,known_portal,known_api,needs
+marn,Marn,Marn,Commerce / Marketplaces,,,,logo;site;portal;api;authDocs;statusUrl;auth;caps;scopes;reqs
+moodle,Moodle,Moodle,Education,,https://moodledev.io/,https://moodledev.io/docs/apis/subsystems/external,site;statusUrl;reqs
+namecheap,Namecheap,Namecheap,Cloud & Hosting,,,,logo;site;portal;api;authDocs;statusUrl;caps;scopes;reqs
+naver-clova-studio,Naver CLOVA Studio,NAVER Cloud,AI & Models,https://www.ncloud.com/,,,logo;portal;api;authDocs;statusUrl;caps;scopes;reqs
+network-international-ngenius,Network International (N-Genius Online),Network International,Payments / Banking / Fintech,,https://docs.ngenius-payments.com/,https://docs.ngenius-payments.com/,logo;site;statusUrl
+nice-cxone,NICE CXone,NICE,Communications / Voice / Video,https://www.nice.com/,,,portal;api;authDocs;auth;caps;scopes;reqs
+numeral,Numeral,Numeral,Finance / Accounting / Tax,https://www.numeral.com/,https://docs.numeral.com/api-reference/v2026-03-01/introduction.md,https://docs.numeral.com/api-reference/v2026-03-01/introduction.md,logo;statusUrl
+ordoro,Ordoro,Ordoro,Logistics / Shipping / Inventory,https://www.ordoro.com/,https://support.ordoro.com/ordoro-api-introduction/,https://docs.ordoro.com/,logo;statusUrl;scopes
+payfit,PayFit,PayFit,HR / Recruiting / Payroll,https://payfit.com/,,,portal;api;authDocs;caps;scopes;reqs
+persona,Persona,Persona,Legal / Compliance,,https://docs.withpersona.com/getting-started,https://docs.withpersona.com/getting-started,site
+postnl,PostNL,PostNL,Logistics / Shipping / Inventory,,https://developer.postnl.nl/,https://developer.postnl.nl/docs/,site;scopes
+powerschool-sis,PowerSchool SIS,PowerSchool,Education,https://www.powerschool.com/,,,portal;api;authDocs;auth;caps;scopes;reqs
+schoology,Schoology (PowerSchool),PowerSchool,Education,https://www.powerschool.com/,,,portal;api;authDocs;auth;caps;scopes;reqs
+precoro,Precoro,Precoro,Finance / Accounting / Tax,https://precoro.com/,https://help.precoro.com/using-api-in-precoro,,api;statusUrl
+reply-io,Reply.io,Reply.io,CRM & Sales,,,,logo;site;portal;api;authDocs;statusUrl;caps;scopes;reqs
+reviewsio,Reviews.io,Reviews.io,Support & Success,https://www.reviews.io/,https://developer.reviews.io/,https://developer.reviews.io/,logo;authDocs;statusUrl
+crates-io,crates.io,Rust Foundation,Developer Tools,https://crates.io/,https://crates.io/api/openapi.json,https://crates.io/api/openapi.json,logo
+sage-intacct,Sage Intacct,Sage,Finance / Accounting / Tax,,https://developer.intacct.com/,https://developer.intacct.com/api/,site
+salla,Salla,Salla,Commerce / Marketplaces,,https://salla.dev/,https://docs.salla.dev/,logo;site;statusUrl
+scaleway-cloud,Scaleway Cloud (IaaS/PaaS APIs),Scaleway,Cloud & Hosting,,https://console.scaleway.com/,,site;api

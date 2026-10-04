@@ -1,0 +1,21 @@
+id,name,provider,category,known_site,known_portal,known_api,needs
+rentcast,RentCast,RentCast,Real Estate / Construction,https://www.rentcast.io/,https://developers.rentcast.io/reference/introduction,https://developers.rentcast.io/reference/property-records,statusUrl
+resource-guru,Resource Guru,Resource Guru,Productivity,https://resourceguruapp.com/,https://app.resourceguruapp.com:443/developers,https://resourceguruapp.com/docs/api,statusUrl
+respond-io,respond.io,respond.io,Support & Success,https://respond.io/,https://developers.respond.io/,https://developers.respond.io/docs/api/c6e1aa937640e-contact,scopes
+salesmate,Salesmate,Salesmate,CRM & Sales,https://www.salesmate.io/,https://apidocs.salesmate.io/,https://apidocs.salesmate.io/,statusUrl
+samsara,Samsara,Samsara,Logistics / Shipping / Inventory,https://www.samsara.com/,https://developers.samsara.com/reference/overview,https://developers.samsara.com/reference/overview,statusUrl
+satispay,Satispay Business,Satispay,Payments / Banking / Fintech,https://www.satispay.com/it-it/privati/,https://developers.satispay.com/docs/welcome,https://developers.satispay.com/reference,statusUrl;scopes
+sauce-labs,Sauce Labs,Sauce Labs,Developer Tools,https://saucelabs.com/,https://docs.saucelabs.com/,https://docs.saucelabs.com/,scopes
+scalapay,Scalapay,Scalapay,Payments / Banking / Fintech,https://www.scalapay.com/,https://developers.scalapay.com/reference/api-architecture.md,https://developers.scalapay.com/reference/api-architecture.md,scopes
+sendbird,Sendbird,Sendbird,Communications / Voice / Video,https://sendbird.com/,https://sendbird.com/docs,https://sendbird.com/docs,statusUrl;scopes
+servicem8,ServiceM8,ServiceM8,Real Estate / Construction,https://www.servicem8.com/,https://developer.servicem8.com/,https://developer.servicem8.com/reference/listjobs,statusUrl
+shipblu,ShipBlu,ShipBlu,Logistics / Shipping / Inventory,https://shipblu.com/,https://docs.shipblu.com/,https://docs.shipblu.com/api-reference,scopes
+shodan,Shodan,Shodan,Security & Identity,https://www.shodan.io/,https://developer.shodan.io/,https://developer.shodan.io/api,scopes
+signaturit,Signaturit,Signaturit,Documents / E-sign / Forms,https://www.signaturit.com/,https://docs.signaturit.com/,https://docs.signaturit.com/api/latest,scopes
+siliconflow,SiliconFlow,SiliconFlow,AI & Models,https://siliconflow.cn/,https://docs.siliconflow.cn/docs/userguide/introduction,https://docs.siliconflow.cn/docs/api/chat-completions-post,statusUrl
+sinch,Sinch,Sinch,Communications / Voice / Video,https://sinch.com/,https://developers.sinch.com/,https://developers.sinch.com/docs/conversation/api-reference/conversation,scopes
+skyscanner,Skyscanner,Skyscanner,Travel / Hospitality / Events,https://www.skyscanner.net/sttc/px/captcha-v2/index.html?url=Lz8=&uuid=deb242ec-bb4d-11f1-8418-5ee3384ba296&vid=,https://developers.skyscanner.net/,https://developers.skyscanner.net/api/flights-live-pricing/,statusUrl
+smallcase-gateway,smallcase Gateway,smallcase,Payments / Banking / Fintech,https://www.smallcase.com/,https://developers.gateway.smallcase.com/docs/overview,https://developers.gateway.smallcase.com/reference/graph-performance-api,statusUrl;scopes
+smartlead,Smartlead,Smartlead,CRM & Sales,https://www.smartlead.ai/,https://api.smartlead.ai/introduction,https://api.smartlead.ai/introduction,statusUrl
+smartsupp,Smartsupp,Smartsupp,Support & Success,https://www.smartsupp.com/,https://docs.smartsupp.com/,https://docs.smartsupp.com/rest-api/reference/,statusUrl
+smile-id,Smile ID,Smile ID,Security & Identity,https://smile.id/,https://docs.usesmileid.com/,https://docs.usesmileid.com/,statusUrl;scopes

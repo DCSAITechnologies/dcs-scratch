@@ -1,0 +1,21 @@
+id,name,provider,category,known_site,known_portal,known_api,needs
+cornerstone-ondemand,Cornerstone OnDemand,Cornerstone,HR / Recruiting / Payroll,https://www.cornerstoneondemand.com/,,,portal;api;authDocs;statusUrl;caps;scopes;reqs
+coupa,Coupa,Coupa,Finance / Accounting / Tax,https://www.coupa.com/,https://compass.coupa.com/en-us/products/product-documentation/integration-technical-documentation/the-coupa-core-api,https://compass.coupa.com/en-us/products/product-documentation/integration-technical-documentation/the-coupa-core-api/resources,logo;statusUrl
+coupang-open-api,Coupang Open API,Coupang,Commerce / Marketplaces,,https://developers.coupang.com/en?ref=legacy,https://developers.coupang.com/en?ref=legacy,site;statusUrl
+dealfront,Dealfront (Leadfeeder),Dealfront,CRM & Sales,https://www.leadfeeder.com/dealfront/,https://docs.leadfeeder.com/api/public,https://docs.leadfeeder.com/api/public,logo
+drata,Drata,Drata,Security & Identity,,https://developers.drata.com/,https://developers.drata.com/openapi/reference/v2/overview/,site
+elastic-path,Elastic Path Commerce Cloud,Elastic Path,Commerce / Marketplaces,,https://developer.elasticpath.com/,https://developer.elasticpath.com/docs/api/,site
+onfido,Onfido (Entrust Identity Verification),Entrust,Legal / Compliance,,https://documentation.identity.entrust.com:443/,https://documentation.identity.entrust.com:443/,logo;site;authDocs;statusUrl;caps;scopes;reqs
+exact-online,Exact Online,Exact,Finance / Accounting / Tax,https://www.exact.com/,,https://start.exactonline.nl/docs/HlpRestAPIResources.aspx,portal;authDocs;caps;scopes;reqs
+expedia-rapid,Expedia Group Rapid,Expedia Group,Travel / Hospitality / Events,https://www.expediagroup.com/en-us,https://developers.expediagroup.com/docs,https://developers.expediagroup.com/rapid/api/explorer,logo;statusUrl
+fred-stlouisfed,FRED (Federal Reserve Bank of St. Louis),Federal Reserve Bank of St. Louis,Government / Public Data,https://fred.stlouisfed.org/,https://fred.stlouisfed.org/docs/api/fred/,https://fred.stlouisfed.org/docs/api/fred/,logo;statusUrl;scopes
+frenet,Frenet,Frenet,Logistics / Shipping / Inventory,,,,logo;site;portal;api;authDocs;statusUrl;caps;scopes;reqs
+gandi,Gandi,Gandi,Cloud & Hosting,,https://api.gandi.net/docs/,https://api.gandi.net/docs/,logo;site
+gusto,Gusto,Gusto,HR / Recruiting / Payroll,,https://docs.gusto.com/,https://docs.gusto.com/,site
+ideogram,Ideogram,Ideogram,AI & Models,,https://developer.ideogram.ai/ideogram-api/api-overview,https://developer.ideogram.ai/api-reference/images/generate/ideogram-3,site
+karbon,Karbon,Karbon,Finance / Accounting / Tax,https://karbonhq.com/,https://developers.karbonhq.com/,,api
+khoros,Khoros,Khoros,Support & Success,https://khoros.ai:443/,https://developer.khoros.com/,,api;authDocs;caps;scopes;reqs
+kit,Kit,Kit,Marketing / Advertising,,https://developers.kit.com/welcome,https://developers.kit.com/api-reference/overview,site
+korapay,Korapay,Kora,Payments / Banking / Fintech,https://korapay.com/,https://developers.korapay.com/,https://docs.korapay.com/,logo;statusUrl
+lexware-office,Lexware Office (formerly lexoffice),Lexware,Finance / Accounting / Tax,https://www.lexware.de/,https://www.lexware.de/funktionen/public-api/,,api;authDocs;statusUrl;scopes
+maplerad,Maplerad,Maplerad,Payments / Banking / Fintech,https://maplerad.com/,,,logo;portal;api;authDocs;caps;scopes;reqs

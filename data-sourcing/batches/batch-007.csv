@@ -1,0 +1,21 @@
+id,name,provider,category,known_site,known_portal,known_api,needs
+cloudsmith,Cloudsmith,Cloudsmith,Developer Tools,https://cloudsmith.com/,https://docs.cloudsmith.com/,https://docs.cloudsmith.com/api/rate-limits,scopes
+cognism,Cognism,Cognism,CRM & Sales,https://www.cognism.com/,https://developers.cognism.com/api/collections/14862827/UVJhBu4C,https://developers.cognism.com/api/collections/14862827/UVJhBu4C,statusUrl
+common-room,Common Room,Common Room,CRM & Sales,https://www.commonroom.io/,https://api.commonroom.io/docs/community.html,https://api.commonroom.io/docs/community.html,statusUrl
+uk-companies-house,UK Companies House,Companies House,Legal / Compliance,https://www.gov.uk/government/organisations/companies-house,https://developer.company-information.service.gov.uk/,https://developer-specs.company-information.service.gov.uk/companies-house-public-data-api/reference,statusUrl
+configcat,ConfigCat,ConfigCat,Developer Tools,https://configcat.com/,https://configcat.com/docs/,https://configcat.com/docs/api/reference/configcat-public-management-api/,scopes
+connecteam,Connecteam,Connecteam,HR / Recruiting / Payroll,https://connecteam.com/,https://developer.connecteam.com/reference/form_submission_edited_eventform_submission_edited_post,https://developer.connecteam.com/reference/get_users_users_v1_users_get,statusUrl
+core42-compass,Core42 Compass,Core42,AI & Models,https://www.core42.ai/,https://www.core42.ai/compass/documentation/compass-api-reference,https://www.core42.ai/compass/documentation/compass-api-reference,statusUrl
+zotero-web-api,Zotero Web API,Corporation for Digital Scholarship,Government / Public Data,https://www.zotero.org/,https://www.zotero.org/support/dev/web_api/v3/,https://www.zotero.org/support/dev/web_api/v3/,statusUrl
+credgenics,Credgenics,Credgenics,Payments / Banking / Fintech,https://www.credgenics.com/,https://docs.credgenics.com/,https://docs.credgenics.com/#lending-apis,statusUrl
+custify,Custify,Custify,Support & Success,https://www.custify.com/,https://docs.custify.com/,https://docs.custify.com/,statusUrl
+cyberark-privilege-cloud,CyberArk Privilege Cloud,CyberArk,Security & Identity,https://www.paloaltonetworks.com/idira,https://docs.cyberark.com/portal/latest/en/docs.htm,https://docs.cyberark.com/manage/latest/en/content/privilege-cloud/webservices/implementing%20privileged%20account%20security%20web%20services%20.htm,authDocs;statusUrl;caps;scopes;reqs
+datacake,Datacake,Datacake,Manufacturing / ERP / Supply Chain,https://datacake.co/,https://docs.datacake.de/,https://docs.datacake.de/api/graphql-api.md,statusUrl
+deepinfra,DeepInfra,DeepInfra,AI & Models,https://deepinfra.com/,https://docs.deepinfra.com,https://docs.deepinfra.com,scopes
+deepsource,DeepSource,DeepSource,Developer Tools,https://deepsource.com/,https://docs.deepsource.com/docs/developers/api,https://docs.deepsource.com/docs/developers/api,statusUrl;scopes
+moogsoft,Moogsoft,Dell Technologies,Observability,https://www.moogsoft.com/,https://docs.moogsoft.com/moogsoft-cloud/en/apis.html,https://docs.moogsoft.com/moogsoft-cloud/en/apis.html,statusUrl
+dhanhq,DhanHQ,Dhan,Payments / Banking / Fintech,https://dhan.co/,https://dhanhq.co/,https://dhanhq.co/docs/v2/,statusUrl;scopes
+bhashini,Bhashini (ULCA),"Digital India Bhashini Division, MeitY",AI & Models,https://bhashini.gov.in/,https://dibd-bhashini.gitbook.io/bhashini-apis,https://dibd-bhashini.gitbook.io/bhashini-apis/pipeline-config-call,statusUrl
+directus,Directus Cloud,Directus,Databases & Search,https://directus.com/,https://directus.com/docs/,https://directus.com/docs/,statusUrl
+dlocal,dLocal,dLocal,Payments / Banking / Fintech,https://www.dlocal.com/,https://docs.dlocal.com/,https://docs.dlocal.com/,statusUrl
+dojah,Dojah,Dojah,Security & Identity,https://dojah.io/,https://docs.dojah.io/,https://docs.dojah.io/,statusUrl

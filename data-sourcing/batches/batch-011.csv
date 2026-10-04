@@ -1,0 +1,21 @@
+id,name,provider,category,known_site,known_portal,known_api,needs
+ipinfo,IPinfo,IPinfo,Government / Public Data,https://ipinfo.io/,https://ipinfo.io/developers,https://ipinfo.io/developers,statusUrl;scopes
+iru,Iru (formerly Kandji),Iru,Security & Identity,https://www.iru.com/,https://docs.iru.com/en/endpoint/api/iru-api-overview,https://api-docs.iru.com/,statusUrl
+youtrack,YouTrack,JetBrains,Developer Tools,https://www.jetbrains.com/youtrack/,https://www.jetbrains.com/help/youtrack/devportal/,https://www.jetbrains.com/help/youtrack/devportal/youtrack-rest-api.html,statusUrl
+jfrog,JFrog Platform,JFrog,Developer Tools,https://jfrog.com/,https://jfrog.com/help/,https://jfrog.com/help/,statusUrl
+juro,Juro,Juro,Legal / Compliance,https://juro.com/,https://api-docs.juro.com/,https://api-docs.juro.com/,scopes
+kashier,Kashier,Kashier,Payments / Banking / Fintech,https://www.kashier.io/,https://developers.kashier.io/docs,https://developers.kashier.io/docs/api-reference,statusUrl
+katana-mrp,Katana,Katana,Logistics / Shipping / Inventory,https://katanamrp.com/,https://developer.katanamrp.com/,https://developer.katanamrp.com/reference/api-introduction,statusUrl;scopes
+kentik,Kentik,Kentik,Observability,https://www.kentik.com/,https://kb.kentik.com/docs/apis-overview,https://kb.kentik.com/v1/docs/admin-apis,scopes
+keycdn,KeyCDN,KeyCDN,Cloud & Hosting,https://www.keycdn.com/,https://www.keycdn.com/api,https://www.keycdn.com/api,scopes
+kiwify,Kiwify,Kiwify,Commerce / Marketplaces,https://kiwify.com.br/,https://docs.kiwify.com.br/api-reference/general,https://docs.kiwify.com.br/api-reference/general.md,scopes
+chatwork,Chatwork,kubell,Communications / Voice / Video,https://go.chatwork.com/en/,https://developer.chatwork.com/docs/getting-started,https://developer.chatwork.com/reference/get-me,statusUrl
+lambda-cloud,Lambda Cloud (GPU),Lambda,Cloud & Hosting,https://lambda.ai/,https://docs.lambda.ai/,https://docs.lambda.ai/api/cloud,scopes
+lancedb-cloud,LanceDB Cloud,LanceDB,AI & Models,https://www.lancedb.com/,https://docs.lancedb.com/api-reference/rest/index.md,https://docs.lancedb.com/api-reference/rest/index.md,statusUrl;scopes
+last9,Last9,Last9,Observability,https://last9.io/,https://last9.io/docs/getting-started-with-api/,https://last9.io/docs/getting-started-with-api/,statusUrl
+lemlist,lemlist,lemlist,CRM & Sales,https://www.lemlist.com/,https://developer.lemlist.com/api-reference/getting-started/overview,https://developer.lemlist.com/api-reference/endpoints/campaigns/get-many-campaigns,statusUrl;scopes
+linkedin-learning,LinkedIn Learning,LinkedIn,Education,https://business.linkedin.com/learn,https://learn.microsoft.com/en-us/linkedin/learning/,https://learn.microsoft.com/en-us/linkedin/learning/,statusUrl
+linnworks,Linnworks,Linnworks,Commerce / Marketplaces,https://www.linnworks.com/,https://apidocs.linnworks.net/reference/overview,https://apidocs.linnworks.net/reference/overview,scopes
+skuvault,SkuVault,Linnworks,Logistics / Shipping / Inventory,https://www.skuvault.com/,https://dev.skuvault.com/reference/additem,https://dev.skuvault.com/llms.txt,statusUrl
+ticketmaster-discovery,Ticketmaster Discovery API,Live Nation Entertainment,Travel / Hospitality / Events,https://www.ticketmaster.com/,https://developer.ticketmaster.com/,https://developer.ticketmaster.com/products-and-docs/apis/discovery-api/v2/,statusUrl;scopes
+tray-commerce,Tray Commerce,Locaweb,Commerce / Marketplaces,https://tray.com.br/,https://developers.tray.com.br/,https://developers.tray.com.br/#api-de-produtos,scopes
