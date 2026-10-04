@@ -56,18 +56,25 @@ test('public header stays pinned while scrolling', async ({ page }) => {
   expect(top).toBe(0)
 })
 
-test('console: sticky top bar, sidebar and wide tables scroll inside their region', async ({ page }) => {
+test('console: app shell — top bar and sidebar stay put, main and wide tables scroll inside their region', async ({ page }) => {
   await page.setViewportSize({ width: 1280, height: 720 })
   await page.goto('/app/connectors')
   await expect(page.getByTestId('dash-connector-count')).toBeVisible() // lazily loaded catalogue rendered
-  await page.evaluate(() => window.scrollTo(0, 1500))
-  await page.waitForTimeout(200)
   const header = page.locator('header').first()
-  expect(await header.evaluate((el) => el.getBoundingClientRect().top)).toBeLessThanOrEqual(1)
-  // sidebar is pinned directly under the 54px top bar (no gap, no overlap)
+  const before = await header.evaluate((el) => el.getBoundingClientRect().top)
+  // at lg+ the main column is the scroll container; the document itself does not scroll
+  const main = page.locator('#console-main')
+  await main.evaluate((el) => el.scrollTo(0, 1500))
+  await page.waitForTimeout(200)
+  expect(await main.evaluate((el) => el.scrollTop)).toBeGreaterThan(0)
+  expect(await page.evaluate(() => window.scrollY)).toBe(0)
+  expect(await header.evaluate((el) => el.getBoundingClientRect().top)).toBe(before)
+  // sidebar starts directly under the top bar (no gap, no overlap) and fits the viewport
+  const hb = await header.evaluate((el) => el.getBoundingClientRect().bottom)
   const nav = page.getByRole('navigation', { name: 'Console' }).first()
-  const asideTop = await nav.evaluate((el) => el.closest('aside')!.getBoundingClientRect().top)
-  expect(Math.abs(asideTop - 54)).toBeLessThanOrEqual(1)
+  const aside = await nav.evaluate((el) => { const r = el.closest('aside')!.getBoundingClientRect(); return { top: r.top, bottom: r.bottom } })
+  expect(Math.abs(aside.top - hb)).toBeLessThanOrEqual(1)
+  expect(aside.bottom).toBeLessThanOrEqual(721)
   const region = page.getByRole('region', { name: /^Table:/ }).first()
   const { scroll, client } = await region.evaluate((el) => ({ scroll: el.scrollWidth, client: el.clientWidth }))
   expect(scroll).toBeGreaterThanOrEqual(client) // table scrolls in its own region, page does not

@@ -20,7 +20,8 @@
 | Identity | `src/lib/auth/session.ts`, `src/components/dash/AuthGate.tsx` | Provider-agnostic OIDC (code + PKCE). Hermetic/mock identities exist only in development, mock and core builds. |
 | Core reference server | `.core/tree/devex/api-server` (git-ignored) | Core's **real** `/v1` server, assembled from the packs (`npm run core:assemble`). Hermetic adapters; not deployed. |
 | Mock API | `scripts/mock-api.mjs` | Fast stand-in for development and the `api-mode` suite. Its catalogue is core's projection, and its behaviour was aligned to core (§5). |
-| Theme | `index.html` `data-theme="light"`; `src/index.css` light layer; `App.tsx` switches `/app` to dark | **Public site is light** (founder-approved 03 Oct). The console keeps the dark theme until the dashboard pass. `scripts/light-codemod.py` records the colour mapping. |
+| Theme | `index.html` `data-theme="light"`; `src/index.css` light layer + console `--c-*` tokens; `src/lib/console-theme.ts` | **Public site is light** (founder-approved 03 Oct). **Console: dark (default) + light**, switched in the top bar and saved per browser. |
+| Console shell | `src/components/dash/DashShell.tsx` | At lg+ it is an app shell: top bar fixed, and the sidebar, main column and rail each scroll on their own. The activity rail is docked only on the Overview; on other pages it opens from **Activity**. There is one banner line (demo/claim). Table headers are sentence case. Screenshots: `audit/console/*-dark.png` / `*-light.png`. |
 | Homepage | `src/pages/Home.tsx`, `src/components/hero/*` | HERO-A ↔ HERO-C every 10 s (pause, hover/focus pause, reduced motion = no rotation); HERO-B as "How it works" |
 | Logos | `scripts/build-logos.mjs` → `public/logos/brand/*.svg`, `src/lib/logo-map.json`; report `audit/LOGO_SOURCES.md` | 160 vector brand marks (CC0 sets, strict matching, reviewed collisions excluded); 241 published connectors still use a monogram (listed in the report) |
 | Footer | `src/components/Footer.tsx` | Seven columns mirroring the header menus (every link a real route, crawled by e2e), CTA row, legal bar |
@@ -90,7 +91,6 @@ Templates: `.env.example`, `.env.mock` and `.env.core`.
 | 3 | Hosting target + preview deploy token (confirms the `_redirects` / `_headers` syntax) | founder |
 | 4 | Reviewed dispatch grants / staging verifications (today 0) | core / founder |
 | 5 | Run the 4 data-sourcing terminals (`data-sourcing/README.md`) and return `data-sourcing/returns/`, or export core's `packages/connectors/*/manifest.json` | founder / ops |
-| 7 | Dashboard (console) redesign in the light system | next phase |
 | 6 | Optional: contact endpoint + Turnstile | founder |
 
 ## 7. Guard rails

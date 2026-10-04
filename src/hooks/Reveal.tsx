@@ -29,8 +29,9 @@ export function Reveal({
     return () => obs.disconnect()
   }, [])
 
+  // capped: long staggers left whole rows blank while scrolling
   return (
-    <div ref={ref} className={`reveal ${className}`} style={{ transitionDelay: `${delay}ms` }}>
+    <div ref={ref} className={`reveal ${className}`} style={{ transitionDelay: `${Math.min(delay, 240)}ms` }}>
       {children}
     </div>
   )

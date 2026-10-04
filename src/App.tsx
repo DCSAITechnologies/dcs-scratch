@@ -28,7 +28,7 @@ const HeroPreview = lazy(() => import('./pages/preview/HeroConcepts').then((m) =
 
 function RouteLoading({ console: inConsole = false }: { console?: boolean }) {
   return (
-    <div role="status" aria-live="polite" className={inConsole ? 'min-h-screen bg-[#070B18] pt-24 text-center text-[13px] text-[#93A0C2]' : 'pt-36 pb-28 text-center text-[13px] text-[#566074]'}>
+    <div role="status" aria-live="polite" className={inConsole ? 'console min-h-screen pt-24 text-center text-[13px] text-[var(--c-muted)]' : 'pt-36 pb-28 text-center text-[13px] text-[#566074]'}>
       Loading…
     </div>
   )

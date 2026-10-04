@@ -50,7 +50,7 @@ export function DashUsage() {
             ['Reconciled 24 h', USAGE.reconciled_24h], ['Provider cost', 'not reported'],
           ].map(([l, v]) => (
             <div key={String(l)} className="glass-card p-4">
-              <div className="text-[10.5px] uppercase tracking-[0.12em] text-[var(--c-muted)] font-semibold">{l}</div>
+              <div className="text-[11.5px] text-[var(--c-muted)] font-medium">{l}</div>
               <div className="mt-1.5 text-2xl font-semibold text-[var(--c-text)]">{v}</div>
             </div>
           ))}

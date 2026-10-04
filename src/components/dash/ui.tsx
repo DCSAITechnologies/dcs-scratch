@@ -96,11 +96,11 @@ export function Table({ head, rows, mobileScroll = true }: { head: string[]; row
     // focusable + labelled so keyboard users can scroll a wide table (axe: scrollable-region-focusable)
     <div className={mobileScroll ? 'overflow-x-auto -mx-4 px-4 md:mx-0 md:px-0 focus-visible:outline focus-visible:outline-1 focus-visible:outline-[color-mix(in_srgb,var(--c-info)_60%,transparent)]' : ''}
       {...(mobileScroll ? { tabIndex: 0, role: 'region', 'aria-label': `Table: ${head.slice(0, 3).join(', ')}` } : {})}>
-      <table className="w-full text-left border-collapse min-w-[640px]">
+      <table className="w-full text-left border-collapse" style={{ minWidth: head.length > 3 ? head.length * 88 : undefined }}>
         <thead>
           <tr>
             {head.map((h) => (
-              <th key={h} className="text-[10.5px] uppercase tracking-[0.12em] text-[var(--c-muted)] font-semibold pb-2.5 pr-4 border-b border-[var(--c-border)] whitespace-nowrap">{h}</th>
+              <th key={h} className="text-[11.5px] font-medium text-[var(--c-muted)] pb-2 pr-4 border-b border-[var(--c-border)] whitespace-nowrap">{h}</th>
             ))}
           </tr>
         </thead>
@@ -150,7 +150,7 @@ export function Tile({ label, value, sub, tone = 'default' }: { label: string; v
   const c = tone === 'warn' ? 'var(--c-warn)' : tone === 'bad' ? 'var(--c-err)' : tone === 'good' ? 'var(--c-ok)' : '#fff'
   return (
     <div className="glass-card p-3.5">
-      <div className="text-[10.5px] uppercase tracking-[0.12em] text-[var(--c-muted)] font-semibold">{label}</div>
+      <div className="text-[11.5px] text-[var(--c-muted)] font-medium">{label}</div>
       <div className="mt-1 text-[26px] leading-tight font-semibold" style={{ color: c }}>{value}</div>
       {sub && <div className="mt-1 text-[11.5px] text-[var(--c-text-2)]">{sub}</div>}
     </div>
@@ -162,7 +162,7 @@ export function KV({ items }: { items: [string, ReactNode][] }) {
     <dl className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-3">
       {items.map(([k, v]) => (
         <div key={k}>
-          <dt className="text-[10.5px] uppercase tracking-[0.12em] text-[var(--c-muted)] font-semibold">{k}</dt>
+          <dt className="text-[11.5px] text-[var(--c-muted)] font-medium">{k}</dt>
           <dd className="mt-1 text-[13px] text-[var(--c-text-2)] break-words">{v}</dd>
         </div>
       ))}

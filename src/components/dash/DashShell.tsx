@@ -4,7 +4,7 @@
 // width — no centered max-width island. The PNG is the visual source of truth;
 // truthful maturity labelling everywhere (rule 6/13 of the handoff).
 
-import { useEffect, useState, type ReactNode } from 'react'
+import { useEffect, useRef, useState, type ReactNode } from 'react'
 import { CLAIM_LEVEL, STATUS_AS_OF } from '../../lib/status'
 import { WORKSPACES, ENVIRONMENTS, APPROVALS, KILLS, RECEIPTS, USAGE, type Environment } from '../../lib/fixtures'
 import { navigate } from '../../hooks/usePathRoute'
@@ -123,7 +123,14 @@ export function DashShell({ path, children }: { path: string; children: ReactNod
     setPrevPath(path); setDrawer(false); setRailOpen(false)
   }
 
+  // at lg+ the main column is its own scroll container: start each page at the top
+  const mainRef = useRef<HTMLElement>(null)
+  useEffect(() => { mainRef.current?.scrollTo?.({ top: 0 }) }, [path])
+
   const demo = DATA_MODE === 'demo'
+  // the activity rail is docked only on the Overview (command centre); elsewhere tables get the full width
+  // and the rail opens as a drawer from the Activity button
+  const docked = path === '/app' || path === '/app/'
   const pageTitle = NAV.flatMap((g) => g.items).filter((it) => (it.to === '/app' ? path === '/app' || path === '/app/' : path.startsWith(it.to))).sort((a, b) => b.to.length - a.to.length)[0]?.label ?? 'Console'
   const auth = useAuth()
   // fixture approvals feed the badge/alert only in demo mode; API mode shows the API rail
@@ -173,10 +180,10 @@ export function DashShell({ path, children }: { path: string; children: ReactNod
   )
 
   const navFoot = (
-    <div className="px-3 py-2.5 border-t border-[var(--c-border)]">
-      <div className="text-[10.5px] text-[var(--c-muted)]">Connector OS v0.9.0 · claim {CLAIM_LEVEL}</div>
-      <div className="mt-0.5 flex items-center gap-1.5 text-[10.5px] text-[var(--c-text-2)]">
-        <span className="w-1.5 h-1.5 rounded-full bg-[var(--c-subtle)]" /> {demo ? 'Demo data · no backend connected' : `API · ${apiHost()}`}
+    <div className="px-3 py-2 border-t border-[var(--c-border)]">
+      <div className="flex items-center gap-1.5 text-[11px] text-[var(--c-muted)] truncate" title={demo ? 'Demo data · no backend connected' : `API · ${apiHost()}`}>
+        <span className="w-1.5 h-1.5 rounded-full shrink-0" style={{ background: demo ? 'var(--c-warn)' : 'var(--c-ok)' }} />
+        v0.9.0 · {CLAIM_LEVEL} · {demo ? 'demo data' : apiHost()}
       </div>
       <div className="mt-2 lg:hidden"><ThemeToggle /></div>
     </div>
@@ -211,7 +218,7 @@ export function DashShell({ path, children }: { path: string; children: ReactNod
           <h2 className="text-[12.5px] font-semibold text-[var(--c-text)]">Provider health</h2>
           <a href="/app/connectors" className="text-[11px] font-semibold text-[var(--c-info)]">All providers →</a>
         </div>
-        <div className="mb-2 text-[9.5px] uppercase tracking-wide text-[var(--c-muted)] font-semibold">Simulator providers · reference data</div>
+        <div className="mb-2 text-[11px] text-[var(--c-muted)]">Simulator providers · reference data</div>
         <ul className="space-y-1.5">
           {PROVIDER_HEALTH.map((p) => (
             <li key={p.name} className="flex items-center gap-2 text-[12px]">
@@ -261,25 +268,22 @@ export function DashShell({ path, children }: { path: string; children: ReactNod
   )
 
   return (
-    <div className="console min-h-screen w-full">
+    <div className="console min-h-screen w-full lg:h-screen lg:flex lg:flex-col">
       {/* Data-mode banner. Demo mode must be unmistakable: fixture data is never production truth. */}
       {demo ? (
-        <div role="note" data-testid="demo-banner" className="px-4 py-1 text-center text-[11px] font-semibold tracking-wide text-[var(--c-text)] bg-[color-mix(in_srgb,var(--c-warn)_18%,var(--c-bg))] border-b border-[color-mix(in_srgb,var(--c-warn)_40%,transparent)]">
-          DEMO / NON-PRODUCTION — fixture data from the hermetic reference stores. No backend is connected; nothing here is live.
+        <div role="note" data-testid="demo-banner" className="px-4 py-1 text-center text-[11px] leading-snug text-[var(--c-text)] bg-[color-mix(in_srgb,var(--c-warn)_18%,var(--c-bg))] border-b border-[color-mix(in_srgb,var(--c-warn)_40%,transparent)]">
+          <span className="font-semibold tracking-wide">DEMO / NON-PRODUCTION — fixture data; no backend is connected and nothing here is live.</span>
+          {' '}<ClaimLine />
         </div>
       ) : (
-        <div role="note" data-testid="api-banner" className="px-4 py-1 text-center text-[11px] font-medium text-[var(--c-text-2)] bg-[var(--c-panel)] border-b border-[var(--c-border)]">
+        <div role="note" data-testid="api-banner" className="px-4 py-1 text-center text-[11px] leading-snug font-medium text-[var(--c-text-2)] bg-[var(--c-panel)] border-b border-[var(--c-border)]">
           Connected to <span className="font-mono">{apiHost()}</span> · environment {auth.principal?.environment ?? '—'}
+          <span className="hidden md:inline"> · </span><ClaimLine />
         </div>
       )}
-      <div className="px-4 py-0.5 text-center text-[10.5px] font-medium text-[var(--c-muted)] bg-[var(--c-panel)] border-b border-[var(--c-border)]">
-        {CLAIM_BANNER[CLAIM_LEVEL] ?? CLAIM_BANNER.HERMETIC}
-        <span className="text-[var(--c-muted)]"> · claim level {CLAIM_LEVEL} · as of {STATUS_AS_OF} · </span>
-        <a href="/developers/status" className="text-[var(--c-link)] underline underline-offset-2">build status</a>
-      </div>
 
       {/* Top application bar — compact 54px (compactness spec) */}
-      <header className="sticky top-0 z-40 h-[54px] flex items-center gap-2.5 px-3.5 border-b border-[var(--c-border)]" style={{ background: 'var(--c-bg)' }}>
+      <header className="sticky top-0 z-40 shrink-0 h-[54px] flex items-center gap-2.5 px-3.5 border-b border-[var(--c-border)]" style={{ background: 'var(--c-bg)' }}>
         <button type="button" className="lg:hidden p-2 -ml-1 text-[var(--c-text-2)] hover:text-[var(--c-text)]" aria-label="Open console navigation" aria-expanded={drawer} onClick={() => setDrawer(true)}>
           <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M3 5h14M3 10h14M3 15h14" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" /></svg>
         </button>
@@ -316,9 +320,10 @@ export function DashShell({ path, children }: { path: string; children: ReactNod
         </div>
 
         <div className="ml-auto flex items-center gap-3">
-          <button type="button" onClick={() => setRailOpen(true)} aria-label="Notifications" className="xl:hidden relative p-2 text-[var(--c-text-2)] hover:text-[var(--c-text)]">
+          <button type="button" onClick={() => setRailOpen(true)} aria-label="Activity" className={`${docked ? 'xl:hidden' : ''} relative flex items-center gap-1.5 p-2 rounded-lg text-[12px] font-medium text-[var(--c-text-2)] hover:text-[var(--c-text)] hover:bg-[var(--c-active)]`}>
             <svg width="18" height="18" viewBox="0 0 20 20" fill="none"><path d="M10 3a5 5 0 0 0-5 5v3l-1.5 3h13L15 11V8a5 5 0 0 0-5-5Z" stroke="currentColor" strokeWidth="1.4" strokeLinejoin="round" /><path d="M8 16.5a2 2 0 0 0 4 0" stroke="currentColor" strokeWidth="1.4" /></svg>
-            {pending.length > 0 && <span className="absolute top-1 right-1 w-2 h-2 rounded-full bg-[var(--c-warn)]" />}
+            <span className="hidden xl:inline">Activity</span>
+            {pending.length > 0 && <span className="absolute top-1 left-[22px] w-2 h-2 rounded-full bg-[var(--c-warn)]" />}
           </button>
           <span className="hidden lg:block"><ThemeToggle /></span>
           <div className="hidden sm:block w-px h-6 bg-[var(--c-border)]" />
@@ -343,8 +348,8 @@ export function DashShell({ path, children }: { path: string; children: ReactNod
       </header>
 
       {/* Three-zone shell — full width, no max-width island (handoff §2.2) */}
-      <div className="grid lg:grid-cols-[224px_minmax(0,1fr)] xl:grid-cols-[224px_minmax(0,1fr)_296px]">
-        <aside className="hidden lg:flex flex-col h-[calc(100vh-54px)] sticky top-[54px] border-r border-[var(--c-border)]" style={{ background: 'var(--c-panel)' }}>
+      <div className={`grid lg:flex-1 lg:min-h-0 lg:grid-cols-[224px_minmax(0,1fr)] ${docked ? 'xl:grid-cols-[224px_minmax(0,1fr)_296px]' : ''}`}>
+        <aside className="hidden lg:flex flex-col min-h-0 border-r border-[var(--c-border)]" style={{ background: 'var(--c-panel)' }}>
           <a href="/app" className="flex items-center gap-2.5 px-4 pt-4 pb-1">
             <BrandMark />
             <span className="text-[14px] font-semibold tracking-tight text-[var(--c-text)]">Connector OS</span>
@@ -374,18 +379,35 @@ export function DashShell({ path, children }: { path: string; children: ReactNod
         )}
 
         {/* Central workspace — fluid, compact padding (compactness spec) */}
-        <main className="min-w-0 px-4 md:px-5 py-4" data-env={env} data-ws={ws}>
+        <main ref={mainRef} id="console-main" className="min-w-0 lg:min-h-0 lg:overflow-y-auto px-4 md:px-5 py-4" data-env={env} data-ws={ws}>
+          {docked && pending.length > 0 && !bannerDismissed && (
+            <div role="alert" className="mb-4 flex flex-wrap items-center gap-3 pl-3.5 pr-2.5 py-2.5 rounded-xl border border-[color-mix(in_srgb,var(--c-warn)_35%,transparent)] bg-[color-mix(in_srgb,var(--c-warn)_8%,var(--c-card))]">
+              <span className="text-[var(--c-warn)] shrink-0" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 20 20" fill="none"><path d="M10 3 2.5 16h15L10 3Z" fill="color-mix(in srgb, var(--c-warn) 20%, transparent)" stroke="currentColor" strokeWidth="1.4" strokeLinejoin="round" /><path d="M10 8v3.5M10 14v.01" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" /></svg>
+              </span>
+              <div className="min-w-0">
+                <div className="text-[13px] font-semibold text-[var(--c-text)]">{pending.length} approvals pending</div>
+                <div className="text-[11.5px] text-[var(--c-text-2)]">High-risk actions require your review.</div>
+              </div>
+              <div className="ml-auto flex items-center gap-2 shrink-0">
+                <a href="/app/approvals" className="px-3 py-1.5 rounded-lg text-[12px] font-semibold text-[var(--c-on-primary)] bg-[var(--c-primary)] hover:opacity-90">Review approvals →</a>
+                <button type="button" onClick={() => setBannerDismissed(true)} aria-label="Dismiss" className="p-1.5 text-[var(--c-muted)] hover:text-[var(--c-text)]">✕</button>
+              </div>
+            </div>
+          )}
           {children}
         </main>
 
-        {/* Right utility rail — desktop */}
-        <aside className="hidden xl:block w-[296px] shrink-0 border-l border-[var(--c-border)] h-[calc(100vh-54px)] sticky top-[54px] overflow-y-auto" style={{ background: 'var(--c-panel)' }}>
-          {rail}
-        </aside>
+        {/* Right utility rail — docked on the Overview at xl+ */}
+        {docked && (
+          <aside className="hidden xl:block w-[296px] min-h-0 shrink-0 border-l border-[var(--c-border)] overflow-y-auto" style={{ background: 'var(--c-panel)' }}>
+            {rail}
+          </aside>
+        )}
 
-        {/* Rail drawer — <1280px */}
+        {/* Rail drawer — every page below xl, and every page but the Overview at xl+ */}
         {railOpen && (
-          <div className="xl:hidden fixed inset-0 z-50" role="dialog" aria-modal="true">
+          <div className={`${docked ? 'xl:hidden' : ''} fixed inset-0 z-50`} role="dialog" aria-modal="true" aria-label="Activity">
             <div className="absolute inset-0 bg-black/70" onClick={() => setRailOpen(false)} />
             <div className="absolute right-0 top-0 bottom-0 w-[320px] overflow-y-auto border-l border-[var(--c-border)]" style={{ background: 'var(--c-panel)' }}>
               <div className="flex items-center justify-between px-4 h-14 border-b border-[var(--c-border)]">
@@ -398,35 +420,16 @@ export function DashShell({ path, children }: { path: string; children: ReactNod
         )}
       </div>
 
-      {/* Action-required alert — FLOATING OVERLAY (compactness spec §2).
-          position: fixed, high z-index; never consumes document layout height.
-          Opening/closing moves nothing underneath. */}
-      {path === '/app' && pending.length > 0 && !bannerDismissed && (
-        <div
-          role="alert"
-          className="fixed z-[60] right-6 top-[86px] flex items-center gap-3 pl-3.5 pr-2.5 py-2.5 rounded-xl border border-[color-mix(in_srgb,var(--c-warn)_35%,transparent)] shadow-2xl"
-          style={{
-            width: 'min(680px, calc(100vw - 48px))',
-            background: 'var(--c-card)',
-            backdropFilter: 'blur(12px)',
-            boxShadow: '0 12px 40px rgba(0,0,0,0.5), 0 0 0 1px color-mix(in srgb, var(--c-warn) 12%, transparent)',
-          }}
-        >
-          <span className="text-[var(--c-warn)] shrink-0" aria-hidden="true">
-            <svg width="18" height="18" viewBox="0 0 20 20" fill="none"><path d="M10 3 2.5 16h15L10 3Z" fill="color-mix(in srgb, var(--c-warn) 20%, transparent)" stroke="currentColor" strokeWidth="1.4" strokeLinejoin="round" /><path d="M10 8v3.5M10 14v.01" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" /></svg>
-          </span>
-          <div className="min-w-0">
-            <div className="text-[13px] font-semibold text-[var(--c-warn)]">{pending.length} approvals pending</div>
-            <div className="text-[11.5px] text-[var(--c-warn)]">High-risk actions require your review.</div>
-          </div>
-          <div className="ml-auto flex items-center gap-2 shrink-0">
-            <a href="/app/approvals" className="px-3 py-1.5 rounded-lg text-[12px] font-semibold text-[var(--c-on-primary)] bg-[var(--c-primary)] hover:opacity-90">Review approvals →</a>
-            <button type="button" onClick={() => setBannerDismissed(true)} aria-label="Dismiss" className="p-1.5 text-[var(--c-warn)] hover:text-[var(--c-text)]">✕</button>
-          </div>
-        </div>
-      )}
-
       <SearchModal open={searchOpen} initial={search} suggestions={demo} onClose={() => setSearchOpen(false)} onSubmit={(q) => { setSearch(q); setSearchOpen(false); navigate(searchTarget(q)) }} />
     </div>
+  )
+}
+
+function ClaimLine() {
+  return (
+    <span className="hidden md:inline font-normal text-[var(--c-text-2)]">
+      <span className="hidden 2xl:inline">{CLAIM_BANNER[CLAIM_LEVEL] ?? CLAIM_BANNER.HERMETIC} · </span>claim level {CLAIM_LEVEL} · as of {STATUS_AS_OF} ·{' '}
+      <a href="/developers/status" className="text-[var(--c-link)] underline underline-offset-2">build status</a>
+    </span>
   )
 }

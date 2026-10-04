@@ -61,8 +61,8 @@ export function DashExecutionDetail({ id }: { id: string }) {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 mb-4">
         <Panel title="Two statuses">
           <div className="flex items-center gap-3 flex-wrap">
-            <div><div className="text-[10.5px] uppercase tracking-[0.12em] text-[var(--c-muted)] font-semibold mb-1">Outcome</div><Pill v={e.outcome} /></div>
-            <div><div className="text-[10.5px] uppercase tracking-[0.12em] text-[var(--c-muted)] font-semibold mb-1">Receipt state</div><Pill v={e.receipt_state} /></div>
+            <div><div className="text-[11.5px] text-[var(--c-muted)] font-medium mb-1">Outcome</div><Pill v={e.outcome} /></div>
+            <div><div className="text-[11.5px] text-[var(--c-muted)] font-medium mb-1">Receipt state</div><Pill v={e.receipt_state} /></div>
           </div>
           {e.receipt_state === 'FAILED' && (
             <p className="mt-3 text-[12px] text-[var(--c-warn)] leading-relaxed">The execution succeeded but receipt issuance failed. Behaviour per class (block vs PENDING) is founder decision FD-1 — surfaced in Settings.</p>

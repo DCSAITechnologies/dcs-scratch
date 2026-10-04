@@ -11,9 +11,9 @@ function Donut({ parts }: { parts: { label: string; value: number; color: string
   const total = parts.reduce((s, p) => s + p.value, 0)
   const R = 52, C = 2 * Math.PI * R
   return (
-    <div className="flex items-center gap-5">
+    <div className="flex w-full flex-col items-center gap-4">
       <div className="relative shrink-0">
-        <svg width="124" height="124" viewBox="0 0 128 128" role="img" aria-label={`Runs by outcome: ${parts.map((p) => `${p.label} ${p.value}`).join(', ')}`}>
+        <svg width="112" height="112" viewBox="0 0 128 128" role="img" aria-label={`Runs by outcome: ${parts.map((p) => `${p.label} ${p.value}`).join(', ')}`}>
           <circle cx="64" cy="64" r={R} fill="none" stroke="var(--c-card)" strokeWidth="16" />
           {parts.map((p, idx) => {
             const frac = total ? p.value / total : 0
@@ -30,13 +30,13 @@ function Donut({ parts }: { parts: { label: string; value: number; color: string
           <span className="text-[10px] text-[var(--c-muted)]">total runs</span>
         </div>
       </div>
-      <ul className="space-y-2">
+      <ul className="w-full space-y-1.5">
         {parts.map((p) => (
           <li key={p.label} className="flex items-center gap-2 text-[12.5px]">
-            <span className="w-2 h-2 rounded-full" style={{ background: p.color }} />
-            <span className="text-[var(--c-text-2)]">{p.label}</span>
-            <span className="ml-2 text-[var(--c-text)] font-semibold">{p.value}</span>
-            <span className="text-[var(--c-muted)]">{total ? Math.round((p.value / total) * 100) : 0}%</span>
+            <span className="w-2 h-2 rounded-full shrink-0" style={{ background: p.color }} />
+            <span className="min-w-0 truncate text-[var(--c-text-2)]">{p.label}</span>
+            <span className="ml-auto text-[var(--c-text)] font-semibold tabular-nums">{p.value}</span>
+            <span className="w-9 text-right text-[var(--c-muted)] tabular-nums">{total ? Math.round((p.value / total) * 100) : 0}%</span>
           </li>
         ))}
       </ul>
@@ -221,7 +221,7 @@ function Body({ pending, health, readonly = false }: { pending: typeof APPROVALS
           <table className="w-full text-left border-collapse min-w-[760px]">
             <thead>
               <tr>{['Run', 'Connector', 'Agent', 'Stage', 'Outcome', 'Start time', 'Duration'].map((h) => (
-                <th key={h} className="text-[10px] uppercase tracking-[0.12em] text-[var(--c-muted)] font-semibold pb-2.5 pr-4 border-b border-[var(--c-border)]">{h}</th>
+                <th key={h} className="text-[11.5px] font-medium text-[var(--c-muted)] pb-2 pr-4 border-b border-[var(--c-border)] whitespace-nowrap">{h}</th>
               ))}</tr>
             </thead>
             <tbody>
