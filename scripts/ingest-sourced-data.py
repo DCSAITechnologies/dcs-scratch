@@ -26,6 +26,11 @@ DOC_HOSTS = ('github.com', 'githubusercontent.com', 'readme.io', 'readme.com', '
              'apiary.io', 'swaggerhub.com', 'stoplight.io', 'statuspage.io', 'status.io', 'instatus.com', 'betteruptime.com',
              'atlassian.net', 'zendesk.com', 'freshdesk.com', 'notion.site', 'mintlify.app', 'redoc.ly', 'apidog.io', 'bump.sh',
              'helpscoutdocs.com', 'intercom.help', 'document360.io', 'hund.io', 'sorryapp.com', 'statuscake.com')
+# provider-owned secondary domains, approved per connector with recorded proof (data-sourcing/domain-aliases.json)
+ALIASES_PATH = os.path.join(DS, 'domain-aliases.json')
+DECISIONS_PATH = os.path.join(DS, 'review-decisions.json')
+# a note that admits a scope string or access level is a UI label or inferred disqualifies the scopes
+SCOPE_CAVEAT = re.compile(r'\binferr?ed\b|\bUI labels?\b|\bguess', re.I)
 TWO_LEVEL = ('co.uk', 'com.au', 'co.in', 'com.br', 'co.jp', 'co.nz', 'co.za', 'com.mx', 'com.sg', 'org.uk', 'net.au', 'com.tr', 'co.kr')
 
 
@@ -81,6 +86,8 @@ def check_logo(path):
 
 def main():
     dry = '--dry-run' in sys.argv
+    aliases = {k: v for k, v in (json.load(open(ALIASES_PATH)).items() if os.path.isfile(ALIASES_PATH) else []) if not k.startswith('_')}
+    decisions = {k: v for k, v in (json.load(open(DECISIONS_PATH)).items() if os.path.isfile(DECISIONS_PATH) else []) if not k.startswith('_')}
     rows = {c['id']: c for c in json.load(open(os.path.join(ROOT, 'src', 'lib', 'connectors.json')))}
     assigned = {}
     for p in sorted(glob.glob(os.path.join(DS, 'inputs', 'part-*.csv'))):
@@ -112,9 +119,21 @@ def main():
                 rejected.append((part, cid, 'id', 'duplicate record'))
                 continue
             seen.add(cid)
+            dec = decisions.get(cid, {})
+            if '*' in dec:
+                rejected.append((part, cid, '*', 'reviewer: ' + dec['*']))
+                continue
+            for f, why in dec.items():
+                if f in rec:
+                    rec.pop(f)
+                    rejected.append((part, cid, f, 'reviewer: ' + why))
+            if rec.get('providerScopes') and SCOPE_CAVEAT.search(rec.get('notes') or ''):
+                rec.pop('providerScopes')
+                rejected.append((part, cid, 'providerScopes', 'notes say the scopes are UI labels, inferred or guessed'))
             ev = rec.get('evidence') or {}
             out, src = {}, {}
             domains = {regdom(urlparse(u).netloc) for u in (c.get('site'), rec.get('site')) if ok_url(u)}
+            domains |= {regdom(a['domain']) for a in aliases.get(cid, []) if a.get('approved')}
 
             def take(field, value, evidence, check):
                 why = check(value)
@@ -182,6 +201,8 @@ def main():
                 out['_src'] = src
                 out['_checked'] = str(rec.get('checked') or '')[:10]
                 out['_part'] = part
+                if rec.get('notes'):
+                    out['_notes'] = str(rec['notes'])[:600]  # kept: says where automated access was blocked
                 accepted[cid] = out
     for cid, part in assigned.items():
         if cid not in seen and os.path.isdir(os.path.join(DS, 'returns', part)):
@@ -198,6 +219,8 @@ def main():
     lines += ['', '## Rejected', '', '| Part | Connector | Field | Reason |', '|---|---|---|---|']
     lines += [f'| {a} | {b} | {c} | {d.replace("|", "/")} |' for a, b, c, d in rejected] or ['| — | — | — | none |']
     report = '\n'.join(lines) + '\n'
+    if dry:
+        open(os.path.join(DS, 'INGEST_REPORT.dry-run.md'), 'w').write(report)
     if not dry:
         os.makedirs(LOGO_DIR, exist_ok=True)
         for cid, f in logos.items():
@@ -206,7 +229,7 @@ def main():
                   open(OUT_JSON, 'w'), ensure_ascii=False, indent=1)
         open(OUT_JSON, 'a').write('\n')
         open(os.path.join(DS, 'INGEST_REPORT.md'), 'w').write(report)
-    print(report if len(report) < 4000 else report[:4000] + '\n… (see data-sourcing/INGEST_REPORT.md)')
+    print(report if len(report) < 4000 else report[:4000] + '\n… (full report: data-sourcing/INGEST_REPORT' + ('.dry-run' if dry else '') + '.md)')
 
 
 if __name__ == '__main__':

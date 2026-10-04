@@ -155,3 +155,19 @@ test.describe('connector detail routing', () => {
     await expect(page.locator('main')).toContainText('Connector not found')
   })
 })
+
+test.describe('sourced provider facts (data-sourcing)', () => {
+  test('labelled as provider facts, separate from core, with the source', async ({ page }) => {
+    await page.goto('/connectors/heygen')
+    await page.getByRole('button', { name: 'Tools', exact: true }).click()
+    await expect(page.getByTestId('provider-caps')).toContainText('What the HeyGen API supports')
+    await expect(page.getByTestId('provider-caps').getByRole('link', { name: /source/ })).toHaveAttribute('href', /heygen\.com/)
+    await page.getByRole('button', { name: 'Documentation', exact: true }).click()
+    await expect(page.getByTestId('sourced-links-note')).toContainText("provider's official pages")
+  })
+  test('no empty scope table: the documented permission model is stated instead', async ({ page }) => {
+    await page.goto('/connectors/ideogram')
+    await page.getByRole('button', { name: 'Permissions', exact: true }).click()
+    await expect(page.getByTestId('scope-model')).toContainText('permissions of the API key')
+  })
+})

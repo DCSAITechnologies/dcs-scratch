@@ -1,0 +1,204 @@
+{
+ "_comment": "Provider-owned secondary domains approved PER CONNECTOR. An entry is added only with proof: (catalogue) the connector's existing docs-verified catalogue link (committed before data sourcing) is already on that domain, or (link)/(redirect) a fetched page on the provider's primary domain links or redirects to it. Never a global allowlist. Read by scripts/ingest-sourced-data.py.",
+ "datacake": [
+  {
+   "domain": "datacake.de",
+   "approved": true,
+   "proof": "catalogue",
+   "evidence": "portal=https://docs.datacake.de/",
+   "verified_catalogue_date": "2026-09-28"
+  }
+ ],
+ "hyperproof": [
+  {
+   "domain": "hyperproof.app",
+   "approved": true,
+   "proof": "catalogue",
+   "evidence": "portal=https://developer.hyperproof.app/",
+   "verified_catalogue_date": "2026-09-28"
+  },
+  {
+   "domain": "hyperproof.app",
+   "approved": true,
+   "proof": "catalogue",
+   "evidence": "portal=https://developer.hyperproof.app/",
+   "verified_catalogue_date": "2026-09-28"
+  }
+ ],
+ "linkedin-learning": [
+  {
+   "domain": "microsoft.com",
+   "approved": true,
+   "proof": "catalogue",
+   "evidence": "portal=https://learn.microsoft.com/en-us/linkedin/learning/",
+   "verified_catalogue_date": "2026-09-28"
+  }
+ ],
+ "nuget": [
+  {
+   "domain": "microsoft.com",
+   "approved": true,
+   "proof": "catalogue",
+   "evidence": "portal=https://learn.microsoft.com/en-us/nuget/api/overview",
+   "verified_catalogue_date": "2026-09-28"
+  }
+ ],
+ "swapcard": [
+  {
+   "domain": "swapcard.dev",
+   "approved": true,
+   "proof": "catalogue",
+   "evidence": "portal=https://swapcard.dev/organizer/authentication",
+   "verified_catalogue_date": "2026-09-28"
+  }
+ ],
+ "absorb-lms": [
+  {
+   "domain": "myabsorb.com",
+   "approved": true,
+   "proof": "catalogue",
+   "evidence": "portal=https://docs.myabsorb.com/integration-api/v2/docs",
+   "verified_catalogue_date": "2026-09-28"
+  },
+  {
+   "domain": "myabsorb.com",
+   "approved": true,
+   "proof": "catalogue",
+   "evidence": "portal=https://docs.myabsorb.com/integration-api/v2/docs",
+   "verified_catalogue_date": "2026-09-28"
+  }
+ ],
+ "kintone": [
+  {
+   "domain": "kintone.dev",
+   "approved": true,
+   "proof": "catalogue",
+   "evidence": "portal=https://kintone.dev/en/",
+   "verified_catalogue_date": "2026-09-28"
+  }
+ ],
+ "courtlistener": [
+  {
+   "domain": "free.law",
+   "approved": true,
+   "proof": "catalogue",
+   "evidence": "portal=https://wiki.free.law/c/courtlistener/help/api",
+   "verified_catalogue_date": "2026-09-28"
+  }
+ ],
+ "ilovepdf": [
+  {
+   "domain": "iloveapi.com",
+   "approved": true,
+   "proof": "catalogue",
+   "evidence": "portal=https://www.iloveapi.com/",
+   "verified_catalogue_date": "2026-09-28"
+  }
+ ],
+ "momento": [
+  {
+   "domain": "momentohq.com",
+   "approved": true,
+   "proof": "catalogue",
+   "evidence": "portal=https://docs.momentohq.com/",
+   "verified_catalogue_date": "2026-09-28"
+  }
+ ],
+ "otto-market": [
+  {
+   "domain": "otto.market",
+   "approved": true,
+   "proof": "catalogue",
+   "evidence": "portal=https://api.otto.market/docs/getting-started/",
+   "verified_catalogue_date": "2026-09-28"
+  }
+ ],
+ "outreach": [
+  {
+   "domain": "outreach.io",
+   "approved": true,
+   "proof": "catalogue",
+   "evidence": "portal=https://developers.outreach.io/",
+   "verified_catalogue_date": "2026-09-28"
+  },
+  {
+   "domain": "outreach.io",
+   "approved": true,
+   "proof": "catalogue",
+   "evidence": "portal=https://developers.outreach.io/",
+   "verified_catalogue_date": "2026-09-28"
+  }
+ ],
+ "snapchat-marketing": [
+  {
+   "domain": "snap.com",
+   "approved": true,
+   "proof": "catalogue",
+   "evidence": "portal=https://developers.snap.com/",
+   "verified_catalogue_date": "2026-09-28"
+  }
+ ],
+ "regulations-gov": [
+  {
+   "domain": "gsa.gov",
+   "approved": true,
+   "proof": "catalogue",
+   "evidence": "portal=https://open.gsa.gov/api/regulationsgov/",
+   "verified_catalogue_date": "2026-09-28"
+  }
+ ],
+ "sam-gov-opportunities": [
+  {
+   "domain": "gsa.gov",
+   "approved": true,
+   "proof": "catalogue",
+   "evidence": "portal=https://open.gsa.gov/api/get-opportunities-public-api/",
+   "verified_catalogue_date": "2026-09-28"
+  }
+ ],
+ "zerodha-kite-connect": [
+  {
+   "domain": "kite.trade",
+   "approved": true,
+   "proof": "catalogue",
+   "evidence": "api=https://kite.trade/docs/connect/v3/",
+   "verified_catalogue_date": "2026-09-28"
+  }
+ ],
+ "dixa": [
+  {
+   "domain": "dixa.io",
+   "approved": true,
+   "proof": "catalogue",
+   "evidence": "portal=https://docs.dixa.io/",
+   "verified_catalogue_date": "2026-09-28"
+  }
+ ],
+ "astra-db": [
+  {
+   "domain": "datastax.com",
+   "approved": true,
+   "proof": "catalogue",
+   "evidence": "portal=https://docs.datastax.com/en/home/index.html",
+   "verified_catalogue_date": "2026-09-28"
+  }
+ ],
+ "hetzner-cloud": [
+  {
+   "domain": "hetzner.cloud",
+   "approved": true,
+   "proof": "catalogue",
+   "evidence": "api=https://docs.hetzner.cloud/",
+   "verified_catalogue_date": "2026-09-28"
+  }
+ ],
+ "khoros": [
+  {
+   "domain": "khoros.com",
+   "approved": true,
+   "proof": "catalogue",
+   "evidence": "portal=https://developer.khoros.com/",
+   "verified_catalogue_date": "2026-09-28"
+  }
+ ]
+}

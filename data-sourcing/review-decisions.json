@@ -1,0 +1,8 @@
+{
+  "_comment": "Reviewer decisions on returned records (caveats in the terminals' own notes). Each entry rejects a field or a whole record; scripts/ingest-sourced-data.py applies them and lists them in the report. Nothing here adds a fact.",
+  "marn": {"*": "provider identity not confirmed by the return (notes: no public API; candidate domains unrelated)"},
+  "storyblok": {"providerScopes": "notes say these are UI labels shown when creating a token, not documented scope strings"},
+  "keka": {"providerScopes": "notes say these are module-level labels configured per key, not documented scope strings"},
+  "usps": {"providerScopes": "notes say access levels were inferred", "providerCaps": "notes say access levels were inferred"},
+  "loop-returns": {"providerScopes": "notes say scope access levels were inferred from endpoints"}
+}

@@ -167,7 +167,7 @@ function ConnectorDetailView({ c, legacy, resolved }: { c: Conn; legacy?: Conn; 
               <Row k="Core rank" v={c.r == null ? (c.core ? (c.core.pack === 'GOLDEN-FIVE' ? 'Golden Five (core reference set)' : c.core.pack === 'REFERENCE' ? 'Reference connector' : `${c.core.pack} pack`) : null) : `#${c.r} of ${TOTAL_CATALOGUED.toLocaleString('en-US')}`} />
               <Row k="Docs verified" v={c.verified} />
               {(c.caps.length > 0 || c.scopes.length > 0) && (
-                <Row k="At a glance" v={[plural(c.caps.length, 'tool'), plural(new Set(c.scopes).size, 'permission'), c.wh ? plural(c.whEvents.length, 'webhook event') : ''].filter(Boolean).join(' · ')} />
+                <Row k="At a glance" v={[plural(toolCount(c.caps), 'tool'), plural(new Set(c.scopes).size, 'permission'), c.wh ? plural(c.whEvents.length, 'webhook event') : ''].filter(Boolean).join(' · ')} />
               )}
 
               {links.length > 0 && (
@@ -243,7 +243,10 @@ function ConnectorDetailView({ c, legacy, resolved }: { c: Conn; legacy?: Conn; 
             </div>
           )}
 
-          {tab === 'Tools' && (
+          {tab === 'Tools' && c.caps.length === 0 && !c.providerCaps?.length && (
+            <p className="text-[14px] text-[#3A4357]">Tools for this connector are not documented yet. They are published from its Connector OS manifest.</p>
+          )}
+          {tab === 'Tools' && c.caps.length > 0 && (
             <div className="glass-panel overflow-hidden">
               <div className="grid grid-cols-[1fr_130px_1fr] px-5 py-3 text-[10.5px] font-semibold uppercase tracking-[0.14em] text-[#566074] border-b border-[#E3E7EE]">
                 <span>Capability</span><span>Operation class</span><span>Required scope</span>
@@ -252,7 +255,7 @@ function ConnectorDetailView({ c, legacy, resolved }: { c: Conn; legacy?: Conn; 
                 const op = c.ops[Math.min(i, c.ops.length - 1)]
                 return (
                   <div key={cap} className="grid grid-cols-[1fr_130px_1fr] px-5 py-3.5 items-center border-b border-[#E3E7EE] last:border-0 dcs-table-row">
-                    <span className="text-[13px] text-[#1E2638]">{cap}</span>
+                    <span className="text-[13px] text-[#1E2638]">{cap.replace(/^1 (read|write) tools$/, '1 $1 tool')}</span>
                     <span className="text-[11px] font-semibold" style={{ color: opColor[op] ?? '#3A4357' }}>{op}</span>
                     <span className="text-[11.5px] text-[#566074]" style={{ fontFamily: "'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace" }}>{c.scopes[Math.min(i, c.scopes.length - 1)]}</span>
                   </div>
@@ -284,7 +287,10 @@ function ConnectorDetailView({ c, legacy, resolved }: { c: Conn; legacy?: Conn; 
             </div>
           )}
 
-          {tab === 'Permissions' && (
+          {tab === 'Permissions' && c.scopes.length === 0 && c.optScopes.length === 0 && !c.providerScopes?.length && (
+            <p className="text-[14px] text-[#3A4357]" data-testid="scope-model">{scopeModelText(c)}</p>
+          )}
+          {tab === 'Permissions' && (c.scopes.length > 0 || c.optScopes.length > 0) && (
             <div className="glass-panel overflow-hidden">
               <div className="grid grid-cols-[1fr_110px] px-5 py-3 text-[10.5px] font-semibold uppercase tracking-[0.14em] text-[#566074] border-b border-[#E3E7EE]"><span>Scope</span><span>Level</span></div>
               {c.scopes.map((s) => (
@@ -327,6 +333,11 @@ function ConnectorDetailView({ c, legacy, resolved }: { c: Conn; legacy?: Conn; 
                   <span className="text-[11.5px] text-[#2850D8] truncate max-w-[380px]" style={{ fontFamily: "'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace" }}>{url!.replace('https://', '')} ↗</span>
                 </a>
               ))}
+              {c.sourced?.fields.some((f) => DOC_FIELDS.includes(f)) && (
+                <p className="text-[11.5px] text-[#566074]" data-testid="sourced-links-note">
+                  Some links were added from the provider's official pages (checked {c.sourced.checked}): {c.sourced.fields.filter((f) => DOC_FIELDS.includes(f)).map((f) => DOC_LABEL[f]).join(', ')}.
+                </p>
+              )}
               {c.verified
                 ? <p className="text-[11.5px] text-[#566074]">Documentation links verified {c.verified}.</p>
                 : <p className="text-[11.5px] text-[#B45309]">Developer-portal links for this connector are pending verification and are hidden until confirmed against official provider sources.</p>}
@@ -338,6 +349,25 @@ function ConnectorDetailView({ c, legacy, resolved }: { c: Conn; legacy?: Conn; 
       </div>
     </div>
   )
+}
+
+// core rows carry counts ("4 read tools", "1 write tools"); named capabilities count one each
+function toolCount(caps: string[]) {
+  return caps.reduce((n, x) => n + (Number(/^(\d+) (?:read|write) tools?$/.exec(x)?.[1]) || 1), 0)
+}
+
+const DOC_LABEL: Record<string, string> = { site: 'website', portal: 'developer portal', api: 'API reference', authDocs: 'authentication docs', whDocs: 'webhook docs', statusUrl: 'status page' }
+const DOC_FIELDS = Object.keys(DOC_LABEL)
+
+// What the provider's docs say about permissions when there are no scope strings to list.
+function scopeModelText(c: Conn) {
+  const who = c.p || c.n
+  switch (c.scopeModel) {
+    case 'api_key_permissions': return `${who} does not document named scope strings: access is governed by the permissions of the API key or token.`
+    case 'account_roles': return `${who} does not document named scope strings: access follows the roles of the account that connects.`
+    case 'none': return `${who} documents no permission scopes for this API.`
+    default: return 'Permission scopes for this connector are not documented yet.'
+  }
 }
 
 // Provider-documented facts (data-sourcing/README.md). Labelled as the provider's API surface, kept apart

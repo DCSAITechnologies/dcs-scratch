@@ -168,3 +168,15 @@ The other 201 connectors are **on hold in core**, not offline. Core's reasons:
 - blocked variants: 9
 
 They are not part of this sourcing run. They become public automatically when core lifts the hold; the counts are derived, never typed.
+
+## 8. Ingest status and incremental parts
+
+- **PARTS 1–3 were ingested on 04 Oct.** The results are in `data-sourcing/INGEST_REPORT.md`.
+- **Secondary domains.** A provider-owned secondary domain (for example kintone.dev for Kintone) is accepted only per connector, and only with proof recorded in `data-sourcing/domain-aliases.json`. There is no global allowlist. The pairs still waiting for proof are listed in `data-sourcing/PENDING_DOMAIN_PROOFS.md`.
+- **Reviewer decisions.** Rejections based on the terminals' own notes are recorded in `data-sourcing/review-decisions.json`:
+  - UI permission labels used as scopes
+  - inferred access levels
+  - unconfirmed provider identity
+
+  Any return whose notes say its scopes are inferred, guessed or UI labels is rejected automatically.
+- **PART 4.** Drop it in as `data-sourcing/returns/part-4/` and re-run the same two commands. The ingest is idempotent, and earlier parts are unaffected.
