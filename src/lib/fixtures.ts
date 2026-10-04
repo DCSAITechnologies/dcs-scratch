@@ -237,4 +237,7 @@ export const CATALOGUE_RUNTIME = CONNECTORS.map((c) => ({
   alias_of: c.alias_of ?? null, rank: c.r, pack: c.core?.pack ?? null,
   available: Boolean(c.core?.dispatch.staging || c.core?.dispatch.production),
   dispatch_reasons: c.core?.dispatch.reasons ?? [], founder_holds: c.core?.founder_holds ?? [],
+  // provider facts from data sourcing (data-sourcing/INGEST_REPORT.md): which rows a person still has to review
+  data: c.data_review ? 'needs review' : c.sourced ? 'sourced' : 'not sourced',
+  data_detail: c.data_review ? `${c.data_review}: ${[...(c.sourced?.review ?? [])].join(', ') || 'see data-sourcing/INGEST_REPORT.md'}` : c.sourced ? `${c.sourced.fields.length} fields from official provider pages (${c.sourced.checked})` : '',
 }))

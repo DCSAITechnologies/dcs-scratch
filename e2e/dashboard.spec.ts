@@ -73,6 +73,14 @@ test.describe('console connector catalogue', () => {
     await expect(page.getByTestId('dash-connector-count')).toContainText(`of ${HOLD.length} matching`)
   })
 
+  test('provider-data filter shows the data-sourcing review queue (derived, never typed)', async ({ page }) => {
+    const review = CANONICAL.filter((c) => (c as { data_review?: string }).data_review).length
+    expect(review).toBeGreaterThan(0)
+    await page.goto('/app/connectors')
+    await page.locator('label:has-text("Provider data") select').selectOption('needs review')
+    await expect(page.getByTestId('dash-connector-count')).toContainText(`of ${review} matching`)
+  })
+
   test('Request access opens the contact flow', async ({ page }) => {
     await page.goto('/app/connectors/' + CANONICAL[0].id)
     await page.getByRole('button', { name: 'Request access' }).click()

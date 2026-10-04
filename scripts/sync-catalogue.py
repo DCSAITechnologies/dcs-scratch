@@ -218,6 +218,7 @@ _ov_path = os.path.join(LIB, 'editorial-overrides.json')
 OVERRIDES = {k: v for k, v in (json.load(open(_ov_path)).items() if os.path.isfile(_ov_path) else []) if not k.startswith('_')}
 _sd_path = os.path.join(LIB, 'sourced-data.json')
 SOURCED = {k: v for k, v in (json.load(open(_sd_path)).items() if os.path.isfile(_sd_path) else []) if not k.startswith('_')}
+SOURCED_QUEUE = (json.load(open(_sd_path)).get('_queue', {}) if os.path.isfile(_sd_path) else {})  # review queue from the ingest
 UNKNOWN_AUTH = ('See documentation', '', None)
 
 
@@ -225,6 +226,9 @@ def apply_sourced(rows):
     # facts from official provider pages (data-sourcing/README.md, validated by scripts/ingest-sourced-data.py);
     # they fill only empty fields, so core and curated editorial records always win
     for r in rows:
+        r.pop('data_review', None)
+        if r['id'] in SOURCED_QUEUE and not r.get('unpublished'):
+            r['data_review'] = SOURCED_QUEUE[r['id']]
         sd = SOURCED.get(r['id'])
         if not sd or r.get('unpublished'):
             continue
@@ -250,7 +254,8 @@ def apply_sourced(rows):
         if used or sd.get('logo'):
             r['sourced'] = {'part': sd.get('_part'), 'checked': sd.get('_checked'), 'prior': prior,
                             'fields': sorted(set(used) | ({'logo'} if sd.get('logo') else set())),
-                            'evidence': {k: v for k, v in sd.get('_src', {}).items() if k in used or k == 'logo'}}
+                            'evidence': {k: v for k, v in sd.get('_src', {}).items() if k in used or k == 'logo'},
+                            'review': sd.get('_review', []), 'notFound': sd.get('_notFound', [])}
     return rows
 
 

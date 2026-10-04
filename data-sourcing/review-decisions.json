@@ -1,8 +1,40 @@
 {
-  "_comment": "Reviewer decisions on returned records (caveats in the terminals' own notes). Each entry rejects a field or a whole record; scripts/ingest-sourced-data.py applies them and lists them in the report. Nothing here adds a fact.",
-  "marn": {"*": "provider identity not confirmed by the return (notes: no public API; candidate domains unrelated)"},
-  "storyblok": {"providerScopes": "notes say these are UI labels shown when creating a token, not documented scope strings"},
-  "keka": {"providerScopes": "notes say these are module-level labels configured per key, not documented scope strings"},
-  "usps": {"providerScopes": "notes say access levels were inferred", "providerCaps": "notes say access levels were inferred"},
-  "loop-returns": {"providerScopes": "notes say scope access levels were inferred from endpoints"}
+ "_comment": "Reviewer decisions on returned records (caveats in the terminals' own notes). Each entry rejects a field or a whole record; scripts/ingest-sourced-data.py applies them and lists them in the report. Nothing here adds a fact. An entry under 'review' rejects nothing; it puts the connector in the review queue with that reason.",
+ "marn": {
+  "*": "provider identity not confirmed by the return (notes: no public API; candidate domains unrelated)"
+ },
+ "storyblok": {
+  "providerScopes": "notes say these are UI labels shown when creating a token, not documented scope strings"
+ },
+ "keka": {
+  "providerScopes": "notes say these are module-level labels configured per key, not documented scope strings"
+ },
+ "usps": {
+  "providerScopes": "notes say access levels were inferred",
+  "providerCaps": "notes say access levels were inferred"
+ },
+ "loop-returns": {
+  "providerScopes": "notes say scope access levels were inferred from endpoints"
+ },
+ "teamtailor": {
+  "providerScopes": "notes say the scope labels were composed from a key scope plus a permission, not copied as documented strings"
+ },
+ "onfido": {
+  "review": "PART4_RETURN: robots.txt/403 block automated access; no facts sourced, needs manual sourcing"
+ },
+ "gladly": {
+  "review": "PART4_RETURN: API facts verified on developer.gladly.com withheld (catalogue site is gladly.ai); needs domain proof"
+ },
+ "fibery": {
+  "review": "PART4_RETURN: status.fibery.io linked from fibery.com but withheld; needs domain proof"
+ },
+ "gusto": {
+  "review": "PART4_RETURN: homepage blocked by robots.txt; confirm site manually"
+ },
+ "elastic-path": {
+  "review": "PART4_RETURN: homepage blocked by robots.txt; confirm site manually"
+ },
+ "gandi": {
+  "review": "PART4_RETURN: www.gandi.net timed out; confirm site manually"
+ }
 }

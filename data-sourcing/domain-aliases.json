@@ -200,5 +200,68 @@
    "evidence": "portal=https://developer.khoros.com/",
    "verified_catalogue_date": "2026-09-28"
   }
+ ],
+ "percy": [
+  {
+   "domain": "browserstack.com",
+   "approved": true,
+   "proof": "catalogue",
+   "evidence": "portal=https://www.browserstack.com/docs/percy",
+   "verified_catalogue_date": "2026-09-28"
+  }
+ ],
+ "deliveroo-partner-api": [
+  {
+   "domain": "deliveroo.com",
+   "approved": true,
+   "proof": "catalogue",
+   "evidence": "portal=https://api-docs.deliveroo.com/docs/introduction",
+   "verified_catalogue_date": "2026-09-28"
+  }
+ ],
+ "invoice-ninja": [
+  {
+   "domain": "invoiceninja.github.io",
+   "approved": true,
+   "proof": "catalogue",
+   "evidence": "portal=https://invoiceninja.github.io/docs/developer-guide/api/authentication",
+   "verified_catalogue_date": "2026-09-28"
+  }
+ ],
+ "dpo-pay": [
+  {
+   "domain": "dpopay.com",
+   "approved": true,
+   "proof": "catalogue",
+   "evidence": "portal=https://docs.dpopay.com/dpo-pay-by-network/reference/create-token.md",
+   "verified_catalogue_date": "2026-09-28"
+  }
+ ],
+ "gerrit": [
+  {
+   "domain": "googlesource.com",
+   "approved": true,
+   "proof": "catalogue",
+   "evidence": "portal=https://gerrit-review.googlesource.com/Documentation/",
+   "verified_catalogue_date": "2026-09-28"
+  }
+ ],
+ "prisma-cloud": [
+  {
+   "domain": "pan.dev",
+   "approved": true,
+   "proof": "catalogue",
+   "evidence": "portal=https://pan.dev/",
+   "verified_catalogue_date": "2026-09-28"
+  }
+ ],
+ "crunchy-bridge": [
+  {
+   "domain": "crunchybridge.com",
+   "approved": true,
+   "proof": "catalogue",
+   "evidence": "portal=https://docs.crunchybridge.com/",
+   "verified_catalogue_date": "2026-09-28"
+  }
  ]
 }

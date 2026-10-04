@@ -16,7 +16,8 @@ export type Conn = {
   scopeModel?: 'oauth_scopes' | 'api_key_permissions' | 'account_roles' | 'none'
   providerScopes?: { scope: string; access: 'read' | 'write' | 'admin'; purpose: string }[]
   providerCaps?: { name: string; access: 'read' | 'write'; endpoint: string }[]
-  sourced?: { part: string; checked: string; fields: string[]; evidence: Record<string, string> }
+  data_review?: 'partial' | 'rejected' | 'no facts' | 'no record'
+  sourced?: { part: string; checked: string; fields: string[]; evidence: Record<string, string>; review?: string[]; notFound?: string[] }
   unpublished?: boolean
   description_source?: 'editorial' | 'provider' | 'auto-pending'
   engineering_rank?: number | null

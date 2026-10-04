@@ -148,6 +148,7 @@ export function DashConnectors() {
   const [webhooks, setWebhooks] = useState('')
   const [avail, setAvail] = useState('')
   const [eng, setEng] = useState('')
+  const [data, setData] = useState('')
   const [sort, setSort] = useState('rank')
   const [q, setQ] = useState(params.get('q') ?? '')
   const [page, setPage] = useState(Math.max(1, Number(params.get('page')) || 1))
@@ -157,7 +158,7 @@ export function DashConnectors() {
     (!pub || (pub === 'published' ? c.published : !c.published)) &&
     (!auth || c.auth === auth) && (!rw || (rw === 'read only' ? c.rw === 'read' : rw === 'read + write' ? c.rw.includes('write') : !c.rw.startsWith('read'))) &&
     (!webhooks || (webhooks === 'yes') === c.webhooks) && (!avail || (avail === 'available to connect') === c.available) &&
-    (!eng || c.engineering_status === eng) &&
+    (!eng || c.engineering_status === eng) && (!data || c.data === data) &&
     (!needle || c.name.toLowerCase().includes(needle) || c.id.includes(needle) || c.provider.toLowerCase().includes(needle))
   ).sort(sort === 'name' ? (a, b) => a.name.localeCompare(b.name) : (a, b) => (a.rank ?? 1e9) - (b.rank ?? 1e9) || a.name.localeCompare(b.name))
   const pages = Math.max(1, Math.ceil(matching.length / CONSOLE_PAGE))
@@ -185,6 +186,7 @@ export function DashConnectors() {
           <Filter label="Auth" value={auth} options={[...new Set(CATALOGUE_RUNTIME.map((c) => c.auth))].sort()} onChange={(v) => setFilter(() => setAuth(v))} />
           <Filter label="Read/write" value={rw} options={['read only', 'read + write', 'not documented']} onChange={(v) => setFilter(() => setRw(v))} />
           <Filter label="Webhooks" value={webhooks} options={['yes', 'no']} onChange={(v) => setFilter(() => setWebhooks(v))} />
+          <Filter label="Provider data" value={data} options={['sourced', 'needs review', 'not sourced']} onChange={(v) => setFilter(() => setData(v))} />
           <Filter label="Sort" value={sort === 'rank' ? '' : sort} options={['name']} onChange={(v) => setFilter(() => setSort(v || 'rank'))} />
         </FilterBar>
         {legacyHits.length > 0 && (
@@ -199,7 +201,7 @@ export function DashConnectors() {
         <div className="glass-card p-5">
           {rows.length === 0 ? <EmptyState text="No canonical connector matches these filters." /> : (
             <Table
-              head={['#', 'Connector', 'Provider', 'Category', 'Catalogue status', 'Publication', 'Availability', 'Runtime status', 'Engineering', 'Auth', 'R/W', 'Webhooks', 'Actions']}
+              head={['#', 'Connector', 'Provider', 'Category', 'Catalogue status', 'Publication', 'Availability', 'Runtime status', 'Engineering', 'Auth', 'R/W', 'Webhooks', 'Provider data', 'Actions']}
               rows={rows.map((c) => [
                 <span key="r" className="text-[var(--c-muted)]">{c.rank ?? (c.pack === 'GOLDEN-FIVE' ? 'G5' : '—')}</span>,
                 <IdLink key="id" to={`/app/connectors/${c.id}`}>{c.name}</IdLink>,
@@ -209,6 +211,7 @@ export function DashConnectors() {
                 <span key="rs" className="text-[12px] text-[var(--c-text-2)]">{c.runtime_status.replaceAll('_', ' ')}</span>,
                 <span key="es" className="text-[12px] text-[var(--c-text-2)]">{(c.engineering_status ?? '—').replaceAll('_', ' ').toLowerCase()}</span>,
                 c.auth, c.rw, c.webhooks ? 'yes' : '—',
+                <span key="d" title={c.data_detail} className="text-[12px]" style={{ color: c.data === 'needs review' ? 'var(--c-warn)' : c.data === 'sourced' ? 'var(--c-text-2)' : 'var(--c-muted)' }}>{c.data}</span>,
                 <Action key="a" label="Connect" maturity="STAGING ONLY" title="Enabled when runtime status ≥ staging-verified and claim_level ≥ STAGING" />,
               ])}
             />
@@ -262,7 +265,7 @@ export function DashConnectorDetail({ id }: { id: string }) {
             ['Core pack / rank', `${c.pack ?? '—'} · ${c.rank ?? 'unranked'}`],
             ['Founder holds', c.founder_holds.join('; ') || 'none'],
             ['Alias', c.alias_of ? `also known as ${c.alias_of}` : '—'],
-            ['Auth scheme', c.auth], ['Read/write', c.rw], ['Webhooks', c.webhooks ? 'yes' : 'no'],
+            ['Auth scheme', c.auth], ['Read/write', c.rw], ['Webhooks', c.webhooks ? 'yes' : 'no'], ['Provider data', c.data_detail ? `${c.data} — ${c.data_detail}` : c.data],
             ['Runtime verification date', '—'],
           ]} />
         </Panel>
