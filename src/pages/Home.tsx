@@ -6,6 +6,7 @@ import { ConnectorLogo } from '../components/ConnectorLogo'
 import { HeroA, HeroB, HeroC } from '../components/hero/Heroes'
 import { C, SCALE } from '../components/hero/tokens'
 import { usePrefersReducedMotion } from '../components/hero/motion'
+import { locSearch } from '../hooks/usePathRoute'
 
 const SLIDE_MS = 10_000
 const SLIDES = [
@@ -14,7 +15,7 @@ const SLIDES = [
 ] as const
 
 function initialSlide() {
-  const s = new URLSearchParams(window.location.search).get('slide')
+  const s = new URLSearchParams(locSearch()).get('slide')
   return Math.max(0, SLIDES.findIndex((x) => x.id === s))
 }
 
@@ -34,7 +35,7 @@ function HeroRotator() {
   const [focusIn, setFocusIn] = useState(false)
   const [visible, setVisible] = useState(true)
   const ref = useRef<HTMLElement>(null)
-  const auto = !reduced && !new URLSearchParams(window.location.search).has('still')
+  const auto = !reduced && !new URLSearchParams(locSearch()).has('still')
   const paused = userPaused || hover || focusIn || !visible
 
   const show = (index: number) => setState((s) => (s.index === index ? s : { index, runs: s.runs.map((r, i) => (i === index ? r + 1 : r)) }))

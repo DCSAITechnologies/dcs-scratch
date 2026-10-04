@@ -10,6 +10,7 @@
 import { useEffect, type ReactNode } from 'react'
 import { AUTH_PROVIDER, initAuth, signIn, useAuth, safeReturnTo } from '../../lib/auth/session'
 import { DEV_TOKENS, apiHost } from '../../lib/api/config'
+import { locSearch } from '../../hooks/usePathRoute'
 
 function Screen({ title, children }: { title: string; children: ReactNode }) {
   return (
@@ -54,7 +55,7 @@ export function SignInPanel({ returnTo }: { returnTo: string }) {
 export function AuthGate({ path, children }: { path: string; children: ReactNode }) {
   const auth = useAuth()
   useEffect(() => { void initAuth() }, [])
-  const returnTo = safeReturnTo(path === '/app/sign-in' ? new URLSearchParams(window.location.search).get('returnTo') : path + window.location.search)
+  const returnTo = safeReturnTo(path === '/app/sign-in' ? new URLSearchParams(locSearch()).get('returnTo') : path + locSearch())
 
   if (auth.status === 'demo') return <>{children}</>
   if (auth.status === 'unconfigured') {

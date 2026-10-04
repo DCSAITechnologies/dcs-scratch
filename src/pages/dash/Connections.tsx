@@ -6,7 +6,7 @@ import { useState } from 'react'
 import { PageHeader, Panel, Pill, Table, IdLink, EmptyState, StateGate, FilterBar, Filter, Action, KV, MaturityTag } from '../../components/dash/ui'
 import { CONNECTIONS, CATALOGUE_RUNTIME, TOOLS, EXECUTIONS, fmtConn } from '../../lib/fixtures'
 import { LEGACY_REFERENCE_SURFACES } from '../../lib/data'
-import { navigate } from '../../hooks/usePathRoute'
+import { navigate, locSearch } from '../../hooks/usePathRoute'
 
 // ── Connections list ───────────────────────────────────────────────────────
 export function DashConnections() {
@@ -20,7 +20,7 @@ export function DashConnections() {
           title="Connections"
           sub="The connection lifecycle, per tenant and environment. Credentials render as opaque references — secrets never appear. Real-provider OAuth apps are an external dependency; the preview runs against simulator providers."
           maturity="HERMETIC ONLY"
-          actions={<Action label="New connection" maturity="HERMETIC ONLY" title="Simulator providers until vault + OAuth apps exist" onClick={() => { window.history.pushState({}, '', '/app/connections/new'); window.dispatchEvent(new PopStateEvent('popstate')) }} />}
+          actions={<Action label="New connection" maturity="HERMETIC ONLY" title="Simulator providers until vault + OAuth apps exist" onClick={() => navigate('/app/connections/new')} />}
         />
         <FilterBar>
           <Filter label="State" value={state} options={['CREATE', 'AUTHORIZE', 'TEST', 'ACTIVE', 'DEGRADED', 'SUSPENDED', 'REVOKED']} onChange={setState} />
@@ -139,7 +139,7 @@ const LEGACY_LINKABLE = LEGACY_REFERENCE_SURFACES.filter((c) => c.lane6_behavior
 export function DashConnectors() {
   // q / page live in the URL so ⌘K search, back/forward and shared links all agree;
   // DashApp keys this component on location.search so a new query re-mounts it.
-  const params = new URLSearchParams(window.location.search)
+  const params = new URLSearchParams(locSearch())
   const [cat, setCat] = useState('')
   const [runtime, setRuntime] = useState('')
   const [pub, setPub] = useState('')

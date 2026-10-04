@@ -1,3 +1,4 @@
+import { navigate } from '../../hooks/usePathRoute'
 // §4.11 Security / Kill · §4.10 Events · §4.12 Environments
 
 import { PageHeader, Panel, Pill, Table, IdLink, EmptyState, StateGate, Action, KV, MaturityTag, FilterBar, Filter } from '../../components/dash/ui'
@@ -21,7 +22,7 @@ export function DashSecurity() {
             <div className="flex flex-col gap-3 items-start">
               <Action label="Kill a scope…" maturity="HERMETIC ONLY" danger title="Reason required; confirmation names scope + environment" />
               <Action label="Restore" maturity="HERMETIC ONLY" title="Second identity required — until IdP" />
-              <Action label="View kill audit" maturity="WIRED" onClick={() => { window.history.pushState({}, '', '/app/audit'); window.dispatchEvent(new PopStateEvent('popstate')) }} />
+              <Action label="View kill audit" maturity="WIRED" onClick={() => navigate('/app/audit')} />
             </div>
           </Panel>
           <Panel title={`Active kills (${KILLS.length})`} className="lg:col-span-2">

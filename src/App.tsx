@@ -1,7 +1,7 @@
 import { lazy, Suspense, useLayoutEffect, type ReactElement } from 'react'
 import { Nav } from './components/Nav'
 import { Footer } from './components/Footer'
-import { usePathRoute, navigate } from './hooks/usePathRoute'
+import { usePathRoute, navigate, locSearch } from './hooks/usePathRoute'
 import { useConsoleTheme } from './lib/console-theme'
 import { Home } from './pages/Home'
 import { Product } from './pages/Product'
@@ -63,7 +63,7 @@ export default function App() {
   } else {
     switch (route) {
       case '/product': page = <Product />; break
-      case '/connectors': page = <Connectors key={window.location.search} />; break
+      case '/connectors': page = <Connectors key={locSearch()} />; break
       case '/agents': page = <Agents />; break
       case '/security': page = <Security />; break
       case '/receipts': page = <Receipts />; break

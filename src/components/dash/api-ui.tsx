@@ -8,6 +8,7 @@ import type { usePagedList } from '../../lib/api/usePagedList'
 import { newId } from '../../lib/api/client'
 import { hasCapability, signIn, type Capability } from '../../lib/auth/session'
 import { LoadingSkeleton } from './ui'
+import { locSearch } from '../../hooks/usePathRoute'
 
 const panel = 'glass-card p-6'
 
@@ -25,7 +26,7 @@ export function ApiErrorPanel({ error, onRetry }: { error: ApiError | Error; onR
       )}
       <div className="mt-4 flex gap-2">
         {e?.unauthenticated
-          ? <button type="button" onClick={() => signIn({ returnTo: window.location.pathname + window.location.search })} className="px-3 py-1.5 rounded-lg text-[12.5px] font-semibold text-[var(--c-link)] bg-[color-mix(in_srgb,var(--c-info)_10%,transparent)] border border-[color-mix(in_srgb,var(--c-info)_40%,transparent)]">Sign in again</button>
+          ? <button type="button" onClick={() => signIn({ returnTo: window.location.pathname + locSearch() })} className="px-3 py-1.5 rounded-lg text-[12.5px] font-semibold text-[var(--c-link)] bg-[color-mix(in_srgb,var(--c-info)_10%,transparent)] border border-[color-mix(in_srgb,var(--c-info)_40%,transparent)]">Sign in again</button>
           : onRetry && !e?.notFound && !e?.notImplemented && !e?.forbidden && <button type="button" onClick={onRetry} className="px-3 py-1.5 rounded-lg text-[12.5px] font-semibold text-[var(--c-link)] bg-[color-mix(in_srgb,var(--c-info)_10%,transparent)] border border-[color-mix(in_srgb,var(--c-info)_40%,transparent)]">Retry</button>}
       </div>
     </div>

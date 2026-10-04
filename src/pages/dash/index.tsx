@@ -17,6 +17,7 @@ import { DashExecutions, DashExecutionDetail } from './Executions'
 import { DashReceipts, DashReceiptDetail } from './Receipts'
 import { DashSecurity, DashEvents, DashEnvironments } from './SecurityEvents'
 import { DashDeveloper, DashUsage, DashTeam, DashAudit, DashSettings } from './Workspace'
+import { locSearch } from '../../hooks/usePathRoute'
 
 // Data mode is fixed per build (see lib/api/config.ts): demo pages read the
 // hermetic fixture stores under a DEMO banner; api pages read the Connector OS API
@@ -37,10 +38,10 @@ export function DashApp({ path }: { path: string }) {
   const m = (re: RegExp) => r.match(re)
   let mm
   if (r === '/app' || r === '/app/') page = pick(<DashOverview />, <ApiOverview />)
-  else if (r === '/app/connectors') page = pick(<DashConnectors key={window.location.search} />, <ApiConnectors key={window.location.search} />)
+  else if (r === '/app/connectors') page = pick(<DashConnectors key={locSearch()} />, <ApiConnectors key={locSearch()} />)
   else if ((mm = m(/^\/app\/connectors\/([^/]+)$/))) page = pick(<DashConnectorDetail id={mm[1]} />, <ApiConnectorDetail id={mm[1]} />)
   else if (r === '/app/connections') page = pick(<DashConnections />, <ApiConnections />)
-  else if (r === '/app/connections/new') page = pick(<DashConnectNew />, <ApiConnectNew key={window.location.search} />)
+  else if (r === '/app/connections/new') page = pick(<DashConnectNew />, <ApiConnectNew key={locSearch()} />)
   else if ((mm = m(/^\/app\/connections\/([^/]+)$/))) page = pick(<DashConnectionDetail id={mm[1]} />, <ApiConnectionDetail id={mm[1]} />)
   else if (r === '/app/tools') page = pick(<DashTools />, <ApiTools />)
   else if (r === '/app/agents') page = pick(<DashRuns />, <ApiRuns />)

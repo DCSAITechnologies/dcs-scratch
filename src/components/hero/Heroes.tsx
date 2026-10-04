@@ -13,12 +13,13 @@ import { PUBLISHED_COUNT, CATEGORY_COUNTS } from 'virtual:catalogue-summary'
 import { ConnectorLogo } from '../ConnectorLogo'
 import { C, SCALE, NODES } from './tokens'
 import { usePrefersReducedMotion } from './motion'
+import { locSearch } from '../../hooks/usePathRoute'
 const STAGES = ['Connect', 'Govern', 'Execute', 'Verify'] as const
 
 // ---------------------------------------------------------------- motion helpers
 
 function readFlags() {
-  const q = new URLSearchParams(window.location.search)
+  const q = new URLSearchParams(locSearch())
   const f = q.get('frame')
   return { frame: f !== null && /^\d+$/.test(f) ? Number(f) : null, still: q.has('still') }
 }

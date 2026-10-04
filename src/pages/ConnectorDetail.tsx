@@ -227,19 +227,23 @@ function ConnectorDetailView({ c, legacy, resolved }: { c: Conn; legacy?: Conn; 
                   Auto-generated summary — pending editorial and provider verification.
                 </div>
               )}
-              <p className="text-[14px] leading-relaxed text-[#1E2638]">{c.l}</p>
-              <div>
+              {/* most rows carry monogram initials in `l`; only a real long description is shown */}
+              {c.l.length > 40 && <p className="text-[14px] leading-relaxed text-[#1E2638]">{c.l}</p>}
+              {c.res.length > 0 && <div>
                 <h3 className="text-[13px] font-semibold text-[#0B1220] mb-3 uppercase tracking-wide">Supported resources</h3>
                 <div className="flex flex-wrap gap-2">{c.res.map((r) => <span key={r} className="chip" style={{ fontFamily: "'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace", fontSize: 11 }}>{r}</span>)}</div>
-              </div>
-              <div>
+              </div>}
+              {c.uc.length > 0 && <div>
                 <h3 className="text-[13px] font-semibold text-[#0B1220] mb-3 uppercase tracking-wide">Popular use cases</h3>
                 <ul className="space-y-2">{c.uc.map((u) => <li key={u} className="flex gap-2.5 text-[13.5px] text-[#3A4357]"><span className="mt-2 w-1.5 h-1.5 rounded-full bg-[#2850D8] shrink-0" />{u}</li>)}</ul>
-              </div>
-              <div>
+              </div>}
+              {c.reqs.length > 0 && <div>
                 <h3 className="text-[13px] font-semibold text-[#0B1220] mb-3 uppercase tracking-wide">Connection requirements</h3>
                 <ul className="space-y-2">{c.reqs.map((r) => <li key={r} className="flex gap-2.5 text-[13.5px] text-[#3A4357]"><span className="mt-2 w-1.5 h-1.5 rounded-full bg-[#0E7490] shrink-0" />{r}</li>)}</ul>
-              </div>
+              </div>}
+              {c.res.length === 0 && c.uc.length === 0 && c.reqs.length === 0 && (
+                <p className="text-[13.5px] text-[#566074]">Resources, use cases and connection requirements are not documented for this connector yet. See the links for the provider's own documentation.</p>
+              )}
             </div>
           )}
 

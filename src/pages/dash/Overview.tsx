@@ -1,3 +1,4 @@
+import { navigate } from '../../hooks/usePathRoute'
 // §4.1 + Handoff Design 02 §5 — Overview, pixel-close to the reference PNG.
 // Truthful variant: "live" language replaced — data is from the integrated
 // build's reference stores (HERMETIC ONLY), per handoff §5.2 / §13.
@@ -226,7 +227,7 @@ function Body({ pending, health, readonly = false }: { pending: typeof APPROVALS
             </thead>
             <tbody>
               {RUNS.map((r) => (
-                <tr key={r.id} className="border-b border-[var(--c-border)] hover:bg-[var(--c-card-2)] cursor-pointer" onClick={() => { window.history.pushState({}, '', `/app/agents/runs/${r.id}`); window.dispatchEvent(new PopStateEvent('popstate')) }}>
+                <tr key={r.id} className="border-b border-[var(--c-border)] hover:bg-[var(--c-card-2)] cursor-pointer" onClick={() => navigate(`/app/agents/runs/${r.id}`)}>
                   <td className="py-2 pr-4"><IdLink to={`/app/agents/runs/${r.id}`}>{r.id}</IdLink></td>
                   <td className="py-2 pr-4 text-[12.5px] text-[var(--c-text-2)]">{r.connectors.map(fmtConn).join(', ')}</td>
                   <td className="py-2 pr-4 text-[12.5px] text-[var(--c-text-2)]">{r.agent}</td>

@@ -1,3 +1,4 @@
+import { navigate } from '../../hooks/usePathRoute'
 // §4.9 Receipts / R-Series — evidence, not an activity log. Normal view is a
 // plain-language trust summary + causal chain; advanced view is field groups.
 // Payloads are never shown — digests only. No algorithm names in copy.
@@ -62,7 +63,7 @@ export function DashReceiptDetail({ id }: { id: string }) {
             </div>
             <Action label="Verify receipt" maturity="HERMETIC ONLY" title="In-process verifier today; authenticated route on staging" />
             <Action label="Export receipt + proof" maturity="PLANNED" />
-            <Action label="View run chain" maturity="WIRED" onClick={() => { window.history.pushState({}, '', `/app/agents/runs/${r.run}`); window.dispatchEvent(new PopStateEvent('popstate')) }} />
+            <Action label="View run chain" maturity="WIRED" onClick={() => navigate(`/app/agents/runs/${r.run}`)} />
           </>
         }
       />

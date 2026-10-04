@@ -1,6 +1,7 @@
 import { useEffect, useId, useMemo, useRef, useState } from 'react'
 import { PUBLISHED_CONNECTORS as CONNECTORS, LEGACY_REFERENCE_SURFACES, TOTAL_CATALOGUED, PUBLISHED_COUNT, UNPUBLISHED_COUNT, AVAILABLE_TO_CONNECT_COUNT, CORE_HEAD, byRank, CATEGORIES, STATUSES, AUTH_TYPES, RUNTIME_STATUSES, statusColor, runtimeStatusLabel, type Conn } from '../lib/data'
 import { ConnectorLogo } from '../components/ConnectorLogo'
+import { locSearch } from '../hooks/usePathRoute'
 
 const PAGE = 60
 const LEGACY_PAGE = 12
@@ -82,7 +83,7 @@ const matchesQuery = (c: Conn, q: string) => {
 
 export function Connectors() {
   // ?q= and ?cat= deep links (used by the nav category menu and shared searches)
-  const params = new URLSearchParams(window.location.search)
+  const params = new URLSearchParams(locSearch())
   const [q, setQ] = useState(params.get('q') ?? '')
   const [cat, setCat] = useState(CATEGORIES.includes(params.get('cat') ?? '') ? params.get('cat')! : 'All')
   const [status, setStatus] = useState('')

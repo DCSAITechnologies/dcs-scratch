@@ -8,7 +8,7 @@ import { useApi } from '../../../lib/api/useApi'
 import { usePagedList } from '../../../lib/api/usePagedList'
 import * as api from '../../../lib/api/endpoints'
 import type { S } from '../../../lib/api/endpoints'
-import { navigate } from '../../../hooks/usePathRoute'
+import { navigate, locSearch } from '../../../hooks/usePathRoute'
 import { hasCapability } from '../../../lib/auth/session'
 
 const DISPOSITIONS: S['ConnectorDisposition'][] = ['CODED_LOCALLY_TESTED', 'SPEC_READY', 'ACCESS_GATED', 'PARKED', 'BLOCKED', 'RETIRED', 'EXTERNAL_DEPENDENCY', 'FOUNDER_LEGAL', 'NOT_STARTED']
@@ -17,7 +17,7 @@ const when = (t?: string | null) => (t ? new Date(t).toLocaleString() : '—')
 
 // ── connectors ───────────────────────────────────────────────────────────
 export function ApiConnectors() {
-  const params = new URLSearchParams(window.location.search)
+  const params = new URLSearchParams(locSearch())
   const [q, setQ] = useState(params.get('q') ?? '')
   const [applied, setApplied] = useState(params.get('q') ?? '')
   const [disposition, setDisposition] = useState('')
@@ -130,7 +130,7 @@ export function ApiConnections() {
 
 export function ApiConnectionDetail({ id }: { id: string }) {
   const r = useApi(`connection:${id}`, () => api.getConnection(id))
-  const created = new URLSearchParams(window.location.search).get('created')
+  const created = new URLSearchParams(locSearch()).get('created')
   const [notice, setNotice] = useState<string | null>(created ? `Connection ${id} created (status ${created}). Test it next.` : null)
   const done = (text: string) => { setNotice(text); r.reload() }
   return (
@@ -174,7 +174,7 @@ export function ApiConnectionDetail({ id }: { id: string }) {
 // vault issuance are external dependencies today, so the reference is entered.
 const CREF = /^cref_[0-9a-f-]{8,}$/i
 export function ApiConnectNew() {
-  const params = new URLSearchParams(window.location.search)
+  const params = new URLSearchParams(locSearch())
   const [connectorId, setConnectorId] = useState(params.get('connector') ?? '')
   const [label, setLabel] = useState('')
   const [environment, setEnvironment] = useState<'staging' | 'development' | 'sandbox'>('staging')

@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { logoUrl } from '../lib/logo-url'
 
 // Stable hue per name, so a connector's monogram looks the same everywhere.
 function hue(name: string) {
@@ -12,7 +13,8 @@ function hue(name: string) {
  * fetched from the provider's official domain. Rendered large inside a light tile.
  * With no logo (or if it fails to load), a tinted monogram.
  */
-export function ConnectorLogo({ name, src, size = 36, bare = false }: { name: string; src: string; size?: number; bare?: boolean }) {
+export function ConnectorLogo({ name, src: raw, size = 36, bare = false }: { name: string; src: string; size?: number; bare?: boolean }) {
+  const src = logoUrl(raw)
   const [err, setErr] = useState(!src)
   const initials = name.replace(/\(.*?\)/g, '').split(/[\s./-]+/).filter(Boolean).slice(0, 2).map((w) => w[0]).join('').toUpperCase() || '?'
   const h = hue(name)
