@@ -119,10 +119,11 @@ def main():
         part = os.path.basename(p)[:-4]
         for r in csv.DictReader(open(p)):
             assigned[r['id']] = part
-    accepted, rejected, logos, seen, missing_ids, flagged = {}, [], {}, set(), {}, []
-    for part_dir in sorted(glob.glob(os.path.join(DS, 'returns', 'part-*'))):
+    accepted, rejected, logos, seen, missing_ids, flagged, records_by_id = {}, [], {}, set(), {}, [], {}
+    for part_dir in sorted(glob.glob(os.path.join(DS, 'returns', 'part-*')), key=lambda d: int(re.sub(r'\D', '', os.path.basename(d)) or 0)):
         part = os.path.basename(part_dir)
         path = os.path.join(part_dir, 'records.jsonl')
+        seen_here = set()
         if not os.path.isfile(path):
             rejected.append((part, '-', 'records.jsonl', 'file missing'))
             continue
@@ -140,10 +141,20 @@ def main():
             if not c or c['unpublished']:
                 rejected.append((part, cid, 'id', 'not a published canonical connector'))
                 continue
-            if cid in seen:
-                rejected.append((part, cid, 'id', 'duplicate record'))
+            if cid in seen_here:
+                rejected.append((part, cid, 'id', 'duplicate record in the same part'))
                 continue
+            seen_here.add(cid)
+            if cid in seen:
+                # a later part (a targeted gap round) supersedes an earlier part key by key;
+                # the merged record is validated again from scratch
+                rec = {**records_by_id[cid], **rec, 'evidence': {**(records_by_id[cid].get('evidence') or {}), **(rec.get('evidence') or {})}}
+                accepted.pop(cid, None)
+                rejected[:] = [x for x in rejected if x[1] != cid]
+                flagged[:] = [x for x in flagged if x[1] != cid]
+                logos.pop(cid, None)
             seen.add(cid)
+            records_by_id[cid] = dict(rec)
             dec = decisions.get(cid, {})
             if '*' in dec:
                 rejected.append((part, cid, '*', 'reviewer: ' + dec['*']))
