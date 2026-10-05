@@ -1,21 +1,21 @@
 id,name,provider,category,known_site,known_portal,known_api,needs
-trustpilot,Trustpilot,Trustpilot,Support & Success,https://business.trustpilot.com/,https://developers.trustpilot.com/,https://developers.trustpilot.com/api-module-overview/,scopes
-bls-public-data-api,U.S. Bureau of Labor Statistics Public Data API,U.S. Bureau of Labor Statistics,Government / Public Data,https://www.bls.gov/,https://www.bls.gov/developers/,https://www.bls.gov/developers/api_signature_v2.htm,statusUrl
-us-census-data-api,U.S. Census Bureau Data API,U.S. Census Bureau,Government / Public Data,https://www.census.gov/,https://www.census.gov/data/developers.html,https://api.census.gov/data.html,statusUrl;scopes
-openfda,openFDA,U.S. Food and Drug Administration,Healthcare,https://open.fda.gov/,https://open.fda.gov/apis/,https://open.fda.gov/apis/,statusUrl;scopes
-data-gov-ckan,Data.gov (CKAN via api.gsa.gov),U.S. General Services Administration,Government / Public Data,https://data.gov/,https://resources.data.gov/catalog-api/,https://resources.data.gov/catalog-api/,statusUrl;scopes
-regulations-gov,Regulations.gov,U.S. General Services Administration,Government / Public Data,https://www.regulations.gov/,https://open.gsa.gov/api/regulationsgov/,https://open.gsa.gov/api/regulationsgov/,statusUrl
-sam-gov-opportunities,SAM.gov Contract Opportunities API,U.S. General Services Administration,Government / Public Data,https://sam.gov/,https://open.gsa.gov/api/get-opportunities-public-api/,https://open.gsa.gov/api/get-opportunities-public-api/,statusUrl
-usgs-earthquake-fdsnws,USGS Earthquake Catalog (FDSN Event),U.S. Geological Survey,Government / Public Data,https://www.usgs.gov/,https://earthquake.usgs.gov/fdsnws/event/1/,https://earthquake.usgs.gov/fdsnws/event/1/,authDocs;statusUrl
-govinfo,GovInfo (U.S. GPO),U.S. Government Publishing Office,Government / Public Data,https://www.govinfo.gov/,https://www.govinfo.gov/developers,https://api.govinfo.gov/docs/,statusUrl
-congress-gov,Congress.gov API,U.S. Library of Congress,Government / Public Data,https://api.congress.gov/,https://api.congress.gov/,https://api.congress.gov/,statusUrl
-sec-edgar,SEC EDGAR APIs,U.S. Securities and Exchange Commission,Government / Public Data,https://www.sec.gov/,https://www.sec.gov/about/developer-resources,https://www.sec.gov/search-filings/edgar-application-programming-interfaces,statusUrl
-uala-bis,Ualá Bis,Ualá,Payments / Banking / Fintech,https://www.ualabis.com.ar/,https://developers.ualabis.com.ar/v2,https://developers.ualabis.com.ar/v2,statusUrl;scopes
-uber,Uber,Uber,Travel / Hospitality / Events,https://www.uber.com/in/en/,https://developer.uber.com/,https://developer.uber.com/docs/riders/references/api,statusUrl
-uber-direct,Uber Direct,Uber,Logistics / Shipping / Inventory,https://www.uber.com/in/en/,https://developer.uber.com/,https://developer.uber.com/docs/deliveries/api-reference/daas,statusUrl
-ons-api,UK Office for National Statistics API,UK Office for National Statistics,Government / Public Data,https://www.ons.gov.uk/,https://developer.ons.gov.uk/,https://developer.ons.gov.uk/,statusUrl
-usps,USPS,United States Postal Service,Logistics / Shipping / Inventory,https://www.usps.com/,https://developers.usps.com/,https://developers.usps.com/apis,statusUrl;caps
-upstox-developer-api,Upstox Developer API,Upstox,Payments / Banking / Fintech,https://upstox.com/,https://upstox.com/developer/api-documentation/,https://upstox.com/developer/api-documentation/,scopes
-userpilot,Userpilot,Userpilot,Support & Success,https://userpilot.com/,https://docs.userpilot.com/api-references/authentication.md,https://docs.userpilot.com/api-references/authentication.md,statusUrl
-vainu,Vainu,Vainu,CRM & Sales,https://www.vainu.com/,https://developers.vainu.com/,https://developers.vainu.com/,statusUrl
-veremark,Veremark,Veremark,HR / Recruiting / Payroll,https://www.veremark.com/,https://api.veremark.com/external/v1/docs/,https://api.veremark.com/external/v1/docs/,scopes
+lambda-cloud,Lambda Cloud (GPU),Lambda,Cloud & Hosting,https://lambda.ai/,https://docs.lambda.ai/,https://docs.lambda.ai/api/cloud,scopes
+lancedb-cloud,LanceDB Cloud,LanceDB,AI & Models,https://www.lancedb.com/,https://docs.lancedb.com/api-reference/rest/index.md,https://docs.lancedb.com/api-reference/rest/index.md,statusUrl;scopes
+last9,Last9,Last9,Observability,https://last9.io/,https://last9.io/docs/getting-started-with-api/,https://last9.io/docs/getting-started-with-api/,statusUrl
+lemlist,lemlist,lemlist,CRM & Sales,https://www.lemlist.com/,https://developer.lemlist.com/api-reference/getting-started/overview,https://developer.lemlist.com/api-reference/endpoints/campaigns/get-many-campaigns,statusUrl;scopes
+linkedin-learning,LinkedIn Learning,LinkedIn,Education,https://business.linkedin.com/learn,https://learn.microsoft.com/en-us/linkedin/learning/,https://learn.microsoft.com/en-us/linkedin/learning/,statusUrl
+linnworks,Linnworks,Linnworks,Commerce / Marketplaces,https://www.linnworks.com/,https://apidocs.linnworks.net/reference/overview,https://apidocs.linnworks.net/reference/overview,scopes
+skuvault,SkuVault,Linnworks,Logistics / Shipping / Inventory,https://www.skuvault.com/,https://dev.skuvault.com/reference/additem,https://dev.skuvault.com/llms.txt,statusUrl
+ticketmaster-discovery,Ticketmaster Discovery API,Live Nation Entertainment,Travel / Hospitality / Events,https://www.ticketmaster.com/,https://developer.ticketmaster.com/,https://developer.ticketmaster.com/products-and-docs/apis/discovery-api/v2/,statusUrl;scopes
+llamacloud,LlamaCloud (LlamaParse),LlamaIndex,AI & Models,https://www.llamaindex.ai/,https://developers.llamaindex.ai/llamaparse/,https://developers.llamaindex.ai/llamaparse/,authDocs;whDocs;statusUrl;caps;scopes;reqs
+lob,Lob,Lob,Communications / Voice / Video,https://www.lob.com/,https://docs.lob.com/,https://docs.lob.com/,authDocs;whDocs;statusUrl;caps;scopes;reqs
+tray-commerce,Tray Commerce,Locaweb,Commerce / Marketplaces,https://tray.com.br/,https://developers.tray.com.br/,https://developers.tray.com.br/#api-de-produtos,scopes
+logrocket,LogRocket,LogRocket,Observability,https://logrocket.com/,https://docs.logrocket.com/docs/introduction,https://docs.logrocket.com/docs/audit-log-api.md,caps;scopes
+logzio,Logz.io,Logz.io,Observability,https://logz.io/,https://docs.logz.io/,https://docs.logz.io/,scopes
+loops,Loops,Loops,Marketing / Advertising,https://loops.so/,https://loops.so/docs,https://loops.so/docs,scopes
+lusha,Lusha,Lusha,CRM & Sales,https://www.lusha.com/,https://docs.lusha.com/,https://docs.lusha.com/,authDocs;statusUrl;caps;scopes;reqs
+line-messaging,LINE Messaging API,LY Corporation,Communications / Voice / Video,https://www.line.me/en/,https://developers.line.biz/,https://developers.line.biz/en/reference/messaging-api/,statusUrl;scopes
+mailtrap,Mailtrap,Mailtrap,Communications / Voice / Video,https://mailtrap.io/,https://docs.mailtrap.io/,https://docs.mailtrap.io/developers,statusUrl
+manatal,Manatal,Manatal,HR / Recruiting / Payroll,https://www.manatal.com/,https://developers.manatal.com/reference/getting-started,https://developers.manatal.com/reference/candidates_list,scopes
+mapbox,Mapbox,Mapbox,Government / Public Data,https://www.mapbox.com/,https://docs.mapbox.com/,https://docs.mapbox.com/api/,authDocs;caps;scopes;reqs
+medallia,Medallia Experience Cloud,Medallia,Support & Success,https://www.medallia.com/,https://developer.medallia.com/,https://developer.medallia.com/medallia-apis,scopes

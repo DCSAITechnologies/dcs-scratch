@@ -10,8 +10,8 @@
 | Key | Count | Rule |
 |---|---:|---|
 | CANONICAL_TOTAL | 1010 | rows in core `catalogue.json` |
-| PUBLIC_TOTAL | 809 | canonical, not held (rendered on the public website and in the console catalogue) |
-| HOLD_TOTAL | 201 | canonical, held: core founder hold, core BLOCKED, or website editorial hold |
+| PUBLIC_TOTAL | 996 | canonical, not held (rendered on the public website and in the console catalogue) |
+| HOLD_TOTAL | 14 | canonical, held: core founder hold, core BLOCKED, or website editorial hold |
 | AVAILABLE_TO_CONNECT_TOTAL | 0 | core dispatch eligibility: staging or production dispatchable |
 | NOT_AVAILABLE_TOTAL | 1010 | canonical, not dispatchable |
 | STAGING_VERIFIED_TOTAL | 0 | listed in core `staging-verified.json` |
@@ -38,9 +38,9 @@ Core `dispatch-eligibility.json` reports 0 dispatchable rows in staging and 0 in
 
 | Source | Held rows carrying it |
 |---|---:|
-| Founder hold in core | 179 |
-| Website editorial hold | 132 |
+| Website editorial hold | 10 |
 | Blocked in core | 9 |
+| Founder hold in core | 6 |
 
 ## Engineering status (core disposition)
 

@@ -1,0 +1,29 @@
+{
+ "_comment": "Founder decisions that change website listing only. They never change core truth: execution stays gated in core and every row stays NOT_DISPATCHABLE. Read by scripts/sync-catalogue.py and scripts/validate-catalogue.py.",
+ "publish_held": {
+  "decided": "2026-10-05",
+  "by": "founder",
+  "decision": "List held connectors on the website as Coming Soon (listing only). Execution stays gated in core: no dispatch eligibility changes, every row stays NOT_DISPATCHABLE, core and core-snapshot/ are not modified. BLOCKED rows and the excluded ids stay on hold.",
+  "evidence": {
+   "core_head": "f6a3161e04e2f37da266e74adc54e8ecd974686a",
+   "catalogue_rulings_applied": "core-snapshot/catalogue.json rulings_applied is [] (no core ruling changes any hold)",
+   "founder_rulings": "core packages/registry/data/inputs/founder-rulings.json holds 2 rulings (D8-575 amadeus-self-service, D8-148 servicenow-cloud-observability), both status proposed; both ids are excluded here"
+  },
+  "exclude": {
+   "servicenow-cloud-observability": "Blocked in core: disposition BLOCKED · Founder hold in core: gate:FOUNDER-REVIEW pack flag (acknowledge only) · Website editorial hold: Provider access blocked · core ruling D8-148 proposes RETIRED (status proposed)",
+   "duo-admin-api": "Blocked in core: disposition BLOCKED · Website editorial hold: Provider access blocked",
+   "govuk-notify": "Blocked in core: disposition BLOCKED · Website editorial hold: Provider access blocked",
+   "ondc": "Blocked in core: disposition BLOCKED · Founder hold in core: gate:F07-640-4 ONDC network participation (TSP route) · Website editorial hold: Provider access blocked",
+   "eko-india": "Blocked in core: disposition BLOCKED · Website editorial hold: Provider access blocked",
+   "cirrus-ci": "Blocked in core: blocked: BLOCK_API_WITHDRAWN (replaced by nuclino)",
+   "delighted": "Blocked in core: blocked: B-WITHDRAWN (replaced by elastic-path)",
+   "gel-cloud": "Blocked in core: blocked: B-WITHDRAWN (replaced by upsun-platformsh)",
+   "tenor": "Blocked in core: blocked: BLOCK-API-WITHDRAWN (replaced by muck-rack)",
+   "amadeus-self-service": "Founder hold in core: gate:G-8 retire/replace row · Website editorial hold: Provider product retired · core ruling D8-575 proposes RETIRED (status proposed)",
+   "hyperbolic": "Website editorial hold: Provider product retired",
+   "facebook-pages-api": "Founder hold in core: FD-03 · Website editorial hold: Provider approval / identity decision",
+   "threads-api": "Founder hold in core: FD-03 · Website editorial hold: Provider approval / identity decision",
+   "instagram-platform-api": "Founder hold in core: FD-03 · Website editorial hold: Provider approval / identity decision"
+  }
+ }
+}

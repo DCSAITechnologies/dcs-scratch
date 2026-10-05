@@ -6,6 +6,7 @@ import { join } from 'node:path'
 type Row = {
   id: string; n: string; p: string; r: number; cat: string; d: string; s: string
   unpublished?: boolean; alias_of?: string | null
+  listed_by_founder_decision?: boolean; review_note?: string | null; dispatch_eligibility?: string
   lane6_behavior?: string; lane6_redirect_to?: string | null
 }
 
@@ -14,6 +15,8 @@ export const CANONICAL: Row[] = JSON.parse(readFileSync(join(lib, 'connectors.js
 export const LEGACY: Row[] = JSON.parse(readFileSync(join(lib, 'connectors-legacy.json'), 'utf8'))
 export const PUBLISHED = CANONICAL.filter((c) => !c.unpublished)
 export const HOLD = CANONICAL.filter((c) => c.unpublished)
+// held rows listed as Coming Soon by the founder decision (src/lib/founder-decisions.json)
+export const FOUNDER_LISTED = CANONICAL.filter((c) => c.listed_by_founder_decision && !c.unpublished)
 export const ALIASES = CANONICAL.filter((c) => c.alias_of)
 export const legacy = (id: string) => LEGACY.find((c) => c.id === id)
 // mirrors the app's search: name, provider or id

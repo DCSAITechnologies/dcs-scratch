@@ -1,18 +1,21 @@
 id,name,provider,category,known_site,known_portal,known_api,needs
-vitally,Vitally,Vitally,Support & Success,https://www.vitally.io/,https://docs.vitally.io/en/,https://docs.vitally.io/en/,statusUrl
-toss-payments,Toss Payments,Viva Republica,Payments / Banking / Fintech,https://www.tosspayments.com/,https://developers.tosspayments.com/,https://developers.tosspayments.com/,scopes
-what3words,what3words,what3words,Government / Public Data,https://what3words.com/toddler.geologist.animated?redirect=true,https://developer.what3words.com/public-api,https://developer.what3words.com/public-api/docs,statusUrl
-whereby,Whereby,Whereby,Communications / Voice / Video,https://whereby.com/,https://docs.whereby.com/,https://docs.whereby.com/reference/whereby-rest-api-reference,statusUrl
-world-bank-indicators,World Bank Indicators API,World Bank Group,Government / Public Data,https://www.worldbank.org/ext/en/home,https://datahelpdesk.worldbank.org/knowledgebase/articles/889392-about-the-indicators-api-documentation,https://datahelpdesk.worldbank.org/knowledgebase/articles/889392-about-the-indicators-api-documentation,statusUrl
-writer,Writer,Writer,AI & Models,https://writer.com/,https://dev.writer.com/home/introduction,https://dev.writer.com/api-reference/completion-api/chat-completion,statusUrl
-x-api,X (Twitter) API,X Corp.,Social / Creator / Publishing,https://x.com/,https://developer.x.com/,https://docs.x.com/overview,statusUrl
-xray-cloud,Xray Cloud,Xblend,Developer Tools,https://www.getxray.app/,https://docs.getxray.app/,https://docs.getxray.app/,statusUrl
-xometry,Xometry,Xometry,Manufacturing / ERP / Supply Chain,https://www.xometry.com/,https://developer.xometry.com/,https://developer.xometry.com/reference,statusUrl
-yampi,Yampi,Yampi,Commerce / Marketplaces,https://www.yampi.com.br/,https://docs.yampi.com.br/introduction,https://docs.yampi.com.br/api-reference/rate-limit/limites.md,scopes
-yotpo,Yotpo (Core API),Yotpo,Support & Success,https://www.yotpo.com/,https://core-api.yotpo.com/,https://core-api.yotpo.com/reference/welcome,scopes
-youcanbookme,YouCanBookMe,YouCanBookMe,Productivity,https://youcanbook.me/,https://ycbm.stoplight.io/docs/youcanbookme-api/2a78a4ca016d7-create-booking,https://ycbm.stoplight.io/docs/youcanbookme-api/2a78a4ca016d7-create-booking,statusUrl
-youverify,Youverify,Youverify,Security & Identity,https://youverify.co/en,https://doc.youverify.co/introduction,https://doc.youverify.co/api-reference/overview,statusUrl
-zabbix,Zabbix,Zabbix,Observability,https://www.zabbix.com/,https://www.zabbix.com/documentation/current/en/manual/api,https://www.zabbix.com/documentation/current/en/manual/api,statusUrl
-zamzar,Zamzar,Zamzar,Documents / E-sign / Forms,https://www.zamzar.com/,https://developers.zamzar.com/,https://developers.zamzar.com/docs,statusUrl;scopes
-zerodha-kite-connect,Zerodha Kite Connect,Zerodha,Payments / Banking / Fintech,https://zerodha.com/,https://zerodha.com/products/api/,https://kite.trade/docs/connect/v3/,statusUrl;scopes
-ziina,Ziina,Ziina,Payments / Banking / Fintech,https://ziina.com/,https://docs.ziina.com/getting-started,https://docs.ziina.com/api-reference/introduction,statusUrl
+medusa,Medusa,Medusa,Commerce / Marketplaces,https://medusajs.com/,https://docs.medusajs.com/,https://docs.medusajs.com/,scopes
+mem-ai,Mem,Mem,Productivity,https://mem.ai/,https://docs.mem.ai/,https://docs.mem.ai/,scopes
+mend,Mend,Mend.io,Developer Tools,https://www.mend.io/,https://docs.mend.io/,https://docs.mend.io/,scopes
+mentimeter,Mentimeter,Mentimeter,Productivity,https://www.mentimeter.com/,https://developer.mentimeter.com/openapi.json,https://developer.mentimeter.com/openapi.json,statusUrl
+merge,Merge,Merge,Finance / Accounting / Tax,https://www.merge.dev/,https://docs.merge.dev/home,https://docs.merge.dev/home,statusUrl
+metriport,Metriport,Metriport,Healthcare,https://www.metriport.com/,https://docs.metriport.com/medical-api/getting-started/quickstart,https://docs.metriport.com/medical-api/getting-started/quickstart,authDocs;whDocs;statusUrl;caps;scopes;reqs
+mews,Mews,Mews,Travel / Hospitality / Events,https://www.mews.com/en,https://docs.mews.com/,https://docs.mews.com/connector-api/operations,scopes
+microsoft-advertising,Microsoft Advertising,Microsoft,Marketing / Advertising,https://ads.microsoft.com/,https://learn.microsoft.com/en-us/advertising/guides/?view=bingads-13,https://learn.microsoft.com/en-us/advertising/guides/?view=bingads-13,statusUrl
+middleware-io,Middleware.io,Middleware,Observability,https://middleware.io/,https://app.middleware.io/swagger.json,https://app.middleware.io/swagger.json,statusUrl;scopes
+mixedbread,Mixedbread,Mixedbread,AI & Models,https://www.mixedbread.com/,https://www.mixedbread.com/api-reference,https://www.mixedbread.com/api-reference,statusUrl
+moengage,MoEngage,MoEngage,Marketing / Advertising,https://www.moengage.com/,https://www.moengage.com/docs/developer-guide/introduction,https://www.moengage.com/docs/api/introduction,scopes
+momento,Momento,Momento,Databases & Search,https://www.gomomento.com/,https://docs.momentohq.com/,https://docs.momentohq.com/cache/develop/api-reference/http-api,statusUrl
+moneybird,Moneybird,Moneybird,Finance / Accounting / Tax,https://www.moneybird.com/,https://developer.moneybird.com/,https://developer.moneybird.com/api/sales-invoices,statusUrl
+usemotion,Motion,Motion,Productivity,https://www.usemotion.com/,https://docs.usemotion.com/,https://docs.usemotion.com/,authDocs;statusUrl;caps;scopes;reqs
+moyasar,Moyasar,Moyasar,Payments / Banking / Fintech,https://moyasar.com/,https://docs.moyasar.com/,https://docs.moyasar.com/,statusUrl
+muck-rack,Muck Rack,Muck Rack,Social / Creator / Publishing,https://muckrack.com/,https://muckrack.com/pr-software/api,https://muckrack.com/pr-software/api,caps;scopes
+murf-ai,Murf AI,Murf AI,AI & Models,https://murf.ai/,https://murf.ai/api/docs/api-reference/text-to-speech/generate,https://murf.ai/api/docs/api-reference/text-to-speech/generate,authDocs;statusUrl;caps;scopes;reqs
+myfatoorah,MyFatoorah,MyFatoorah,Payments / Banking / Fintech,https://www.myfatoorah.com/,https://docs.myfatoorah.com/docs/get-started,https://docs.myfatoorah.com/docs/get-started,statusUrl
+name-com,Name.com,Name.com,Cloud & Hosting,https://www.name.com/,https://docs.name.com/,https://docs.name.com/api/v1/overview,scopes
+ncbi-eutilities,NCBI E-utilities (PubMed),National Center for Biotechnology Information,Healthcare,https://www.ncbi.nlm.nih.gov/,https://www.ncbi.nlm.nih.gov/home/about/policies/,https://www.ncbi.nlm.nih.gov/books/NBK25499/,statusUrl

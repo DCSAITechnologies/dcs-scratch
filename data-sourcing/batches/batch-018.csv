@@ -1,21 +1,21 @@
 id,name,provider,category,known_site,known_portal,known_api,needs
-temporal-cloud,Temporal Cloud,Temporal Technologies,Developer Tools,https://temporal.io/,https://docs.temporal.io/cloud,https://docs.temporal.io/cloud,caps
-termii,Termii,Termii,Communications / Voice / Video,https://termii.com/,https://developer.termii.com/,https://developer.termii.com/,statusUrl
-testingbot,TestingBot,TestingBot,Developer Tools,https://testingbot.com/,https://testingbot.com/support/api,https://testingbot.com/support/api,scopes
-unleashed-software,Unleashed Software,The Access Group,Logistics / Shipping / Inventory,https://www.unleashedsoftware.com/,https://apidocs.unleashedsoftware.com/,https://apidocs.unleashedsoftware.com/,statusUrl;scopes
-the-things-stack,The Things Stack,The Things Industries,Manufacturing / ERP / Supply Chain,https://www.thethingsindustries.com/,https://www.thethingsindustries.com/docs/,https://www.thethingsindustries.com/docs/,statusUrl
-thingsboard,ThingsBoard Cloud,ThingsBoard,Manufacturing / ERP / Supply Chain,https://thingsboard.io/,https://thingsboard.io/docs/,https://thingsboard.io/docs/,statusUrl
-ticket-tailor,Ticket Tailor,Ticket Tailor,Travel / Hospitality / Events,https://www.tickettailor.com/,https://developers.tickettailor.com/,https://developers.tickettailor.com/docs/api/ticket-tailor-api/,scopes
-universe,Universe,Ticketmaster,Travel / Hospitality / Events,https://www.universe.com/,https://developers.universe.com/,https://developers.universe.com/docs/basic-usage-1,caps;scopes
-ticktick,TickTick,TickTick,Productivity,https://ticktick.com/,https://developer.ticktick.com/,https://developer.ticktick.com/docs/index.html#/openapi,statusUrl
-timecamp,TimeCamp,TimeCamp,Productivity,https://www.timecamp.com/,https://developer.timecamp.com/reference/dist/api-prod.yaml,https://developer.timecamp.com/reference/dist/api-prod.yaml,statusUrl
-tipalti,Tipalti,Tipalti,Finance / Accounting / Tax,https://tipalti.com/,https://documentation.tipalti.com/docs/getting-started,https://documentation.tipalti.com/reference/introduction,statusUrl
-tito,Tito,Tito,Travel / Hospitality / Events,https://ti.to/home,https://ti.to/docs/api/admin/3.0,https://ti.to/docs/api/admin/3.0,statusUrl
-tldv,tl;dv,tl;dv,Productivity,https://tldv.io/,https://doc.tldv.io/index.html,https://doc.tldv.io/index.html,statusUrl
-toggl-track,Toggl Track,Toggl,Productivity,https://toggl.com/,https://engineering.toggl.com/docs/,https://engineering.toggl.com/docs/,scopes
-toradex-torizon,Torizon Cloud,Toradex,Manufacturing / ERP / Supply Chain,https://www.toradex.com/,https://developer.toradex.com/,https://developer.toradex.com/torizon/torizon-platform/torizon-api/,statusUrl
-transak,Transak,Transak,Payments / Banking / Fintech,https://transak.com/,https://docs.transak.com/getting-started/what-is-transak,https://docs.transak.com/getting-started/what-is-transak,statusUrl;scopes
-transloadit,Transloadit,Transloadit,Documents / E-sign / Forms,https://transloadit.com/,https://transloadit.com/docs/api/,https://transloadit.com/docs/api/,statusUrl
-treasury-prime,Treasury Prime,Treasury Prime,Payments / Banking / Fintech,https://www.treasuryprime.com/,https://docs.treasuryprime.com/docs/getting-started,https://docs.treasuryprime.com/reference/introduction,scopes
-tripadvisor-terra,Tripadvisor Terra,Tripadvisor,Travel / Hospitality / Events,https://www.tripadvisor.com/,https://docs.terra.tripadvisor.com/docs/overview,https://docs.terra.tripadvisor.com/docs/endpoints-overview,statusUrl
-trunk,Trunk,Trunk,Developer Tools,https://trunk.io/,https://docs.trunk.io/,https://login.trunk.io/?client_id=client_01H50ZWVHX8SVCZ6801WPAA5H6&redirect_uri=https%3A%2F%2Fapp.trunk.io%2Fauth%2Fcallback&state=Fe26.2*1*60f1e285a88130b9e4e5f584cbf7f6d0746eab0eae498113668f7333ebb458fd*y2BhBMvnIp9K18Gd8puWTw*N6C1mzpcxfJ1RIsX1kjh5o7gMv8WoO6p1oUOO_48ykVPbdkx07rGV9VxhP0MLf8RjZvpNUXZ6TRsHWzuU-dNM3ezdeO_BDIJ7Q69i0WV6BmJoA5QTRplKi3zms19Ur1lys5_C0Iw0vLVxxJvdt9TPn3sG04w6QTKtIFS2BDhQ99PL3a9bBJm3n03qnM03cJJum8BJOqkkdKynOkqvKu0zceCegV_U-y39JEutq39efE*1790608415950*cbe43c885e4527e5aaf0ae340e26d2319bd42e82c9ebac8a6d3ff1dc396f4ebf*Wti9XZBKsD4mvPaFhb6NhHgnHWI_nUyVPh92lsyAFpA~2&authorization_session_id=01M3M8NXYD6KVBJ61D744A7XA7,scopes
+instantly,Instantly,Instantly.ai,CRM & Sales,https://instantly.ai/,https://developer.instantly.ai/,https://developer.instantly.ai/api-reference/introduction,statusUrl
+instatus,Instatus,Instatus,Observability,https://instatus.com/,https://instatus.com/help,https://instatus.com/help/api,statusUrl;scopes
+canvas-lms,Canvas LMS (Instructure),Instructure,Education,https://www.instructure.com/,https://canvas.instructure.com/doc/api/,https://canvas.instructure.com/doc/api/,authDocs;caps;scopes;reqs
+interswitch,Interswitch,Interswitch,Payments / Banking / Fintech,https://interswitchgroup.com,https://docs.interswitchgroup.com/docs/home,https://docs.interswitchgroup.com/reference/how-to-use-the-reference,statusUrl;scopes
+intruder,Intruder,Intruder,Security & Identity,https://www.intruder.io/,https://developers.intruder.io/docs/welcome,https://developers.intruder.io/docs/welcome,scopes
+invoice-ninja,Invoice Ninja,Invoice Ninja,Finance / Accounting / Tax,https://invoiceninja.com/,https://invoiceninja.github.io/docs/developer-guide/api/authentication,https://invoiceninja.github.io/docs/developer-guide/api/authentication,scopes
+ionos-cloud,IONOS Cloud,IONOS,Cloud & Hosting,https://cloud.ionos.com/,https://docs.ionos.com/cloud,https://docs.ionos.com/cloud,statusUrl
+ipinfo,IPinfo,IPinfo,Government / Public Data,https://ipinfo.io/,https://ipinfo.io/developers,https://ipinfo.io/developers,statusUrl;scopes
+iru,Iru (formerly Kandji),Iru,Security & Identity,https://www.iru.com/,https://docs.iru.com/en/endpoint/api/iru-api-overview,https://api-docs.iru.com/,statusUrl
+youtrack,YouTrack,JetBrains,Developer Tools,https://www.jetbrains.com/youtrack/,https://www.jetbrains.com/help/youtrack/devportal/,https://www.jetbrains.com/help/youtrack/devportal/youtrack-rest-api.html,statusUrl
+jfrog,JFrog Platform,JFrog,Developer Tools,https://jfrog.com/,https://jfrog.com/help/,https://jfrog.com/help/,statusUrl
+juro,Juro,Juro,Legal / Compliance,https://juro.com/,https://api-docs.juro.com/,https://api-docs.juro.com/,scopes
+kashier,Kashier,Kashier,Payments / Banking / Fintech,https://www.kashier.io/,https://developers.kashier.io/docs,https://developers.kashier.io/docs/api-reference,statusUrl
+katana-mrp,Katana,Katana,Logistics / Shipping / Inventory,https://katanamrp.com/,https://developer.katanamrp.com/,https://developer.katanamrp.com/reference/api-introduction,statusUrl;scopes
+kentik,Kentik,Kentik,Observability,https://www.kentik.com/,https://kb.kentik.com/docs/apis-overview,https://kb.kentik.com/v1/docs/admin-apis,scopes
+keycdn,KeyCDN,KeyCDN,Cloud & Hosting,https://www.keycdn.com/,https://www.keycdn.com/api,https://www.keycdn.com/api,scopes
+kiwify,Kiwify,Kiwify,Commerce / Marketplaces,https://kiwify.com.br/,https://docs.kiwify.com.br/api-reference/general,https://docs.kiwify.com.br/api-reference/general.md,scopes
+knowbe4,KnowBe4 (KSAT Reporting API),KnowBe4,Security & Identity,https://www.knowbe4.com/,https://developer.knowbe4.com/,https://developer.knowbe4.com/elvis-swagger.yml,authDocs;statusUrl;caps;scopes;reqs
+kling-ai,Kling AI (Kuaishou),Kuaishou Technology,AI & Models,https://kling.ai/,https://kling.ai/document-api/api/get-started/authentication,https://kling.ai/document-api/api/get-started/authentication,authDocs;statusUrl;caps;scopes;reqs
+chatwork,Chatwork,kubell,Communications / Voice / Video,https://go.chatwork.com/en/,https://developer.chatwork.com/docs/getting-started,https://developer.chatwork.com/reference/get-me,statusUrl

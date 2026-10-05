@@ -1,21 +1,21 @@
 id,name,provider,category,known_site,known_portal,known_api,needs
-opencorporates,OpenCorporates,OpenCorporates,Legal / Compliance,https://opencorporates.com/,https://api.opencorporates.com/,https://api.opencorporates.com/,scopes
-optimizely-feature-experimentation,Optimizely Feature Experimentation,Optimizely,Developer Tools,https://www.optimizely.com/,https://docs.developers.optimizely.com/,https://docs.developers.optimizely.com/feature-experimentation/reference/generate-tokens-and-use-the-rest-apis,scopes
-oracle-eloqua,Oracle Eloqua,Oracle,Marketing / Advertising,https://www.oracle.com/cx/marketing/automation/,https://docs.oracle.com/en/cloud/saas/marketing/eloqua-rest-api/,https://docs.oracle.com/en/cloud/saas/marketing/eloqua-rest-api/,statusUrl
-oracle-hospitality-opera-ohip,Oracle Hospitality Integration Platform,Oracle,Travel / Hospitality / Events,https://www.oracle.com/hospitality/,https://docs.oracle.com/en/industries/hospitality/integration-platform/,https://github.com/oracle/hospitality-api-docs,statusUrl
-otter-ai,Otter.ai,Otter.ai,Productivity,https://otter.ai/,https://help.otter.ai/hc/en-us/articles/36130822688279-Otter-ai-Public-API,https://help.otter.ai/hc/en-us/articles/36130822688279-Otter-ai-Public-API,authDocs;caps;scopes;reqs
-otto-market,OTTO Market Partner API,OTTO,Commerce / Marketplaces,https://www.otto.de/,https://api.otto.market/docs/getting-started/,https://api.otto.market/docs/getting-started/,statusUrl
-ottu,Ottu,Ottu,Payments / Banking / Fintech,https://ottu.com/en/,https://docs.ottu.com/developers/,https://docs.ottu.com/developers/getting-started/api-fundamentals/,statusUrl
-ovhcloud-ai-endpoints,OVHcloud AI Endpoints,OVHcloud,AI & Models,https://www.ovhcloud.com/en-in/,https://docs.ovhcloud.com/en/guides/public-cloud/ai-machine-learning/ai-endpoints-getting-started,https://docs.ovhcloud.com/en/guides/public-cloud/ai-machine-learning/ai-endpoints-getting-started,scopes
-paga,Paga,Paga,Payments / Banking / Fintech,https://www.mypaga.com/,https://developer-docs.paga.com/docs/operations-1.md,https://developer-docs.paga.com/docs/operations-1.md,scopes
-panther,Panther,Panther,Security & Identity,https://panther.com/,https://docs.panther.com/panther-developer-workflows/api,https://docs.panther.com/panther-developer-workflows/api,statusUrl
-papaya-global,Papaya Global,Papaya Global,HR / Recruiting / Payroll,https://www.papayaglobal.com/,https://docs.papayaglobal.com/,https://docs.papayaglobal.com/api-reference,statusUrl
-paylocity,Paylocity,Paylocity,HR / Recruiting / Payroll,https://www.paylocity.com/,https://developer.paylocity.com/integrations/docs/getting-started,https://developer.paylocity.com/integrations/reference/authentication,statusUrl;scopes
-paymo,Paymo,Paymo,Productivity,https://www.paymoapp.com/,https://github.com/paymo-org/api,https://github.com/paymo-org/api,statusUrl
-paysafe,Paysafe,Paysafe,Payments / Banking / Fintech,https://www.paysafe.com/en/,https://developer.paysafe.com/en/,https://developer.paysafe.com/en/payments-api/,scopes
-peach-payments,Peach Payments,Peach Payments,Payments / Banking / Fintech,https://www.peachpayments.com/,https://developer.peachpayments.com/,https://developer.peachpayments.com/reference/payment,scopes
-credly,Credly,Pearson,Education,https://info.credly.com/,https://docs.credly.com/browse/docs/getting-started,https://docs.credly.com/browse/reference,statusUrl
-people-data-labs,People Data Labs,People Data Labs,CRM & Sales,https://www.peopledatalabs.com/,https://docs.peopledatalabs.com/docs/intro,https://docs.peopledatalabs.com/docs/intro,scopes
-blazemeter,BlazeMeter,Perforce,Developer Tools,https://www.blazemeter.com/,https://help.blazemeter.com/,https://help.blazemeter.com/apidocs/performance/index.htm,scopes
-pesapal,Pesapal,Pesapal,Payments / Banking / Fintech,https://www.pesapal.com/,https://developer.pesapal.com/,https://developer.pesapal.com/how-to-integrate/e-commerce/api-30-json/api-reference,statusUrl;scopes
-tidb-cloud,TiDB Cloud,PingCAP,Databases & Search,https://www.pingcap.com/,https://docs.pingcap.com/tidbcloud/,https://docs.pingcap.com/tidbcloud/,statusUrl;scopes
+credgenics,Credgenics,Credgenics,Payments / Banking / Fintech,https://www.credgenics.com/,https://docs.credgenics.com/,https://docs.credgenics.com/#lending-apis,statusUrl
+cronofy,Cronofy,Cronofy,Productivity,https://www.cronofy.com/,https://docs.cronofy.com/,https://docs.cronofy.com/,authDocs;statusUrl;caps;scopes;reqs
+crunchbase,Crunchbase,Crunchbase,CRM & Sales,https://www.crunchbase.com/,https://data.crunchbase.com/docs/welcome-to-crunchbase-data,https://data.crunchbase.com/docs/using-the-api,authDocs;statusUrl;caps;scopes;reqs
+custify,Custify,Custify,Support & Success,https://www.custify.com/,https://docs.custify.com/,https://docs.custify.com/,statusUrl
+cyberark-privilege-cloud,CyberArk Privilege Cloud,CyberArk,Security & Identity,https://www.paloaltonetworks.com/idira,https://docs.cyberark.com/portal/latest/en/docs.htm,https://docs.cyberark.com/manage/latest/en/content/privilege-cloud/webservices/implementing%20privileged%20account%20security%20web%20services%20.htm,authDocs;statusUrl;caps;scopes;reqs
+d-id,D-ID,D-ID,AI & Models,https://www.d-id.com/,https://docs.d-id.com/docs/quickstart,https://docs.d-id.com/docs/quickstart,authDocs;statusUrl;caps;scopes;reqs
+datacake,Datacake,Datacake,Manufacturing / ERP / Supply Chain,https://datacake.co/,https://docs.datacake.de/,https://docs.datacake.de/api/graphql-api.md,statusUrl
+deepinfra,DeepInfra,DeepInfra,AI & Models,https://deepinfra.com/,https://docs.deepinfra.com,https://docs.deepinfra.com,scopes
+deepsource,DeepSource,DeepSource,Developer Tools,https://deepsource.com/,https://docs.deepsource.com/docs/developers/api,https://docs.deepsource.com/docs/developers/api,statusUrl;scopes
+moogsoft,Moogsoft,Dell Technologies,Observability,https://www.moogsoft.com/,https://docs.moogsoft.com/moogsoft-cloud/en/apis.html,https://docs.moogsoft.com/moogsoft-cloud/en/apis.html,statusUrl
+dhanhq,DhanHQ,Dhan,Payments / Banking / Fintech,https://dhan.co/,https://dhanhq.co/,https://dhanhq.co/docs/v2/,statusUrl;scopes
+bhashini,Bhashini (ULCA),"Digital India Bhashini Division, MeitY",AI & Models,https://bhashini.gov.in/,https://dibd-bhashini.gitbook.io/bhashini-apis,https://dibd-bhashini.gitbook.io/bhashini-apis/pipeline-config-call,statusUrl
+directus,Directus Cloud,Directus,Databases & Search,https://directus.com/,https://directus.com/docs/,https://directus.com/docs/,statusUrl
+dlocal,dLocal,dLocal,Payments / Banking / Fintech,https://www.dlocal.com/,https://docs.dlocal.com/,https://docs.dlocal.com/,statusUrl
+dojah,Dojah,Dojah,Security & Identity,https://dojah.io/,https://docs.dojah.io/,https://docs.dojah.io/,statusUrl
+dribbble,Dribbble,Dribbble,Social / Creator / Publishing,https://dribbble.com/,https://developer.dribbble.com/,https://developer.dribbble.com/v2/,statusUrl
+dvla-vehicle-enquiry-service,DVLA Vehicle Enquiry Service,Driver and Vehicle Licensing Agency,Government / Public Data,https://www.gov.uk/government/organisations/driver-and-vehicle-licensing-agency,https://developer-portal.driver-vehicle-licensing.api.gov.uk/,https://developer-portal.driver-vehicle-licensing.api.gov.uk/apis/vehicle-enquiry-service/vehicle-enquiry-service-description.html,statusUrl;scopes
+eka-care,Eka Care,Eka Care,Healthcare,https://www.eka.care/,https://developer.eka.care/user-guides/get-started,https://developer.eka.care/user-guides/get-started,authDocs;statusUrl;caps;scopes;reqs
+enable-banking,Enable Banking,Enable Banking,Payments / Banking / Fintech,https://enablebanking.com/,https://enablebanking.com/docs/,https://enablebanking.com/docs/api/reference/,statusUrl
+enkash,EnKash,EnKash,Payments / Banking / Fintech,https://www.enkash.com/,https://docs.enkash.com/docs,https://docs.enkash.com/folder-3851169,statusUrl

@@ -5,7 +5,11 @@ import { navigate } from '../hooks/usePathRoute'
 
 const TABS = ['Overview', 'Tools', 'Authentication', 'Permissions', 'Webhooks', 'Documentation'] as const
 
-const plural = (n: number, w: string) => (n ? `${n} ${w}${n === 1 ? '' : 's'}` : '')
+// hold reasons in the health, children's-data, money-moving and likeness categories (core gates G-3, G-7, G-4 and
+// likeness/voice consent, and the matching website editorial holds) need extra compliance review before a run
+const COMPLIANCE_REVIEW = /\bPHI\b|health data|minors|money-mov|likeness/i
+
+const plural =(n: number, w: string) => (n ? `${n} ${w}${n === 1 ? '' : 's'}` : '')
 
 function Row({ k, v, mono, title }: { k: string; v: string | null; mono?: boolean; title?: string }) {
   if (!v) return null
@@ -120,6 +124,12 @@ function ConnectorDetailView({ c, legacy, resolved }: { c: Conn; legacy?: Conn; 
             {c.unreconciled && (
               <div className="mb-5 p-4 rounded-xl text-[12.5px] leading-relaxed" style={{ background: 'rgba(245,165,36,0.08)', border: '1px solid rgba(245,165,36,0.35)', color: '#B45309' }}>
                 This catalogue record is pending reconciliation against the frozen engineering set and is shown as Coming Soon until verified. It does not represent an engineered connector.
+              </div>
+            )}
+            {c.listed_by_founder_decision && (
+              <div className="mb-5 p-4 rounded-xl text-[12.5px] leading-relaxed" style={{ background: '#F5F7FB', border: '1px solid #E3E7EE', color: '#3A4357' }}>
+                Use of this connector is subject to the provider's terms.
+                {COMPLIANCE_REVIEW.test(c.review_note ?? '') && ' Additional compliance review applies before it can run.'}
               </div>
             )}
             {legacy && !resolved && (

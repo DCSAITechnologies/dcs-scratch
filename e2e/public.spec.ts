@@ -1,5 +1,5 @@
 import { test, expect, type Page } from '@playwright/test'
-import { PUBLISHED, CANONICAL, HOLD, ALIASES, LEGACY, legacy, matches } from './catalogue'
+import { PUBLISHED, CANONICAL, HOLD, FOUNDER_LISTED, ALIASES, LEGACY, legacy, matches } from './catalogue'
 
 const NOT_FOUND = /This page is not on the map|Connector not found/
 
@@ -127,6 +127,18 @@ test.describe('connector detail routing', () => {
     await page.goto(`/connectors/${c.id}`)
     await expect(page.locator('main')).toContainText('not publicly listed')
     await expect(page.locator('main')).not.toContainText(c.d.slice(0, 40))
+  })
+
+  test('founder-listed held rows show the provider-terms notice, and compliance categories say so', async ({ page }) => {
+    const compliance = /\bPHI\b|health data|minors|money-mov|likeness/i
+    expect(FOUNDER_LISTED.every((c) => c.dispatch_eligibility === 'NOT_DISPATCHABLE')).toBe(true)
+    const plain = FOUNDER_LISTED.find((c) => !compliance.test(c.review_note ?? '') && !c.alias_of)!
+    await page.goto(`/connectors/${plain.id}`)
+    await expect(page.locator('main')).toContainText("Use of this connector is subject to the provider's terms.")
+    await expect(page.locator('main')).not.toContainText('Additional compliance review applies')
+    const gated = FOUNDER_LISTED.find((c) => compliance.test(c.review_note ?? '') && !c.alias_of)!
+    await page.goto(`/connectors/${gated.id}`)
+    await expect(page.locator('main')).toContainText('Additional compliance review applies before it can run.')
   })
 
   test('legacy route behaviours: preserve, redirect, gone, unlisted', async ({ page }) => {

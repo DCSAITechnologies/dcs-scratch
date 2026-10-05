@@ -1,0 +1,21 @@
+id,name,provider,category,known_site,known_portal,known_api,needs
+tidb-cloud,TiDB Cloud,PingCAP,Databases & Search,https://www.pingcap.com/,https://docs.pingcap.com/tidbcloud/,https://docs.pingcap.com/tidbcloud/,statusUrl;scopes
+plivo,Plivo,Plivo,Communications / Voice / Video,https://www.plivo.com/,https://www.plivo.com/docs/home,https://www.plivo.com/docs/home,scopes
+pluggy,Pluggy,Pluggy,Payments / Banking / Fintech,https://www.pluggy.ai/,https://docs.pluggy.ai/en,https://docs.pluggy.ai/en,scopes
+port-io,Port,Port,Developer Tools,https://www.port.io/,https://docs.port.io/,https://docs.port.io/api-reference/create-an-access-token/,scopes
+portone,PortOne,PortOne,Payments / Banking / Fintech,https://www.portone.io/,https://developers.portone.io/opi/ko/readme,https://developers.portone.io/api/rest-v2,statusUrl;scopes
+postgrid,PostGrid,PostGrid,Communications / Voice / Video,https://www.postgrid.com/,https://postgrid.readme.io/docs/overview,https://postgrid.readme.io/docs/overview,scopes
+posthog,PostHog,PostHog,Marketing / Advertising,https://posthog.com/,https://posthog.com/docs/api,https://posthog.com/docs/api,statusUrl
+prembly,Prembly,Prembly,Security & Identity,https://prembly.com/,https://docs.prembly.com/docs/authentication.md,https://docs.prembly.com/docs/authentication.md,statusUrl;scopes
+printify,Printify,Printify,Commerce / Marketplaces,https://printify.com/,https://developers.printify.com/,https://developers.printify.com/,statusUrl
+procountor,Procountor,Procountor,Finance / Accounting / Tax,https://www.procountor.com/,https://dev.procountor.com/,https://dev.procountor.com/,statusUrl
+procurify,Procurify,Procurify,Finance / Accounting / Tax,https://www.procurify.com/,https://developer.procurify.com/,https://developer.procurify.com/,scopes
+sharefile,"ShareFile (Progress ShareFile, formerly Citrix ShareFile)",Progress Software,Productivity,https://www.sharefile.com/,https://api.sharefile.com/,https://api.sharefile.com/,scopes
+proofpoint-tap,Proofpoint TAP,Proofpoint,Security & Identity,https://www.proofpoint.com/us,https://help.proofpoint.com/Threat_Insight_Dashboard/API_Documentation/SIEM_API,https://help.proofpoint.com/Threat_Insight_Dashboard/API_Documentation/SIEM_API,statusUrl;scopes
+propertyradar,PropertyRadar,PropertyRadar,Real Estate / Construction,https://www.propertyradar.com/,https://developers.propertyradar.com/,https://developers.propertyradar.com/api,statusUrl
+qonto,Qonto Business API,Qonto,Payments / Banking / Fintech,https://qonto.com/en,https://docs.qonto.com/introduction/welcome,https://docs.qonto.com/introduction/welcome,authDocs;statusUrl;caps;scopes;reqs
+quaderno,Quaderno,Quaderno,Finance / Accounting / Tax,https://quaderno.io/,https://developers.quaderno.io/,https://developers.quaderno.io/api/,scopes
+qualtrics,Qualtrics,Qualtrics,Support & Success,https://www.qualtrics.com/,https://api.qualtrics.com/,https://api.qualtrics.com/,caps;scopes
+ramp,Ramp,Ramp,Finance / Accounting / Tax,https://ramp.com/,https://docs.ramp.com/,https://docs.ramp.com/,authDocs;whDocs;statusUrl;caps;scopes;reqs
+rapyd,Rapyd,Rapyd,Payments / Banking / Fintech,https://www.rapyd.net/,https://docs.rapyd.net/,https://docs.rapyd.net/,statusUrl;scopes
+readme,ReadMe,ReadMe,Developer Tools,https://readme.com/,https://docs.readme.com/main/reference/intro-to-the-readme-api,https://docs.readme.com/main/reference/intro-to-the-readme-api,scopes

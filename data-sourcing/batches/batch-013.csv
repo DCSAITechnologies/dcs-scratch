@@ -1,21 +1,21 @@
 id,name,provider,category,known_site,known_portal,known_api,needs
-muck-rack,Muck Rack,Muck Rack,Social / Creator / Publishing,https://muckrack.com/,https://muckrack.com/pr-software/api,https://muckrack.com/pr-software/api,caps;scopes
-myfatoorah,MyFatoorah,MyFatoorah,Payments / Banking / Fintech,https://www.myfatoorah.com/,https://docs.myfatoorah.com/docs/get-started,https://docs.myfatoorah.com/docs/get-started,statusUrl
-name-com,Name.com,Name.com,Cloud & Hosting,https://www.name.com/,https://docs.name.com/,https://docs.name.com/api/v1/overview,scopes
-ncbi-eutilities,NCBI E-utilities (PubMed),National Center for Biotechnology Information,Healthcare,https://www.ncbi.nlm.nih.gov/,https://www.ncbi.nlm.nih.gov/home/about/policies/,https://www.ncbi.nlm.nih.gov/books/NBK25499/,statusUrl
-clinicaltrials-gov-api,ClinicalTrials.gov API,National Library of Medicine,Healthcare,https://clinicaltrials.gov/,https://clinicaltrials.gov/api/oas/v2,https://clinicaltrials.gov/api/oas/v2,statusUrl
-rxnav-rxnorm-api,RxNav / RxNorm API (NLM),National Library of Medicine,Healthcare,https://www.nlm.nih.gov/,https://lhncbc.nlm.nih.gov/RxNav/APIs/RxNormAPIs.html,https://lhncbc.nlm.nih.gov/RxNav/APIs/RxNormAPIs.html,statusUrl
-nebius-token-factory,Nebius Token Factory,Nebius,AI & Models,https://nebius.com/,https://docs.tokenfactory.nebius.com/,https://docs.tokenfactory.nebius.com/api-reference/introduction,scopes
-neo4j-aura,Neo4j Aura API,Neo4j,Databases & Search,https://neo4j.com/,https://neo4j.com/docs/aura/,https://neo4j.com/docs/aura/,statusUrl
-neo4j-query,Neo4j Query API (Aura),Neo4j,Databases & Search,https://neo4j.com/,https://neo4j.com/docs/query-api/current/,https://neo4j.com/docs/query-api/current/query/,statusUrl
-dpo-pay,DPO Pay,Network International,Payments / Banking / Fintech,https://dpogroup.com/,https://docs.dpopay.com/dpo-pay-by-network/reference/create-token.md,https://docs.dpopay.com/dpo-pay-by-network/reference/create-token.md,statusUrl
-newegg-marketplace-api,Newegg Marketplace API,Newegg,Commerce / Marketplaces,https://www.newegg.com/,https://developer.newegg.com/newegg_marketplace_api/,https://developer.newegg.com/newegg_marketplace_api/order_management/,statusUrl
-noaa-ncei-cdo,NOAA NCEI Climate Data Online,NOAA National Centers for Environmental Information,Government / Public Data,https://www.ncei.noaa.gov/,https://www.ncdc.noaa.gov/cdo-web/webservices/v2,https://www.ncdc.noaa.gov/cdo-web/webservices/v2,statusUrl
-nws-api,National Weather Service API (api.weather.gov),NOAA National Weather Service,Government / Public Data,https://www.weather.gov/,https://www.weather.gov/documentation/services-web-api,https://www.weather.gov/documentation/services-web-api,statusUrl
-nuclino,Nuclino,Nuclino,Productivity,https://www.nuclino.com/,https://help.nuclino.com/d3a29686-api,https://help.nuclino.com/d3a29686-api,statusUrl
-nutshell,Nutshell,Nutshell,CRM & Sales,https://www.nutshell.com/,https://developers.nutshell.com/,https://developers.nutshell.com/reference,scopes
-nuvei,Nuvei,Nuvei,Payments / Banking / Fintech,https://www.nuvei.com/,https://docs.nuvei.com/documentation/home/,https://docs.nuvei.com/documentation/home/,statusUrl
-nymcard,NymCard,NymCard,Payments / Banking / Fintech,https://www.nymcard.com/,https://docs.nymcard.com/,https://portal.stg.platform.ae-1.nymcard.com/default/documentation/02_api_specs,statusUrl
-omie,Omie,Omie,Manufacturing / ERP / Supply Chain,https://www.omie.com.br/,https://developer.omie.com.br/,https://developer.omie.com.br/service-list/,statusUrl;scopes
-onespan-sign,OneSpan Sign,OneSpan,Documents / E-sign / Forms,https://www.onespan.com/,https://community.onespan.com/,https://docs.onespan.com/apidocs,statusUrl
-gerrit,Gerrit Code Review,Open-source project (no single provider),Developer Tools,https://www.gerritcodereview.com/,https://gerrit-review.googlesource.com/Documentation/,https://gerrit-review.googlesource.com/Documentation/rest-api.html,statusUrl
+churnzero,ChurnZero,ChurnZero,Support & Success,https://churnzero.com/,https://support.churnzero.com/hc/en-us/articles/360003183171-Integrate-ChurnZero-using-HTTP-API,https://support.churnzero.com/hc/en-us/articles/360003183171-Integrate-ChurnZero-using-HTTP-API,authDocs
+cielo-ecommerce,Cielo E-commerce API,Cielo,Payments / Banking / Fintech,https://www.cielo.com.br/,https://developercielo.github.io/manual/cielo-ecommerce,https://developercielo.github.io/manual/cielo-ecommerce,scopes
+cisco-umbrella,Cisco Umbrella,Cisco,Security & Identity,https://umbrella.cisco.com/,https://developer.cisco.com/docs/cloud-security/,https://developer.cisco.com/docs/cloud-security/umbrella-api-authentication/,statusUrl
+clay,Clay,Clay,CRM & Sales,https://www.clay.com/,https://developers.clay.com/,https://developers.clay.com/api-reference/me/get-the-authenticated-user,statusUrl;scopes
+clerk,Clerk,Clerk,Security & Identity,https://clerk.com/,https://clerk.com/docs,https://clerk.com/docs,scopes
+clickatell,Clickatell,Clickatell,Communications / Voice / Video,https://www.clickatell.com/,https://help.clickatell.com/developers-api-reference/reference/one-api,https://help.clickatell.com/developers-api-reference/reference/one-api,authDocs;statusUrl;caps;scopes;reqs
+clickpost,ClickPost,ClickPost,Logistics / Shipping / Inventory,https://www.clickpost.ai/,https://docs.clickpost.ai/docs/getting-started,https://docs.clickpost.ai/reference,scopes
+clip-mx,Clip,Clip,Payments / Banking / Fintech,https://www.clip.mx/,https://developer.clip.mx/,https://developer.clip.mx/reference,statusUrl
+argo-cd,Argo CD,Cloud Native Computing Foundation,Developer Tools,https://argoproj.github.io/cd/,https://argo-cd.readthedocs.io/en/stable/developer-guide/api-docs/,https://argo-cd.readthedocs.io/en/stable/developer-guide/api-docs/,statusUrl
+keycloak,Keycloak (self-hosted),Cloud Native Computing Foundation,Security & Identity,https://www.keycloak.org/,https://www.keycloak.org/documentation,https://www.keycloak.org/docs-api/latest/rest-api/index.html,statusUrl
+prometheus,Prometheus (HTTP API),Cloud Native Computing Foundation,Observability,https://prometheus.io/,https://prometheus.io/docs/introduction/overview/,https://prometheus.io/docs/prometheus/latest/querying/api/,statusUrl
+cloudconvert,CloudConvert,CloudConvert,Documents / E-sign / Forms,https://cloudconvert.com/,https://cloudconvert.com/docs/getting-started/introduction,https://cloudconvert.com/docs/getting-started/introduction,authDocs;statusUrl;caps;scopes;reqs
+cloudsmith,Cloudsmith,Cloudsmith,Developer Tools,https://cloudsmith.com/,https://docs.cloudsmith.com/,https://docs.cloudsmith.com/api/rate-limits,scopes
+cognism,Cognism,Cognism,CRM & Sales,https://www.cognism.com/,https://developers.cognism.com/api/collections/14862827/UVJhBu4C,https://developers.cognism.com/api/collections/14862827/UVJhBu4C,statusUrl
+common-room,Common Room,Common Room,CRM & Sales,https://www.commonroom.io/,https://api.commonroom.io/docs/community.html,https://api.commonroom.io/docs/community.html,statusUrl
+uk-companies-house,UK Companies House,Companies House,Legal / Compliance,https://www.gov.uk/government/organisations/companies-house,https://developer.company-information.service.gov.uk/,https://developer-specs.company-information.service.gov.uk/companies-house-public-data-api/reference,statusUrl
+configcat,ConfigCat,ConfigCat,Developer Tools,https://configcat.com/,https://configcat.com/docs/,https://configcat.com/docs/api/reference/configcat-public-management-api/,scopes
+connecteam,Connecteam,Connecteam,HR / Recruiting / Payroll,https://connecteam.com/,https://developer.connecteam.com/reference/form_submission_edited_eventform_submission_edited_post,https://developer.connecteam.com/reference/get_users_users_v1_users_get,statusUrl
+core42-compass,Core42 Compass,Core42,AI & Models,https://www.core42.ai/,https://www.core42.ai/compass/documentation/compass-api-reference,https://www.core42.ai/compass/documentation/compass-api-reference,statusUrl
+zotero-web-api,Zotero Web API,Corporation for Digital Scholarship,Government / Public Data,https://www.zotero.org/,https://www.zotero.org/support/dev/web_api/v3/,https://www.zotero.org/support/dev/web_api/v3/,statusUrl

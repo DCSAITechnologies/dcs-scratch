@@ -1,0 +1,21 @@
+id,name,provider,category,known_site,known_portal,known_api,needs
+shodan,Shodan,Shodan,Security & Identity,https://www.shodan.io/,https://developer.shodan.io/,https://developer.shodan.io/api,scopes
+giphy,GIPHY,Shutterstock,Social / Creator / Publishing,https://giphy.com/,https://developers.giphy.com/,https://developers.giphy.com/docs/api/,authDocs;statusUrl;caps;scopes;reqs
+signaturit,Signaturit,Signaturit,Documents / E-sign / Forms,https://www.signaturit.com/,https://docs.signaturit.com/,https://docs.signaturit.com/api/latest,scopes
+siliconflow,SiliconFlow,SiliconFlow,AI & Models,https://siliconflow.cn/,https://docs.siliconflow.cn/docs/userguide/introduction,https://docs.siliconflow.cn/docs/api/chat-completions-post,statusUrl
+sinch,Sinch,Sinch,Communications / Voice / Video,https://sinch.com/,https://developers.sinch.com/,https://developers.sinch.com/docs/conversation/api-reference/conversation,scopes
+skyscanner,Skyscanner,Skyscanner,Travel / Hospitality / Events,https://www.skyscanner.net/sttc/px/captcha-v2/index.html?url=Lz8=&uuid=deb242ec-bb4d-11f1-8418-5ee3384ba296&vid=,https://developers.skyscanner.net/,https://developers.skyscanner.net/api/flights-live-pricing/,statusUrl
+smallcase-gateway,smallcase Gateway,smallcase,Payments / Banking / Fintech,https://www.smallcase.com/,https://developers.gateway.smallcase.com/docs/overview,https://developers.gateway.smallcase.com/reference/graph-performance-api,statusUrl;scopes
+smartlead,Smartlead,Smartlead,CRM & Sales,https://www.smartlead.ai/,https://api.smartlead.ai/introduction,https://api.smartlead.ai/introduction,statusUrl
+smartsupp,Smartsupp,Smartsupp,Support & Success,https://www.smartsupp.com/,https://docs.smartsupp.com/,https://docs.smartsupp.com/rest-api/reference/,statusUrl
+smile-id,Smile ID,Smile ID,Security & Identity,https://smile.id/,https://docs.usesmileid.com/,https://docs.usesmileid.com/,statusUrl;scopes
+smoobu,Smoobu,Smoobu,Real Estate / Construction,https://www.smoobu.com/en/,https://www.smoobu.com/en/for-developers/,https://docs.smoobu.com/,scopes
+snapchat-marketing,Snapchat Marketing API,Snap Inc.,Marketing / Advertising,https://forbusiness.snapchat.com/,https://developers.snap.com/,https://developers.snap.com/api/marketing-api/Ads-API/introduction,statusUrl
+snov-io,Snov.io,Snov.io,CRM & Sales,https://snov.io/,https://snov.io/api,https://snov.io/api,statusUrl;scopes
+papertrail,Papertrail,SolarWinds,Observability,https://www.papertrail.com/,https://www.papertrail.com/help/papertrail-documentation/,https://www.papertrail.com/help/http-api/,statusUrl;scopes
+squadcast,Squadcast,SolarWinds,Observability,https://www.solarwinds.com/it-incident-response-software,https://developers.incidents.cloud.solarwinds.com/,https://developers.incidents.cloud.solarwinds.com/,statusUrl
+soldo,Soldo,Soldo,Finance / Accounting / Tax,https://www.soldo.com/en-gb/,https://developer.soldo.com/,https://developer.soldo.com/reference/introduction,statusUrl
+sonatype-nexus,Sonatype Nexus Repository,Sonatype,Developer Tools,https://www.sonatype.com/,https://help.sonatype.com/index.html,https://help.sonatype.com/index.html,authDocs;statusUrl;caps;scopes;reqs
+sophos-central,Sophos Central,Sophos,Security & Identity,https://www.sophos.com/,https://developer.sophos.com/,https://developer.sophos.com/apis/,statusUrl
+speedcurve,SpeedCurve,SpeedCurve,Observability,https://www.speedcurve.com/,https://support.speedcurve.com/reference/getting-started,https://support.speedcurve.com/reference/getting-started,authDocs;statusUrl;caps;scopes;reqs
+appdynamics,Splunk AppDynamics,Splunk,Observability,https://www.splunk.com/,https://help.splunk.com/en/appdynamics-saas/extend-splunk-appdynamics/25.4.0/extend-splunk-appdynamics/splunk-appdynamics-apis/api-clients,https://help.splunk.com/en/appdynamics-saas/extend-splunk-appdynamics/25.4.0/extend-splunk-appdynamics/splunk-appdynamics-apis/api-clients,statusUrl

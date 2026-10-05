@@ -1,21 +1,21 @@
 id,name,provider,category,known_site,known_portal,known_api,needs
-courtlistener,CourtListener / RECAP,Free Law Project,Legal / Compliance,https://www.courtlistener.com/,https://wiki.free.law/c/courtlistener/help/api,https://wiki.free.law/c/courtlistener/help/api,statusUrl;scopes
-geoapify,Geoapify,Geoapify,Government / Public Data,https://www.geoapify.com/,https://apidocs.geoapify.com/docs/geocoding/forward-geocoding/,https://apidocs.geoapify.com/docs/geocoding/forward-geocoding/,scopes
-geotab,Geotab,Geotab,Logistics / Shipping / Inventory,https://www.geotab.com/,https://developers.geotab.com/,https://developers.geotab.com/myGeotab/apiReference/methods,statusUrl;scopes
-getaccept,GetAccept,GetAccept,CRM & Sales,https://www.getaccept.com/,https://raw.githubusercontent.com/getaccept/openapi/master/swagger.yaml,https://raw.githubusercontent.com/getaccept/openapi/master/swagger.yaml,statusUrl
-gladia,Gladia,Gladia,AI & Models,https://www.gladia.io/,https://docs.gladia.io/chapters/introduction,https://docs.gladia.io/chapters/introduction,scopes
-gladly,Gladly,Gladly,Support & Success,https://www.gladly.ai/,https://developer.gladly.com/,https://developer.gladly.com/,authDocs;caps;scopes;reqs
-reamaze,Re:amaze,GoDaddy,Support & Success,https://www.reamaze.com/,https://www.reamaze.com/api,https://www.reamaze.com/api,scopes
-golioth,Golioth,Golioth,Manufacturing / ERP / Supply Chain,https://golioth.io/,https://docs.golioth.io/,https://docs.golioth.io/,scopes
-virustotal,VirusTotal,Google,Security & Identity,https://www.virustotal.com/gui/,https://docs.virustotal.com/,https://docs.virustotal.com/,statusUrl
-grain,Grain,Grain,Productivity,https://grain.com/,https://developers.grain.com/overview.html,https://developers.grain.com/endpoints.html,statusUrl
-gravity-forms,Gravity Forms,Gravity Forms,Documents / E-sign / Forms,https://www.gravityforms.com/,https://docs.gravityforms.com/rest-api-v2/,https://docs.gravityforms.com/rest-api-v2/,statusUrl
-greynoise,GreyNoise,GreyNoise,Security & Identity,https://www.greynoise.io/,https://docs.greynoise.io/,https://docs.greynoise.io/docs/using-the-greynoise-api,scopes
-grist,Grist,Grist Labs,Databases & Search,https://www.getgrist.com/,https://support.getgrist.com/api/,https://support.getgrist.com/api/,statusUrl
-guesty,Guesty,Guesty,Real Estate / Construction,https://www.guesty.com/,https://open-api-docs.guesty.com/,https://open-api-docs.guesty.com/reference/get-started,statusUrl
-hackerone,HackerOne,HackerOne,Security & Identity,https://www.hackerone.com/,https://api.hackerone.com/,https://api.hackerone.com/,statusUrl;scopes
-harvest,Harvest,Harvest,Productivity,https://www.getharvest.com/,https://help.getharvest.com/api-v2/,https://help.getharvest.com/api-v2/,statusUrl
-hasura-cloud,Hasura Cloud,Hasura,Databases & Search,https://hasura.io/,https://hasura.io/docs/3.0/index/,https://hasura.io/docs/2.0/api-reference/cloud-api-reference/,scopes
-hotelbeds,Hotelbeds (HBX Group),HBX Group,Travel / Hospitality / Events,https://discover.hotelbeds.com,https://developer.hotelbeds.com/,https://developer.hotelbeds.com/documentation/hotels/booking-api/api-reference/,statusUrl;scopes
-helpjuice,Helpjuice,Helpjuice,Productivity,https://helpjuice.com/,https://help.helpjuice.com/en_US/api-v3/using-api-v3,https://help.helpjuice.com/en_US/api-v3/using-api-v3,scopes
-hexnode,Hexnode,Hexnode,Security & Identity,https://www.hexnode.com/,https://www.hexnode.com/mobile-device-management/developers/,https://www.hexnode.com/mobile-device-management/developers/,statusUrl
+similarweb,Similarweb,Similarweb,Marketing / Advertising,,https://developers.similarweb.com/docs/similarweb-web-traffic-api,https://developers.similarweb.com/docs/similarweb-web-traffic-api,logo;site;authDocs;statusUrl;caps;scopes;reqs
+siteminder,SiteMinder,SiteMinder,Travel / Hospitality / Events,,,,site;portal;api;authDocs;statusUrl;caps;scopes;reqs
+pactflow,PactFlow,SmartBear,Developer Tools,https://pactflow.io/,https://docs.pactflow.io/,https://docs.pactflow.io/,logo;authDocs;auth;caps
+swaggerhub,SwaggerHub,SmartBear,Developer Tools,https://swagger.io/product/,https://support.smartbear.com/swagger/studio/docs/en/about.html,https://support.smartbear.com/swagger/studio/docs/en/about.html,logo
+zephyr-scale-cloud,Zephyr Scale Cloud,SmartBear,Developer Tools,https://smartbear.com/,https://support.smartbear.com/zephyr/docs/en/rest-api/rest-api--overview-.html,https://support.smartbear.com/zephyr-scale-cloud/api-docs/,logo
+socket-dev,Socket,Socket,Security & Identity,,https://docs.socket.dev/docs/getting-started,https://docs.socket.dev/reference/authentication,logo;site;statusUrl;caps;scopes;reqs
+soracom,Soracom,Soracom,Manufacturing / ERP / Supply Chain,http://soracom.io/,,,portal;api;authDocs;statusUrl;caps;scopes;reqs
+soundcloud,SoundCloud,SoundCloud,Social / Creator / Publishing,https://soundcloud.com/,https://developers.soundcloud.com/,,api;authDocs;statusUrl;caps;scopes;reqs
+springverify-india,SpringVerify India,SpringVerify,HR / Recruiting / Payroll,https://in.springverify.com/,,,portal;api;authDocs;statusUrl;caps;scopes;reqs
+stedi-healthcare,Stedi Healthcare,Stedi,Healthcare,https://www.stedi.com/,https://www.stedi.com/docs/healthcare,https://www.stedi.com/docs/healthcare,logo;authDocs;statusUrl;caps;scopes;reqs
+sugarcrm,SugarCRM,SugarCRM,CRM & Sales,https://www.sugarcrm.com/,,,portal;api;authDocs;statusUrl;auth;caps;scopes;reqs
+sw-sapien,SW sapien (Smarter Web),SW sapien,Finance / Accounting / Tax,,https://developers.sw.com.mx/,https://developers.sw.com.mx/,logo;site;authDocs;statusUrl;caps;scopes;reqs
+boldsign,BoldSign,Syncfusion,Documents / E-sign / Forms,https://boldsign.com/,https://developers.boldsign.com/,,api;authDocs;whDocs;statusUrl;caps;scopes;reqs
+tazapay,Tazapay,Tazapay,Payments / Banking / Fintech,,https://developer.tazapay.com/getting-started/overview/overview,https://developer.tazapay.com/getting-started/overview/overview,logo;site;authDocs;statusUrl;auth;caps;scopes;reqs
+teamleader-focus,Teamleader Focus,Teamleader,CRM & Sales,https://www.teamleader.eu/,https://developer.focus.teamleader.eu/,,api;authDocs;statusUrl;caps;scopes;reqs
+terra,Terra API,Terra,Healthcare,https://tryterra.co/,https://docs.tryterra.co/,https://docs.tryterra.co/,logo;authDocs;whDocs;statusUrl;caps;scopes;reqs
+thinkific,Thinkific,Thinkific,Education,https://www.thinkific.com/,https://developers.thinkific.com/,,logo;api;authDocs;statusUrl;caps;scopes;reqs
+tiendanube-nuvemshop,Tiendanube / Nuvemshop,Tiendanube,Commerce / Marketplaces,,,,logo;site;portal;api;authDocs;statusUrl;auth;caps;scopes;reqs
+transbank-webpay,Transbank Webpay Plus,Transbank,Payments / Banking / Fintech,,https://www.transbankdevelopers.cl/,,logo;site;api;authDocs;statusUrl;auth;caps;scopes;reqs
+trend-vision-one,Trend Vision One,Trend Micro,Security & Identity,https://www.trendmicro.com/en_gb/business.html,https://automation.trendmicro.com/,,api;caps

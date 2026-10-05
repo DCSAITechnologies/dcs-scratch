@@ -1,21 +1,21 @@
 id,name,provider,category,known_site,known_portal,known_api,needs
+1uphealth,1upHealth,1upHealth,Healthcare,https://1up.health/,,,portal;api;authDocs;statusUrl;caps;scopes;reqs
+6sense,6sense,6sense,CRM & Sales,,,,logo;site;portal;api;authDocs;statusUrl;caps;scopes;reqs
 abuseipdb,AbuseIPDB,AbuseIPDB,Security & Identity,,https://docs.abuseipdb.com/,https://docs.abuseipdb.com/,site
 actionstep,Actionstep,Actionstep,Legal / Compliance,https://www.actionstep.com/,,,portal;api;authDocs;auth;caps;scopes;reqs
+adobe-analytics,Adobe Analytics,Adobe,Marketing / Advertising,,https://developer.adobe.com/analytics-apis/docs/2.0/,https://developer.adobe.com/analytics-apis/docs/2.0/,logo;site;authDocs;statusUrl;caps;scopes;reqs
+adobe-pdf-services,Adobe PDF Services API,Adobe,Documents / E-sign / Forms,,https://developer.adobe.com/document-services/,https://developer.adobe.com/document-services/docs/overview/pdf-services-api/,logo;site;authDocs;statusUrl;caps;scopes;reqs
 agile-crm,Agile CRM,Agile CRM,CRM & Sales,,https://github.com/agilecrm/rest-api,https://github.com/agilecrm/rest-api,logo;site;statusUrl
 akamai-edgegrid,Akamai (EdgeGrid APIs),Akamai,Cloud & Hosting,,https://techdocs.akamai.com/home,https://techdocs.akamai.com/home,site;statusUrl;caps
 linode,Akamai Cloud (Linode API v4),Akamai,Cloud & Hosting,,https://techdocs.akamai.com/cloud-computing/docs/welcome,https://techdocs.akamai.com/linode-api/reference/api,site
+alegra,Alegra,Alegra,Finance / Accounting / Tax,https://www.alegra.com/,https://developer.alegra.com/,,logo;api;authDocs;statusUrl;caps;scopes;reqs
 allegro,Allegro,Allegro,Commerce / Marketplaces,,https://developer.allegro.pl/,https://developer.allegro.pl/documentation,logo;site;statusUrl
+alloy,Alloy,Alloy,Legal / Compliance,https://www.alloy.com/,,,portal;api;authDocs;statusUrl;caps;scopes;reqs
+nexar-octopart,Nexar (Octopart),Altium,Manufacturing / ERP / Supply Chain,https://nexar.com/,,,portal;api;authDocs;statusUrl;caps;scopes;reqs
 apaleo,apaleo,apaleo,Travel / Hospitality / Events,https://apaleo.com/,,https://api.apaleo.com/swagger/index.html,portal;authDocs;reqs
+arrow-electronics,Arrow Electronics,Arrow Electronics,Manufacturing / ERP / Supply Chain,,https://developers.arrow.com/api/,https://developers.arrow.com/api/index.php/site/page?view=Itemservice,logo;site;authDocs;statusUrl;caps;scopes;reqs
 autodesk-aps,Autodesk Platform Services,Autodesk,Real Estate / Construction,https://aps.autodesk.com/,https://aps.autodesk.com/,https://aps.autodesk.com/developer/documentation,logo
+availity,Availity,Availity,Healthcare,https://www.availity.com/,https://developer.availity.com/,,api;authDocs;statusUrl;caps;scopes;reqs
 element14-farnell,element14 / Farnell Product Search API,Avnet,Manufacturing / ERP / Supply Chain,https://www.farnell.com/,https://uk.farnell.com/search-api,,api;authDocs;statusUrl
-bandwidth,Bandwidth,Bandwidth,Communications / Voice / Video,,https://dev.bandwidth.com/,https://dev.bandwidth.com/apis,site
-bluesky,Bluesky (AT Protocol),Bluesky,Social / Creator / Publishing,https://bsky.social:443/about,,https://github.com/bluesky-social/atproto,portal;authDocs;statusUrl;scopes;reqs
-brightlocal,BrightLocal,BrightLocal,Marketing / Advertising,https://www.brightlocal.com/,https://developer.brightlocal.com/,https://apidocs.brightlocal.com/,logo
-bringg,Bringg,Bringg,Logistics / Shipping / Inventory,,https://developers.bringg.com/docs/overview,https://developers.bringg.com/reference,site
-canva,Canva Connect API,Canva,Productivity,,https://www.canva.dev/docs/,https://www.canva.dev/docs/apps/rest-apis/,logo;site;statusUrl
-leonardo,Leonardo.Ai,Canva,AI & Models,,https://docs.leonardo.ai/docs/getting-started,https://docs.leonardo.ai/docs/getting-started,site;statusUrl
-cin7-omni,Cin7 Omni,Cin7,Logistics / Shipping / Inventory,https://www.cin7.com/,,https://api.cin7.com/api,logo;portal
-thousandeyes,Cisco ThousandEyes,Cisco,Observability,,https://developer.cisco.com/docs/thousandeyes/,https://developer.cisco.com/docs/thousandeyes/,logo;site;statusUrl
-clio-manage,Clio Manage,Clio,Legal / Compliance,,,,logo;site;portal;api;authDocs;statusUrl;caps;scopes;reqs
-clio-platform-grow,Clio Platform (Grow API),Clio,Legal / Compliance,,https://docs.developers.clio.com/,https://docs.developers.clio.com/api-docs/clio-platform/rate-limits/,site
-contentful,Contentful,Contentful,Databases & Search,,https://www.contentful.com/developers,https://www.contentful.com/developers/docs/references/content-delivery-api/,site;caps;scopes;reqs
+avoma,Avoma,Avoma,CRM & Sales,https://www.avoma.com/,,,portal;api;authDocs;statusUrl;caps;scopes;reqs
+wompi,Wompi,Bancolombia,Payments / Banking / Fintech,,https://docs.wompi.co/docs/colombia/eventos/,https://docs.wompi.co/docs/colombia/eventos/,logo;site;authDocs;statusUrl;caps;scopes;reqs

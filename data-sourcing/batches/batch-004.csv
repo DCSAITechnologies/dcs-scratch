@@ -1,21 +1,21 @@
 id,name,provider,category,known_site,known_portal,known_api,needs
-scaleway-generative,Scaleway Generative APIs,Scaleway,AI & Models,,https://console.scaleway.com/,,site;api
-seismic,Seismic,Seismic,CRM & Sales,https://www.seismic.com/,https://developer.seismic.com/seismicsoftware/,https://developer.seismic.com/seismicsoftware/,logo
-sendcloud,Sendcloud,Sendcloud,Logistics / Shipping / Inventory,https://www.sendcloud.com/,,,portal;api;authDocs;caps;scopes;reqs
-shoplazza,Shoplazza,Shoplazza,Commerce / Marketplaces,https://www.shoplazza.com/,,,portal;api;authDocs;statusUrl;caps;scopes;reqs
-shutterstock,Shutterstock,Shutterstock,Social / Creator / Publishing,,,,logo;site;portal;api;authDocs;statusUrl;caps;scopes;reqs
-siteminder,SiteMinder,SiteMinder,Travel / Hospitality / Events,,,,site;portal;api;authDocs;statusUrl;caps;scopes;reqs
-pactflow,PactFlow,SmartBear,Developer Tools,https://pactflow.io/,https://docs.pactflow.io/,https://docs.pactflow.io/,logo;authDocs;auth;caps
-swaggerhub,SwaggerHub,SmartBear,Developer Tools,https://swagger.io/product/,https://support.smartbear.com/swagger/studio/docs/en/about.html,https://support.smartbear.com/swagger/studio/docs/en/about.html,logo
-zephyr-scale-cloud,Zephyr Scale Cloud,SmartBear,Developer Tools,https://smartbear.com/,https://support.smartbear.com/zephyr/docs/en/rest-api/rest-api--overview-.html,https://support.smartbear.com/zephyr-scale-cloud/api-docs/,logo
-soracom,Soracom,Soracom,Manufacturing / ERP / Supply Chain,http://soracom.io/,,,portal;api;authDocs;statusUrl;caps;scopes;reqs
-trend-vision-one,Trend Vision One,Trend Micro,Security & Identity,https://www.trendmicro.com/en_gb/business.html,https://automation.trendmicro.com/,,api;caps
-ukg-pro,UKG Pro,UKG,HR / Recruiting / Payroll,,https://developer.ukg.com/,https://developer.ukg.com/hcm/reference/welcome-to-the-ukg-pro-api,site;statusUrl;scopes
-unicourt,UniCourt,UniCourt,Legal / Compliance,,,,logo;site;portal;api;authDocs;statusUrl;auth;caps;scopes;reqs
-upcloud,UpCloud,UpCloud,Cloud & Hosting,,https://developers.upcloud.com/api/1.3,https://developers.upcloud.com/1.3/2-architecture/,site
-victoriametrics-cloud,VictoriaMetrics Cloud,VictoriaMetrics,Observability,https://victoriametrics.com/,https://docs.victoriametrics.com/,https://docs.victoriametrics.com/victoriametrics-cloud/api/,logo
-xendit,Xendit,Xendit,Payments / Banking / Fintech,,https://docs.xendit.co/,https://docs.xendit.co/,site
-planday,Planday,Xero,HR / Recruiting / Payroll,https://www.planday.com/,https://openapi.planday.com/,https://openapi.planday.com/,logo
-yellow-card,Yellow Card,Yellow Card,Payments / Banking / Fintech,https://yellowcard.io/,,,portal;api;authDocs;statusUrl;auth;caps;scopes;reqs
-seventeen-track,17TRACK,17TRACK,Logistics / Shipping / Inventory,https://www.17track.net/en,https://www.17track.net/en/api,https://api.17track.net/en/doc,statusUrl
-2c2p,2C2P,2C2P,Payments / Banking / Fintech,https://2c2p.com/,https://developer.2c2p.com/docs/general,https://developer.2c2p.com/reference/post_payment-4-3-paymenttoken,statusUrl
+edlink,Edlink,Edlink,Education,https://ed.link/,,,logo;portal;api;authDocs;statusUrl;caps;scopes;reqs
+elastic-path,Elastic Path Commerce Cloud,Elastic Path,Commerce / Marketplaces,,https://developer.elasticpath.com/,https://developer.elasticpath.com/docs/api/,site
+elation-health,Elation Health,Elation Health,Healthcare,https://www.elationhealth.com/,,,portal;api;authDocs;whDocs;statusUrl;caps;scopes;reqs
+onfido,Onfido (Entrust Identity Verification),Entrust,Legal / Compliance,,https://documentation.identity.entrust.com:443/,https://documentation.identity.entrust.com:443/,logo;site;authDocs;statusUrl;caps;scopes;reqs
+epic-on-fhir,Epic on FHIR,Epic Systems,Healthcare,https://www.epic.com/,https://fhir.epic.com/,,logo;api;authDocs;statusUrl;caps;scopes;reqs
+espocrm,EspoCRM,EspoCRM,CRM & Sales,https://www.espocrm.com/,https://docs.espocrm.com/,https://docs.espocrm.com/development/api/,authDocs;statusUrl;auth;caps;scopes;reqs
+exact-online,Exact Online,Exact,Finance / Accounting / Tax,https://www.exact.com/,,https://start.exactonline.nl/docs/HlpRestAPIResources.aspx,portal;authDocs;caps;scopes;reqs
+expedia-rapid,Expedia Group Rapid,Expedia Group,Travel / Hospitality / Events,https://www.expediagroup.com/en-us,https://developers.expediagroup.com/docs,https://developers.expediagroup.com/rapid/api/explorer,logo;statusUrl
+fast2sms,Fast2SMS,Fast2SMS,Communications / Voice / Video,https://www.fast2sms.com/,,,logo;portal;api;authDocs;statusUrl;caps;scopes;reqs
+fred-stlouisfed,FRED (Federal Reserve Bank of St. Louis),Federal Reserve Bank of St. Louis,Government / Public Data,https://fred.stlouisfed.org/,https://fred.stlouisfed.org/docs/api/fred/,https://fred.stlouisfed.org/docs/api/fred/,logo;statusUrl;scopes
+flutterwave,Flutterwave,Flutterwave,Payments / Banking / Fintech,https://flutterwave.com/us/,https://developer.flutterwave.com/,,api;authDocs;statusUrl;auth;caps;scopes;reqs
+foodics,Foodics,Foodics,Commerce / Marketplaces,https://www.foodics.com/,https://developers.foodics.com/,,api;authDocs;statusUrl;auth;caps;scopes;reqs
+formstack,Formstack Forms,Formstack,Documents / E-sign / Forms,https://www.formstack.com/,https://developers.formstack.com/reference/api-overview,,api;authDocs;statusUrl;caps;scopes;reqs
+fortnox,Fortnox,Fortnox,Finance / Accounting / Tax,https://www.fortnox.se/,https://www.fortnox.se/developer,,api;authDocs;statusUrl;auth;caps;scopes;reqs
+frenet,Frenet,Frenet,Logistics / Shipping / Inventory,,,,logo;site;portal;api;authDocs;statusUrl;caps;scopes;reqs
+fynd-platform,Fynd Commerce Platform,Fynd,Commerce / Marketplaces,https://www.fynd.com/,,,logo;portal;api;authDocs;statusUrl;caps;scopes;reqs
+g2,G2,G2,CRM & Sales,,https://documentation.g2.com/docs/g2-api.md,https://documentation.g2.com/docs/g2-api.md,logo;site;authDocs;statusUrl;caps;scopes;reqs
+gainsight,Gainsight NXT,Gainsight,Support & Success,,,,logo;site;portal;api;authDocs;statusUrl;auth;caps;scopes;reqs
+gamma,Gamma,Gamma,Productivity,,https://developers.gamma.app/,https://developers.gamma.app/llms-full.txt,logo;site;authDocs;statusUrl;caps;scopes;reqs
+gandi,Gandi,Gandi,Cloud & Hosting,,https://api.gandi.net/docs/,https://api.gandi.net/docs/,logo;site

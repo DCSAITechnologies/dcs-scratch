@@ -1,6 +1,6 @@
 # Connector OS website + console: engineering handoff
 
-**Updated:** 03 Oct 2026
+**Updated:** 05 Oct 2026
 **Branch:** `claude/new-session-e3y98d` (DCSAITechnologies/dcs-scratch)
 **Core:** `f6a3161` (`coord/step2b-r4`), from the four core packs
 
@@ -68,13 +68,24 @@ Templates: `.env.example`, `.env.mock` and `.env.core`.
 
 | Area | State | Evidence |
 |---|---|---|
-| Catalogue = core | 1010 canonical, 809 public, 201 hold, 9 blocked, 63 aliases, 542 legacy. 0 available to connect, 0 dispatch-eligible, 0 staging/runtime verified. | `CORE_RECONCILIATION_FINAL.md`, the inventory CSV, gates |
+| Catalogue = core | 1010 canonical, 996 public (187 listed by founder decision, §4a), 14 hold, 9 blocked, 63 aliases, 542 legacy. 0 available to connect, 0 dispatch-eligible, 0 staging/runtime verified. | `CORE_RECONCILIATION_FINAL.md`, the inventory CSV, gates |
 | Major providers | GitHub, Gmail, Slack, Notion and Stripe are canonical (GOLDEN-FIVE); Linear is canonical (REFERENCE). OpenAI, Anthropic, Azure OpenAI and Gemini are **not in core**: legacy reference surfaces only. | the legacy-route gate; `CONNECTOR_STATUS_SUMMARY.md` |
 | Console vs core | 21/25 route patterns REAL_API_WIRED and verified against core's real server; 4 PLANNED; 0 fixture-only in API mode | `DASHBOARD_WIRING_MATRIX.md`; `e2e/core-api.spec.ts` 11/11; core's contract tests 36/36 |
 | Auth | Sign-in, restore, expiry, deep link, sign-out, RBAC from `/v1/me` (verified with core's hermetic identities). OIDC seam ready; **no IdP configured**. | core-api + api-mode suites |
 | Website | All pages, catalogue search/filter/sort/paging, SEO, logo fallback (relative logo paths fixed: 387 rows) | desktop suite, route smoke |
 | A11y / responsive | axe 0 violations; 36 desktop viewport/zoom combinations + 5 devices; previews checked at 390, 768, 1024 and 1440 | `a11y`, `responsive`, `hero-preview` specs |
 | Light site + hero | Whole public site light; homepage = A ↔ C rotator + B section; real colour logos at larger sizes | axe 0 violations on all pages; `audit/site/*.png` |
+
+### 4a. Founder decision 2026-10-05: held connectors listed
+
+`src/lib/founder-decisions.json` (`publish_held`) lists every held row that is not BLOCKED and not excluded as **Coming Soon** (5 core `ACCESS_GATED` rows show **Provider Approval Required**, as `catalogue_status()` gives with hold = false). **Website listing only**: core and `core-snapshot/` are unchanged, core holds stay recorded (`founder_hold`, `core.founder_holds`), and every listed row stays `NOT_DISPATCHABLE`.
+
+- Sync sets `unpublished=false`, `hold_category=null`, `review_note=<hold reasons>`, `listed_by_founder_decision=true`.
+- 14 stay held: the 9 BLOCKED rows plus amadeus-self-service, hyperbolic, facebook-pages-api, threads-api and instagram-platform-api (reason per id in the decision file).
+- `validate-catalogue.py` allows a published core-held row only with the flag, not BLOCKED, not excluded and `NOT_DISPATCHABLE`; `test-validate-catalogue.py` (in `npm run gates`) proves BLOCKED and excluded rows still fail.
+- Detail page: "Use of this connector is subject to the provider's terms." and, for health / children's-data / money-moving / likeness holds, "Additional compliance review applies before it can run."
+- Evidence: core `f6a3161` `catalogue.json` `rulings_applied: []`; `founder-rulings.json` has 2 rulings (D8-575, D8-148), both `proposed`.
+- Batches regenerated after listing: 30 batches, 584 connectors (`data-sourcing/batches/BATCHES.md`).
 
 ## 5. Findings from running against core
 
@@ -96,6 +107,7 @@ Templates: `.env.example`, `.env.mock` and `.env.core`.
 ## 7. Guard rails
 
 - Counts are always derived; the stale-count gate scans 83 files. Featured ids live in `src/lib/featured.json`, and the build fails on a held id.
+- A held row is published only through `src/lib/founder-decisions.json`; BLOCKED rows never.
 - Never hand-edit `connectors*.json`, the inventory or `core-snapshot/`: regenerate them. Never append a provider that core does not list.
 - A new console page needs a demo version and an API version (`pick`). Mutations go through `MutationButton`.
 - Labels: WIRED, HERMETIC ONLY, PLANNED, EXTERNAL DEPENDENCY, STAGING ONLY, SNAPSHOT.

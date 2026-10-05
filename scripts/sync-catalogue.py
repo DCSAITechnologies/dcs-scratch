@@ -29,7 +29,10 @@ Rules (all mechanical, nothing invented):
   catalogue status   = BLOCKED → "Blocked"; any hold → "HOLD"; ACCESS_GATED → "Provider Approval Required";
                        dispatchable in production/staging → "Available" / "Preview"; otherwise "Coming Soon"
   HOLD (unpublished) = core founder_holds non-empty OR core disposition BLOCKED OR website editorial hold
-                       (the website's Lane 6 editorial hold is kept: never publish what either side holds)
+                       (the website's Lane 6 editorial hold is kept: never publish what either side holds),
+                       except where src/lib/founder-decisions.json publish_held lists a non-BLOCKED, non-excluded
+                       held row as Coming Soon (listed_by_founder_decision; reasons kept in review_note).
+                       Listing only: core holds and dispatch eligibility are never changed.
   available to connect = dispatchable in staging or production (core); 0 rows today unless core grants
 """
 import csv, hashlib, json, os, shutil, sys
@@ -180,14 +183,22 @@ def generate():
             reasons.append('Founder hold in core: ' + '; '.join(core_hold))
         if site_hold:
             reasons.append(f'Website editorial hold: {editorial_hold}')
+        # founder decision (src/lib/founder-decisions.json): list a held row as Coming Soon; website listing only,
+        # core holds and dispatch eligibility are untouched, BLOCKED and excluded rows stay held
+        listed = bool(PUBLISH_HELD) and hold and r['disposition'] != 'BLOCKED' and cid not in PUBLISH_HELD_EXCLUDE
+        row.pop('review_note', None)
+        row.pop('listed_by_founder_decision', None)
+        if listed:
+            row['review_note'] = ' · '.join(reasons)
+            row['listed_by_founder_decision'] = True
         row.update({
             'id': cid, 'n': r['name'], 'r': r['engineering_rank'],
             'engineering_rank': r['engineering_rank'], 'research_rank': r.get('research_rank'),
             'engineering_status': r['disposition'],
-            's': catalogue_status(r, hold, e),
+            's': catalogue_status(r, hold and not listed, e),
             'runtime_status': 'staging_verified' if cid in sv else 'not_verified',
-            'unpublished': hold,
-            'hold_category': ' · '.join(reasons) if hold else None,
+            'unpublished': hold and not listed,
+            'hold_category': ' · '.join(reasons) if hold and not listed else None,
             'founder_hold': bool(core_hold), 'editorial_hold': editorial_hold, 'alias_of': (ident.get(cid) or {}).get('alias_research_key') or None,
             'dispatch_eligibility': 'DISPATCHABLE_PRODUCTION' if e.get('production') else 'DISPATCHABLE_STAGING' if e.get('staging') else 'NOT_DISPATCHABLE',
             'dispatch_reason': ', '.join(e.get('reasons', [])) or None,
@@ -201,7 +212,7 @@ def generate():
             },
             'editorial_source': editorial_source,
         })
-        if not hold and row.get('cta') == 'coming_soon' and editorial_source.startswith('legacy'):
+        if not (hold and not listed) and row.get('cta') == 'coming_soon' and editorial_source.startswith('legacy'):
             row['cta'] = 'notify'
         out.append(row)
 
@@ -220,6 +231,9 @@ _sd_path = os.path.join(LIB, 'sourced-data.json')
 SOURCED = {k: v for k, v in (json.load(open(_sd_path)).items() if os.path.isfile(_sd_path) else []) if not k.startswith('_')}
 SOURCED_QUEUE = (json.load(open(_sd_path)).get('_queue', {}) if os.path.isfile(_sd_path) else {})  # review queue from the ingest
 UNKNOWN_AUTH = ('See documentation', '', None)
+_fd_path = os.path.join(LIB, 'founder-decisions.json')
+PUBLISH_HELD = (json.load(open(_fd_path)) if os.path.isfile(_fd_path) else {}).get('publish_held')  # None → no decision, nothing listed
+PUBLISH_HELD_EXCLUDE = set((PUBLISH_HELD or {}).get('exclude', {}))
 
 
 def apply_sourced(rows):

@@ -1,21 +1,21 @@
 id,name,provider,category,known_site,known_portal,known_api,needs
-blynk,Blynk,Blynk,Manufacturing / ERP / Supply Chain,https://www.blynk.io/,https://docs.blynk.io/en/blynk.cloud/device-https-api,https://docs.blynk.io/en/blynk.cloud/device-https-api,statusUrl
-booking-com-connectivity,Booking.com Connectivity APIs,Booking.com,Travel / Hospitality / Events,https://www.booking.com/,https://developers.booking.com/,https://developers.booking.com/connectivity/docs/api-reference,statusUrl
-brankas,Brankas,Brankas,Payments / Banking / Fintech,https://www.brankas.com/,https://api-reference.brankas.com/,https://api-reference.brankas.com/,statusUrl
-bunny-net,bunny.net,bunny.net,Cloud & Hosting,https://bunny.net/,https://bunny.net/docs,https://bunny.net/docs,scopes
-buzzsprout,Buzzsprout,Buzzsprout,Social / Creator / Publishing,https://www.buzzsprout.com/,https://github.com/buzzsprout/buzzsprout-api/blob/master/README.md,https://github.com/buzzsprout/buzzsprout-api/blob/master/README.md,statusUrl
-canopy,Canopy,Canopy,Finance / Accounting / Tax,https://www.getcanopy.com/,https://www.getcanopy.com/api/,https://www.getcanopy.com/api/,caps;scopes
-pixabay,Pixabay,Canva,Social / Creator / Publishing,https://pixabay.com/,https://pixabay.com/api/docs/,https://pixabay.com/api/docs/,statusUrl
-catchpoint,Catchpoint,Catchpoint,Observability,https://www.catchpoint.com/,https://docs.catchpoint.com/docs/rest-api-v2-guide,https://docs.catchpoint.com/docs/rest-api-v2-guide,scopes
-nppes-npi-registry,NPPES NPI Registry,Centers for Medicare & Medicaid Services,Healthcare,https://npiregistry.cms.hhs.gov/,https://npiregistry.cms.hhs.gov/api-page,https://npiregistry.cms.hhs.gov/api-page,statusUrl
-checkmk,Checkmk,Checkmk,Observability,https://checkmk.com/,https://docs.checkmk.com/latest/en/,https://docs.checkmk.com/latest/en/rest_api.html,statusUrl
-churnzero,ChurnZero,ChurnZero,Support & Success,https://churnzero.com/,https://support.churnzero.com/hc/en-us/articles/360003183171-Integrate-ChurnZero-using-HTTP-API,https://support.churnzero.com/hc/en-us/articles/360003183171-Integrate-ChurnZero-using-HTTP-API,authDocs
-cielo-ecommerce,Cielo E-commerce API,Cielo,Payments / Banking / Fintech,https://www.cielo.com.br/,https://developercielo.github.io/manual/cielo-ecommerce,https://developercielo.github.io/manual/cielo-ecommerce,scopes
-cisco-umbrella,Cisco Umbrella,Cisco,Security & Identity,https://umbrella.cisco.com/,https://developer.cisco.com/docs/cloud-security/,https://developer.cisco.com/docs/cloud-security/umbrella-api-authentication/,statusUrl
-clay,Clay,Clay,CRM & Sales,https://www.clay.com/,https://developers.clay.com/,https://developers.clay.com/api-reference/me/get-the-authenticated-user,statusUrl;scopes
-clerk,Clerk,Clerk,Security & Identity,https://clerk.com/,https://clerk.com/docs,https://clerk.com/docs,scopes
-clickpost,ClickPost,ClickPost,Logistics / Shipping / Inventory,https://www.clickpost.ai/,https://docs.clickpost.ai/docs/getting-started,https://docs.clickpost.ai/reference,scopes
-clip-mx,Clip,Clip,Payments / Banking / Fintech,https://www.clip.mx/,https://developer.clip.mx/,https://developer.clip.mx/reference,statusUrl
-argo-cd,Argo CD,Cloud Native Computing Foundation,Developer Tools,https://argoproj.github.io/cd/,https://argo-cd.readthedocs.io/en/stable/developer-guide/api-docs/,https://argo-cd.readthedocs.io/en/stable/developer-guide/api-docs/,statusUrl
-keycloak,Keycloak (self-hosted),Cloud Native Computing Foundation,Security & Identity,https://www.keycloak.org/,https://www.keycloak.org/documentation,https://www.keycloak.org/docs-api/latest/rest-api/index.html,statusUrl
-prometheus,Prometheus (HTTP API),Cloud Native Computing Foundation,Observability,https://prometheus.io/,https://prometheus.io/docs/introduction/overview/,https://prometheus.io/docs/prometheus/latest/querying/api/,statusUrl
+kit,Kit,Kit,Marketing / Advertising,,https://developers.kit.com/welcome,https://developers.kit.com/api-reference/overview,site
+korapay,Korapay,Kora,Payments / Banking / Fintech,https://korapay.com/,https://developers.korapay.com/,https://docs.korapay.com/,logo;statusUrl
+lawmatics,Lawmatics,Lawmatics,Legal / Compliance,https://www.lawmatics.com/,,,portal;api;authDocs;statusUrl;caps;scopes;reqs
+leegality,Leegality,Leegality,Documents / E-sign / Forms,https://www.leegality.com/,,,portal;api;authDocs;statusUrl;caps;scopes;reqs
+lexware-office,Lexware Office (formerly lexoffice),Lexware,Finance / Accounting / Tax,https://www.lexware.de/,https://www.lexware.de/funktionen/public-api/,,api;authDocs;statusUrl;scopes
+luma,Luma,Luma,Travel / Hospitality / Events,https://luma.com/,,,logo;portal;api;authDocs;statusUrl;caps;scopes;reqs
+maplerad,Maplerad,Maplerad,Payments / Banking / Fintech,https://maplerad.com/,,,logo;portal;api;authDocs;caps;scopes;reqs
+mappls-mapmyindia,Mappls (MapmyIndia),MapmyIndia,Logistics / Shipping / Inventory,https://www.mappls.com/,,,logo;portal;api;authDocs;statusUrl;caps;scopes;reqs
+marn,Marn,Marn,Commerce / Marketplaces,,,,logo;site;portal;api;authDocs;statusUrl;auth;caps;scopes;reqs
+medplum,Medplum,Medplum,Healthcare,https://www.medplum.com/,https://www.medplum.com/docs,https://www.medplum.com/docs,logo;authDocs;whDocs;statusUrl;caps;scopes;reqs
+mercado-pago,Mercado Pago,Mercado Libre,Payments / Banking / Fintech,https://www.mercadopago.com.ar,https://www.mercadopago.com.ar/developers/es,,api;authDocs;statusUrl;caps;scopes;reqs
+moneris,Moneris,Moneris,Payments / Banking / Fintech,,https://developer.moneris.com/,,logo;site;api;authDocs;statusUrl;caps;scopes;reqs
+mono,Mono,Mono,Payments / Banking / Fintech,https://mono.co/,https://docs.mono.co/docs,https://docs.mono.co/docs,logo;authDocs;statusUrl;auth;caps;scopes;reqs
+moodle,Moodle,Moodle,Education,,https://moodledev.io/,https://moodledev.io/docs/apis/subsystems/external,site;statusUrl;reqs
+namecheap,Namecheap,Namecheap,Cloud & Hosting,,,,logo;site;portal;api;authDocs;statusUrl;caps;scopes;reqs
+naver-clova-studio,Naver CLOVA Studio,NAVER Cloud,AI & Models,https://www.ncloud.com/,,,logo;portal;api;authDocs;statusUrl;caps;scopes;reqs
+nearpay,NearPay,NearPay,Payments / Banking / Fintech,https://nearpay.io/,,,logo;portal;api;authDocs;statusUrl;caps;scopes;reqs
+network-international-ngenius,Network International (N-Genius Online),Network International,Payments / Banking / Fintech,,https://docs.ngenius-payments.com/,https://docs.ngenius-payments.com/,logo;site;statusUrl
+nice-cxone,NICE CXone,NICE,Communications / Voice / Video,https://www.nice.com/,,,portal;api;authDocs;auth;caps;scopes;reqs
+novita,Novita AI,Novita AI,AI & Models,https://novita.ai/,,,logo;portal;api;authDocs;statusUrl;caps;scopes;reqs

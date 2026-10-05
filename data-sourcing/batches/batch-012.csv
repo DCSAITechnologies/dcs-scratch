@@ -1,21 +1,21 @@
 id,name,provider,category,known_site,known_portal,known_api,needs
-logrocket,LogRocket,LogRocket,Observability,https://logrocket.com/,https://docs.logrocket.com/docs/introduction,https://docs.logrocket.com/docs/audit-log-api.md,caps;scopes
-logzio,Logz.io,Logz.io,Observability,https://logz.io/,https://docs.logz.io/,https://docs.logz.io/,scopes
-loops,Loops,Loops,Marketing / Advertising,https://loops.so/,https://loops.so/docs,https://loops.so/docs,scopes
-line-messaging,LINE Messaging API,LY Corporation,Communications / Voice / Video,https://www.line.me/en/,https://developers.line.biz/,https://developers.line.biz/en/reference/messaging-api/,statusUrl;scopes
-mailtrap,Mailtrap,Mailtrap,Communications / Voice / Video,https://mailtrap.io/,https://docs.mailtrap.io/,https://docs.mailtrap.io/developers,statusUrl
-manatal,Manatal,Manatal,HR / Recruiting / Payroll,https://www.manatal.com/,https://developers.manatal.com/reference/getting-started,https://developers.manatal.com/reference/candidates_list,scopes
-medallia,Medallia Experience Cloud,Medallia,Support & Success,https://www.medallia.com/,https://developer.medallia.com/,https://developer.medallia.com/medallia-apis,scopes
-medusa,Medusa,Medusa,Commerce / Marketplaces,https://medusajs.com/,https://docs.medusajs.com/,https://docs.medusajs.com/,scopes
-mem-ai,Mem,Mem,Productivity,https://mem.ai/,https://docs.mem.ai/,https://docs.mem.ai/,scopes
-mend,Mend,Mend.io,Developer Tools,https://www.mend.io/,https://docs.mend.io/,https://docs.mend.io/,scopes
-mentimeter,Mentimeter,Mentimeter,Productivity,https://www.mentimeter.com/,https://developer.mentimeter.com/openapi.json,https://developer.mentimeter.com/openapi.json,statusUrl
-merge,Merge,Merge,Finance / Accounting / Tax,https://www.merge.dev/,https://docs.merge.dev/home,https://docs.merge.dev/home,statusUrl
-mews,Mews,Mews,Travel / Hospitality / Events,https://www.mews.com/en,https://docs.mews.com/,https://docs.mews.com/connector-api/operations,scopes
-microsoft-advertising,Microsoft Advertising,Microsoft,Marketing / Advertising,https://ads.microsoft.com/,https://learn.microsoft.com/en-us/advertising/guides/?view=bingads-13,https://learn.microsoft.com/en-us/advertising/guides/?view=bingads-13,statusUrl
-middleware-io,Middleware.io,Middleware,Observability,https://middleware.io/,https://app.middleware.io/swagger.json,https://app.middleware.io/swagger.json,statusUrl;scopes
-mixedbread,Mixedbread,Mixedbread,AI & Models,https://www.mixedbread.com/,https://www.mixedbread.com/api-reference,https://www.mixedbread.com/api-reference,statusUrl
-moengage,MoEngage,MoEngage,Marketing / Advertising,https://www.moengage.com/,https://www.moengage.com/docs/developer-guide/introduction,https://www.moengage.com/docs/api/introduction,scopes
-momento,Momento,Momento,Databases & Search,https://www.gomomento.com/,https://docs.momentohq.com/,https://docs.momentohq.com/cache/develop/api-reference/http-api,statusUrl
-moneybird,Moneybird,Moneybird,Finance / Accounting / Tax,https://www.moneybird.com/,https://developer.moneybird.com/,https://developer.moneybird.com/api/sales-invoices,statusUrl
-moyasar,Moyasar,Moyasar,Payments / Banking / Fintech,https://moyasar.com/,https://docs.moyasar.com/,https://docs.moyasar.com/,statusUrl
+baserow,Baserow,Baserow,Databases & Search,https://baserow.io/,https://baserow.io/api-docs,https://baserow.io/api-docs,statusUrl
+beyondtrust-password-safe,BeyondTrust Password Safe,BeyondTrust,Security & Identity,https://www.beyondtrust.com/,https://docs.beyondtrust.com/,https://docs.beyondtrust.com/,statusUrl
+big-cartel,Big Cartel,Big Cartel,Commerce / Marketplaces,https://www.bigcartel.com/,https://developers.bigcartel.com/,https://developers.bigcartel.com/api/v1,scopes
+bill-com,BILL (Bill.com),BILL,Finance / Accounting / Tax,https://www.bill.com/,https://developer.bill.com/docs/home,https://developer.bill.com/reference,statusUrl;scopes
+pusher-channels,Pusher Channels,Bird,Communications / Voice / Video,https://pusher.com/,https://pusher.com/docs/channels/,https://pusher.com/docs/channels/,scopes
+bloomfire,Bloomfire,Bloomfire,Productivity,https://bloomfire.com/,https://help.bloomfire.com/api/v2/swagger.json,https://help.bloomfire.com/api/v2/swagger.json,statusUrl
+blynk,Blynk,Blynk,Manufacturing / ERP / Supply Chain,https://www.blynk.io/,https://docs.blynk.io/en/blynk.cloud/device-https-api,https://docs.blynk.io/en/blynk.cloud/device-https-api,statusUrl
+booking-com-connectivity,Booking.com Connectivity APIs,Booking.com,Travel / Hospitality / Events,https://www.booking.com/,https://developers.booking.com/,https://developers.booking.com/connectivity/docs/api-reference,statusUrl
+brankas,Brankas,Brankas,Payments / Banking / Fintech,https://www.brankas.com/,https://api-reference.brankas.com/,https://api-reference.brankas.com/,statusUrl
+bunny-net,bunny.net,bunny.net,Cloud & Hosting,https://bunny.net/,https://bunny.net/docs,https://bunny.net/docs,scopes
+buzzsprout,Buzzsprout,Buzzsprout,Social / Creator / Publishing,https://www.buzzsprout.com/,https://github.com/buzzsprout/buzzsprout-api/blob/master/README.md,https://github.com/buzzsprout/buzzsprout-api/blob/master/README.md,statusUrl
+canopy,Canopy,Canopy,Finance / Accounting / Tax,https://www.getcanopy.com/,https://www.getcanopy.com/api/,https://www.getcanopy.com/api/,caps;scopes
+pixabay,Pixabay,Canva,Social / Creator / Publishing,https://pixabay.com/,https://pixabay.com/api/docs/,https://pixabay.com/api/docs/,statusUrl
+canvas-medical,Canvas Medical,Canvas Medical,Healthcare,https://www.canvasmedical.com/,https://docs.canvasmedical.com/,https://docs.canvasmedical.com/,authDocs;statusUrl;caps;scopes;reqs
+cashfree,Cashfree Payments,Cashfree Payments,Payments / Banking / Fintech,https://www.cashfree.com/,https://www.cashfree.com/docs,https://www.cashfree.com/docs,authDocs;whDocs;statusUrl;caps;scopes;reqs
+catchpoint,Catchpoint,Catchpoint,Observability,https://www.catchpoint.com/,https://docs.catchpoint.com/docs/rest-api-v2-guide,https://docs.catchpoint.com/docs/rest-api-v2-guide,scopes
+nppes-npi-registry,NPPES NPI Registry,Centers for Medicare & Medicaid Services,Healthcare,https://npiregistry.cms.hhs.gov/,https://npiregistry.cms.hhs.gov/api-page,https://npiregistry.cms.hhs.gov/api-page,statusUrl
+checkmarx-one,Checkmarx One,Checkmarx,Security & Identity,https://checkmarx.com/,https://docs.checkmarx.com/,https://docs.checkmarx.com/en/34965-68772-checkmarx-one-api-documentation.html,authDocs;statusUrl;caps;scopes;reqs
+checkmk,Checkmk,Checkmk,Observability,https://checkmk.com/,https://docs.checkmk.com/latest/en/,https://docs.checkmk.com/latest/en/rest_api.html,statusUrl
+checkr,Checkr,Checkr,HR / Recruiting / Payroll,https://checkr.com/,https://docs.checkr.com/,https://docs.checkr.com/,authDocs;whDocs;statusUrl;caps;scopes;reqs

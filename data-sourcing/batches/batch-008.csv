@@ -1,21 +1,21 @@
 id,name,provider,category,known_site,known_portal,known_api,needs
-dribbble,Dribbble,Dribbble,Social / Creator / Publishing,https://dribbble.com/,https://developer.dribbble.com/,https://developer.dribbble.com/v2/,statusUrl
-dvla-vehicle-enquiry-service,DVLA Vehicle Enquiry Service,Driver and Vehicle Licensing Agency,Government / Public Data,https://www.gov.uk/government/organisations/driver-and-vehicle-licensing-agency,https://developer-portal.driver-vehicle-licensing.api.gov.uk/,https://developer-portal.driver-vehicle-licensing.api.gov.uk/apis/vehicle-enquiry-service/vehicle-enquiry-service-description.html,statusUrl;scopes
-enable-banking,Enable Banking,Enable Banking,Payments / Banking / Fintech,https://enablebanking.com/,https://enablebanking.com/docs/,https://enablebanking.com/docs/api/reference/,statusUrl
-enkash,EnKash,EnKash,Payments / Banking / Fintech,https://www.enkash.com/,https://docs.enkash.com/docs,https://docs.enkash.com/folder-3851169,statusUrl
-eu-vies-vat,EU VIES VAT Number Validation,European Commission,Government / Public Data,https://ec.europa.eu/taxation_customs/vies/,https://ec.europa.eu/assets/taxud/vow-information/swagger_publicVAT.yaml,https://ec.europa.eu/assets/taxud/vow-information/swagger_publicVAT.yaml,authDocs;statusUrl
-eurostat,Eurostat,Eurostat,Government / Public Data,https://ec.europa.eu/eurostat,https://ec.europa.eu/eurostat/web/user-guides/data-browser/api-data-access/api-getting-started,https://ec.europa.eu/eurostat/web/user-guides/data-browser/api-data-access/api-getting-started,authDocs;statusUrl
-fabric,fabric,fabric,Commerce / Marketplaces,https://fabric.inc/,https://developer.fabric.inc/home,https://developer.fabric.inc/llms.txt,statusUrl
-facturapi,Facturapi,Facturapi,Finance / Accounting / Tax,https://www.facturapi.io/,https://docs.facturapi.io/,https://docs.facturapi.io/,statusUrl
-fastmail,Fastmail,Fastmail,Productivity,https://www.fastmail.com/,https://www.fastmail.com/dev/,https://www.fastmail.com/dev/,statusUrl
-fathom,Fathom,Fathom,Productivity,https://www.fathom.ai/,https://developers.fathom.ai/,https://developers.fathom.ai/api-overview,statusUrl
-spark-platform,Spark Platform,FBS,Real Estate / Construction,https://www.sparkapi.io/,https://www.sparkapi.io/developers/,https://sparkplatform.com/docs/overview/api,statusUrl
-fedex,FedEx,FedEx,Logistics / Shipping / Inventory,https://www.fedex.com/,https://developer.fedex.com/api/global/choose-location.html,https://developer.fedex.com/api/en-us/catalog.html,statusUrl;caps
-fibery,Fibery,Fibery,Productivity,https://fibery.com/,https://developers.fibery.com/,https://developers.fibery.com/guides/http-api/overview,statusUrl
-finbox-bankconnect,FinBox BankConnect,FinBox,Payments / Banking / Fintech,https://www.finbox.in/,https://docs.finbox.in/,https://docs.finbox.in/,statusUrl
-flexport,Flexport,Flexport,Logistics / Shipping / Inventory,https://www.flexport.com/,https://developers.flexport.com/,https://apidocs.flexport.com/,statusUrl;scopes
-flightaware-aeroapi,FlightAware AeroAPI,FlightAware,Travel / Hospitality / Events,https://www.flightaware.com/,https://www.flightaware.com/commercial/aeroapi/,https://www.flightaware.com/aeroapi/portal/documentation,scopes
-flipkart-seller-api,Flipkart Seller API,Flipkart,Commerce / Marketplaces,https://seller.flipkart.com/,https://seller.flipkart.com/api-docs/,https://seller.flipkart.com/api-docs/FMSAPI.html,statusUrl
-invoiced,Invoiced,Flywire,Finance / Accounting / Tax,https://www.invoiced.com/,https://docs.invoiced.com/dev,https://developer.invoiced.com/api,statusUrl
-fonoa,Fonoa,Fonoa,Finance / Accounting / Tax,https://www.fonoa.com/,https://docs.fonoa.com/reference/authentication.md,https://docs.fonoa.com/reference/authentication.md,scopes
-erpnext-frappe,ERPNext (Frappe Framework REST API),Frappe Technologies,Manufacturing / ERP / Supply Chain,https://frappe.io/erpnext,https://docs.frappe.io/framework/user/en/api,https://docs.frappe.io/framework/user/en/api/rest,statusUrl
+sandbox-co-in,Sandbox (sandbox.co.in),Quicko,Finance / Accounting / Tax,https://sandbox.co.in/,https://developer.sandbox.co.in/,,api;authDocs;statusUrl;caps;scopes;reqs
+doubletick,DoubleTick,QuickSell,Communications / Voice / Video,https://doubletick.io/,,,portal;api;authDocs;statusUrl;caps;scopes;reqs
+reddit,Reddit Data API,Reddit,Social / Creator / Publishing,https://www.reddit.com/,,https://www.reddit.com/dev/api/,portal;authDocs;caps;scopes;reqs
+remote,Remote,Remote,HR / Recruiting / Payroll,https://remote.com/,https://developer.remote.com/docs/getting-started-with-remote,,api;authDocs;statusUrl;caps;scopes;reqs
+reply-io,Reply.io,Reply.io,CRM & Sales,,,,logo;site;portal;api;authDocs;statusUrl;caps;scopes;reqs
+reviewsio,Reviews.io,Reviews.io,Support & Success,https://www.reviews.io/,https://developer.reviews.io/,https://developer.reviews.io/,logo;authDocs;statusUrl
+rocketchat,Rocket.Chat,Rocket.Chat,Productivity,https://www.rocket.chat/,https://developer.rocket.chat/docs,https://docs.rocket.chat/,authDocs;statusUrl;auth;caps;scopes;reqs
+rocketlane,Rocketlane,Rocketlane,Support & Success,https://www.rocketlane.com/,https://developer.rocketlane.com/reference/get-invoice-payments,,api;authDocs;statusUrl;caps;scopes;reqs
+route-mobile,Route Mobile,Route Mobile,Communications / Voice / Video,https://routemobile.com/,,,logo;portal;api;authDocs;statusUrl;caps;scopes;reqs
+crates-io,crates.io,Rust Foundation,Developer Tools,https://crates.io/,https://crates.io/api/openapi.json,https://crates.io/api/openapi.json,logo
+sage-intacct,Sage Intacct,Sage,Finance / Accounting / Tax,,https://developer.intacct.com/,https://developer.intacct.com/api/,site
+salla,Salla,Salla,Commerce / Marketplaces,,https://salla.dev/,https://docs.salla.dev/,logo;site;statusUrl
+sap-business-one-service-layer,SAP Business One Service Layer,SAP,Manufacturing / ERP / Supply Chain,https://www.sap.com/index.html,,,portal;api;authDocs;statusUrl;auth;caps;scopes;reqs
+savvycal,SavvyCal,SavvyCal,Productivity,https://savvycal.com/,https://developers.savvycal.com/,,api;authDocs;whDocs;statusUrl;caps;scopes;reqs
+scaleway-cloud,Scaleway Cloud (IaaS/PaaS APIs),Scaleway,Cloud & Hosting,,https://console.scaleway.com/,,site;api
+scaleway-generative,Scaleway Generative APIs,Scaleway,AI & Models,,https://console.scaleway.com/,,site;api
+seismic,Seismic,Seismic,CRM & Sales,https://www.seismic.com/,https://developer.seismic.com/seismicsoftware/,https://developer.seismic.com/seismicsoftware/,logo
+sendcloud,Sendcloud,Sendcloud,Logistics / Shipping / Inventory,https://www.sendcloud.com/,,,portal;api;authDocs;caps;scopes;reqs
+shoplazza,Shoplazza,Shoplazza,Commerce / Marketplaces,https://www.shoplazza.com/,,,portal;api;authDocs;statusUrl;caps;scopes;reqs
+shutterstock,Shutterstock,Shutterstock,Social / Creator / Publishing,,,,logo;site;portal;api;authDocs;statusUrl;caps;scopes;reqs

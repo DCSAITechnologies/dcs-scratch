@@ -13,6 +13,7 @@ Checks (fail the build):
   - logo file exists in public/logos or logo is null (monogram fallback)
   - no 'Available' catalogue status with runtime_status == 'not_verified'
 """
+from __future__ import annotations
 import json, os, re, sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -21,6 +22,33 @@ LOGOS = os.path.join(ROOT, 'public', 'logos')
 
 ALLOWED_STATUS = {'Preview', 'Read Only', 'Limited Access', 'Coming Soon', 'Provider Approval Required', 'HOLD', 'Blocked', 'Available'}
 ALLOWED_RUNTIME = {'not_verified', 'staging_verified', 'production_verified'}
+DECISIONS = os.path.join(ROOT, 'src', 'lib', 'founder-decisions.json')
+
+
+def load_publish_held(path: str = DECISIONS) -> dict | None:
+    return (json.load(open(path)) if os.path.isfile(path) else {}).get('publish_held')
+
+
+def hold_publish_error(c: dict, decision: dict | None) -> str | None:
+    # a core hold or BLOCKED row may be published only through the founder's publish_held decision
+    # (src/lib/founder-decisions.json), never when BLOCKED and never for an excluded id
+    core = c.get('core') or {}
+    blocked = core.get('disposition') == 'BLOCKED'
+    if c.get('listed_by_founder_decision') and not c.get('unpublished') and (blocked or not decision or c['id'] in (decision.get('exclude') or {})):
+        return f"{c['id']}: listed_by_founder_decision on a BLOCKED, excluded or undecided row"
+    if not (core.get('founder_holds') or blocked) or c.get('unpublished'):
+        return None
+    if blocked:
+        return f"{c['id']}: core BLOCKED but published"
+    if not decision:
+        return f"{c['id']}: core hold but published (no founder publish_held decision)"
+    if c['id'] in (decision.get('exclude') or {}):
+        return f"{c['id']}: core hold but published although founder decision excludes it"
+    if c.get('listed_by_founder_decision') is not True:
+        return f"{c['id']}: core hold but published without listed_by_founder_decision"
+    if c.get('dispatch_eligibility') != 'NOT_DISPATCHABLE':
+        return f"{c['id']}: listed by founder decision but not NOT_DISPATCHABLE"
+    return None
 
 def main() -> int:
     expect = None
@@ -28,6 +56,7 @@ def main() -> int:
         expect = int(sys.argv[sys.argv.index('--expect') + 1])
 
     records = json.load(open(DATA))
+    decision = load_publish_held()
     errors: list[str] = []
 
     total = len(records)
@@ -65,8 +94,9 @@ def main() -> int:
         core = c.get('core') or {}
         if c.get('s') in ('Available', 'Preview') and not (core.get('dispatch') or {}).get('production' if c['s'] == 'Available' else 'staging'):
             errors.append(f"{c['id']}: catalogue status {c['s']} without core dispatch eligibility — forbidden")
-        if (core.get('founder_holds') or core.get('disposition') == 'BLOCKED') and not c.get('unpublished'):
-            errors.append(f"{c['id']}: core hold/BLOCKED but published")
+        err = hold_publish_error(c, decision)
+        if err:
+            errors.append(err)
         logo = c.get('logo')
         if logo:
             if not logo.startswith('/'):

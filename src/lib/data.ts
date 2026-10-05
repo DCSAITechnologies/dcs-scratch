@@ -28,6 +28,9 @@ export type Conn = {
   founder_hold?: boolean
   legal_hold?: boolean
   hold_category?: string | null
+  // founder decision 2026-10-05 (src/lib/founder-decisions.json): held row listed as Coming Soon; execution stays gated in core
+  listed_by_founder_decision?: boolean
+  review_note?: string | null
   alias_of?: string | null
   docs_status?: string | null
   source_provenance?: string | null

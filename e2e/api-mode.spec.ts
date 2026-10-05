@@ -136,7 +136,8 @@ test('connection flow: refuse a non-reference credential, create, test, activate
   await page.getByTestId('conn-activate').click()
   await page.getByTestId('confirm-submit').click()
   await expect(page.getByRole('status')).toContainText('Connection is ACTIVE')
-  await expect(page.getByText('connected', { exact: false }).first()).toBeVisible()
+  // scoped to the connection's own line: the hermetic banner also contains 'connected' and is hidden below 2xl
+  await expect(page.getByText('deepl · connected')).toBeVisible()
 })
 
 test('kill order: create, then restore with a recorded reviewer and reason (as core: no second-identity enforcement)', async ({ page }) => {
