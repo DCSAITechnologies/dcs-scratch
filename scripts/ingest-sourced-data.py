@@ -31,6 +31,8 @@ ALIASES_PATH = os.path.join(DS, 'domain-aliases.json')
 DECISIONS_PATH = os.path.join(DS, 'review-decisions.json')
 # a note that admits a scope string or access level is a UI label or inferred disqualifies the scopes
 SCOPE_CAVEAT = re.compile(r'\binferr?ed\b|\bUI labels?\b|\bguess', re.I)
+# a denial is not a caveat: "fields were not inferred or guessed", "omitted rather than guessed"
+SCOPE_CAVEAT_NEGATED = re.compile(r'\b(?:not|never|no|rather than|instead of|without)\s+(?:\w+\s+){0,3}?(?:inferr?ed|guess\w*)(?:\s+(?:or|and|nor)\s+(?:inferr?ed|guess\w*))?', re.I)
 TWO_LEVEL = ('co.uk', 'com.au', 'co.in', 'com.br', 'co.jp', 'co.nz', 'co.za', 'com.mx', 'com.sg', 'org.uk', 'net.au', 'com.tr', 'co.kr')
 
 
@@ -161,7 +163,7 @@ def main():
                 if f != 'review' and f in rec:
                     rec.pop(f)
                     rejected.append((part, cid, f, 'reviewer: ' + why))
-            if rec.get('providerScopes') and SCOPE_CAVEAT.search(rec.get('notes') or ''):
+            if rec.get('providerScopes') and SCOPE_CAVEAT.search(SCOPE_CAVEAT_NEGATED.sub('', rec.get('notes') or '')):
                 rec.pop('providerScopes')
                 rejected.append((part, cid, 'providerScopes', 'notes say the scopes are UI labels, inferred or guessed'))
             ev = rec.get('evidence') or {}
