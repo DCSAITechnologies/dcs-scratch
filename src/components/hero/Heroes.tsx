@@ -102,6 +102,17 @@ function ScaleLine({ center = false }: { center?: boolean }) {
   )
 }
 
+// The product name above the hero headline: a large blue wordmark (founder direction, 05 Oct 2026).
+// The gradient stays within the accent blues, so it keeps at least 3:1 contrast as large text.
+function BrandMark() {
+  return (
+    <p className="text-[30px] font-bold leading-none tracking-[-0.02em] sm:text-[38px]"
+      style={{ color: C.blue, backgroundImage: `linear-gradient(90deg, ${C.blue}, #4F6EF0)`, WebkitBackgroundClip: 'text', backgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
+      Connector OS
+    </p>
+  )
+}
+
 function Illustrative() {
   return <span className="rounded px-1.5 py-0.5 text-[10.5px] font-medium uppercase tracking-wide" style={{ color: C.muted, background: C.bg, border: `1px solid ${C.line}` }}>Illustrative</span>
 }
@@ -168,7 +179,7 @@ export function HeroA({ running = true, heading: Heading = 'h1' }: HeroProps = {
   return (
     <section className="mx-auto px-4 sm:px-8 xl:px-12 2xl:px-16 grid max-w-[1760px] items-center gap-10 pb-6 pt-8 lg:grid-cols-[0.95fr_1.05fr] lg:pt-8 ">
       <div className="min-w-0">
-        <p className="text-[12.5px] font-semibold uppercase tracking-[0.14em]" style={{ color: C.blue }}>Connector OS</p>
+        <BrandMark />
         <Heading className={H1} style={{ color: C.ink }}>Governed connections for every agent action.</Heading>
         <p className={`mt-5 max-w-[540px] ${LEAD}`} style={{ color: C.muted }}>
           Connector OS connects agents to the systems your business runs on, applies policy and approval before anything executes, and keeps an evidence record of every action.
@@ -396,7 +407,7 @@ export function HeroC({ running = true, heading: Heading = 'h1' }: HeroProps = {
   return (
     <section className="mx-auto px-4 sm:px-8 xl:px-12 2xl:px-16 grid max-w-[1760px] items-center gap-10 pb-6 pt-8 lg:grid-cols-[0.9fr_1.1fr] lg:pt-8">
       <div className="min-w-0">
-        <p className="text-[12.5px] font-semibold uppercase tracking-[0.14em]" style={{ color: C.blue }}>Connector OS</p>
+        <BrandMark />
         <Heading className={H1} style={{ color: C.ink }}>
           One control plane for {SCALE} connectors.
         </Heading>
