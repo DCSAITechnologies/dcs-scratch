@@ -139,14 +139,17 @@ export function Connectors() {
   }, [q, cat, status, runtime, auth, rw, wh, sort])
 
   const needle = q.trim().toLowerCase()
+  // Popular, and All without a search, open with the founder-curated connectors in their curated order
+  const popularFirst = sort === 'rank' && (cat === 'Popular' || (cat === 'All' && !needle))
   const pinned: Conn[] = sort !== 'rank' ? [] :
-    cat === 'Popular' ? filteredLegacy.filter((c) => POPULAR_REFS.has(c.id))
+    popularFirst ? filteredLegacy.filter((c) => POPULAR_REFS.has(c.id))
     : cat === 'AI & Models' ? AI_LEADERS.filter((c) => filteredLegacy.includes(c))
     : needle.length > 1 ? filteredLegacy.filter((c) => POPULAR_REFS.has(c.id) && (c.n.toLowerCase().includes(needle) || c.id.includes(needle)))
     : []
-  // Popular keeps the curated order across both kinds; elsewhere the pinned pages lead, then the catalogue
-  const grid: Conn[] = cat === 'Popular' && sort === 'rank'
-    ? [...pinned, ...filtered].sort((a, b) => POPULAR.popular.indexOf(a.id) - POPULAR.popular.indexOf(b.id))
+  // curated order across both kinds (stable sort: the rest keep their rank); elsewhere the pinned pages lead
+  const popIndex = (c: Conn) => { const i = POPULAR.popular.indexOf(c.id); return i < 0 ? Infinity : i }
+  const grid: Conn[] = popularFirst
+    ? [...pinned, ...filtered].sort((a, b) => popIndex(a) - popIndex(b) || 0)
     : [...pinned, ...filtered]
   const moreRefs = cat === 'Popular' ? [] : filteredLegacy.filter((c) => !pinned.includes(c))
 

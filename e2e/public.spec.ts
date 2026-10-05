@@ -41,13 +41,13 @@ test.describe('public catalogue', () => {
   test('load more pages through the published grid', async ({ page }) => {
     await page.goto('/connectors')
     const grid = page.locator('a[href^="/connectors/"]:has-text("Details →")')
-    const legacyCards = page.locator('a[href^="/connectors/"]:has-text("Reference")')
-    const canonicalCount = async () => (await grid.count()) - (await legacyCards.count())
     // the catalogue chunk loads lazily; wait for the grid before counting
     await expect(page.getByTestId('result-count')).toHaveText(`${PUBLISHED.length} connectors`)
-    await expect.poll(canonicalCount).toBe(60)
+    // All opens with the founder-curated Popular connectors, in their order
+    await expect(grid.first()).toHaveAttribute('href', `/connectors/${POPULAR.popular[0]}`)
+    const before = await grid.count()
     await page.getByRole('button', { name: /^Load more \(/ }).click()
-    await expect.poll(canonicalCount).toBe(120)
+    await expect.poll(() => grid.count()).toBe(before + 60)
   })
 
   for (const q of ['openai', 'anthropic']) {

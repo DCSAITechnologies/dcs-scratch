@@ -20,7 +20,20 @@ import { areaLoader } from './lib/subpage-areas'
 
 // Route-level code splitting: the catalogue pages carry the 2 MB connector JSON and
 // the console carries its fixtures and screens; marketing pages load neither.
-const Connectors = lazy(() => import('./pages/Connectors').then((m) => ({ default: m.Connectors })))
+const loadConnectors = () => import('./pages/Connectors')
+const Connectors = lazy(() => loadConnectors().then((m) => ({ default: m.Connectors })))
+// fetch the catalogue chunk once the page is idle, or as soon as a catalogue link is hovered or
+// touched, so "Explore the catalogue" opens without a loading step
+if (typeof window !== 'undefined') {
+  const warm = () => { void loadConnectors() }
+  const idle = (window as Window & { requestIdleCallback?: (cb: () => void, o?: { timeout: number }) => void }).requestIdleCallback
+  if (idle) idle(warm, { timeout: 4000 }); else setTimeout(warm, 2000)
+  const onIntent = (e: Event) => {
+    if ((e.target as HTMLElement).closest?.('a[href^="/connectors"]')) warm()
+  }
+  document.addEventListener('pointerover', onIntent, { passive: true })
+  document.addEventListener('touchstart', onIntent, { passive: true })
+}
 const ConnectorDetail = lazy(() => import('./pages/ConnectorDetail').then((m) => ({ default: m.ConnectorDetail })))
 const DashApp = lazy(() => import('./pages/dash').then((m) => ({ default: m.DashApp })))
 // Founder-review hero concepts (noindex; not linked from the site)

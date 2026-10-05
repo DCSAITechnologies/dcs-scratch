@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { startTransition, useEffect, useLayoutEffect, useState } from 'react'
 
 // History-API routing (Completion Spec B2 / gate G13).
 // Static pre-render writes one HTML per route; this hook drives client-side nav.
@@ -14,7 +14,6 @@ export function navigate(to: string) {
   if (MEMORY) memLoc = to
   else window.history.pushState({}, '', to)
   window.dispatchEvent(new PopStateEvent('popstate'))
-  window.scrollTo({ top: 0 })
 }
 
 const currentLocation = () => (MEMORY ? memLoc : (window.location.pathname || '/') + window.location.search)
@@ -31,10 +30,14 @@ export function locSearch(): string {
 export function usePathRoute(): string {
   const [loc, setLoc] = useState(currentLocation)
   useEffect(() => {
-    const onPop = () => { setLoc(currentLocation()); window.scrollTo({ top: 0 }) }
+    // a transition keeps the current page on screen while a lazy route chunk loads,
+    // instead of flashing the "Loading…" fallback (and the footer jumping up)
+    const onPop = () => startTransition(() => setLoc(currentLocation()))
     window.addEventListener('popstate', onPop)
     return () => window.removeEventListener('popstate', onPop)
   }, [])
+  // scroll once the new page has rendered, not before
+  useLayoutEffect(() => { window.scrollTo({ top: 0 }) }, [loc])
   return loc.split('?')[0]
 }
 
