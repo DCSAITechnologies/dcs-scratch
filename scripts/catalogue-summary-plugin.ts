@@ -16,7 +16,7 @@ type Row = { id: string; n: string; p: string; cat: string; s: string; auth: str
 
 export function catalogueSummary(root: string): Plugin {
   const lib = join(root, 'src', 'lib')
-  const files = ['connectors.json', 'connectors-legacy.json', 'featured.json'].map((f) => join(lib, f))
+  const files = ['connectors.json', 'connectors-legacy.json', 'featured.json', 'popular.json'].map((f) => join(lib, f))
   return {
     name: 'catalogue-summary',
     resolveId(id) { return id === ID ? RESOLVED : null },
@@ -39,6 +39,17 @@ export function catalogueSummary(root: string): Plugin {
         }
         lists[key] = ids as string[]
       }
+      // founder-curated Popular list (src/lib/popular.json): published canonical rows or preserved
+      // reference pages; reference pages are flagged so they never read as catalogue connectors
+      const legacyById = new Map(legacy.map((c) => [c.id, c as Row & { lane6_behavior?: string }]))
+      const popularIds: string[] = JSON.parse(readFileSync(files[3], 'utf8')).popular
+      const POPULAR_STRIP = popularIds.map((id) => {
+        const c = byId.get(id)
+        if (c && !c.unpublished) return { id, n: c.n, logo: c.logo, ref: false }
+        const l = legacyById.get(id)
+        if (l && l.lane6_behavior === 'PRESERVE_REFERENCE_SURFACE') return { id, n: l.n, logo: l.logo, ref: true }
+        this.error(`popular.json: "${id}" is neither a published canonical row nor a preserved reference page`)
+      })
       const published = canonical.filter((c) => !c.unpublished).length
       const summary = {
         TOTAL_CATALOGUED: canonical.length,
@@ -58,6 +69,7 @@ export function catalogueSummary(root: string): Plugin {
         ...Object.entries(summary).map(([k, v]) => `export const ${k} = ${JSON.stringify(v)}`),
         `export const FEATURED_ROWS = ${JSON.stringify(rows)}`,
         `export const FEATURED = ${JSON.stringify(lists)}`,
+        `export const POPULAR_STRIP = ${JSON.stringify(POPULAR_STRIP)}`,
       ].join('\n')
     },
   }

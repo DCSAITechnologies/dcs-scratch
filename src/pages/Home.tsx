@@ -2,7 +2,7 @@
 // every 10 s; HERO-B is the "How it works" section. Every number is derived from the catalogue.
 import { useEffect, useRef, useState, type ReactNode } from 'react'
 import { LIFECYCLE_10, LIFECYCLE_10_DESC } from '../lib/lifecycle'
-import { TOTAL_CATALOGUED, PUBLISHED_COUNT, CATEGORY_COUNTS, FEATURED, FEATURED_ROWS } from 'virtual:catalogue-summary'
+import { TOTAL_CATALOGUED, PUBLISHED_COUNT, CATEGORY_COUNTS, FEATURED, FEATURED_ROWS, POPULAR_STRIP } from 'virtual:catalogue-summary'
 import { ConnectorLogo } from '../components/ConnectorLogo'
 import { HeroA, HeroB, HeroC } from '../components/hero/Heroes'
 import { C, SCALE } from '../components/hero/tokens'
@@ -72,7 +72,7 @@ function HeroRotator() {
         })}
       </div>
 
-      <div className="mx-auto px-4 sm:px-8 xl:px-12 2xl:px-16 -mt-6 flex max-w-[1760px] flex-wrap items-center gap-3 pb-10 ">
+      <div className="mx-auto px-4 sm:px-8 xl:px-12 2xl:px-16 -mt-2 flex max-w-[1760px] flex-wrap items-center gap-3 pb-4">
         <div className="flex flex-wrap gap-2" role="group" aria-label="Choose a slide">
           {SLIDES.map((s, i) => {
             const on = i === state.index
@@ -104,25 +104,29 @@ function HeroRotator() {
   )
 }
 
+// The founder-curated Popular connectors (src/lib/popular.json), small enough to sit inside the
+// first screen under the hero. Reference pages (not yet in core's catalogue) are labelled.
 function LogoStrip() {
-  const rows = FEATURED.homeStrip.map((id) => FEATURED_ROWS[id])
+  const rows = POPULAR_STRIP
   const loop = [...rows, ...rows]
   return (
-    <section aria-labelledby="strip-title" className="border-y py-10" style={{ borderColor: C.line, background: C.surface }}>
-      <p id="strip-title" className="mb-6 text-center text-[12.5px] font-medium" style={{ color: C.muted }}>
-        From the catalogue — {PUBLISHED_COUNT} published of {TOTAL_CATALOGUED.toLocaleString('en-US')} catalogued connectors
-      </p>
+    <section aria-labelledby="strip-title" className="border-y py-3.5" style={{ borderColor: C.line, background: C.surface }}>
       <div className="marquee-mask overflow-hidden">
-        <div className="marquee-track">
+        <div className="marquee-track !gap-2.5" style={{ animationDuration: '120s' }}>
           {loop.map((c, i) => (
             <a key={`${c.id}-${i}`} href={`/connectors/${c.id}`} tabIndex={i >= rows.length ? -1 : undefined} aria-hidden={i >= rows.length ? true : undefined}
-              className="flex shrink-0 items-center gap-3 rounded-xl px-4 py-2.5 transition-colors hover:bg-[#F5F7FB]" style={{ border: `1px solid ${C.line}` }}>
-              <ConnectorLogo name={c.n} src={c.logo} size={32} />
-              <span className="text-[13px] font-medium" style={{ color: C.ink2 }}>{c.n}</span>
+              title={c.ref ? 'Reference page: not yet in the Connector OS catalogue' : undefined}
+              className="flex shrink-0 items-center gap-2 rounded-lg px-2.5 py-1.5 transition-colors hover:bg-[#F5F7FB]" style={{ border: `1px solid ${C.line}` }}>
+              <ConnectorLogo name={c.n} src={c.logo ?? ''} size={22} />
+              <span className="text-[12.5px] font-medium whitespace-nowrap" style={{ color: C.ink2 }}>{c.n}</span>
             </a>
           ))}
         </div>
       </div>
+      <p id="strip-title" className="mt-2.5 text-center text-[11.5px]" style={{ color: C.muted }}>
+        Popular connectors · from the catalogue — {PUBLISHED_COUNT} published of {TOTAL_CATALOGUED.toLocaleString('en-US')} catalogued
+        <a href="/connectors" className="ml-2 font-semibold" style={{ color: C.blue }}>See all →</a>
+      </p>
     </section>
   )
 }

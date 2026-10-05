@@ -166,7 +166,7 @@ export function HeroA({ running = true, heading: Heading = 'h1' }: HeroProps = {
   ]
 
   return (
-    <section className="mx-auto px-4 sm:px-8 xl:px-12 2xl:px-16 grid max-w-[1760px] items-center gap-12 pb-20 pt-14 lg:grid-cols-[0.95fr_1.05fr] lg:pt-20 ">
+    <section className="mx-auto px-4 sm:px-8 xl:px-12 2xl:px-16 grid max-w-[1760px] items-center gap-10 pb-6 pt-8 lg:grid-cols-[0.95fr_1.05fr] lg:pt-8 ">
       <div className="min-w-0">
         <p className="text-[12.5px] font-semibold uppercase tracking-[0.14em]" style={{ color: C.blue }}>Connector OS</p>
         <Heading className={H1} style={{ color: C.ink }}>Governed connections for every agent action.</Heading>
@@ -394,7 +394,7 @@ export function HeroC({ running = true, heading: Heading = 'h1' }: HeroProps = {
   const focus = step >= 2
 
   return (
-    <section className="mx-auto px-4 sm:px-8 xl:px-12 2xl:px-16 grid max-w-[1760px] items-center gap-12 pb-20 pt-14 lg:grid-cols-[0.9fr_1.1fr] lg:pt-20">
+    <section className="mx-auto px-4 sm:px-8 xl:px-12 2xl:px-16 grid max-w-[1760px] items-center gap-10 pb-6 pt-8 lg:grid-cols-[0.9fr_1.1fr] lg:pt-8">
       <div className="min-w-0">
         <p className="text-[12.5px] font-semibold uppercase tracking-[0.14em]" style={{ color: C.blue }}>Connector OS</p>
         <Heading className={H1} style={{ color: C.ink }}>
