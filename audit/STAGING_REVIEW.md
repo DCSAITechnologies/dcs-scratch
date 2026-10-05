@@ -21,7 +21,7 @@ The console in the preview runs in **demo mode**: fixture data under a DEMO bann
 | Area | Where | Look for |
 |---|---|---|
 | Homepage | `/` | HERO-A ↔ HERO-C every 10 s (pause button, hover pause), HERO-B "How it works", logo strip, derived counts |
-| Catalogue | `/connectors` | Stat tiles, one-row categories, 4 cards per row, filters, search (try "openai": legacy reference) |
+| Catalogue | `/connectors` | Stat tiles, one-row categories, 4 cards per row, filters, **Popular** tab (50 founder-curated), AI & Models led by Anthropic, OpenAI, Gemini …; search "openai" pins the reference page on top |
 | Connector pages | `/connectors/heygen`, `/connectors/gmail`, `/connectors/ideogram` | Links panel; tabs Tools / Permissions / Documentation. Provider facts are labelled "What the … API supports" with a source link. Where there are no scope strings, the permission model is stated. A "links added from official pages" note shows where it applies. |
 | Sub-pages | Header menus and footer (7 columns) | Every link resolves, light theme throughout |
 | Console | `/app` (toggle **Light / Dark** in the top bar) | App shell. The activity rail is docked on Overview only (other pages: **Activity** button). One banner line. Tables scroll inside their card. |

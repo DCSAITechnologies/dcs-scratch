@@ -1,0 +1,13 @@
+{
+  "_comment": "Founder curation (2026-10-05): the everyday connectors shown first. 'popular' is the Popular tab, in this order; 'aiLeaders' lead the AI & Models results. Ids are published canonical rows or preserved reference pages (validated by scripts/validate-catalogue.py). Reference pages are not in core's catalogue yet and stay outside every count.",
+  "aiLeaders": ["anthropic", "openai", "google-gemini", "azure-openai", "mistral-ai", "perplexity", "hugging-face", "cohere", "aws-bedrock"],
+  "popular": [
+    "anthropic", "openai", "google-gemini", "azure-openai", "mistral-ai", "perplexity", "hugging-face", "cohere",
+    "slack", "gmail", "notion", "github", "microsoft-teams", "zoom", "google-drive", "dropbox",
+    "salesforce", "hubspot", "shopify", "stripe", "paypal", "razorpay", "quickbooks", "xero",
+    "zendesk", "intercom", "linear", "asana", "trello", "clickup", "airtable", "confluence",
+    "gitlab", "vercel", "cloudflare", "aws", "sentry", "datadog", "figma", "calendly",
+    "mailchimp", "sendgrid", "twilio", "discord", "docusign", "segment", "mixpanel", "snowflake",
+    "postgresql", "onedrive"
+  ]
+}

@@ -91,7 +91,7 @@ test('keyboard: the catalogue search is reachable by Tab and usable', async ({ p
   }
   expect(reached).toBe(true)
   await page.keyboard.type('anthropic')
-  await expect(page.getByTestId('no-canonical-match')).toBeVisible()
+  await expect(page.locator('a[href="/connectors/anthropic"]').first()).toBeVisible()
 })
 
 test('sign-in collects no credentials while no identity backend exists', async ({ page }) => {

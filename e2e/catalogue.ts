@@ -13,6 +13,7 @@ type Row = {
 const lib = join(process.cwd(), 'src', 'lib')
 export const CANONICAL: Row[] = JSON.parse(readFileSync(join(lib, 'connectors.json'), 'utf8'))
 export const LEGACY: Row[] = JSON.parse(readFileSync(join(lib, 'connectors-legacy.json'), 'utf8'))
+export const POPULAR: { popular: string[]; aiLeaders: string[] } = JSON.parse(readFileSync(join(lib, 'popular.json'), 'utf8'))
 export const PUBLISHED = CANONICAL.filter((c) => !c.unpublished)
 export const HOLD = CANONICAL.filter((c) => c.unpublished)
 // held rows listed as Coming Soon by the founder decision (src/lib/founder-decisions.json)

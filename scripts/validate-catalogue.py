@@ -119,6 +119,21 @@ def main() -> int:
             errors.append(f'RANK_DRIFT_FROM_CORE={drift[:10]}')
     else:
         errors.append('core-snapshot/catalogue.json missing')
+    # founder curation (Popular tab, AI leaders): every id must be a published canonical row
+    # or a preserved reference page, so the curation can never list a held or unknown connector
+    pop_path = os.path.join(ROOT, 'src', 'lib', 'popular.json')
+    if os.path.isfile(pop_path):
+        pop = json.load(open(pop_path))
+        legacy = json.load(open(os.path.join(ROOT, 'src', 'lib', 'connectors-legacy.json')))
+        ok = {c['id'] for c in records if not c.get('unpublished')} | {
+            c['id'] for c in legacy if c.get('lane6_behavior') == 'PRESERVE_REFERENCE_SURFACE'}
+        for key in ('popular', 'aiLeaders'):
+            ids_ = pop.get(key) or []
+            bad = [i for i in ids_ if i not in ok]
+            if bad:
+                errors.append(f'POPULAR_{key.upper()}_NOT_LISTABLE={bad[:10]}')
+            if len(set(ids_)) != len(ids_):
+                errors.append(f'POPULAR_{key.upper()}_DUPLICATES')
     if errors:
         print('CATALOGUE VALIDATION: FAIL')
         for e in errors[:40]:

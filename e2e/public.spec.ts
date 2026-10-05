@@ -1,5 +1,5 @@
 import { test, expect, type Page } from '@playwright/test'
-import { PUBLISHED, CANONICAL, HOLD, FOUNDER_LISTED, ALIASES, LEGACY, legacy, matches } from './catalogue'
+import { PUBLISHED, CANONICAL, HOLD, FOUNDER_LISTED, ALIASES, LEGACY, POPULAR, legacy, matches } from './catalogue'
 
 const NOT_FOUND = /This page is not on the map|Connector not found/
 
@@ -60,8 +60,9 @@ test.describe('public catalogue', () => {
       const hits = PUBLISHED.filter((c) => matches(c, q))
       expect(hits.some((c) => c.id === q)).toBe(false)
       await expect(page.getByTestId('result-count')).toHaveText(`${hits.length} connectors`)
-      if (hits.length === 0) await expect(page.getByTestId('no-canonical-match')).toContainText('legacy reference')
-      const card = page.locator(`a[href="/connectors/${q}"]`)
+      // a founder-curated leader is pinned at the top of the grid, labelled Reference, outside the count
+      const card = page.locator(`a[href="/connectors/${q}"]`).first()
+      await expect(page.getByTestId('pinned-count')).toContainText('reference')
       await expect(card).toContainText(row.n)
       await expect(card).toContainText('Reference')
       await card.click()
@@ -69,6 +70,22 @@ test.describe('public catalogue', () => {
       await expect(page.locator('h1')).toHaveText(row.n)
     })
   }
+
+  test('AI & Models opens with the founder-curated leaders, Anthropic first', async ({ page }) => {
+    await page.goto(`/connectors?cat=${encodeURIComponent('AI & Models')}`)
+    const cards = page.locator('a[href^="/connectors/"]:has-text("Details →")')
+    await expect(cards.first()).toHaveAttribute('href', `/connectors/${POPULAR.aiLeaders[0]}`)
+    await expect(cards.nth(1)).toHaveAttribute('href', `/connectors/${POPULAR.aiLeaders[1]}`)
+  })
+
+  test('Popular tab lists the curated connectors in order, and no extra reference section', async ({ page }) => {
+    await page.goto('/connectors')
+    await page.getByRole('button', { name: 'Popular', exact: true }).click()
+    const cards = page.locator('a[href^="/connectors/"]:has-text("Details →")')
+    await expect(cards).toHaveCount(POPULAR.popular.length)
+    await expect(cards.first()).toHaveAttribute('href', `/connectors/${POPULAR.popular[0]}`)
+    await expect(page.getByText('More reference pages')).toHaveCount(0)
+  })
 
   test('category deep link filters the grid', async ({ page }) => {
     const cat = 'Healthcare'

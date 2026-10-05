@@ -2,6 +2,7 @@ import { useEffect, useId, useMemo, useRef, useState } from 'react'
 import { PUBLISHED_CONNECTORS as CONNECTORS, LEGACY_REFERENCE_SURFACES, TOTAL_CATALOGUED, PUBLISHED_COUNT, UNPUBLISHED_COUNT, AVAILABLE_TO_CONNECT_COUNT, CORE_HEAD, byRank, CATEGORIES, STATUSES, AUTH_TYPES, RUNTIME_STATUSES, statusColor, runtimeStatusLabel, type Conn } from '../lib/data'
 import { ConnectorLogo } from '../components/ConnectorLogo'
 import { locSearch } from '../hooks/usePathRoute'
+import POPULAR from '../lib/popular.json'
 
 const PAGE = 60
 const LEGACY_PAGE = 12
@@ -10,6 +11,14 @@ const LEGACY_PAGE = 12
 const LEGACY_GRID = LEGACY_REFERENCE_SURFACES.filter(
   (c) => c.lane6_behavior === 'PRESERVE_REFERENCE_SURFACE' || c.lane6_behavior === 'REDIRECT'
 )
+// Founder curation (src/lib/popular.json): the everyday connectors, and the AI model leaders.
+// Many of them (OpenAI, Anthropic, Salesforce, Shopify …) are reference pages until core lists them.
+const REF_IDS = new Set(LEGACY_GRID.map((c) => c.id))
+const byId = (id: string) => CONNECTORS.find((c) => c.id === id) ?? LEGACY_GRID.find((c) => c.id === id)
+const AI_LEADERS = POPULAR.aiLeaders.map(byId).filter((c): c is Conn => Boolean(c) && REF_IDS.has(c!.id))
+const POPULAR_REFS = new Set(POPULAR.popular.filter((id) => REF_IDS.has(id)))
+const isRef = (c: Conn) => REF_IDS.has(c.id)
+const TABS = ['Popular', ...CATEGORIES]
 
 // Custom dark dropdown — native <select> renders OS-styled (white) panels.
 // Listbox pattern: button (aria-haspopup/expanded) + listbox of options;
@@ -85,7 +94,7 @@ export function Connectors() {
   // ?q= and ?cat= deep links (used by the nav category menu and shared searches)
   const params = new URLSearchParams(locSearch())
   const [q, setQ] = useState(params.get('q') ?? '')
-  const [cat, setCat] = useState(CATEGORIES.includes(params.get('cat') ?? '') ? params.get('cat')! : 'All')
+  const [cat, setCat] = useState(TABS.includes(params.get('cat') ?? '') ? params.get('cat')! : 'All')
   const [status, setStatus] = useState('')
   const [runtime, setRuntime] = useState('')
   const [auth, setAuth] = useState('')
@@ -99,7 +108,7 @@ export function Connectors() {
   const activeFilters = [status, runtime, auth, rw].filter(Boolean).length + (wh ? 1 : 0)
   const filtered = useMemo(() => {
     let list = CONNECTORS.filter((c) =>
-      (cat === 'All' || c.cat === cat) &&
+      (cat === 'All' || c.cat === cat || (cat === 'Popular' && POPULAR.popular.includes(c.id))) &&
       (!status || c.s === status) &&
       (!runtime || runtimeStatusLabel(c) === runtime) &&
       (!auth || c.auth === auth) &&
@@ -107,7 +116,9 @@ export function Connectors() {
       (!wh || c.wh) &&
       matchesQuery(c, q)
     )
-    list = sort === 'rank' ? list.sort(byRank) : list.sort((a, b) => a.n.localeCompare(b.n))
+    list = cat === 'Popular' && sort === 'rank'
+      ? list.sort((a, b) => POPULAR.popular.indexOf(a.id) - POPULAR.popular.indexOf(b.id))
+      : sort === 'rank' ? list.sort(byRank) : list.sort((a, b) => a.n.localeCompare(b.n))
     return list
   }, [q, cat, status, runtime, auth, rw, wh, sort])
 
@@ -116,7 +127,7 @@ export function Connectors() {
     // legacy rows carry no runtime status, so a runtime filter excludes them all
     if (runtime) return []
     let list = LEGACY_GRID.filter((c) =>
-      (cat === 'All' || c.cat === cat) &&
+      (cat === 'All' || c.cat === cat || (cat === 'Popular' && POPULAR_REFS.has(c.id))) &&
       (!status || c.s === status) &&
       (!auth || c.auth === auth) &&
       (!rw || (rw === 'Read only' ? c.rw === 'read' : c.rw.includes('write'))) &&
@@ -126,6 +137,18 @@ export function Connectors() {
     list = sort === 'rank' ? list.sort((a, b) => (a.r ?? 0) - (b.r ?? 0)) : list.sort((a, b) => a.n.localeCompare(b.n))
     return list
   }, [q, cat, status, runtime, auth, rw, wh, sort])
+
+  const needle = q.trim().toLowerCase()
+  const pinned: Conn[] = sort !== 'rank' ? [] :
+    cat === 'Popular' ? filteredLegacy.filter((c) => POPULAR_REFS.has(c.id))
+    : cat === 'AI & Models' ? AI_LEADERS.filter((c) => filteredLegacy.includes(c))
+    : needle.length > 1 ? filteredLegacy.filter((c) => POPULAR_REFS.has(c.id) && (c.n.toLowerCase().includes(needle) || c.id.includes(needle)))
+    : []
+  // Popular keeps the curated order across both kinds; elsewhere the pinned pages lead, then the catalogue
+  const grid: Conn[] = cat === 'Popular' && sort === 'rank'
+    ? [...pinned, ...filtered].sort((a, b) => POPULAR.popular.indexOf(a.id) - POPULAR.popular.indexOf(b.id))
+    : [...pinned, ...filtered]
+  const moreRefs = cat === 'Popular' ? [] : filteredLegacy.filter((c) => !pinned.includes(c))
 
   return (
     <div className="pt-24 pb-16">
@@ -185,7 +208,7 @@ export function Connectors() {
         {/* categories: one scrollable row instead of four wrapped rows */}
         <div className="relative mt-3">
           <div className="flex gap-2 overflow-x-auto pb-1.5 [scrollbar-width:thin]" role="group" aria-label="Category">
-            {CATEGORIES.map((c) => (
+            {TABS.map((c) => (
               <button key={c} onClick={() => { setCat(c); setShown(PAGE) }} aria-pressed={cat === c} className={`chip shrink-0 whitespace-nowrap !py-1 !px-3 ${cat === c ? 'active' : ''}`}>{c}</button>
             ))}
           </div>
@@ -194,6 +217,7 @@ export function Connectors() {
 
         <div className="mt-5 flex items-center gap-3 text-[12.5px] text-[#566074]">
           <span data-testid="result-count" className="font-medium text-[#1E2638]">{filtered.length} connectors</span>
+          {pinned.length > 0 && <span data-testid="pinned-count">+ {pinned.length} reference {pinned.length === 1 ? 'page' : 'pages'} (not in the catalogue count)</span>}
           {(q || cat !== 'All' || status || runtime || auth || rw || wh) && (
             <button type="button" className="font-semibold text-[#2850D8] hover:underline"
               onClick={() => { setQ(''); setCat('All'); setStatus(''); setRuntime(''); setAuth(''); setRw(''); setWh(false); setShown(PAGE) }}>Clear filters</button>
@@ -201,7 +225,7 @@ export function Connectors() {
         </div>
 
         <div className="mt-3 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-3.5">
-          {filtered.slice(0, shown).map((c: Conn) => (
+          {grid.slice(0, shown).map((c: Conn) => (
             <a key={c.id} href={`/connectors/${c.id}`} className="glass-card glass-card-hover p-4 flex flex-col">
               <div className="flex items-center gap-3">
                 <ConnectorLogo name={c.n} src={c.logo} size={40} />
@@ -213,7 +237,9 @@ export function Connectors() {
               <p className="mt-2.5 text-[12.5px] leading-snug text-[#3A4357] line-clamp-2">{c.d}</p>
               <div className="flex-1" />
               <div className="mt-3 flex items-center gap-1.5 flex-wrap">
-                <span className="text-[10.5px] font-semibold px-2 py-0.5 rounded-full" style={{ color: statusColor(c.s), background: `${statusColor(c.s)}1f`, border: `1px solid ${statusColor(c.s)}44` }}>{c.s}</span>
+                {isRef(c)
+                  ? <span className="text-[10.5px] font-semibold px-2 py-0.5 rounded-full text-[#92400E]" style={{ background: 'rgba(255,178,36,0.08)', border: '1px solid rgba(255,178,36,0.3)' }} title="Reference page: not yet in the Connector OS catalogue, outside every count">Reference</span>
+                  : <span className="text-[10.5px] font-semibold px-2 py-0.5 rounded-full" style={{ color: statusColor(c.s), background: `${statusColor(c.s)}1f`, border: `1px solid ${statusColor(c.s)}44` }}>{c.s}</span>}
                 {c.runtime_status && c.runtime_status !== 'not_verified' && (
                   <span className="text-[10.5px] px-2 py-0.5 rounded-full text-[#566074]" style={{ background: '#F5F7FB', border: '1px solid #E3E7EE' }}>{runtimeStatusLabel(c)}</span>
                 )}
@@ -225,7 +251,7 @@ export function Connectors() {
           ))}
         </div>
 
-        {filtered.length === 0 && (
+        {grid.length === 0 && (
           <div className="glass-panel p-6 text-center" data-testid="no-canonical-match">
             <p className="text-[13.5px] text-[#1E2638]">No published canonical connector matches these filters.</p>
             <p className="mt-1.5 text-[12px] text-[#566074]">
@@ -236,20 +262,20 @@ export function Connectors() {
           </div>
         )}
 
-        {shown < filtered.length && (
+        {shown < grid.length && (
           <div className="mt-10 text-center">
-            <button onClick={() => setShown(shown + PAGE)} className="cta-secondary">Load more ({filtered.length - shown} remaining)</button>
+            <button onClick={() => setShown(shown + PAGE)} className="cta-secondary">Load more ({grid.length - shown} remaining)</button>
           </div>
         )}
 
-        {filteredLegacy.length > 0 && (
+        {moreRefs.length > 0 && (
           <div className="mt-14">
             <div className="flex items-baseline gap-3 flex-wrap">
-              <h2 className="text-xl font-semibold tracking-tight text-[#0B1220]">Legacy reference surfaces</h2>
-              <span className="text-[11.5px] text-[#566074]">{filteredLegacy.length} preserved from the previous catalogue — reference only, not part of the canonical catalogue or any count above</span>
+              <h2 className="text-xl font-semibold tracking-tight text-[#0B1220]">More reference pages</h2>
+              <span className="text-[11.5px] text-[#566074]">{moreRefs.length} from the previous catalogue — reference only, not part of the canonical catalogue or any count above</span>
             </div>
             <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4">
-              {filteredLegacy.slice(0, legacyShown).map((c: Conn) => (
+              {moreRefs.slice(0, legacyShown).map((c: Conn) => (
                 <a key={`legacy-${c.id}`} href={`/connectors/${c.id}`} className="glass-card glass-card-hover p-5 flex flex-col">
                   <div className="flex items-center gap-3 mb-3">
                     <ConnectorLogo name={c.n} src={c.logo} size={44} />
@@ -267,9 +293,9 @@ export function Connectors() {
                 </a>
               ))}
             </div>
-            {legacyShown < filteredLegacy.length && (
+            {legacyShown < moreRefs.length && (
               <div className="mt-8 text-center">
-                <button onClick={() => setLegacyShown(legacyShown + LEGACY_PAGE * 4)} className="cta-secondary">Load more reference surfaces ({filteredLegacy.length - legacyShown} remaining)</button>
+                <button onClick={() => setLegacyShown(legacyShown + LEGACY_PAGE * 4)} className="cta-secondary">Load more reference pages ({moreRefs.length - legacyShown} remaining)</button>
               </div>
             )}
           </div>
