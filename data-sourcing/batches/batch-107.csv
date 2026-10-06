@@ -1,0 +1,21 @@
+id,name,provider,category,known_site,known_portal,known_api,needs
+sap-business-one-service-layer,SAP Business One Service Layer,SAP,Manufacturing / ERP / Supply Chain,https://www.sap.com/index.html,,,portal;api;authDocs;statusUrl;auth;caps;scopes;reqs
+savvycal,SavvyCal,SavvyCal,Productivity,https://savvycal.com/,https://developers.savvycal.com/,,api;authDocs;whDocs;statusUrl;caps;scopes;reqs
+seismic,Seismic,Seismic,CRM & Sales,https://www.seismic.com/,https://developer.seismic.com/seismicsoftware/,https://developer.seismic.com/seismicsoftware/,logo
+shutterstock,Shutterstock,Shutterstock,Social / Creator / Publishing,https://www.shutterstock.com/,https://www.shutterstock.com/developers,https://api-reference.shutterstock.com/?language=en,logo;statusUrl
+similarweb,Similarweb,Similarweb,Marketing / Advertising,,https://developers.similarweb.com/docs/similarweb-web-traffic-api,https://developers.similarweb.com/docs/similarweb-web-traffic-api,logo;site;authDocs;statusUrl;caps;scopes;reqs
+pactflow,PactFlow,SmartBear,Developer Tools,https://pactflow.io/,https://docs.pactflow.io/,https://docs.pactflow.io/,logo;caps
+swaggerhub,SwaggerHub,SmartBear,Developer Tools,https://swagger.io/product/,https://support.smartbear.com/swagger/studio/docs/en/about.html,https://support.smartbear.com/swagger/studio/docs/en/about.html,logo
+zephyr-scale-cloud,Zephyr Scale Cloud,SmartBear,Developer Tools,https://smartbear.com/,https://support.smartbear.com/zephyr/docs/en/rest-api/rest-api--overview-.html,https://support.smartbear.com/zephyr-scale-cloud/api-docs/,logo
+socket-dev,Socket,Socket,Security & Identity,,https://docs.socket.dev/docs/getting-started,https://docs.socket.dev/reference/authentication,logo;site;statusUrl;caps;scopes;reqs
+soracom,Soracom,Soracom,Manufacturing / ERP / Supply Chain,http://soracom.io/,,,portal;api;authDocs;statusUrl;caps;scopes;reqs
+soundcloud,SoundCloud,SoundCloud,Social / Creator / Publishing,https://soundcloud.com/,https://developers.soundcloud.com/,,api;authDocs;statusUrl;caps;scopes;reqs
+springverify-india,SpringVerify India,SpringVerify,HR / Recruiting / Payroll,https://in.springverify.com/,,,portal;api;authDocs;statusUrl;caps;scopes;reqs
+stedi-healthcare,Stedi Healthcare,Stedi,Healthcare,https://www.stedi.com/,https://www.stedi.com/docs/healthcare,https://www.stedi.com/docs/healthcare,logo;authDocs;statusUrl;caps;scopes;reqs
+sugarcrm,SugarCRM,SugarCRM,CRM & Sales,https://www.sugarcrm.com/,,,portal;api;authDocs;statusUrl;auth;caps;scopes;reqs
+sw-sapien,SW sapien (Smarter Web),SW sapien,Finance / Accounting / Tax,,https://developers.sw.com.mx/,https://developers.sw.com.mx/,logo;site;authDocs;statusUrl;caps;scopes;reqs
+boldsign,BoldSign,Syncfusion,Documents / E-sign / Forms,https://boldsign.com/,https://developers.boldsign.com/,,api;authDocs;whDocs;statusUrl;caps;scopes;reqs
+tazapay,Tazapay,Tazapay,Payments / Banking / Fintech,,https://developer.tazapay.com/getting-started/overview/overview,https://developer.tazapay.com/getting-started/overview/overview,logo;site;authDocs;statusUrl;auth;caps;scopes;reqs
+teamleader-focus,Teamleader Focus,Teamleader,CRM & Sales,https://www.teamleader.eu/,https://developer.focus.teamleader.eu/,,api;authDocs;statusUrl;caps;scopes;reqs
+terra,Terra API,Terra,Healthcare,https://tryterra.co/,https://docs.tryterra.co/,https://docs.tryterra.co/,logo;authDocs;whDocs;statusUrl;caps;scopes;reqs
+thinkific,Thinkific,Thinkific,Education,https://www.thinkific.com/,https://developers.thinkific.com/,,logo;api;authDocs;statusUrl;caps;scopes;reqs

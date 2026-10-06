@@ -1,0 +1,21 @@
+id,name,provider,category,known_site,known_portal,known_api,needs
+juro,Juro,Juro,Legal / Compliance,https://juro.com/,https://api-docs.juro.com/,https://api-docs.juro.com/,scopes
+kashier,Kashier,Kashier,Payments / Banking / Fintech,https://www.kashier.io/,https://developers.kashier.io/docs,https://developers.kashier.io/docs/api-reference,statusUrl
+katana-mrp,Katana,Katana,Logistics / Shipping / Inventory,https://katanamrp.com/,https://developer.katanamrp.com/,https://developer.katanamrp.com/reference/api-introduction,statusUrl;scopes
+kentik,Kentik,Kentik,Observability,https://www.kentik.com/,https://kb.kentik.com/docs/apis-overview,https://kb.kentik.com/v1/docs/admin-apis,scopes
+keycdn,KeyCDN,KeyCDN,Cloud & Hosting,https://www.keycdn.com/,https://www.keycdn.com/api,https://www.keycdn.com/api,scopes
+khoros,Khoros,Khoros,Support & Success,https://khoros.ai:443/,https://developer.khoros.com/,https://developer.khoros.com/,caps;scopes
+kiwify,Kiwify,Kiwify,Commerce / Marketplaces,https://kiwify.com.br/,https://docs.kiwify.com.br/api-reference/general,https://docs.kiwify.com.br/api-reference/general.md,scopes
+knowbe4,KnowBe4 (KSAT Reporting API),KnowBe4,Security & Identity,https://www.knowbe4.com/,https://developer.knowbe4.com/,https://developer.knowbe4.com/elvis-swagger.yml,authDocs;statusUrl;caps;scopes;reqs
+kling-ai,Kling AI (Kuaishou),Kuaishou Technology,AI & Models,https://kling.ai/,https://kling.ai/document-api/api/get-started/authentication,https://kling.ai/document-api/api/get-started/authentication,authDocs;statusUrl;caps;scopes;reqs
+chatwork,Chatwork,kubell,Communications / Voice / Video,https://go.chatwork.com/en/,https://developer.chatwork.com/docs/getting-started,https://developer.chatwork.com/reference/get-me,statusUrl
+lambda-cloud,Lambda Cloud (GPU),Lambda,Cloud & Hosting,https://lambda.ai/,https://docs.lambda.ai/,https://docs.lambda.ai/api/cloud,scopes
+lancedb-cloud,LanceDB Cloud,LanceDB,AI & Models,https://www.lancedb.com/,https://docs.lancedb.com/api-reference/rest/index.md,https://docs.lancedb.com/api-reference/rest/index.md,scopes
+last9,Last9,Last9,Observability,https://last9.io/,https://last9.io/docs/getting-started-with-api/,https://last9.io/docs/getting-started-with-api/,statusUrl
+lemlist,lemlist,lemlist,CRM & Sales,https://www.lemlist.com/,https://developer.lemlist.com/api-reference/getting-started/overview,https://developer.lemlist.com/api-reference/endpoints/campaigns/get-many-campaigns,scopes
+lexware-office,Lexware Office (formerly lexoffice),Lexware,Finance / Accounting / Tax,https://www.lexware.de/,https://www.lexware.de/funktionen/public-api/,https://www.lexware.de/funktionen/public-api/,authDocs;scopes
+linnworks,Linnworks,Linnworks,Commerce / Marketplaces,https://www.linnworks.com/,https://apidocs.linnworks.net/reference/overview,https://apidocs.linnworks.net/reference/overview,scopes
+skuvault,SkuVault,Linnworks,Logistics / Shipping / Inventory,https://www.skuvault.com/,https://dev.skuvault.com/reference/additem,https://dev.skuvault.com/llms.txt,statusUrl
+ticketmaster-discovery,Ticketmaster Discovery API,Live Nation Entertainment,Travel / Hospitality / Events,https://www.ticketmaster.com/,https://developer.ticketmaster.com/,https://developer.ticketmaster.com/products-and-docs/apis/discovery-api/v2/,statusUrl;scopes
+llamacloud,LlamaCloud (LlamaParse),LlamaIndex,AI & Models,https://www.llamaindex.ai/,https://developers.llamaindex.ai/llamaparse/,https://developers.llamaindex.ai/llamaparse/,authDocs;whDocs;statusUrl;caps;scopes;reqs
+lob,Lob,Lob,Communications / Voice / Video,https://www.lob.com/,https://docs.lob.com/,https://docs.lob.com/,authDocs;whDocs;statusUrl;caps;scopes;reqs

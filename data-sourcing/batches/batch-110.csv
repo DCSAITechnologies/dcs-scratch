@@ -1,0 +1,21 @@
+id,name,provider,category,known_site,known_portal,known_api,needs
+bill-com,BILL (Bill.com),BILL,Finance / Accounting / Tax,https://www.bill.com/,https://developer.bill.com/docs/home,https://developer.bill.com/reference,scopes
+pusher-channels,Pusher Channels,Bird,Communications / Voice / Video,https://pusher.com/,https://pusher.com/docs/channels/,https://pusher.com/docs/channels/,scopes
+bloomfire,Bloomfire,Bloomfire,Productivity,https://bloomfire.com/,https://help.bloomfire.com/api/v2/swagger.json,https://help.bloomfire.com/api/v2/swagger.json,statusUrl
+blynk,Blynk,Blynk,Manufacturing / ERP / Supply Chain,https://www.blynk.io/,https://docs.blynk.io/en/blynk.cloud/device-https-api,https://docs.blynk.io/en/blynk.cloud/device-https-api,statusUrl
+brankas,Brankas,Brankas,Payments / Banking / Fintech,https://www.brankas.com/,https://api-reference.brankas.com/,https://api-reference.brankas.com/,statusUrl
+bunny-net,bunny.net,bunny.net,Cloud & Hosting,https://bunny.net/,https://bunny.net/docs,https://bunny.net/docs,scopes
+buzzsprout,Buzzsprout,Buzzsprout,Social / Creator / Publishing,https://www.buzzsprout.com/,https://github.com/buzzsprout/buzzsprout-api/blob/master/README.md,https://github.com/buzzsprout/buzzsprout-api/blob/master/README.md,statusUrl
+canopy,Canopy,Canopy,Finance / Accounting / Tax,https://www.getcanopy.com/,https://www.getcanopy.com/api/,https://www.getcanopy.com/api/,caps;scopes
+leonardo,Leonardo.Ai,Canva,AI & Models,https://leonardo.ai/,https://docs.leonardo.ai/docs/getting-started,https://docs.leonardo.ai/docs/getting-started,statusUrl
+pixabay,Pixabay,Canva,Social / Creator / Publishing,https://pixabay.com/,https://pixabay.com/api/docs/,https://pixabay.com/api/docs/,statusUrl
+canvas-medical,Canvas Medical,Canvas Medical,Healthcare,https://www.canvasmedical.com/,https://docs.canvasmedical.com/,https://docs.canvasmedical.com/,authDocs;statusUrl;caps;scopes;reqs
+cashfree,Cashfree Payments,Cashfree Payments,Payments / Banking / Fintech,https://www.cashfree.com/,https://www.cashfree.com/docs,https://www.cashfree.com/docs,authDocs;whDocs;statusUrl;caps;scopes;reqs
+nppes-npi-registry,NPPES NPI Registry,Centers for Medicare & Medicaid Services,Healthcare,https://npiregistry.cms.hhs.gov/,https://npiregistry.cms.hhs.gov/api-page,https://npiregistry.cms.hhs.gov/api-page,statusUrl
+checkmarx-one,Checkmarx One,Checkmarx,Security & Identity,https://checkmarx.com/,https://docs.checkmarx.com/,https://docs.checkmarx.com/en/34965-68772-checkmarx-one-api-documentation.html,authDocs;statusUrl;caps;scopes;reqs
+checkmk,Checkmk,Checkmk,Observability,https://checkmk.com/,https://docs.checkmk.com/latest/en/,https://docs.checkmk.com/latest/en/rest_api.html,statusUrl
+checkr,Checkr,Checkr,HR / Recruiting / Payroll,https://checkr.com/,https://docs.checkr.com/,https://docs.checkr.com/,authDocs;whDocs;statusUrl;caps;scopes;reqs
+churnzero,ChurnZero,ChurnZero,Support & Success,https://churnzero.com/,https://support.churnzero.com/hc/en-us/articles/360003183171-Integrate-ChurnZero-using-HTTP-API,https://support.churnzero.com/hc/en-us/articles/360003183171-Integrate-ChurnZero-using-HTTP-API,authDocs
+cielo-ecommerce,Cielo E-commerce API,Cielo,Payments / Banking / Fintech,https://www.cielo.com.br/,https://developercielo.github.io/manual/cielo-ecommerce,https://developercielo.github.io/manual/cielo-ecommerce,scopes
+clay,Clay,Clay,CRM & Sales,https://www.clay.com/,https://developers.clay.com/,https://developers.clay.com/api-reference/me/get-the-authenticated-user,scopes
+clickatell,Clickatell,Clickatell,Communications / Voice / Video,https://www.clickatell.com/,https://help.clickatell.com/developers-api-reference/reference/one-api,https://help.clickatell.com/developers-api-reference/reference/one-api,authDocs;statusUrl;caps;scopes;reqs

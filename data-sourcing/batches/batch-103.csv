@@ -1,0 +1,21 @@
+id,name,provider,category,known_site,known_portal,known_api,needs
+docebo,Docebo,Docebo,HR / Recruiting / Payroll,https://www.docebo.com/,,,portal;api;authDocs;statusUrl;auth;caps;scopes;reqs
+doorloop,DoorLoop,DoorLoop,Real Estate / Construction,https://www.doorloop.com/,,,portal;api;authDocs;statusUrl;caps;scopes;reqs
+edfapay,EdfaPay,EdfaPay,Payments / Banking / Fintech,https://edfapay.com/home/,,,portal;api;authDocs;statusUrl;caps;scopes;reqs
+edlink,Edlink,Edlink,Education,https://ed.link/,,,logo;portal;api;authDocs;statusUrl;caps;scopes;reqs
+elation-health,Elation Health,Elation Health,Healthcare,https://www.elationhealth.com/,,,portal;api;authDocs;whDocs;statusUrl;caps;scopes;reqs
+onfido,Onfido (Entrust Identity Verification),Entrust,Legal / Compliance,https://www.entrust.com/products/identity-verification,https://documentation.identity.entrust.com:443/,https://documentation.identity.entrust.com:443/,logo;statusUrl
+epic-on-fhir,Epic on FHIR,Epic Systems,Healthcare,https://www.epic.com/,https://fhir.epic.com/,,logo;api;authDocs;statusUrl;caps;scopes;reqs
+espocrm,EspoCRM,EspoCRM,CRM & Sales,https://www.espocrm.com/,https://docs.espocrm.com/,https://docs.espocrm.com/development/api/,authDocs;statusUrl;auth;caps;scopes;reqs
+exact-online,Exact Online,Exact,Finance / Accounting / Tax,https://www.exact.com/,,https://start.exactonline.nl/docs/HlpRestAPIResources.aspx,portal;authDocs;caps;scopes;reqs
+expedia-rapid,Expedia Group Rapid,Expedia Group,Travel / Hospitality / Events,https://www.expediagroup.com/en-us,https://developers.expediagroup.com/docs,https://developers.expediagroup.com/rapid/api/explorer,logo;statusUrl
+fast2sms,Fast2SMS,Fast2SMS,Communications / Voice / Video,https://www.fast2sms.com/,,,logo;portal;api;authDocs;statusUrl;caps;scopes;reqs
+fred-stlouisfed,FRED (Federal Reserve Bank of St. Louis),Federal Reserve Bank of St. Louis,Government / Public Data,https://fred.stlouisfed.org/,https://fred.stlouisfed.org/docs/api/fred/,https://fred.stlouisfed.org/docs/api/fred/,logo;statusUrl;scopes
+flutterwave,Flutterwave,Flutterwave,Payments / Banking / Fintech,https://flutterwave.com/us/,https://developer.flutterwave.com/,,api;authDocs;statusUrl;auth;caps;scopes;reqs
+foodics,Foodics,Foodics,Commerce / Marketplaces,https://www.foodics.com/,https://developers.foodics.com/,,api;authDocs;statusUrl;auth;caps;scopes;reqs
+formstack,Formstack Forms,Formstack,Documents / E-sign / Forms,https://www.formstack.com/,https://developers.formstack.com/reference/api-overview,,api;authDocs;statusUrl;caps;scopes;reqs
+fortnox,Fortnox,Fortnox,Finance / Accounting / Tax,https://www.fortnox.se/,https://www.fortnox.se/developer,,api;authDocs;statusUrl;auth;caps;scopes;reqs
+frenet,Frenet,Frenet,Logistics / Shipping / Inventory,,,,logo;site;portal;api;authDocs;statusUrl;caps;scopes;reqs
+fynd-platform,Fynd Commerce Platform,Fynd,Commerce / Marketplaces,https://www.fynd.com/,,,logo;portal;api;authDocs;statusUrl;caps;scopes;reqs
+g2,G2,G2,CRM & Sales,,https://documentation.g2.com/docs/g2-api.md,https://documentation.g2.com/docs/g2-api.md,logo;site;authDocs;statusUrl;caps;scopes;reqs
+gainsight,Gainsight NXT,Gainsight,Support & Success,,,,logo;site;portal;api;authDocs;statusUrl;auth;caps;scopes;reqs

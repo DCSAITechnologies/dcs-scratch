@@ -1,0 +1,21 @@
+id,name,provider,category,known_site,known_portal,known_api,needs
+practicepanther,PracticePanther,Paradigm,Legal / Compliance,https://www.practicepanther.com/,,,portal;api;authDocs;statusUrl;caps;scopes;reqs
+particle-health,Particle Health,Particle Health,Healthcare,https://www.particlehealth.com/,,,portal;api;authDocs;statusUrl;caps;scopes;reqs
+paychex,Paychex,Paychex,HR / Recruiting / Payroll,https://www.paychex.com/,https://developer.paychex.com/,,api;authDocs;statusUrl;caps;scopes;reqs
+travelperk,TravelPerk,Perk,Travel / Hospitality / Events,https://www.perk.com/,,,logo;portal;api;authDocs;statusUrl;caps;scopes;reqs
+photon-health,Photon Health,Photon Health,Healthcare,https://photonhealth.com/,,,logo;portal;api;authDocs;whDocs;statusUrl;caps;scopes;reqs
+powerschool-sis,PowerSchool SIS,PowerSchool,Education,https://www.powerschool.com/,https://sis.powerschool.com/api/ims/oneroster/v1p1,https://sis.powerschool.com/api/ims/oneroster/v1p1,authDocs;auth;scopes;reqs
+printful,Printful,Printful,Commerce / Marketplaces,https://www.printful.com/,https://developers.printful.com/docs/,https://developers.printful.com/docs/,logo;authDocs;statusUrl;caps;scopes;reqs
+priority-software,Priority Software,Priority Software,Manufacturing / ERP / Supply Chain,https://www.priority-software.com/,,,portal;api;authDocs;statusUrl;caps;scopes;reqs
+onshape,Onshape,PTC,Manufacturing / ERP / Supply Chain,https://www.onshape.com/en/,,,portal;api;authDocs;statusUrl;caps;scopes;reqs
+sandbox-co-in,Sandbox (sandbox.co.in),Quicko,Finance / Accounting / Tax,https://sandbox.co.in/,https://developer.sandbox.co.in/,,api;authDocs;statusUrl;caps;scopes;reqs
+doubletick,DoubleTick,QuickSell,Communications / Voice / Video,https://doubletick.io/,,,portal;api;authDocs;statusUrl;caps;scopes;reqs
+reddit,Reddit Data API,Reddit,Social / Creator / Publishing,https://www.reddit.com/,,https://www.reddit.com/dev/api/,portal;authDocs;caps;scopes;reqs
+remote,Remote,Remote,HR / Recruiting / Payroll,https://remote.com/,https://developer.remote.com/docs/getting-started-with-remote,,api;authDocs;statusUrl;caps;scopes;reqs
+reply-io,Reply.io,Reply.io,CRM & Sales,https://reply.io/,https://docs.reply.io/,https://docs.reply.io/,logo;caps;scopes
+reviewsio,Reviews.io,Reviews.io,Support & Success,https://www.reviews.io/,https://developer.reviews.io/,https://developer.reviews.io/,logo;statusUrl
+rocketchat,Rocket.Chat,Rocket.Chat,Productivity,https://www.rocket.chat/,https://developer.rocket.chat/docs,https://docs.rocket.chat/,authDocs;statusUrl;auth;caps;scopes;reqs
+rocketlane,Rocketlane,Rocketlane,Support & Success,https://www.rocketlane.com/,https://developer.rocketlane.com/reference/get-invoice-payments,,api;authDocs;statusUrl;caps;scopes;reqs
+route-mobile,Route Mobile,Route Mobile,Communications / Voice / Video,https://routemobile.com/,,,logo;portal;api;authDocs;statusUrl;caps;scopes;reqs
+crates-io,crates.io,Rust Foundation,Developer Tools,https://crates.io/,https://crates.io/api/openapi.json,https://crates.io/api/openapi.json,logo
+salla,Salla,Salla,Commerce / Marketplaces,https://salla.com/,https://salla.dev/,https://docs.salla.dev/,logo

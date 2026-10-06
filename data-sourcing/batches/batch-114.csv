@@ -1,0 +1,21 @@
+id,name,provider,category,known_site,known_portal,known_api,needs
+harness,Harness,Harness,Developer Tools,https://www.harness.io/,https://developer.harness.io/,https://apidocs.harness.io/,authDocs;caps;scopes;reqs
+hasura-cloud,Hasura Cloud,Hasura,Databases & Search,https://hasura.io/,https://hasura.io/docs/3.0/index/,https://hasura.io/docs/2.0/api-reference/cloud-api-reference/,scopes
+have-i-been-pwned,Have I Been Pwned,Have I Been Pwned,Security & Identity,https://haveibeenpwned.com/,https://haveibeenpwned.com/API/v3,https://haveibeenpwned.com/API/v3,authDocs;statusUrl;caps;scopes;reqs
+hotelbeds,Hotelbeds (HBX Group),HBX Group,Travel / Hospitality / Events,https://discover.hotelbeds.com,https://developer.hotelbeds.com/,https://developer.hotelbeds.com/documentation/hotels/booking-api/api-reference/,statusUrl;scopes
+helpjuice,Helpjuice,Helpjuice,Productivity,https://helpjuice.com/,https://help.helpjuice.com/en_US/api-v3/using-api-v3,https://help.helpjuice.com/en_US/api-v3/using-api-v3,scopes
+hevo-data,Hevo Data,Hevo Data,Databases & Search,https://hevodata.com/,https://docs.hevodata.com/,https://docs.hevodata.com/,authDocs;statusUrl;caps;scopes;reqs
+hexnode,Hexnode,Hexnode,Security & Identity,https://www.hexnode.com/,https://www.hexnode.com/mobile-device-management/developers/,https://www.hexnode.com/mobile-device-management/developers/,statusUrl
+huawei-cloud-ecs,Huawei Cloud ECS,Huawei,Cloud & Hosting,https://www.huaweicloud.com/intl/en-us/,https://support.huaweicloud.com/intl/en-us/api-ecs/en-us_topic_0020212668.html,https://support.huaweicloud.com/intl/en-us/api-ecs/en-us_topic_0020212668.html,statusUrl
+hyperverge,HyperVerge,HyperVerge,Security & Identity,https://hyperverge.co/,https://documentation.hyperverge.co/,https://documentation.hyperverge.co/,statusUrl
+icici-breeze,ICICI Direct Breeze,ICICI Securities,Payments / Banking / Fintech,https://www.icicidirect.com/,https://api.icicidirect.com/apiuser/home,https://api.icicidirect.com/breezeapi/documents/index.html,statusUrl
+icinga2,Icinga 2,Icinga,Observability,https://icinga.com/,https://icinga.com/docs/,https://icinga.com/docs/icinga-2/latest/doc/12-icinga2-api/,statusUrl
+testrail,TestRail,Idera,Developer Tools,https://www.testrail.com/,https://support.testrail.com/hc/en-us/categories/7076541806228-API-Manual,https://support.testrail.com/hc/en-us/articles/7077083596436-Introduction-to-the-TestRail-API,scopes
+ilovepdf,iLovePDF (iLoveAPI),iLovePDF,Documents / E-sign / Forms,https://www.ilovepdf.com/,https://www.iloveapi.com/,https://www.iloveapi.com/docs/api-reference,statusUrl;scopes
+indiamart-lead-manager,IndiaMART Lead Manager API,IndiaMART,CRM & Sales,https://www.indiamart.com/,https://help.indiamart.com/knowledge-base/lms-crm-integration-v2/,https://help.indiamart.com/knowledge-base/lms-crm-integration-v2/,statusUrl;scopes
+infinite-campus,Infinite Campus,Infinite Campus,Education,https://www.infinitecampus.com/,https://kb.infinitecampus.com/help/oneroster-api,https://kb.infinitecampus.com/help/oneroster-api-documentation-oauth-2,statusUrl;scopes
+instatus,Instatus,Instatus,Observability,https://instatus.com/,https://instatus.com/help,https://instatus.com/help/api,scopes
+canvas-lms,Canvas LMS (Instructure),Instructure,Education,https://www.instructure.com/,https://canvas.instructure.com/doc/api/,https://canvas.instructure.com/doc/api/,authDocs;caps;scopes;reqs
+interswitch,Interswitch,Interswitch,Payments / Banking / Fintech,https://interswitchgroup.com,https://docs.interswitchgroup.com/docs/home,https://docs.interswitchgroup.com/reference/how-to-use-the-reference,statusUrl;scopes
+invoice-ninja,Invoice Ninja,Invoice Ninja,Finance / Accounting / Tax,https://invoiceninja.com/,https://invoiceninja.github.io/docs/developer-guide/api/authentication,https://invoiceninja.github.io/docs/developer-guide/api/authentication,scopes
+ipinfo,IPinfo,IPinfo,Government / Public Data,https://ipinfo.io/,https://ipinfo.io/developers,https://ipinfo.io/developers,statusUrl;scopes

@@ -1,0 +1,21 @@
+id,name,provider,category,known_site,known_portal,known_api,needs
+refiner,Refiner,Refiner,Support & Success,https://refiner.io/,https://refiner.io/docs/api/,https://refiner.io/docs/api/,scopes
+rentcast,RentCast,RentCast,Real Estate / Construction,https://www.rentcast.io/,https://developers.rentcast.io/reference/introduction,https://developers.rentcast.io/reference/property-records,statusUrl
+resemble,Resemble AI,Resemble AI,AI & Models,https://www.resemble.ai/,https://docs.resemble.ai/welcome,https://docs.resemble.ai/welcome,authDocs;statusUrl;caps;scopes;reqs
+resource-guru,Resource Guru,Resource Guru,Productivity,https://resourceguruapp.com/,https://app.resourceguruapp.com:443/developers,https://resourceguruapp.com/docs/api,statusUrl
+respond-io,respond.io,respond.io,Support & Success,https://respond.io/,https://developers.respond.io/,https://developers.respond.io/docs/api/c6e1aa937640e-contact,scopes
+rollbar,Rollbar,Rollbar,Developer Tools,https://rollbar.com/,https://docs.rollbar.com/docs/getting-started,https://docs.rollbar.com/docs/getting-started,authDocs;caps;scopes;reqs
+samsara,Samsara,Samsara,Logistics / Shipping / Inventory,https://www.samsara.com/,https://developers.samsara.com/reference/overview,https://developers.samsara.com/reference/overview,statusUrl
+sarvam-ai,Sarvam AI,Sarvam AI,AI & Models,https://www.sarvam.ai/,https://docs.sarvam.ai/,https://docs.sarvam.ai/,authDocs;statusUrl;caps;scopes;reqs
+satispay,Satispay Business,Satispay,Payments / Banking / Fintech,https://www.satispay.com/it-it/privati/,https://developers.satispay.com/docs/welcome,https://developers.satispay.com/reference,statusUrl;scopes
+sauce-labs,Sauce Labs,Sauce Labs,Developer Tools,https://saucelabs.com/,https://docs.saucelabs.com/,https://docs.saucelabs.com/,scopes
+scalapay,Scalapay,Scalapay,Payments / Banking / Fintech,https://www.scalapay.com/,https://developers.scalapay.com/reference/api-architecture.md,https://developers.scalapay.com/reference/api-architecture.md,scopes
+semrush,Semrush,Semrush,Marketing / Advertising,https://www.semrush.com/,https://developer.semrush.com/api/v4/,https://developer.semrush.com/api/v4/,authDocs;statusUrl;caps;scopes;reqs
+sendbird,Sendbird,Sendbird,Communications / Voice / Video,https://sendbird.com/,https://sendbird.com/docs,https://sendbird.com/docs,scopes
+codecov,Codecov,Sentry,Developer Tools,https://about.codecov.io/,https://docs.codecov.com/docs/quick-start,https://docs.codecov.com/reference/overview,authDocs;statusUrl;caps;scopes;reqs
+servicem8,ServiceM8,ServiceM8,Real Estate / Construction,https://www.servicem8.com/,https://developer.servicem8.com/,https://developer.servicem8.com/reference/listjobs,statusUrl
+shipblu,ShipBlu,ShipBlu,Logistics / Shipping / Inventory,https://shipblu.com/,https://docs.shipblu.com/,https://docs.shipblu.com/api-reference,scopes
+shodan,Shodan,Shodan,Security & Identity,https://www.shodan.io/,https://developer.shodan.io/,https://developer.shodan.io/api,scopes
+shoplazza,Shoplazza,Shoplazza,Commerce / Marketplaces,https://www.shoplazza.com/,,,statusUrl
+giphy,GIPHY,Shutterstock,Social / Creator / Publishing,https://giphy.com/,https://developers.giphy.com/,https://developers.giphy.com/docs/api/,authDocs;statusUrl;caps;scopes;reqs
+signaturit,Signaturit,Signaturit,Documents / E-sign / Forms,https://www.signaturit.com/,https://docs.signaturit.com/,https://docs.signaturit.com/api/latest,scopes

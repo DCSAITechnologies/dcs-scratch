@@ -1,0 +1,21 @@
+id,name,provider,category,known_site,known_portal,known_api,needs
+port-io,Port,Port,Developer Tools,https://www.port.io/,https://docs.port.io/,https://docs.port.io/api-reference/create-an-access-token/,scopes
+portone,PortOne,PortOne,Payments / Banking / Fintech,https://www.portone.io/,https://developers.portone.io/opi/ko/readme,https://developers.portone.io/api/rest-v2,scopes
+postgrid,PostGrid,PostGrid,Communications / Voice / Video,https://www.postgrid.com/,https://postgrid.readme.io/docs/overview,https://postgrid.readme.io/docs/overview,scopes
+postnl,PostNL,PostNL,Logistics / Shipping / Inventory,https://www.postnl.nl/,https://developer.postnl.nl/,https://developer.postnl.nl/docs/,scopes
+schoology,Schoology (PowerSchool),PowerSchool,Education,https://www.powerschool.com/,,,scopes
+precoro,Precoro,Precoro,Finance / Accounting / Tax,https://precoro.com/,https://help.precoro.com/using-api-in-precoro,https://help.precoro.com/using-api-in-precoro,statusUrl
+prembly,Prembly,Prembly,Security & Identity,https://prembly.com/,https://docs.prembly.com/docs/authentication.md,https://docs.prembly.com/docs/authentication.md,statusUrl;scopes
+procountor,Procountor,Procountor,Finance / Accounting / Tax,https://www.procountor.com/,https://dev.procountor.com/,https://dev.procountor.com/,statusUrl
+procurify,Procurify,Procurify,Finance / Accounting / Tax,https://www.procurify.com/,https://developer.procurify.com/,https://developer.procurify.com/,scopes
+sharefile,"ShareFile (Progress ShareFile, formerly Citrix ShareFile)",Progress Software,Productivity,https://www.sharefile.com/,https://api.sharefile.com/,https://api.sharefile.com/,scopes
+proofpoint-tap,Proofpoint TAP,Proofpoint,Security & Identity,https://www.proofpoint.com/us,https://help.proofpoint.com/Threat_Insight_Dashboard/API_Documentation/SIEM_API,https://help.proofpoint.com/Threat_Insight_Dashboard/API_Documentation/SIEM_API,statusUrl;scopes
+propertyradar,PropertyRadar,PropertyRadar,Real Estate / Construction,https://www.propertyradar.com/,https://developers.propertyradar.com/,https://developers.propertyradar.com/api,statusUrl
+qonto,Qonto Business API,Qonto,Payments / Banking / Fintech,https://qonto.com/en,https://docs.qonto.com/introduction/welcome,https://docs.qonto.com/introduction/welcome,authDocs;statusUrl;caps;scopes;reqs
+qualtrics,Qualtrics,Qualtrics,Support & Success,https://www.qualtrics.com/,https://api.qualtrics.com/,https://api.qualtrics.com/,caps;scopes
+ramp,Ramp,Ramp,Finance / Accounting / Tax,https://ramp.com/,https://docs.ramp.com/,https://docs.ramp.com/,authDocs;whDocs;statusUrl;caps;scopes;reqs
+rapyd,Rapyd,Rapyd,Payments / Banking / Fintech,https://www.rapyd.net/,https://docs.rapyd.net/,https://docs.rapyd.net/,statusUrl;scopes
+readme,ReadMe,ReadMe,Developer Tools,https://readme.com/,https://docs.readme.com/main/reference/intro-to-the-readme-api,https://docs.readme.com/main/reference/intro-to-the-readme-api,scopes
+recraft,Recraft,Recraft,AI & Models,https://www.recraft.ai/,https://www.recraft.ai/docs,https://www.recraft.ai/docs/api-reference/endpoints,scopes
+redox,Redox,Redox,Healthcare,https://redoxengine.com/,https://docs.redoxengine.com/,https://docs.redoxengine.com/,authDocs;statusUrl;caps;scopes;reqs
+reducto,Reducto,Reducto,AI & Models,https://reducto.ai/,https://docs.reducto.ai/api-reference/parse,https://docs.reducto.ai/api-reference/parse,scopes

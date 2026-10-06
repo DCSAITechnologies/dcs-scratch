@@ -1,0 +1,21 @@
+id,name,provider,category,known_site,known_portal,known_api,needs
+1uphealth,1upHealth,1upHealth,Healthcare,https://1up.health/,,,portal;api;authDocs;statusUrl;caps;scopes;reqs
+6sense,6sense,6sense,CRM & Sales,,,,logo;site;portal;api;authDocs;statusUrl;caps;scopes;reqs
+adobe-analytics,Adobe Analytics,Adobe,Marketing / Advertising,,https://developer.adobe.com/analytics-apis/docs/2.0/,https://developer.adobe.com/analytics-apis/docs/2.0/,logo;site;authDocs;statusUrl;caps;scopes;reqs
+adobe-pdf-services,Adobe PDF Services API,Adobe,Documents / E-sign / Forms,,https://developer.adobe.com/document-services/,https://developer.adobe.com/document-services/docs/overview/pdf-services-api/,logo;site;authDocs;statusUrl;caps;scopes;reqs
+agile-crm,Agile CRM,Agile CRM,CRM & Sales,https://www.agilecrm.com/,https://github.com/agilecrm/rest-api,https://github.com/agilecrm/rest-api,logo;statusUrl
+alegra,Alegra,Alegra,Finance / Accounting / Tax,https://www.alegra.com/,https://developer.alegra.com/,,logo;api;authDocs;statusUrl;caps;scopes;reqs
+allegro,Allegro,Allegro,Commerce / Marketplaces,https://allegro.pl/,https://developer.allegro.pl/,https://developer.allegro.pl/documentation,logo;statusUrl
+alloy,Alloy,Alloy,Legal / Compliance,https://www.alloy.com/,,,portal;api;authDocs;statusUrl;caps;scopes;reqs
+nexar-octopart,Nexar (Octopart),Altium,Manufacturing / ERP / Supply Chain,https://nexar.com/,,,portal;api;authDocs;statusUrl;caps;scopes;reqs
+arrow-electronics,Arrow Electronics,Arrow Electronics,Manufacturing / ERP / Supply Chain,,https://developers.arrow.com/api/,https://developers.arrow.com/api/index.php/site/page?view=Itemservice,logo;site;authDocs;statusUrl;caps;scopes;reqs
+autodesk-aps,Autodesk Platform Services,Autodesk,Real Estate / Construction,https://aps.autodesk.com/,https://aps.autodesk.com/,https://aps.autodesk.com/developer/documentation,logo
+availity,Availity,Availity,Healthcare,https://www.availity.com/,https://developer.availity.com/,,api;authDocs;statusUrl;caps;scopes;reqs
+avoma,Avoma,Avoma,CRM & Sales,https://www.avoma.com/,,,portal;api;authDocs;statusUrl;caps;scopes;reqs
+wompi,Wompi,Bancolombia,Payments / Banking / Fintech,,https://docs.wompi.co/docs/colombia/eventos/,https://docs.wompi.co/docs/colombia/eventos/,logo;site;authDocs;statusUrl;caps;scopes;reqs
+bazaarvoice,Bazaarvoice (Conversations API),Bazaarvoice,Support & Success,https://www.bazaarvoice.com/,https://developers.bazaarvoice.com/,https://developers.bazaarvoice.com/v1.0-ConversationsAPI/docs/display-fundamentals,logo;authDocs;statusUrl;caps;scopes;reqs
+bonusly,Bonusly,Bonusly,HR / Recruiting / Payroll,https://bonusly.com,https://docs.bonus.ly/v1.0/llms.txt,https://docs.bonus.ly/v1.0/llms.txt,logo;authDocs;statusUrl;caps;scopes;reqs
+brex,Brex,Brex,Finance / Accounting / Tax,https://www.brex.com/,https://developer.brex.com/,,api;authDocs;statusUrl;caps;scopes;reqs
+brightlocal,BrightLocal,BrightLocal,Marketing / Advertising,https://www.brightlocal.com/,https://developer.brightlocal.com/,https://apidocs.brightlocal.com/,logo
+bunq,bunq,bunq,Payments / Banking / Fintech,https://www.bunq.com/,https://doc.bunq.com/,https://doc.bunq.com/,authDocs;statusUrl;auth;caps;scopes;reqs
+candid-health,Candid Health,Candid Health,Healthcare,https://www.joincandidhealth.com/,,,portal;api;authDocs;statusUrl;caps;scopes;reqs

@@ -1,0 +1,21 @@
+id,name,provider,category,known_site,known_portal,known_api,needs
+sudo-africa,Sudo Africa,Sudo Africa,Payments / Banking / Fintech,https://sudo.africa/,https://docs.sudo.africa/docs/getting-started,https://docs.sudo.africa/reference/introduction,scopes
+synctera,Synctera,Synctera,Payments / Banking / Fintech,https://www.synctera.com/,https://docs.synctera.com/home,https://docs.synctera.com/reference/introduction,scopes
+synthesia,Synthesia,Synthesia,AI & Models,https://www.synthesia.io/,https://docs.synthesia.io/,https://docs.synthesia.io/,authDocs;whDocs;statusUrl;caps;scopes;reqs
+tabby,Tabby,Tabby,Payments / Banking / Fintech,https://tabby.ai/en-AE,https://docs.tabby.ai/introduction/what-is-tabby,https://docs.tabby.ai/introduction/what-is-tabby,authDocs;statusUrl;caps;scopes;reqs
+talkdesk,Talkdesk,Talkdesk,Communications / Voice / Video,https://www.talkdesk.com/,https://docs.talkdesk.com/,https://docs.talkdesk.com/,authDocs;statusUrl;caps;scopes;reqs
+tap-payments,Tap Payments,Tap Payments,Payments / Banking / Fintech,https://www.tap.company/en-in,https://developers.tap.company/,https://developers.tap.company/reference/api-endpoint,statusUrl
+tarabut,Tarabut,Tarabut,Payments / Banking / Fintech,https://tarabut.com/sa,https://docs.tarabut.com/,https://docs.tarabut.com/reference,statusUrl;scopes
+tavus,Tavus,Tavus,AI & Models,https://www.tavus.io/,https://docs.tavus.io/sections/introduction,https://docs.tavus.io/sections/introduction,authDocs;statusUrl;caps;scopes;reqs
+teachable,Teachable,Teachable,Education,https://www.teachable.com/,https://docs.teachable.com/,https://docs.teachable.com/,authDocs;statusUrl;caps;scopes;reqs
+telegram-bot-api,Telegram Bot API,Telegram,Communications / Voice / Video,https://telegram.org/,https://core.telegram.org/bots,https://core.telegram.org/bots/api,statusUrl
+telnyx,Telnyx,Telnyx,Communications / Voice / Video,https://telnyx.com/,https://developers.telnyx.com/docs/overview,https://developers.telnyx.com/api-reference,scopes
+telr,Telr,Telr,Payments / Banking / Fintech,https://telr.com/,https://docs.telr.com/reference/get-started,https://docs.telr.com/reference/get-started,statusUrl
+termii,Termii,Termii,Communications / Voice / Video,https://termii.com/,https://developer.termii.com/,https://developer.termii.com/,statusUrl
+testingbot,TestingBot,TestingBot,Developer Tools,https://testingbot.com/,https://testingbot.com/support/api,https://testingbot.com/support/api,scopes
+unleashed-software,Unleashed Software,The Access Group,Logistics / Shipping / Inventory,https://www.unleashedsoftware.com/,https://apidocs.unleashedsoftware.com/,https://apidocs.unleashedsoftware.com/,statusUrl;scopes
+the-things-stack,The Things Stack,The Things Industries,Manufacturing / ERP / Supply Chain,https://www.thethingsindustries.com/,https://www.thethingsindustries.com/docs/,https://www.thethingsindustries.com/docs/,statusUrl
+thingsboard,ThingsBoard Cloud,ThingsBoard,Manufacturing / ERP / Supply Chain,https://thingsboard.io/,https://thingsboard.io/docs/,https://thingsboard.io/docs/,statusUrl
+ticket-tailor,Ticket Tailor,Ticket Tailor,Travel / Hospitality / Events,https://www.tickettailor.com/,https://developers.tickettailor.com/,https://developers.tickettailor.com/docs/api/ticket-tailor-api/,scopes
+universe,Universe,Ticketmaster,Travel / Hospitality / Events,https://www.universe.com/,https://developers.universe.com/,https://developers.universe.com/docs/basic-usage-1,caps;scopes
+ticktick,TickTick,TickTick,Productivity,https://ticktick.com/,https://developer.ticktick.com/,https://developer.ticktick.com/docs/index.html#/openapi,statusUrl

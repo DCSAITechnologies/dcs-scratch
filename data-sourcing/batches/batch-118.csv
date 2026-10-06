@@ -1,0 +1,21 @@
+id,name,provider,category,known_site,known_portal,known_api,needs
+opensanctions,OpenSanctions,OpenSanctions,Legal / Compliance,https://www.opensanctions.org/,https://www.opensanctions.org/docs/,https://www.opensanctions.org/docs/,authDocs;statusUrl;caps;scopes;reqs
+optimizely-feature-experimentation,Optimizely Feature Experimentation,Optimizely,Developer Tools,https://www.optimizely.com/,https://docs.developers.optimizely.com/,https://docs.developers.optimizely.com/feature-experimentation/reference/generate-tokens-and-use-the-rest-apis,scopes
+oracle-eloqua,Oracle Eloqua,Oracle,Marketing / Advertising,https://www.oracle.com/cx/marketing/automation/,https://docs.oracle.com/en/cloud/saas/marketing/eloqua-rest-api/,https://docs.oracle.com/en/cloud/saas/marketing/eloqua-rest-api/,statusUrl
+oracle-hospitality-opera-ohip,Oracle Hospitality Integration Platform,Oracle,Travel / Hospitality / Events,https://www.oracle.com/hospitality/,https://docs.oracle.com/en/industries/hospitality/integration-platform/,https://github.com/oracle/hospitality-api-docs,statusUrl
+otter-ai,Otter.ai,Otter.ai,Productivity,https://otter.ai/,https://help.otter.ai/hc/en-us/articles/36130822688279-Otter-ai-Public-API,https://help.otter.ai/hc/en-us/articles/36130822688279-Otter-ai-Public-API,scopes
+otto-market,OTTO Market Partner API,OTTO,Commerce / Marketplaces,https://www.otto.de/,https://api.otto.market/docs/getting-started/,https://api.otto.market/docs/getting-started/,statusUrl
+ottu,Ottu,Ottu,Payments / Banking / Fintech,https://ottu.com/en/,https://docs.ottu.com/developers/,https://docs.ottu.com/developers/getting-started/api-fundamentals/,statusUrl
+oura,Oura,Oura,Healthcare,https://ouraring.com/,https://cloud.ouraring.com/v2/docs,https://cloud.ouraring.com/v2/docs,authDocs;statusUrl;caps;scopes;reqs
+ovhcloud-ai-endpoints,OVHcloud AI Endpoints,OVHcloud,AI & Models,https://www.ovhcloud.com/en-in/,https://docs.ovhcloud.com/en/guides/public-cloud/ai-machine-learning/ai-endpoints-getting-started,https://docs.ovhcloud.com/en/guides/public-cloud/ai-machine-learning/ai-endpoints-getting-started,scopes
+panther,Panther,Panther,Security & Identity,https://panther.com/,https://docs.panther.com/panther-developer-workflows/api,https://docs.panther.com/panther-developer-workflows/api,statusUrl
+papaya-global,Papaya Global,Papaya Global,HR / Recruiting / Payroll,https://www.papayaglobal.com/,https://docs.papayaglobal.com/,https://docs.papayaglobal.com/api-reference,statusUrl
+particle,Particle,Particle,Manufacturing / ERP / Supply Chain,https://www.particle.io/,https://docs.particle.io/,https://docs.particle.io/,authDocs;statusUrl;caps;scopes;reqs
+paylocity,Paylocity,Paylocity,HR / Recruiting / Payroll,https://www.paylocity.com/,https://developer.paylocity.com/integrations/docs/getting-started,https://developer.paylocity.com/integrations/reference/authentication,statusUrl;scopes
+paymo,Paymo,Paymo,Productivity,https://www.paymoapp.com/,https://github.com/paymo-org/api,https://github.com/paymo-org/api,statusUrl
+paysafe,Paysafe,Paysafe,Payments / Banking / Fintech,https://www.paysafe.com/en/,https://developer.paysafe.com/en/,https://developer.paysafe.com/en/payments-api/,scopes
+peach-payments,Peach Payments,Peach Payments,Payments / Banking / Fintech,https://www.peachpayments.com/,https://developer.peachpayments.com/,https://developer.peachpayments.com/reference/payment,scopes
+people-data-labs,People Data Labs,People Data Labs,CRM & Sales,https://www.peopledatalabs.com/,https://docs.peopledatalabs.com/docs/intro,https://docs.peopledatalabs.com/docs/intro,scopes
+pesapal,Pesapal,Pesapal,Payments / Banking / Fintech,https://www.pesapal.com/,https://developer.pesapal.com/,https://developer.pesapal.com/how-to-integrate/e-commerce/api-30-json/api-reference,statusUrl;scopes
+plivo,Plivo,Plivo,Communications / Voice / Video,https://www.plivo.com/,https://www.plivo.com/docs/home,https://www.plivo.com/docs/home,scopes
+pluggy,Pluggy,Pluggy,Payments / Banking / Fintech,https://www.pluggy.ai/,https://docs.pluggy.ai/en,https://docs.pluggy.ai/en,scopes

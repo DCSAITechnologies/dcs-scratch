@@ -1,0 +1,21 @@
+id,name,provider,category,known_site,known_portal,known_api,needs
+congress-gov,Congress.gov API,U.S. Library of Congress,Government / Public Data,https://api.congress.gov/,https://api.congress.gov/,https://api.congress.gov/,statusUrl
+sec-edgar,SEC EDGAR APIs,U.S. Securities and Exchange Commission,Government / Public Data,https://www.sec.gov/,https://www.sec.gov/about/developer-resources,https://www.sec.gov/search-filings/edgar-application-programming-interfaces,statusUrl
+uala-bis,Ualá Bis,Ualá,Payments / Banking / Fintech,https://www.ualabis.com.ar/,https://developers.ualabis.com.ar/v2,https://developers.ualabis.com.ar/v2,statusUrl;scopes
+uber,Uber,Uber,Travel / Hospitality / Events,https://www.uber.com/in/en/,https://developer.uber.com/,https://developer.uber.com/docs/riders/references/api,statusUrl
+uber-direct,Uber Direct,Uber,Logistics / Shipping / Inventory,https://www.uber.com/in/en/,https://developer.uber.com/,https://developer.uber.com/docs/deliveries/api-reference/daas,statusUrl
+ubidots,Ubidots,Ubidots,Manufacturing / ERP / Supply Chain,https://ubidots.com/,https://docs.ubidots.com/reference/welcome,https://docs.ubidots.com/reference/welcome,authDocs;statusUrl;caps;scopes;reqs
+ons-api,UK Office for National Statistics API,UK Office for National Statistics,Government / Public Data,https://www.ons.gov.uk/,https://developer.ons.gov.uk/,https://developer.ons.gov.uk/,statusUrl
+ukg-pro,UKG Pro,UKG,HR / Recruiting / Payroll,https://www.ukg.com/,https://developer.ukg.com/,https://developer.ukg.com/hcm/reference/welcome-to-the-ukg-pro-api,statusUrl;scopes
+usps,USPS,United States Postal Service,Logistics / Shipping / Inventory,https://www.usps.com/,https://developers.usps.com/,https://developers.usps.com/apis,statusUrl;caps
+upstox-developer-api,Upstox Developer API,Upstox,Payments / Banking / Fintech,https://upstox.com/,https://upstox.com/developer/api-documentation/,https://upstox.com/developer/api-documentation/,scopes
+urlscan,urlscan.io,urlscan.io,Security & Identity,https://urlscan.io/,https://urlscan.io/docs/api/,https://urlscan.io/docs/api/,authDocs;statusUrl;caps;scopes;reqs
+vainu,Vainu,Vainu,CRM & Sales,https://www.vainu.com/,https://developers.vainu.com/,https://developers.vainu.com/,statusUrl
+vast-ai,Vast.ai,Vast.ai,Cloud & Hosting,https://vast.ai/,https://docs.vast.ai/guides/get-started,https://docs.vast.ai/api-reference/introduction,authDocs;statusUrl;caps;scopes;reqs
+veremark,Veremark,Veremark,HR / Recruiting / Payroll,https://www.veremark.com/,https://api.veremark.com/external/v1/docs/,https://api.veremark.com/external/v1/docs/,scopes
+veryfi,Veryfi,Veryfi,Documents / E-sign / Forms,https://www.veryfi.com/,https://docs.veryfi.com/,https://docs.veryfi.com/,authDocs;statusUrl;caps;scopes;reqs
+toss-payments,Toss Payments,Viva Republica,Payments / Banking / Fintech,https://www.tosspayments.com/,https://developers.tosspayments.com/,https://developers.tosspayments.com/,scopes
+what3words,what3words,what3words,Government / Public Data,https://what3words.com/toddler.geologist.animated?redirect=true,https://developer.what3words.com/public-api,https://developer.what3words.com/public-api/docs,statusUrl
+world-bank-indicators,World Bank Indicators API,World Bank Group,Government / Public Data,https://www.worldbank.org/ext/en/home,https://datahelpdesk.worldbank.org/knowledgebase/articles/889392-about-the-indicators-api-documentation,https://datahelpdesk.worldbank.org/knowledgebase/articles/889392-about-the-indicators-api-documentation,statusUrl
+writer,Writer,Writer,AI & Models,https://writer.com/,https://dev.writer.com/home/introduction,https://dev.writer.com/api-reference/completion-api/chat-completion,statusUrl
+x-api,X (Twitter) API,X Corp.,Social / Creator / Publishing,https://x.com/,https://developer.x.com/,https://docs.x.com/overview,statusUrl

@@ -1,0 +1,21 @@
+id,name,provider,category,known_site,known_portal,known_api,needs
+2c2p,2C2P,2C2P,Payments / Banking / Fintech,https://2c2p.com/,https://developer.2c2p.com/docs/general,https://developer.2c2p.com/reference/post_payment-4-3-paymenttoken,statusUrl
+5paisa-xstream,5paisa Xstream API,5paisa,Payments / Banking / Fintech,https://www.5paisa.com/,https://xstream.5paisa.com/dev-docs,https://xstream.5paisa.com/dev-docs/order-management-system/place-order,statusUrl
+abnormal-security,Abnormal Security,Abnormal AI,Security & Identity,https://abnormal.ai/,https://api.swaggerhub.com/apis/abnormal-security/abx/1.4.3,https://api.swaggerhub.com/apis/abnormal-security/abx/1.4.3,scopes
+actionstep,Actionstep,Actionstep,Legal / Compliance,https://www.actionstep.com/,https://docs.actionstep.com/,https://docs.actionstep.com/endpoint-resources/,caps;scopes
+affinity,Affinity,Affinity,CRM & Sales,https://www.affinity.co/,https://api-docs.affinity.co/,https://api-docs.affinity.co/,authDocs;statusUrl;caps;scopes;reqs
+agiloft,Agiloft,Agiloft,Legal / Compliance,https://www.agiloft.com/,https://help.agiloft.com/space/HELP/43715778/REST+Interface,https://help.agiloft.com/space/HELP/43715778/REST+Interface,statusUrl
+signnow,SignNow,airSlate,Documents / E-sign / Forms,https://www.signnow.com/,https://docs.signnow.com/docs/welcome,https://docs.signnow.com/docs/welcome,authDocs;statusUrl;caps;scopes;reqs
+akamai-edgegrid,Akamai (EdgeGrid APIs),Akamai,Cloud & Hosting,https://www.akamai.com/,https://techdocs.akamai.com/home,https://techdocs.akamai.com/home,caps
+alice-blue-ant-api,Alice Blue ANT API,Alice Blue,Payments / Banking / Fintech,https://aliceblueonline.com/,https://v2api.aliceblueonline.com/,https://v2api.aliceblueonline.com/,statusUrl;scopes
+veeqo,Veeqo,Amazon,Logistics / Shipping / Inventory,https://www.veeqo.com/,https://developers.veeqo.com/,https://developers.veeqo.com/api/,scopes
+apple-music-api,Apple Music API,Apple,Social / Creator / Publishing,https://www.apple.com/,https://developer.apple.com/,https://developer.apple.com/documentation/applemusicapi,scopes
+arlo-training,Arlo,Arlo,Education,https://www.arlo.co/,https://developer.arlo.co/,https://developer.arlo.co/doc/api/2012-02-01/auth/,statusUrl
+attestr,Attestr,Attestr,Security & Identity,https://attestr.com/,https://docs.attestr.com,https://docs.attestr.com/attestr-docs/attestr-server-information,statusUrl;scopes
+attom,ATTOM Data Solutions,ATTOM,Real Estate / Construction,https://www.attomdata.com/,https://cloud-help.attomdata.com/category/526-attom-api,https://cloud-help.attomdata.com/article/598-endpoints,caps
+authentica,Authentica,Authentica,Security & Identity,https://www.authentica.sa/en/,https://docs.authentica.sa/,https://docs.authentica.sa/api-reference,statusUrl
+tumblr,Tumblr,Automattic,Social / Creator / Publishing,https://www.tumblr.com/,https://www.tumblr.com/docs/en/api/v2,https://www.tumblr.com/docs/en/api/v2,authDocs;statusUrl;caps;scopes;reqs
+element14-farnell,element14 / Farnell Product Search API,Avnet,Manufacturing / ERP / Supply Chain,https://www.farnell.com/,https://uk.farnell.com/search-api,,statusUrl
+open-edx,Open edX,Axim Collaborative,Education,https://openedx.org/,https://docs.openedx.org/en/latest/,https://docs.openedx.org/en/latest/,statusUrl
+beyondtrust-password-safe,BeyondTrust Password Safe,BeyondTrust,Security & Identity,https://www.beyondtrust.com/,https://docs.beyondtrust.com/,https://docs.beyondtrust.com/,statusUrl
+big-cartel,Big Cartel,Big Cartel,Commerce / Marketplaces,https://www.bigcartel.com/,https://developers.bigcartel.com/,https://developers.bigcartel.com/api/v1,scopes

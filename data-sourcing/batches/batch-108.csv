@@ -1,0 +1,21 @@
+id,name,provider,category,known_site,known_portal,known_api,needs
+tiendanube-nuvemshop,Tiendanube / Nuvemshop,Tiendanube,Commerce / Marketplaces,,,,logo;site;portal;api;authDocs;statusUrl;auth;caps;scopes;reqs
+transbank-webpay,Transbank Webpay Plus,Transbank,Payments / Banking / Fintech,,https://www.transbankdevelopers.cl/,,logo;site;api;authDocs;statusUrl;auth;caps;scopes;reqs
+tulip-interfaces,Tulip,Tulip,Manufacturing / ERP / Supply Chain,https://tulip.co/,,,portal;api;authDocs;statusUrl;caps;scopes;reqs
+usaspending,USAspending.gov,"U.S. Department of the Treasury, Bureau of the Fiscal Service",Government / Public Data,https://www.usaspending.gov/,https://api.usaspending.gov/,https://api.usaspending.gov/docs/endpoints,logo;authDocs;statusUrl;caps;scopes;reqs
+uae-pass,UAE PASS,UAE Government,Security & Identity,https://uaepass.ae/,,,logo;portal;api;authDocs;statusUrl;auth;caps;scopes;reqs
+unicommerce-uniware,Unicommerce Uniware,Unicommerce,Logistics / Shipping / Inventory,https://unicommerce.com/,,,logo;portal;api;authDocs;statusUrl;caps;scopes;reqs
+unicourt,UniCourt,UniCourt,Legal / Compliance,,,,logo;site;portal;api;authDocs;statusUrl;auth;caps;scopes;reqs
+victoriametrics-cloud,VictoriaMetrics Cloud,VictoriaMetrics,Observability,https://victoriametrics.com/,https://docs.victoriametrics.com/,https://docs.victoriametrics.com/victoriametrics-cloud/api/,logo
+vipps-mobilepay,Vipps MobilePay,Vipps MobilePay,Payments / Banking / Fintech,https://vippsmobilepay.com/,https://developer.vippsmobilepay.com/,,logo;api;authDocs;statusUrl;caps;scopes;reqs
+e-conomic,Visma e-conomic,Visma,Finance / Accounting / Tax,https://www.e-conomic.com/,,,logo;portal;api;authDocs;statusUrl;caps;scopes;reqs
+vtiger-crm,Vtiger CRM,Vtiger,CRM & Sales,https://www.vtiger.com/,,,logo;portal;api;authDocs;statusUrl;auth;caps;scopes;reqs
+wafeq,Wafeq,Wafeq,Finance / Accounting / Tax,https://www.wafeq.com/en,,,portal;api;authDocs;statusUrl;caps;scopes;reqs
+wazirx,WazirX,WazirX,Payments / Banking / Fintech,https://wazirx.com/,https://docs.wazirx.com/,https://docs.wazirx.com/,authDocs;statusUrl;auth;caps;scopes;reqs
+whoop,WHOOP,WHOOP,Healthcare,,https://developer.whoop.com/,,logo;site;api;authDocs;whDocs;statusUrl;caps;scopes;reqs
+workato,Workato,Workato,Developer Tools,https://www.workato.com/,https://docs.workato.com/,https://docs.workato.com/,logo;authDocs;statusUrl;caps;scopes;reqs
+planday,Planday,Xero,HR / Recruiting / Payroll,https://www.planday.com/,https://openapi.planday.com/,https://openapi.planday.com/,logo
+yelp-fusion,Yelp Fusion,Yelp,Travel / Hospitality / Events,,https://docs.developer.yelp.com/,https://docs.developer.yelp.com/,logo;site;authDocs;statusUrl;caps;scopes;reqs
+zoominfo,ZoomInfo,ZoomInfo,CRM & Sales,,https://api-docs.zoominfo.com/,https://api-docs.zoominfo.com/,logo;site;authDocs;statusUrl;caps;scopes;reqs
+zuper,Zuper,Zuper,Productivity,https://www.zuper.co/,,,portal;api;authDocs;statusUrl;caps;scopes;reqs
+seventeen-track,17TRACK,17TRACK,Logistics / Shipping / Inventory,https://www.17track.net/en,https://www.17track.net/en/api,https://api.17track.net/en/doc,statusUrl

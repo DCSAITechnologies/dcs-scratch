@@ -1,0 +1,21 @@
+id,name,provider,category,known_site,known_portal,known_api,needs
+muck-rack,Muck Rack,Muck Rack,Social / Creator / Publishing,https://muckrack.com/,https://muckrack.com/pr-software/api,https://muckrack.com/pr-software/api,caps;scopes
+murf-ai,Murf AI,Murf AI,AI & Models,https://murf.ai/,https://murf.ai/api/docs/api-reference/text-to-speech/generate,https://murf.ai/api/docs/api-reference/text-to-speech/generate,authDocs;statusUrl;caps;scopes;reqs
+myfatoorah,MyFatoorah,MyFatoorah,Payments / Banking / Fintech,https://www.myfatoorah.com/,https://docs.myfatoorah.com/docs/get-started,https://docs.myfatoorah.com/docs/get-started,statusUrl
+name-com,Name.com,Name.com,Cloud & Hosting,https://www.name.com/,https://docs.name.com/,https://docs.name.com/api/v1/overview,scopes
+ncbi-eutilities,NCBI E-utilities (PubMed),National Center for Biotechnology Information,Healthcare,https://www.ncbi.nlm.nih.gov/,https://www.ncbi.nlm.nih.gov/home/about/policies/,https://www.ncbi.nlm.nih.gov/books/NBK25499/,statusUrl
+clinicaltrials-gov-api,ClinicalTrials.gov API,National Library of Medicine,Healthcare,https://clinicaltrials.gov/,https://clinicaltrials.gov/api/oas/v2,https://clinicaltrials.gov/api/oas/v2,statusUrl
+rxnav-rxnorm-api,RxNav / RxNorm API (NLM),National Library of Medicine,Healthcare,https://www.nlm.nih.gov/,https://lhncbc.nlm.nih.gov/RxNav/APIs/RxNormAPIs.html,https://lhncbc.nlm.nih.gov/RxNav/APIs/RxNormAPIs.html,statusUrl
+nebius-token-factory,Nebius Token Factory,Nebius,AI & Models,https://nebius.com/,https://docs.tokenfactory.nebius.com/,https://docs.tokenfactory.nebius.com/api-reference/introduction,scopes
+dpo-pay,DPO Pay,Network International,Payments / Banking / Fintech,https://dpogroup.com/,https://docs.dpopay.com/dpo-pay-by-network/reference/create-token.md,https://docs.dpopay.com/dpo-pay-by-network/reference/create-token.md,statusUrl
+noaa-ncei-cdo,NOAA NCEI Climate Data Online,NOAA National Centers for Environmental Information,Government / Public Data,https://www.ncei.noaa.gov/,https://www.ncdc.noaa.gov/cdo-web/webservices/v2,https://www.ncdc.noaa.gov/cdo-web/webservices/v2,statusUrl
+nuclino,Nuclino,Nuclino,Productivity,https://www.nuclino.com/,https://help.nuclino.com/d3a29686-api,https://help.nuclino.com/d3a29686-api,statusUrl
+nutrient-dws,Nutrient DWS (Document Web Services),Nutrient,Documents / E-sign / Forms,https://www.nutrient.io/,https://www.nutrient.io/guides/dws-processor/,https://www.nutrient.io/guides/dws-processor/,authDocs;statusUrl;caps;scopes;reqs
+nutshell,Nutshell,Nutshell,CRM & Sales,https://www.nutshell.com/,https://developers.nutshell.com/,https://developers.nutshell.com/reference,scopes
+nuvei,Nuvei,Nuvei,Payments / Banking / Fintech,https://www.nuvei.com/,https://docs.nuvei.com/documentation/home/,https://docs.nuvei.com/documentation/home/,statusUrl
+nymcard,NymCard,NymCard,Payments / Banking / Fintech,https://www.nymcard.com/,https://docs.nymcard.com/,https://portal.stg.platform.ae-1.nymcard.com/default/documentation/02_api_specs,statusUrl
+omie,Omie,Omie,Manufacturing / ERP / Supply Chain,https://www.omie.com.br/,https://developer.omie.com.br/,https://developer.omie.com.br/service-list/,statusUrl;scopes
+onespan-sign,OneSpan Sign,OneSpan,Documents / E-sign / Forms,https://www.onespan.com/,https://community.onespan.com/,https://docs.onespan.com/apidocs,statusUrl
+open-meteo,Open-Meteo,Open-Meteo,Government / Public Data,https://open-meteo.com/,https://open-meteo.com/en/docs,https://open-meteo.com/en/docs,authDocs;statusUrl;caps;scopes;reqs
+gerrit,Gerrit Code Review,Open-source project (no single provider),Developer Tools,https://www.gerritcodereview.com/,https://gerrit-review.googlesource.com/Documentation/,https://gerrit-review.googlesource.com/Documentation/rest-api.html,statusUrl
+opencorporates,OpenCorporates,OpenCorporates,Legal / Compliance,https://opencorporates.com/,https://api.opencorporates.com/,https://api.opencorporates.com/,scopes

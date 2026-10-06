@@ -1,0 +1,20 @@
+{"id":"muck-rack","checked":"2026-10-06","notFound":["caps","scopes"],"notes":""}
+{"id":"myfatoorah","checked":"2026-10-06","notFound":["statusUrl"],"notes":""}
+{"id":"name-com","checked":"2026-10-06","notFound":["scopes"],"notes":""}
+{"id":"ncbi-eutilities","checked":"2026-10-06","notFound":["statusUrl"],"notes":""}
+{"id":"clinicaltrials-gov-api","checked":"2026-10-06","notFound":["statusUrl"],"notes":""}
+{"id":"rxnav-rxnorm-api","checked":"2026-10-06","notFound":["statusUrl"],"notes":""}
+{"id":"nebius-token-factory","checked":"2026-10-06","notFound":["scopes"],"notes":""}
+{"id":"neo4j-aura","checked":"2026-10-06","statusUrl":"https://status.neo4j.io/","notes":"Official Neo4j Aura status page lists Aura API and Aura database services."}
+{"id":"neo4j-query","checked":"2026-10-06","statusUrl":"https://status.neo4j.io/","notes":"Official Neo4j Aura status page covers Aura services used by the Query API."}
+{"id":"dpo-pay","checked":"2026-10-06","notFound":["statusUrl"],"notes":""}
+{"id":"newegg-marketplace-api","checked":"2026-10-06","statusUrl":"https://developer.newegg.com/status/","notes":"Newegg Developer Portal has a dedicated API Status page for Marketplace API service availability."}
+{"id":"noaa-ncei-cdo","checked":"2026-10-06","notFound":["statusUrl"],"notes":""}
+{"id":"nws-api","checked":"2026-10-06","notFound":["statusUrl"],"notes":""}
+{"id":"nuclino","checked":"2026-10-06","notFound":["statusUrl"],"notes":""}
+{"id":"nutshell","checked":"2026-10-06","notFound":["scopes"],"notes":""}
+{"id":"nuvei","checked":"2026-10-06","notFound":["statusUrl"],"notes":""}
+{"id":"nymcard","checked":"2026-10-06","notFound":["statusUrl"],"notes":""}
+{"id":"omie","checked":"2026-10-06","notFound":["statusUrl","scopes"],"notes":""}
+{"id":"onespan-sign","checked":"2026-10-06","notFound":["statusUrl"],"notes":""}
+{"id":"gerrit","checked":"2026-10-06","notFound":["statusUrl"],"notes":""}

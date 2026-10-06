@@ -1,0 +1,21 @@
+id,name,provider,category,known_site,known_portal,known_api,needs
+deepsource,DeepSource,DeepSource,Developer Tools,https://deepsource.com/,https://docs.deepsource.com/docs/developers/api,https://docs.deepsource.com/docs/developers/api,statusUrl;scopes
+dhanhq,DhanHQ,Dhan,Payments / Banking / Fintech,https://dhan.co/,https://dhanhq.co/,https://dhanhq.co/docs/v2/,statusUrl;scopes
+bhashini,Bhashini (ULCA),"Digital India Bhashini Division, MeitY",AI & Models,https://bhashini.gov.in/,https://dibd-bhashini.gitbook.io/bhashini-apis,https://dibd-bhashini.gitbook.io/bhashini-apis/pipeline-config-call,statusUrl
+dojah,Dojah,Dojah,Security & Identity,https://dojah.io/,https://docs.dojah.io/,https://docs.dojah.io/,statusUrl
+dribbble,Dribbble,Dribbble,Social / Creator / Publishing,https://dribbble.com/,https://developer.dribbble.com/,https://developer.dribbble.com/v2/,statusUrl
+dvla-vehicle-enquiry-service,DVLA Vehicle Enquiry Service,Driver and Vehicle Licensing Agency,Government / Public Data,https://www.gov.uk/government/organisations/driver-and-vehicle-licensing-agency,https://developer-portal.driver-vehicle-licensing.api.gov.uk/,https://developer-portal.driver-vehicle-licensing.api.gov.uk/apis/vehicle-enquiry-service/vehicle-enquiry-service-description.html,statusUrl;scopes
+eka-care,Eka Care,Eka Care,Healthcare,https://www.eka.care/,https://developer.eka.care/user-guides/get-started,https://developer.eka.care/user-guides/get-started,authDocs;statusUrl;caps;scopes;reqs
+enable-banking,Enable Banking,Enable Banking,Payments / Banking / Fintech,https://enablebanking.com/,https://enablebanking.com/docs/,https://enablebanking.com/docs/api/reference/,statusUrl
+enkash,EnKash,EnKash,Payments / Banking / Fintech,https://www.enkash.com/,https://docs.enkash.com/docs,https://docs.enkash.com/folder-3851169,statusUrl
+eu-vies-vat,EU VIES VAT Number Validation,European Commission,Government / Public Data,https://ec.europa.eu/taxation_customs/vies/,https://ec.europa.eu/assets/taxud/vow-information/swagger_publicVAT.yaml,https://ec.europa.eu/assets/taxud/vow-information/swagger_publicVAT.yaml,authDocs;statusUrl
+eurostat,Eurostat,Eurostat,Government / Public Data,https://ec.europa.eu/eurostat,https://ec.europa.eu/eurostat/web/user-guides/data-browser/api-data-access/api-getting-started,https://ec.europa.eu/eurostat/web/user-guides/data-browser/api-data-access/api-getting-started,authDocs;statusUrl
+eway,eWAY,eWAY,Payments / Banking / Fintech,https://www.eway.com.au/,https://eway.io/api-v3/,https://eway.io/api-v3/,authDocs;statusUrl;caps;scopes;reqs
+fabric,fabric,fabric,Commerce / Marketplaces,https://fabric.inc/,https://developer.fabric.inc/home,https://developer.fabric.inc/llms.txt,statusUrl
+fathom,Fathom,Fathom,Productivity,https://www.fathom.ai/,https://developers.fathom.ai/,https://developers.fathom.ai/api-overview,statusUrl
+spark-platform,Spark Platform,FBS,Real Estate / Construction,https://www.sparkapi.io/,https://www.sparkapi.io/developers/,https://sparkplatform.com/docs/overview/api,statusUrl
+filebase,Filebase,Filebase,Cloud & Hosting,https://filebase.com/,https://filebase.com/docs/ipfs/pinning-service-api,https://filebase.com/docs/ipfs/pinning-service-api,authDocs;statusUrl;caps;scopes;reqs
+finbox-bankconnect,FinBox BankConnect,FinBox,Payments / Banking / Fintech,https://www.finbox.in/,https://docs.finbox.in/,https://docs.finbox.in/,statusUrl
+flexpa,Flexpa,Flexpa,Healthcare,https://www.flexpa.com/,https://www.flexpa.com/docs,https://www.flexpa.com/docs,authDocs;whDocs;statusUrl;caps;scopes;reqs
+flightaware-aeroapi,FlightAware AeroAPI,FlightAware,Travel / Hospitality / Events,https://www.flightaware.com/,https://www.flightaware.com/commercial/aeroapi/,https://www.flightaware.com/aeroapi/portal/documentation,scopes
+flipkart-seller-api,Flipkart Seller API,Flipkart,Commerce / Marketplaces,https://seller.flipkart.com/,https://seller.flipkart.com/api-docs/,https://seller.flipkart.com/api-docs/FMSAPI.html,statusUrl

@@ -1,0 +1,21 @@
+id,name,provider,category,known_site,known_portal,known_api,needs
+siliconflow,SiliconFlow,SiliconFlow,AI & Models,https://siliconflow.cn/,https://docs.siliconflow.cn/docs/userguide/introduction,https://docs.siliconflow.cn/docs/api/chat-completions-post,statusUrl
+sinch,Sinch,Sinch,Communications / Voice / Video,https://sinch.com/,https://developers.sinch.com/,https://developers.sinch.com/docs/conversation/api-reference/conversation,scopes
+siteminder,SiteMinder,SiteMinder,Travel / Hospitality / Events,https://www.siteminder.com/,https://developer.siteminder.com/,https://developer.siteminder.com/direct-booking-api/direct-booking-api,statusUrl;scopes
+skyscanner,Skyscanner,Skyscanner,Travel / Hospitality / Events,https://www.skyscanner.net/sttc/px/captcha-v2/index.html?url=Lz8=&uuid=deb242ec-bb4d-11f1-8418-5ee3384ba296&vid=,https://developers.skyscanner.net/,https://developers.skyscanner.net/api/flights-live-pricing/,statusUrl
+smallcase-gateway,smallcase Gateway,smallcase,Payments / Banking / Fintech,https://www.smallcase.com/,https://developers.gateway.smallcase.com/docs/overview,https://developers.gateway.smallcase.com/reference/graph-performance-api,statusUrl;scopes
+smartlead,Smartlead,Smartlead,CRM & Sales,https://www.smartlead.ai/,https://api.smartlead.ai/introduction,https://api.smartlead.ai/introduction,statusUrl
+smile-id,Smile ID,Smile ID,Security & Identity,https://smile.id/,https://docs.usesmileid.com/,https://docs.usesmileid.com/,statusUrl;scopes
+smoobu,Smoobu,Smoobu,Real Estate / Construction,https://www.smoobu.com/en/,https://www.smoobu.com/en/for-developers/,https://docs.smoobu.com/,scopes
+snapchat-marketing,Snapchat Marketing API,Snap Inc.,Marketing / Advertising,https://forbusiness.snapchat.com/,https://developers.snap.com/,https://developers.snap.com/api/marketing-api/Ads-API/introduction,statusUrl
+snov-io,Snov.io,Snov.io,CRM & Sales,https://snov.io/,https://snov.io/api,https://snov.io/api,statusUrl;scopes
+papertrail,Papertrail,SolarWinds,Observability,https://www.papertrail.com/,https://www.papertrail.com/help/papertrail-documentation/,https://www.papertrail.com/help/http-api/,scopes
+sonatype-nexus,Sonatype Nexus Repository,Sonatype,Developer Tools,https://www.sonatype.com/,https://help.sonatype.com/index.html,https://help.sonatype.com/index.html,authDocs;statusUrl;caps;scopes;reqs
+speedcurve,SpeedCurve,SpeedCurve,Observability,https://www.speedcurve.com/,https://support.speedcurve.com/reference/getting-started,https://support.speedcurve.com/reference/getting-started,authDocs;statusUrl;caps;scopes;reqs
+appdynamics,Splunk AppDynamics,Splunk,Observability,https://www.splunk.com/,https://help.splunk.com/en/appdynamics-saas/extend-splunk-appdynamics/25.4.0/extend-splunk-appdynamics/splunk-appdynamics-apis/api-clients,https://help.splunk.com/en/appdynamics-saas/extend-splunk-appdynamics/25.4.0/extend-splunk-appdynamics/splunk-appdynamics-apis/api-clients,statusUrl
+spotdraft,SpotDraft,SpotDraft,Legal / Compliance,https://www.spotdraft.com/,https://developer.spotdraft.com/,https://developer.spotdraft.com/,scopes
+spotify,Spotify Web API,Spotify,Social / Creator / Publishing,https://open.spotify.com/,https://developer.spotify.com/,https://developer.spotify.com/documentation/web-api,statusUrl;caps;scopes;reqs
+statuscake,StatusCake,StatusCake,Observability,https://www.statuscake.com/,https://developers.statuscake.com/,https://developers.statuscake.com/,scopes
+lemon-squeezy,Lemon Squeezy,Stripe,Commerce / Marketplaces,https://www.lemonsqueezy.com/,https://docs.lemonsqueezy.com/,https://docs.lemonsqueezy.com/,authDocs;statusUrl;caps;scopes;reqs
+taxjar,TaxJar,Stripe,Finance / Accounting / Tax,https://www.taxjar.com/,https://developers.taxjar.com/,https://developers.taxjar.com/api/reference/,scopes
+stytch,Stytch,Stytch,Security & Identity,https://stytch.com/,https://stytch.com/docs/get-started/overview,https://stytch.com/docs/get-started/overview,scopes

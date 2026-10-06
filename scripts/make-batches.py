@@ -1,7 +1,12 @@
 #!/usr/bin/env python3
 """Small research batches for people or chat assistants (ChatGPT, DeepSeek, ...).
 
-  python3 scripts/make-batches.py [--size 20]
+  python3 scripts/make-batches.py [--size 20] [--start 101] [--skip held.json]
+
+--start numbers the batches from N and keeps the existing batch files (a later round of
+research; its returns sit next to the earlier ones in returns/). --skip takes a JSON map
+{id: [need, ...]} of facts already found but held for a domain proof, so nobody researches
+them again.
 
 Reads the synced catalogue, takes every published connector that still misses a fact,
 puts the visitor-facing gaps (logo, site, portal, API reference, auth) first, and writes
@@ -19,20 +24,22 @@ P1 = {'logo', 'site', 'portal', 'api', 'auth'}
 
 
 def main():
-    size = int(sys.argv[sys.argv.index('--size') + 1]) if '--size' in sys.argv else 20
+    arg = lambda k, d: sys.argv[sys.argv.index(k) + 1] if k in sys.argv else d
+    size, start = int(arg('--size', 20)), int(arg('--start', 1))
+    skip = json.load(open(arg('--skip', ''))) if '--skip' in sys.argv else {}
     rows = [c for c in json.load(open(os.path.join(ROOT, 'src', 'lib', 'connectors.json'))) if not c['unpublished'] and c['id'] != 'egnyte']
-    todo = [(c, rg.needs(c)) for c in rows]
+    todo = [(c, [n for n in rg.needs(c) if n not in skip.get(c['id'], [])]) for c in rows]
     todo = [(c, n) for c, n in todo if n]
     # P1 gaps first, then most gaps; providers kept together inside each priority
     todo.sort(key=lambda x: (not (set(x[1]) & P1), (x[0].get('p') or '').lower(), x[0]['id']))
     os.makedirs(os.path.join(OUT, 'returns', 'logos'), exist_ok=True)
     for f in os.listdir(OUT):
-        if f.startswith('batch-') and f.endswith('.csv'):
+        if start == 1 and f.startswith('batch-') and f.endswith('.csv'):
             os.remove(os.path.join(OUT, f))
     index = []
     for b in range(0, len(todo), size):
         chunk = todo[b:b + size]
-        name = f'batch-{b // size + 1:03d}'
+        name = f'batch-{b // size + start:03d}'
         with open(os.path.join(OUT, name + '.csv'), 'w', newline='') as f:
             w = csv.writer(f)
             w.writerow(['id', 'name', 'provider', 'category', 'known_site', 'known_portal', 'known_api', 'needs'])
@@ -47,7 +54,7 @@ def main():
          '`returns/batch-NNN.jsonl` (logos in `returns/logos/`). Then follow "After the batches" in BATCH_PROMPT.md.', '',
          '| Batch | Connectors | With a top-priority gap | First few | Assigned to | Done |', '|---|---:|---:|---|---|---|']
     L += [f'| {n} | {k} | {p} | {first} |  |  |' for n, k, p, first in index]
-    open(os.path.join(OUT, 'BATCHES.md'), 'w').write('\n'.join(L) + '\n')
+    open(os.path.join(OUT, 'BATCHES.md' if start == 1 else f'BATCHES-{start:03d}.md'), 'w').write('\n'.join(L) + '\n')
     print(f'{len(index)} batches, {len(todo)} connectors; {sum(i[2] for i in index)} with a top-priority gap')
 
 

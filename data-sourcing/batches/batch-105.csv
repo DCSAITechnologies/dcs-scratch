@@ -1,0 +1,21 @@
+id,name,provider,category,known_site,known_portal,known_api,needs
+leegality,Leegality,Leegality,Documents / E-sign / Forms,https://www.leegality.com/,,,portal;api;authDocs;statusUrl;caps;scopes;reqs
+luma,Luma,Luma,Travel / Hospitality / Events,https://luma.com/,,,logo;portal;api;authDocs;statusUrl;caps;scopes;reqs
+maplerad,Maplerad,Maplerad,Payments / Banking / Fintech,https://maplerad.com/,https://maplerad.com/,,logo
+mappls-mapmyindia,Mappls (MapmyIndia),MapmyIndia,Logistics / Shipping / Inventory,https://www.mappls.com/,,,logo;portal;api;authDocs;statusUrl;caps;scopes;reqs
+marn,Marn,Marn,Commerce / Marketplaces,,,,logo;site;portal;api;authDocs;statusUrl;auth;caps;scopes;reqs
+medplum,Medplum,Medplum,Healthcare,https://www.medplum.com/,https://www.medplum.com/docs,https://www.medplum.com/docs,logo;authDocs;whDocs;statusUrl;caps;scopes;reqs
+mercado-pago,Mercado Pago,Mercado Libre,Payments / Banking / Fintech,https://www.mercadopago.com.ar,https://www.mercadopago.com.ar/developers/es,,api;authDocs;statusUrl;caps;scopes;reqs
+moneris,Moneris,Moneris,Payments / Banking / Fintech,,https://developer.moneris.com/,,logo;site;api;authDocs;statusUrl;caps;scopes;reqs
+mono,Mono,Mono,Payments / Banking / Fintech,https://mono.co/,https://docs.mono.co/docs,https://docs.mono.co/docs,logo;authDocs;statusUrl;auth;caps;scopes;reqs
+namecheap,Namecheap,Namecheap,Cloud & Hosting,https://www.namecheap.com/,https://www.namecheap.com/support/api/intro/,https://www.namecheap.com/support/api/methods/,logo;caps;scopes
+naver-clova-studio,Naver CLOVA Studio,NAVER Cloud,AI & Models,https://www.ncloud.com/,,,logo;scopes
+nearpay,NearPay,NearPay,Payments / Banking / Fintech,https://nearpay.io/,,,logo;portal;api;authDocs;statusUrl;caps;scopes;reqs
+network-international-ngenius,Network International (N-Genius Online),Network International,Payments / Banking / Fintech,https://www.network.ae/en,https://docs.ngenius-payments.com/,https://docs.ngenius-payments.com/,logo
+novita,Novita AI,Novita AI,AI & Models,https://novita.ai/,,,logo;portal;api;authDocs;statusUrl;caps;scopes;reqs
+numeral,Numeral,Numeral,Finance / Accounting / Tax,https://www.numeral.com/,https://docs.numeral.com/api-reference/v2026-03-01/introduction.md,https://docs.numeral.com/api-reference/v2026-03-01/introduction.md,logo
+oag,OAG,OAG,Travel / Hospitality / Events,https://www.oag.com/,https://developers.oag.com/,https://developers.oag.com/,logo;authDocs;statusUrl;caps;scopes;reqs
+ola-maps,Ola Maps,Ola Krutrim,Logistics / Shipping / Inventory,https://maps.olakrutrim.com/,,,portal;api;authDocs;statusUrl;auth;caps;scopes;reqs
+oracle-health-millennium,Oracle Health Millennium Platform (Cerner),Oracle,Healthcare,https://www.oracle.com/health/,https://docs.oracle.com/en/industries/health/index.html,,logo;api;authDocs;statusUrl;caps;scopes;reqs
+ordoro,Ordoro,Ordoro,Logistics / Shipping / Inventory,https://www.ordoro.com/,https://support.ordoro.com/ordoro-api-introduction/,https://docs.ordoro.com/,logo;statusUrl;scopes
+cortex-xdr,Cortex XDR (Palo Alto Networks),Palo Alto Networks,Security & Identity,https://www.paloaltonetworks.com/,https://cortex-docs.paloaltonetworks.com/xdr-5-api,https://cortex-docs.paloaltonetworks.com/xdr-5-api,logo;authDocs;statusUrl;caps;scopes;reqs

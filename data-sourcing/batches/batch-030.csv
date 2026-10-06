@@ -1,5 +1,0 @@
-id,name,provider,category,known_site,known_portal,known_api,needs
-zabbix,Zabbix,Zabbix,Observability,https://www.zabbix.com/,https://www.zabbix.com/documentation/current/en/manual/api,https://www.zabbix.com/documentation/current/en/manual/api,statusUrl
-zamzar,Zamzar,Zamzar,Documents / E-sign / Forms,https://www.zamzar.com/,https://developers.zamzar.com/,https://developers.zamzar.com/docs,statusUrl;scopes
-zerodha-kite-connect,Zerodha Kite Connect,Zerodha,Payments / Banking / Fintech,https://zerodha.com/,https://zerodha.com/products/api/,https://kite.trade/docs/connect/v3/,statusUrl;scopes
-ziina,Ziina,Ziina,Payments / Banking / Fintech,https://ziina.com/,https://docs.ziina.com/getting-started,https://docs.ziina.com/api-reference/introduction,statusUrl

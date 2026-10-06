@@ -1,0 +1,20 @@
+{"id":"ipinfo","checked":"2026-10-06","notFound":["statusUrl","scopes"],"notes":""}
+{"id":"iru","checked":"2026-10-06","statusUrl":"https://status.kandji.io/","notes":"Iru is the renamed Kandji platform; official Kandji/Iru support points to the existing Kandji status page."}
+{"id":"youtrack","checked":"2026-10-06","statusUrl":"https://www.jetbrains.com/youtrack/cloud/status/","notes":""}
+{"id":"jfrog","checked":"2026-10-06","statusUrl":"https://status.jfrog.io/","notes":""}
+{"id":"juro","checked":"2026-10-06","notFound":["scopes"],"notes":""}
+{"id":"kashier","checked":"2026-10-06","notFound":["statusUrl"],"notes":""}
+{"id":"katana-mrp","checked":"2026-10-06","notFound":["statusUrl","scopes"],"notes":""}
+{"id":"kentik","checked":"2026-10-06","notFound":["scopes"],"notes":""}
+{"id":"keycdn","checked":"2026-10-06","notFound":["scopes"],"notes":""}
+{"id":"kiwify","checked":"2026-10-06","notFound":["scopes"],"notes":""}
+{"id":"chatwork","checked":"2026-10-06","notFound":["statusUrl"],"notes":""}
+{"id":"lambda-cloud","checked":"2026-10-06","notFound":["scopes"],"notes":""}
+{"id":"lancedb-cloud","checked":"2026-10-06","statusUrl":"https://lancedb.betteruptime.com/","notFound":["scopes"],"notes":""}
+{"id":"last9","checked":"2026-10-06","notFound":["statusUrl"],"notes":""}
+{"id":"lemlist","checked":"2026-10-06","statusUrl":"https://status.lempire.com/","notFound":["scopes"],"notes":"status.lemlist.com redirects to the provider group status page and explicitly lists lemlist and lemlist API."}
+{"id":"linkedin-learning","checked":"2026-10-06","statusUrl":"https://www.linkedin-status.com/","notes":"LinkedIn Status explicitly lists LinkedIn Learning and LinkedIn Learning Solutions."}
+{"id":"linnworks","checked":"2026-10-06","notFound":["scopes"],"notes":""}
+{"id":"skuvault","checked":"2026-10-06","notFound":["statusUrl"],"notes":""}
+{"id":"ticketmaster-discovery","checked":"2026-10-06","notFound":["statusUrl","scopes"],"notes":""}
+{"id":"tray-commerce","checked":"2026-10-06","notFound":["scopes"],"notes":""}

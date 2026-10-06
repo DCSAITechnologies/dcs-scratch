@@ -1,0 +1,20 @@
+{"id":"logrocket","checked":"2026-10-06","notFound":["caps","scopes"],"notes":""}
+{"id":"logzio","checked":"2026-10-06","scopeModel":"api_key_permissions","providerScopes":[{"scope":"Read","access":"read","purpose":"Can call the Logz.io public API but cannot change anything."},{"scope":"Write","access":"write","purpose":"Can create and update Logz.io objects; implies Read."},{"scope":"Admin","access":"admin","purpose":"Same role as Manage API Tokens; implies Read and Write."}],"evidence":{"scopes":"https://docs.logz.io/docs/user-guide/orioniq/integrations/"},"notes":""}
+{"id":"loops","checked":"2026-10-06","notFound":["scopes"],"notes":""}
+{"id":"line-messaging","checked":"2026-10-06","notFound":["scopes"],"notes":"LINE Developers official documentation links LINE API Status and states that it covers Messaging API, including API and Webhook.","statusUrl":"https://api.line-status.info/"}
+{"id":"mailtrap","checked":"2026-10-06","statusUrl":"https://status.mailtrap.info/","notes":""}
+{"id":"manatal","checked":"2026-10-06","notFound":["scopes"],"notes":""}
+{"id":"medallia","checked":"2026-10-06","notFound":["scopes"],"notes":""}
+{"id":"medusa","checked":"2026-10-06","notFound":["scopes"],"notes":""}
+{"id":"mem-ai","checked":"2026-10-06","notFound":["scopes"],"notes":""}
+{"id":"mend","checked":"2026-10-06","notFound":["scopes"],"notes":""}
+{"id":"mentimeter","checked":"2026-10-06","notFound":["statusUrl"],"notes":""}
+{"id":"merge","checked":"2026-10-06","statusUrl":"https://status.merge.dev/","notes":""}
+{"id":"mews","checked":"2026-10-06","notFound":["scopes"],"notes":""}
+{"id":"microsoft-advertising","checked":"2026-10-06","statusUrl":"https://status.ads.microsoft.com/","notes":""}
+{"id":"middleware-io","checked":"2026-10-06","notFound":["statusUrl","scopes"],"notes":""}
+{"id":"mixedbread","checked":"2026-10-06","notFound":["statusUrl"],"notes":""}
+{"id":"moengage","checked":"2026-10-06","notFound":["scopes"],"notes":""}
+{"id":"momento","checked":"2026-10-06","notFound":["statusUrl"],"notes":""}
+{"id":"moneybird","checked":"2026-10-06","statusUrl":"https://status.moneybird.com/","notes":""}
+{"id":"moyasar","checked":"2026-10-06","notFound":["statusUrl"],"notes":""}

@@ -1,0 +1,21 @@
+id,name,provider,category,known_site,known_portal,known_api,needs
+gamma,Gamma,Gamma,Productivity,,https://developers.gamma.app/,https://developers.gamma.app/llms-full.txt,logo;site;authDocs;statusUrl;caps;scopes;reqs
+gandi,Gandi,Gandi,Cloud & Hosting,https://www.gandi.net/,https://api.gandi.net/docs/,https://api.gandi.net/docs/,logo
+geidea,Geidea,Geidea,Payments / Banking / Fintech,https://www.geidea.net/ksa/en,,,portal;api;authDocs;statusUrl;caps;scopes;reqs
+unsplash,Unsplash,Getty Images,Social / Creator / Publishing,,https://unsplash.com/developers,https://unsplash.com/documentation,logo;site;authDocs;statusUrl;caps;scopes;reqs
+godaddy,GoDaddy,GoDaddy,Cloud & Hosting,,https://developer.godaddy.com/en,https://developer.godaddy.com/en/docs/api-users/quickstart,logo;site;authDocs;statusUrl;caps;scopes;reqs
+midtrans,Midtrans,GoTo Group,Payments / Banking / Fintech,https://midtrans.com/,https://docs.midtrans.com/,https://docs.midtrans.com/,logo;authDocs;statusUrl;caps;scopes;reqs
+gupshup,Gupshup,Gupshup,Communications / Voice / Video,https://www.gupshup.ai:443/,https://docs.gupshup.io/,https://docs.gupshup.io/,logo;authDocs;statusUrl;caps;scopes;reqs
+hackerearth,HackerEarth,HackerEarth,HR / Recruiting / Payroll,https://www.hackerearth.com/,,,portal;api;authDocs;statusUrl;caps;scopes;reqs
+health-gorilla,Health Gorilla,Health Gorilla,Healthcare,https://www.healthgorilla.com/,,,portal;api;authDocs;statusUrl;caps;scopes;reqs
+healthie,Healthie,Healthie,Healthcare,https://www.gethealthie.com/,,,portal;api;authDocs;statusUrl;caps;scopes;reqs
+helcim,Helcim,Helcim,Payments / Banking / Fintech,,https://devdocs.helcim.com/docs/welcome-to-helcim,https://devdocs.helcim.com/docs/welcome-to-helcim,logo;site;authDocs;statusUrl;caps;scopes;reqs
+hostaway,Hostaway,Hostaway,Real Estate / Construction,https://www.hostaway.com/,,,portal;api;authDocs;statusUrl;caps;scopes;reqs
+ns1,NS1 (IBM NS1 Connect),IBM,Cloud & Hosting,https://www.ibm.com/products/ns1-connect,,,logo;portal;api;authDocs;statusUrl;caps;scopes;reqs
+increase,Increase,Increase,Payments / Banking / Fintech,https://increase.com/,https://increase.com/documentation,https://increase.com/documentation,authDocs;statusUrl;auth;caps;scopes;reqs
+instructure-dap,Instructure Data Access Platform (Canvas Data 2),Instructure,Education,https://www.instructure.com/,,,portal;api;authDocs;statusUrl;caps;scopes;reqs
+instructure-masteryconnect,Instructure MasteryConnect,Instructure,Education,https://www.instructure.com/,,,portal;api;authDocs;statusUrl;caps;scopes;reqs
+ithink-logistics,iThink Logistics,iThink Logistics,Logistics / Shipping / Inventory,https://www.ithinklogistics.com/,,,portal;api;authDocs;statusUrl;caps;scopes;reqs
+kintsugi,Kintsugi,Kintsugi,Finance / Accounting / Tax,https://trykintsugi.com/,https://docs.trykintsugi.com/docs/getting-started,https://docs.trykintsugi.com/docs/getting-started/authentication,logo;statusUrl;caps;scopes;reqs
+korapay,Korapay,Kora,Payments / Banking / Fintech,https://korapay.com/,https://developers.korapay.com/,https://docs.korapay.com/,logo;statusUrl
+lawmatics,Lawmatics,Lawmatics,Legal / Compliance,https://www.lawmatics.com/,,,portal;api;authDocs;statusUrl;caps;scopes;reqs

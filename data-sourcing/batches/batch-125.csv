@@ -1,0 +1,10 @@
+id,name,provider,category,known_site,known_portal,known_api,needs
+xometry,Xometry,Xometry,Manufacturing / ERP / Supply Chain,https://www.xometry.com/,https://developer.xometry.com/,https://developer.xometry.com/reference,statusUrl
+zenduty-xurrent-imr,Zenduty (now Xurrent IMR),Xurrent,Observability,https://www.xurrent.com/,https://apidocs.zenduty.com/openapi.json,https://apidocs.zenduty.com/openapi.json,authDocs;statusUrl;caps;scopes;reqs
+yampi,Yampi,Yampi,Commerce / Marketplaces,https://www.yampi.com.br/,https://docs.yampi.com.br/introduction,https://docs.yampi.com.br/api-reference/rate-limit/limites.md,scopes
+yellow-card,Yellow Card,Yellow Card,Payments / Banking / Fintech,https://yellowcard.io/,,,statusUrl
+yotpo,Yotpo (Core API),Yotpo,Support & Success,https://www.yotpo.com/,https://core-api.yotpo.com/,https://core-api.yotpo.com/reference/welcome,scopes
+youverify,Youverify,Youverify,Security & Identity,https://youverify.co/en,https://doc.youverify.co/introduction,https://doc.youverify.co/api-reference/overview,statusUrl
+zamzar,Zamzar,Zamzar,Documents / E-sign / Forms,https://www.zamzar.com/,https://developers.zamzar.com/,https://developers.zamzar.com/docs,statusUrl;scopes
+zerodha-kite-connect,Zerodha Kite Connect,Zerodha,Payments / Banking / Fintech,https://zerodha.com/,https://zerodha.com/products/api/,https://kite.trade/docs/connect/v3/,statusUrl;scopes
+ziina,Ziina,Ziina,Payments / Banking / Fintech,https://ziina.com/,https://docs.ziina.com/getting-started,https://docs.ziina.com/api-reference/introduction,statusUrl

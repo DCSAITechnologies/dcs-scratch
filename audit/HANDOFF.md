@@ -85,7 +85,7 @@ Templates: `.env.example`, `.env.mock` and `.env.core`.
 - `validate-catalogue.py` allows a published core-held row only with the flag, not BLOCKED, not excluded and `NOT_DISPATCHABLE`; `test-validate-catalogue.py` (in `npm run gates`) proves BLOCKED and excluded rows still fail.
 - Detail page: "Use of this connector is subject to the provider's terms." and, for health / children's-data / money-moving / likeness holds, "Additional compliance review applies before it can run."
 - Evidence: core `f6a3161` `catalogue.json` `rulings_applied: []`; `founder-rulings.json` has 2 rulings (D8-575, D8-148), both `proposed`.
-- Batches regenerated after listing: 30 batches, 584 connectors (`data-sourcing/batches/BATCHES.md`).
+- Research: ChatGPT returned batches 001–020 of the first set (397 connectors): 165 facts pass, 102 held for domain proofs, not yet applied (links unchecked; `data-sourcing/batches/returns/REVIEW_001_020.md`). The unused second set (001–030) was replaced by round 2: `batch-101` … `batch-125`, 489 connectors, 1,606 facts (`data-sourcing/batches/BATCHES-101.md`).
 
 ## 5. Findings from running against core
 
