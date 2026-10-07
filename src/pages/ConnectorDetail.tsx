@@ -357,6 +357,15 @@ function ConnectorDetailView({ c, legacy, resolved }: { c: Conn; legacy?: Conn; 
                 : <p className="text-[11.5px] text-[#B45309]">Developer-portal links for this connector are pending verification and are hidden until confirmed against official provider sources.</p>}
             </div>
           )}
+
+          {/* every connector page: the provider owns its API and its terms (founder direction, 07 Oct 2026) */}
+          <div className="mt-10 flex gap-3 rounded-xl p-4 text-[12.5px] leading-relaxed" data-testid="provider-terms-notice" style={{ background: '#F5F7FB', border: '1px solid #E3E7EE', color: '#3A4357' }}>
+            <svg aria-hidden width="16" height="16" viewBox="0 0 16 16" className="mt-0.5 shrink-0" fill="none" stroke="#566074" strokeWidth="1.4"><circle cx="8" cy="8" r="6.5" /><path d="M8 7.2v4M8 4.9v.1" strokeLinecap="round" /></svg>
+            <p>
+              {c.p || c.n} builds and runs its own API. Connector OS does not control it: the provider decides which operations, permissions and terms apply, and can change them.
+              Connecting it means agreeing to {c.p ? `${c.p}'s` : "the provider's"} own terms{c.site ? <> (<a href={c.site} target="_blank" rel="noreferrer" className="font-medium text-[#2850D8] hover:underline">{host(c.site)}</a>)</> : null}. Only connect services you trust.
+            </p>
+          </div>
             </div>
           </div>
         </div>

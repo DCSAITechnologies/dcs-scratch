@@ -87,6 +87,13 @@ test.describe('public catalogue', () => {
     await expect(page.getByText('More reference pages')).toHaveCount(0)
   })
 
+  test('every connector page carries the provider-terms notice', async ({ page }) => {
+    for (const id of ['github', POPULAR.popular[0]]) {
+      await page.goto(`/connectors/${id}`)
+      await expect(page.getByTestId('provider-terms-notice')).toContainText('does not control it')
+    }
+  })
+
   test('category deep link filters the grid', async ({ page }) => {
     const cat = 'Healthcare'
     await page.goto(`/connectors?cat=${encodeURIComponent(cat)}`)
