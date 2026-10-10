@@ -101,7 +101,7 @@ Templates: `.env.example`, `.env.mock` and `.env.core`.
 | 2 | IdP: issuer, SPA client id, test users (admin / approver / viewer) | founder / ops |
 | 3 | Hosting target + preview deploy token (confirms the `_redirects` / `_headers` syntax) | founder |
 | 4 | Reviewed dispatch grants / staging verifications (today 0) | core / founder |
-| 5 | Run the 4 data-sourcing terminals (`data-sourcing/README.md`) and return `data-sourcing/returns/`, or export core's `packages/connectors/*/manifest.json` | founder / ops |
+| 5 | Connector data round 2: `data-sourcing/batches/PENDING_ALL.csv` (530 connectors, 1,722 facts), research in `batch-101` … `batch-125`; run `collect-batches` with internet to apply ChatGPT batches 001–020; add domain proofs. Or export core's `packages/connectors/*/manifest.json` | founder / ops |
 | 6 | Optional: contact endpoint + Turnstile | founder |
 
 ## 7. Guard rails
